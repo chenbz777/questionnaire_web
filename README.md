@@ -18,6 +18,8 @@
   - ✅优点：除了花钱，全是优点
   - ❌缺点：订阅花钱，项目成本增加
 
+
+
   所以突发奇想，能不能弄一款【离线版问卷】，项目独立部署，只处理 “编辑” 和 “渲染”，任意项目想要集成，通过【iframe】嵌入，只关心数据。
 
 - 离线版问卷
@@ -26,13 +28,9 @@
 
 
 
-
-
 ## 🎨 预览
 
 ![设计页面](https://ice.frostsky.com/2024/09/07/9333849b177c02567493135777dcbb1c.png)
-
-
 
 
 
@@ -44,15 +42,11 @@ vue3
 
 
 
-
-
 ## 💻 初始化
 
 ```bash
 pnpm install
 ```
-
-
 
 
 
@@ -64,15 +58,11 @@ pnpm dev
 
 
 
-
-
 ## 📦 打包
 
 ```bash
 pnpm build
 ```
-
-
 
 
 
@@ -294,13 +284,9 @@ const readonlyEasyUrl = window.location.origin + '/questionnaire/v1/readonly/eas
 
 
 
-
-
 ## 📌 许可协议
 
 本项目基于 MIT 许可证开源，详情请参阅 [LICENSE](./LICENSE) 文件。
-
-
 
 
 
