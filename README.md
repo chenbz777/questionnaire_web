@@ -290,6 +290,18 @@ const readonlyEasyUrl = 'https://chenbz777.github.io/questionnaire_web/#/questio
 
 
 
+## 🏗️ 待完善
+
+1. [控件] 附件上传
+
+   > 因为没有存储库，所以没有接上传功能
+
+2. [控件] 日期时间
+
+   > 暂时还没找到好的日期时间插件，后续再补充
+
+
+
 ## 📌 许可协议
 
 本项目基于 MIT 许可证开源，详情请参阅 [LICENSE](./LICENSE) 文件。
