@@ -30,6 +30,8 @@
 
 ## 🎨 预览
 
+[点击前往预览地址](https://chenbz777.github.io/questionnaire_web/)
+
 ![设计页面](https://ice.frostsky.com/2024/09/07/9333849b177c02567493135777dcbb1c.png)
 
 
@@ -116,7 +118,7 @@ pnpm build
 ```vue
 <script setup>
 // 第一步: 拼凑地址, window.location.origin 要换成你部署后的域名
-const designUrl = window.location.origin + '/questionnaire/v1/design';
+const designUrl = window.location.origin + '/#/questionnaire/v1/design';
 
 // 第二步: 问卷数据, 实际上应该是通过接口获取
 let questionnaireData = {};
@@ -161,7 +163,7 @@ function getQuestionnaireData() {
 import { onMounted, nextTick } from 'vue';
 
 // 第一步: 拼凑地址, window.location.origin 要换成你部署后的域名
-const answerUrl = window.location.origin + '/questionnaire/v1/answer';
+const answerUrl = window.location.origin + '/#/questionnaire/v1/answer';
 
 // 第二步: 问卷数据, 实际上应该是通过接口获取
 let questionnaireData = {};
@@ -224,7 +226,7 @@ onMounted(() => {
 import { onMounted } from 'vue';
 
 // 第一步: 拼凑地址, window.location.origin 要换成你部署后的域名
-const readonlyUrl = window.location.origin + '/questionnaire/v1/readonly';
+const readonlyUrl = window.location.origin + '/#/questionnaire/v1/readonly';
 
 // 第二步: 问卷数据, 实际上应该是通过接口获取
 let questionnaireData = {};
@@ -267,7 +269,7 @@ onMounted(() => {
 ### 集成【填答简洁版问卷】
 
 ```js
-const answerEasyUrl = window.location.origin + '/questionnaire/v1/answer/easy';
+const answerEasyUrl = window.location.origin + '/#/questionnaire/v1/answer/easy';
 ```
 
 > 用法与【填答问卷】一致，只是去掉了"皮肤"样式
@@ -277,7 +279,7 @@ const answerEasyUrl = window.location.origin + '/questionnaire/v1/answer/easy';
 ### 集成【只读简洁版问卷】
 
 ```js
-const readonlyEasyUrl = window.location.origin + '/questionnaire/v1/readonly/easy';
+const readonlyEasyUrl = window.location.origin + '/#/questionnaire/v1/readonly/easy';
 ```
 
 > 用法与【只读问卷】一致，只是去掉了"皮肤"样式
