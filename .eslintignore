@@ -1,0 +1,8 @@
+# 忽略public目录下文件的语法检查
+public
+# 忽略node_modules目录下文件的语法检查
+node_modules
+# 忽略src/assets目录下文件的语法检查
+src/assets
+# 忽略dist目录下文件的语法检查
+dist

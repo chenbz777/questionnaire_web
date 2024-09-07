@@ -1,0 +1,94 @@
+<script setup>
+import { ref } from 'vue';
+import materielModel from '@/hooks/useDesignV1/materielModel';
+import { vDraggable } from 'vue-draggable-plus';
+import useDesignV1 from '@/hooks/useDesignV1';
+
+
+const { subscribe, addQuestion } = useDesignV1();
+
+const groups = {
+  '文本': [],
+  '选择': [],
+  '高级': []
+};
+
+Object.values(materielModel).forEach((itemClass) => {
+
+  const model = new itemClass();
+
+  if (!model.group) {
+    return;
+  }
+
+  if (!groups[model.group]) {
+    groups[model.group] = [];
+  }
+
+  groups[model.group].push(model);
+});
+
+// 拖拽配置
+const draggableOption = {
+  animation: 200,
+  sort: false,
+  group: {
+    name: 'questionListDesigner',
+    put: false,
+    pull: 'clone'
+  },
+  clone: (data) => {
+    // 自定义克隆函数: 拖拽时克隆一个新的组件
+    return new materielModel[data.type];
+  }
+};
+
+const currentComponentData = ref(null);
+
+subscribe.on('editClickComponent', (data) => {
+  currentComponentData.value = data;
+});
+
+// 点击组件
+function handleClick(data) {
+  // 生成组件实例
+  const model = new materielModel[data.type]();
+
+  addQuestion(model);
+}
+</script>
+
+<template>
+  <div class="question-type">
+    <AnimateTransitionGroup>
+      <template v-for="(groupItems, key) in groups" :key="key">
+        <div class="question-type__title">
+          {{ key }}
+        </div>
+        <el-row :gutter="10" v-draggable="[groupItems, draggableOption]">
+          <el-col :span="12" v-for="item in groupItems" :key="item.key">
+            <div class="question-type__item" @click="handleClick(item)">{{ item.title }}</div>
+          </el-col>
+        </el-row>
+      </template>
+    </AnimateTransitionGroup>
+  </div>
+</template>
+
+<style scoped>
+.question-type__title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  line-height: 40px;
+}
+
+.question-type__item {
+  background-color: #f0f0f0;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+</style>
