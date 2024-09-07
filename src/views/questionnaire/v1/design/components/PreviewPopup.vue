@@ -28,7 +28,8 @@ function onOpened() {
   const iframe = document.getElementById('myIframe');
 
   // 获取编辑地址
-  const editUrl = window.location.origin + '/questionnaire/v1/answer';
+  const baseUrl = window.location.origin + window.location.pathname + '#';
+  const editUrl = baseUrl + '/questionnaire/v1/answer';
 
   // 设置 iframe 地址
   iframe.src = editUrl;
