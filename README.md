@@ -42,6 +42,12 @@ vue3
 
 
 
+## 📦 仓库
+
+[questionnaire_web](https://github.com/chenbz777/questionnaire_web)
+
+
+
 ## 💻 初始化
 
 ```bash
@@ -58,7 +64,7 @@ pnpm dev
 
 
 
-## 📦 打包
+## 🛠️ 打包
 
 ```bash
 pnpm build
