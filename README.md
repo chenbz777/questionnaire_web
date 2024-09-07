@@ -30,6 +30,8 @@
 
 ## 🎨 预览
 
+[点击链接直达预览地址](https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/design)
+
 ![设计页面](https://ice.frostsky.com/2024/09/07/9333849b177c02567493135777dcbb1c.png)
 
 
