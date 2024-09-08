@@ -34,6 +34,13 @@ const props = defineProps({
   }
 });
 
+/**
+ * @author: chenbz
+ * @description: 触发订阅事件
+ * @param eventName {string} 事件名称
+ * @param data {*} 事件数据
+ * @return {*}
+ */
 function emitSubscribe(eventName, data) {
 
   if (!eventName) {
@@ -50,13 +57,22 @@ function emitSubscribe(eventName, data) {
 
   const key = props.data.key;
 
+  // 拼接事件名称
   const newEventName = `${key}_${eventName}`;
 
+  // 触发订阅事件
   props.subscribe.emit(newEventName, data);
 }
 
+// 实例化题目模型
 const model = new materielModel[props.data.type]();
 
+/**
+ * @author: chenbz
+ * @description: 是否显示正确答案
+ * @param {*} data
+ * @return {*}
+ */
 function showCorrect(data) {
 
   if ((typeof data.answer) === 'object') {
@@ -68,8 +84,6 @@ function showCorrect(data) {
   }
 
   if (data.answer) {
-    console.log(3);
-
     return true;
   }
 
@@ -129,6 +143,7 @@ function showCorrect(data) {
           </span>
         </template>
       </p>
+      <!-- 答案解析 -->
       <p v-if="data.props.answerAnalysis">
         <span class="base-container__correct__title"> 答案解析:</span>
         {{ data.props.answerAnalysis }}
