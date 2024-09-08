@@ -36,11 +36,11 @@ function onOpened() {
 
   // iframe 加载完成后设置数据
   iframe.onload = function () {
-    // 延迟 200ms 是为了确保 iframe 加载完成
+    // 延迟是为了确保 iframe 加载完成
     setTimeout(() => {
       // 设置数据
       window.myIframe.contentWindow.setQuestionnaireData(questionnaireData.value);
-    }, 200);
+    }, 300);
   };
 }
 

@@ -115,7 +115,6 @@ onMounted(() => {
 .left-side__menu__item {
   text-align: center;
   cursor: pointer;
-  background-color: white;
   border-radius: 8px;
   padding: 6px 4px;
   transition: all 0.3s;

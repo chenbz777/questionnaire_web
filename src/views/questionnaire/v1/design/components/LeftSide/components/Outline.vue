@@ -26,5 +26,11 @@ const { questionnaireData } = useDesignV1();
   border-radius: 6px;
   margin-bottom: 10px;
   cursor: move;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+}
+
+.outline__item:hover {
+  border: 1px solid #3095fa;
 }
 </style>

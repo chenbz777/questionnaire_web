@@ -7,6 +7,9 @@ import textFormat from '@/hooks/useDesignV1/common/textFormat';
 
 const { addQuestion } = useDesignV1();
 
+const formInput = new materielModel.FormInput();
+const formRadio = new materielModel.FormRadio();
+
 const questionBankList = [
   // {
   //   label: '人口属性',
@@ -18,7 +21,7 @@ const questionBankList = [
       {
         label: '姓名',
         type: 'FormInput',
-        typeText: '输入框',
+        typeText: formInput.title,
         props: {
           title: '您的姓名是？',
           placeholder: '请输入您的姓名',
@@ -28,7 +31,7 @@ const questionBankList = [
       {
         label: '身份证',
         type: 'FormInput',
-        typeText: '输入框',
+        typeText: formInput.title,
         props: {
           title: '您的身份证号是？',
           placeholder: '请输入您的身份证号',
@@ -38,7 +41,7 @@ const questionBankList = [
       {
         label: '性别',
         type: 'FormRadio',
-        typeText: '单选',
+        typeText: formRadio.title,
         props: {
           title: '您的性别是？',
           options: [
@@ -56,7 +59,7 @@ const questionBankList = [
       {
         label: '学历',
         type: 'FormRadio',
-        typeText: '单选',
+        typeText: formRadio.title,
         props: {
           title: '到目前为止，您的最高学历(包括在读)是？',
           options: [
@@ -103,7 +106,7 @@ const questionBankList = [
       {
         label: '手机号',
         type: 'FormInput',
-        typeText: '输入框',
+        typeText: formInput.title,
         props: {
           title: '您的手机号是？',
           placeholder: '请输入您的手机号',
@@ -113,7 +116,7 @@ const questionBankList = [
       {
         label: '邮箱',
         type: 'FormInput',
-        typeText: '输入框',
+        typeText: formInput.title,
         props: {
           title: '您的邮箱是？',
           placeholder: '请输入您的邮箱',
@@ -184,10 +187,16 @@ const draggableOption = {
   font-size: 14px;
   cursor: pointer;
   margin-bottom: 10px;
+  border: 1px solid transparent;
+  transition: all 0.3s;
 }
 
 .question-bank__item__text {
   color: #999999;
   font-size: 12px;
+}
+
+.question-bank__item:hover {
+  border: 1px solid #3095fa;
 }
 </style>

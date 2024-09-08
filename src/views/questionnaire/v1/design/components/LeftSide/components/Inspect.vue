@@ -313,7 +313,7 @@ watch(() => questionnaireData, () => {
 }
 
 .inspect__item {
-  background-color: #f6f6f6;
+  background-color: #F0F0F0;
   border-radius: 8px;
   padding: 6px 10px;
   font-size: 13px;
