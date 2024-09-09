@@ -115,6 +115,11 @@ export default class BaseMateriel {
         return -1;
       }
 
+      // 没有标准答案, 返回0分
+      if (!this.props.answer) {
+        return 0;
+      }
+
       // 答案正确, 返回分数
       if (this.props.defaultValue === this.props.answer) {
         return this.props.score;
