@@ -56,6 +56,11 @@ export default class FormCheckbox extends BaseMateriel {
         return -1;
       }
 
+      // 没有标准答案, 返回0分
+      if (!this.props.answer.length) {
+        return 0;
+      }
+
       // 答案正确, 返回分数
       if (this.props.defaultValue.join('') === this.props.answer.join('')) {
         return this.props.score;
