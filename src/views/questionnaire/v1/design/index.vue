@@ -21,31 +21,6 @@ watch(() => questionnaireData.value.questionList, (questionList) => {
   immediate: true
 });
 
-// 是否编辑标题
-const isEditTitle = ref(false);
-
-// 标题输入框实例
-const titleInput = ref(null);
-
-// 编辑标题
-function editTitle() {
-  isEditTitle.value = true;
-  // 输入框获取焦点
-  titleInput.value.focus();
-}
-
-// 是否编辑简介
-const isEditDesc = ref(false);
-
-// 简介输入框实例
-const descInput = ref(null);
-
-// 编辑简介
-function editDesc() {
-  isEditDesc.value = true;
-  // 输入框获取焦点
-  descInput.value.focus();
-}
 
 // 预览弹窗实例
 const previewPopupRef = ref(null);
@@ -166,24 +141,14 @@ const importJSON = () => {
               <img :src="questionnaireData.props.logo" alt="logo" class="questionnaire__container__logo__image" />
             </div>
 
-            <el-input v-model="questionnaireData.props.title" class="questionnaire__container__title"
-              placeholder="请输入问卷标题" clearable ref="titleInput" @blur="isEditTitle = false" v-show="isEditTitle" />
+            <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
+              {{ questionnaireData.props.title }}
+            </div>
 
-            <el-tooltip effect="dark" content="点击开始编辑【问卷标题】" placement="top" v-if="!isEditTitle">
-              <div class="questionnaire__container__title" @click="editTitle()">
-                {{ questionnaireData.props.title }}
-              </div>
-            </el-tooltip>
-
-            <el-input type="textarea" :rows="3" v-model="questionnaireData.props.desc"
-              class="questionnaire__container__desc" placeholder="请输入问卷标题" clearable ref="descInput"
-              @blur="isEditDesc = false" v-show="isEditDesc" />
-
-            <el-tooltip effect="dark" content="点击开始编辑【问卷简介】" placement="top" v-if="!isEditDesc">
-              <div class="questionnaire__container__desc" @click="editDesc()">
-                {{ questionnaireData.props.desc }}
-              </div>
-            </el-tooltip>
+            <div class="questionnaire__container__desc"
+              v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
+              <div v-html="questionnaireData.props.desc"></div>
+            </div>
 
             <Edit class="questionnaire__container__content" />
 

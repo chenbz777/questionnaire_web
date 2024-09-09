@@ -243,8 +243,9 @@ eventList.forEach((event) => {
       {{ questionnaireData.props.title }}
     </div>
 
-    <div class="questionnaire__container__desc" v-if="questionnaireData.props.desc">
-      {{ questionnaireData.props.desc }}
+    <div class="questionnaire__container__desc"
+      v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
+      <div v-html="questionnaireData.props.desc"></div>
     </div>
 
     <div class="questionnaire__container__content">

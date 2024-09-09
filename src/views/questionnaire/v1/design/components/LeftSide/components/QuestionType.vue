@@ -11,8 +11,7 @@ const groups = {
   '文本': [],
   '选择': [],
   '高级': [],
-  '矩阵': [],
-  '展示': []
+  '矩阵': []
 };
 
 Object.values(materielModel).forEach((itemClass) => {

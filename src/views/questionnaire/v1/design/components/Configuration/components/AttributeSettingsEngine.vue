@@ -1,6 +1,5 @@
 <script setup>
 import { ref, watch, defineAsyncComponent } from 'vue';
-const List = defineAsyncComponent(() => import('./AttributeConfigEngineType/List.vue'));
 
 
 const props = defineProps({
@@ -19,6 +18,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+const List = defineAsyncComponent(() => import('./AttributeConfigEngineType/List.vue'));
+
+const RichText = defineAsyncComponent(() => import('./AttributeConfigEngineType/RichText.vue'));
 
 const propsData = ref(props.modelValue);
 
@@ -128,6 +131,9 @@ const componentName = props.setting.type === 'slot' ? defineAsyncComponent(() =>
 
       <!-- list 列表 -->
       <List v-model="propsData[dataKey]" :setting="setting" v-if="setting.type === 'list'" />
+
+      <!-- richText 富文本 -->
+      <RichText v-model="propsData[dataKey]" :setting="setting" v-if="setting.type === 'richText'" />
     </div>
   </div>
 </template>

@@ -59,6 +59,16 @@ export default class Questions extends BaseMateriel {
         type: 'block',
         children: [
           {
+            title: '问卷标题',
+            type: 'input',
+            propsKey: 'title'
+          },
+          {
+            title: '问卷描述',
+            type: 'richText',
+            propsKey: 'desc'
+          },
+          {
             title: '显示题目编号',
             type: 'switch',
             propsKey: 'showQuestionIndex'
