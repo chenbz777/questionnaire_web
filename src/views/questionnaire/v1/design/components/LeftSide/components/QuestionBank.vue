@@ -25,7 +25,7 @@ const questionBankList = [
         props: {
           title: '您的姓名是？',
           placeholder: '请输入您的姓名',
-          format: textFormat.find(item => item.label === '中文姓名').format
+          format: textFormat.find(item => item.label === '中文姓名').value
         }
       },
       {
@@ -35,7 +35,7 @@ const questionBankList = [
         props: {
           title: '您的身份证号是？',
           placeholder: '请输入您的身份证号',
-          format: textFormat.find(item => item.label === '身份证').format
+          format: textFormat.find(item => item.label === '身份证').value
         }
       },
       {
@@ -110,7 +110,7 @@ const questionBankList = [
         props: {
           title: '您的手机号是？',
           placeholder: '请输入您的手机号',
-          format: textFormat.find(item => item.label === '手机号').format
+          format: textFormat.find(item => item.label === '手机号').value
         }
       },
       {
@@ -120,7 +120,7 @@ const questionBankList = [
         props: {
           title: '您的邮箱是？',
           placeholder: '请输入您的邮箱',
-          format: textFormat.find(item => item.label === '邮箱').format
+          format: textFormat.find(item => item.label === '邮箱').value
         }
       }
     ]
