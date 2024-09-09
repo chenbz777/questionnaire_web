@@ -10,7 +10,9 @@ const { subscribe, addQuestion } = useDesignV1();
 const groups = {
   '文本': [],
   '选择': [],
-  '高级': []
+  '高级': [],
+  '矩阵': [],
+  '展示': []
 };
 
 Object.values(materielModel).forEach((itemClass) => {
