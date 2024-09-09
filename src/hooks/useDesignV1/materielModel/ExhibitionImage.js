@@ -33,7 +33,7 @@ export default class ExhibitionImage extends BaseMateriel {
   }
 
   getValueText() {
-    return `<img src="${this.props.defaultValue}" alt="图片" style="max-width: 100%; height: auto;" />`;
+    return `<img src="${this.props.defaultValue}" alt="图片" style="height: 100px; width: auto;">`;
   }
 
   getValue() {
