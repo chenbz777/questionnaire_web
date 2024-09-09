@@ -111,7 +111,7 @@ export default class ExhibitionImage extends BaseMateriel {
             propsKey: 'borderRadius'
           },
           {
-            title: '点击是否预览',
+            title: '点击预览大图',
             type: 'switch',
             propsKey: 'isPreview'
           }
