@@ -4,28 +4,29 @@ import RichTextEditor from '@/components/RichTextEditor.vue';
 
 
 const props = defineProps({
-  setting: {
-    type: Object,
-    required: true
-  },
   modelValue: {
     type: String,
-    required: true
+    required: true,
+    default: ''
   }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-const htmlValue = ref(props.modelValue);
+// 富文本内容
+const htmlValue = ref('');
+
+// 初始化
+htmlValue.value = props.modelValue;
 
 // 弹窗是否显示
 const dialogVisible = ref(false);
 
 // 处理确认
 function handleConfirm() {
-  emit('update:modelValue', htmlValue.value);
-
   dialogVisible.value = false;
+
+  emit('update:modelValue', htmlValue.value);
 }
 
 // 处理取消

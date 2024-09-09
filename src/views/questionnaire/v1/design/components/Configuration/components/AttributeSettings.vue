@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { ref, watch } from 'vue';
 import AttributeSettingsEngine from './AttributeSettingsEngine.vue';
 
 
@@ -8,7 +8,7 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  data: {
+  modelValue: {
     type: Object,
     required: true
   },
@@ -19,7 +19,15 @@ const props = defineProps({
   }
 });
 
-const propsData = reactive(props.data);
+const emit = defineEmits(['update:modelValue']);
+
+const propsData = ref(JSON.parse(JSON.stringify(props.modelValue)));
+
+watch(() => propsData.value, (value) => {
+  emit('update:modelValue', JSON.parse(JSON.stringify(value)));
+}, {
+  deep: true
+});
 </script>
 
 <template>
@@ -31,7 +39,7 @@ const propsData = reactive(props.data);
         <div class="attribute-config__block" v-if="settingsItem.type === 'block'">
           <div class="attribute-config__block__title">{{ settingsItem.title }}</div>
 
-          <AttributeSettings :settings="settingsItem.children" :data="data" :dataKey="dataKey" />
+          <AttributeSettings :settings="settingsItem.children" v-model="propsData" :dataKey="dataKey" />
         </div>
 
         <!-- 基础类型 -->

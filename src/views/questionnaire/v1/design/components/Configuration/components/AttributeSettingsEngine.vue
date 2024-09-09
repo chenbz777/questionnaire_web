@@ -23,17 +23,10 @@ const List = defineAsyncComponent(() => import('./AttributeConfigEngineType/List
 
 const RichText = defineAsyncComponent(() => import('./AttributeConfigEngineType/RichText.vue'));
 
-const propsData = ref(props.modelValue);
-
-watch(() => props.modelValue, (value) => {
-  propsData.value = value;
-}, {
-  immediate: true,
-  deep: true
-});
+const propsData = ref(JSON.parse(JSON.stringify(props.modelValue)));
 
 watch(() => propsData.value, (value) => {
-  emit('update:modelValue', value);
+  emit('update:modelValue', JSON.parse(JSON.stringify(value)));
 }, {
   deep: true
 });
@@ -133,7 +126,7 @@ const componentName = props.setting.type === 'slot' ? defineAsyncComponent(() =>
       <List v-model="propsData[dataKey]" :setting="setting" v-if="setting.type === 'list'" />
 
       <!-- richText 富文本 -->
-      <RichText v-model="propsData[dataKey]" :setting="setting" v-if="setting.type === 'richText'" />
+      <RichText v-model="propsData[dataKey]" v-if="setting.type === 'richText'" />
     </div>
   </div>
 </template>

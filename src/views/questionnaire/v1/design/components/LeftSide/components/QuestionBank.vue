@@ -9,12 +9,9 @@ const { addQuestion } = useDesignV1();
 
 const formInput = new materielModel.FormInput();
 const formRadio = new materielModel.FormRadio();
+const formSelect = new materielModel.FormSelect();
 
 const questionBankList = [
-  // {
-  //   label: '人口属性',
-  //   children: []
-  // },
   {
     label: '个人信息',
     children: [
@@ -58,8 +55,8 @@ const questionBankList = [
       },
       {
         label: '学历',
-        type: 'FormRadio',
-        typeText: formRadio.title,
+        type: 'FormSelect',
+        typeText: formSelect.title,
         props: {
           title: '到目前为止，您的最高学历(包括在读)是？',
           options: [

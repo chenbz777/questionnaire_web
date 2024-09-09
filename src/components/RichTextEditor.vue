@@ -17,7 +17,10 @@ const emit = defineEmits(['update:modelValue']);
 const editorRef = shallowRef();
 
 // 内容 HTML
-const valueHtml = ref(props.modelValue);
+const valueHtml = ref('');
+
+// 初始化内容 HTML
+valueHtml.value = props.modelValue;
 
 // 编辑器模式
 const mode = 'default';

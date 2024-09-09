@@ -73,12 +73,12 @@ function handleAsKeyChange(value) {
     <div class="configuration__content" :key="currentComponentData.key">
       <AnimateTransition>
         <template v-if="segmented === '基础'">
-          <AttributeSettings :settings="currentModel.attributeSettings" :data="currentComponentData.props" />
+          <AttributeSettings :settings="currentModel.attributeSettings" v-model="currentComponentData.props" />
         </template>
       </AnimateTransition>
       <AnimateTransition>
         <template v-if="segmented === '题目'">
-          <AttributeSettings :settings="currentModel.topicSettings" :data="currentComponentData.props" />
+          <AttributeSettings :settings="currentModel.topicSettings" v-model="currentComponentData.props" />
         </template>
       </AnimateTransition>
       <AnimateTransition>
@@ -91,7 +91,7 @@ function handleAsKeyChange(value) {
               </el-input>
             </div>
 
-            <AttributeSettings :settings="currentModel.advancedSettings" :data="currentComponentData.props" />
+            <AttributeSettings :settings="currentModel.advancedSettings" v-model="currentComponentData.props" />
           </div>
         </template>
       </AnimateTransition>
