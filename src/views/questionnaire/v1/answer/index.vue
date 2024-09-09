@@ -63,21 +63,8 @@ if (isWx) {
  * @description: 提交问卷
  * @return {*}
  */
-function handleSubmit() {
+function onSubmit() {
   const submitData = checkData();
-
-  const { errorList } = submitData;
-
-  if (errorList.length) {
-    ElMessage({
-      message: errorList[0].message,
-      type: 'warning'
-    });
-
-    animateElement('#submitBtn', 'animate__shakeX');
-
-    return;
-  }
 
   // 计算答题时长
   submitData.answerTimer = answerTimer;
@@ -91,6 +78,50 @@ function handleSubmit() {
   }
 }
 
+/**
+ * @author: chenbz
+ * @description: 处理提交问卷
+ * @return {*}
+ */
+function handleSubmit() {
+  const submitData = checkData();
+
+  const { errorList } = submitData;
+
+  if (errorList.length) {
+    ElMessage({
+      message: errorList[0].message,
+      type: 'warning'
+    });
+
+    animateElement('#submitBtn', 'animate__shakeX');
+
+    const targetNode = document.getElementById(errorList[0].key);
+
+    if (targetNode) {
+      // 滚动targetNode到parentNode的可视区域
+      targetNode.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    }
+
+    return;
+  }
+
+  ElMessageBox.confirm(
+    '确定提交问卷吗？',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }
+  )
+    .then(() => {
+      onSubmit();
+    })
+    .catch(() => { });
+}
+
+// 初始化
 function init() {
   // 重置答题时长
   answerTimer = 0;
@@ -170,7 +201,9 @@ function init() {
       // 判断是否自动提交
       if (questionnaireData.value.props.autoSubmit) {
         showSubmitBtn.value = false;
-        handleSubmit();
+
+        // 不校验, 直接提交
+        onSubmit();
       }
     }, limitTime);
 
