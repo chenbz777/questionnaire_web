@@ -3,6 +3,7 @@ import useGlobal from '../useGlobal';
 import materielModel from './materielModel';
 import { ElMessage } from 'element-plus';
 import localStorage from '@/utils/localStorage';
+import BrowserFingerprint from './common/browserFingerprint';
 
 
 const { Subscribe } = useGlobal();
@@ -12,6 +13,12 @@ const { Subscribe } = useGlobal();
  * editClickComponent: 编辑区点击组件
  */
 const subscribe = new Subscribe();
+
+// 浏览器指纹
+const browserFingerprint = new BrowserFingerprint();
+
+// 用户标识
+const openUserKey = browserFingerprint.getShortIdentificationKey();
 
 // 问卷模型
 const questionnaireModel = new materielModel.Questions();
@@ -122,7 +129,8 @@ function checkData() {
     data,
     totalScore,
     score,
-    answerSheet
+    answerSheet,
+    openUserKey
   };
 }
 
