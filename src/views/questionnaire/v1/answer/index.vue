@@ -85,9 +85,13 @@ function handleSubmit() {
       type: 'warning'
     });
 
-    animateElement('#submitBtn', 'animate__shakeX');
+    // animateElement('#submitBtn', 'animate__shakeX');
 
     userDefined.scrollIntoView(errorList[0].key);
+
+    setTimeout(() => {
+      animateElement(`#${errorList[0].key}`, 'animate__shakeX');
+    }, 300);
 
     return;
   }

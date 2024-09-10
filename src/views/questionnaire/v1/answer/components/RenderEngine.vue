@@ -200,6 +200,7 @@ function showCorrect(data) {
 
 .base-container__tips {
   font-size: 14px;
+  font-weight: 400;
   padding: 2px 6px;
   border-radius: 4px;
   margin-left: 6px;
