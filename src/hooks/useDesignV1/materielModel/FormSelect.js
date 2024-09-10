@@ -23,7 +23,7 @@ export default class FormSelect extends BaseMateriel {
       ],
       showOther: false,  // 是否显示其它
       otherValue: '',  // 其它值
-      score: 0,  // 主观题分数
+      score: 0,  // 选择题分数
       answer: '',  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件

@@ -23,10 +23,10 @@ const List = defineAsyncComponent(() => import('./AttributeConfigEngineType/List
 
 const RichText = defineAsyncComponent(() => import('./AttributeConfigEngineType/RichText.vue'));
 
-const propsData = ref(JSON.parse(JSON.stringify(props.modelValue)));
+const propsData = ref(props.modelValue);
 
 watch(() => propsData.value, (value) => {
-  emit('update:modelValue', JSON.parse(JSON.stringify(value)));
+  emit('update:modelValue', value);
 }, {
   deep: true
 });

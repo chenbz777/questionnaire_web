@@ -83,8 +83,8 @@ function checkData() {
   // 所得分数
   let score = 0;
 
-  // 题目答题情况
-  const questionAnswer = {};
+  // 答题卡
+  const answerSheet = {};
 
   questionList.forEach((question, index) => {
     const model = new materielModel[question.type](question);
@@ -114,7 +114,7 @@ function checkData() {
       score += verifyScore;
     }
 
-    questionAnswer[asKey] = verifyScore;
+    answerSheet[asKey] = verifyScore;
   });
 
   return {
@@ -122,7 +122,7 @@ function checkData() {
     data,
     totalScore,
     score,
-    questionAnswer
+    answerSheet
   };
 }
 

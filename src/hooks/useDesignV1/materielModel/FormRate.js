@@ -13,7 +13,7 @@ export default class FormRate extends BaseMateriel {
       remark: '',
       required: false,
       status: 'normal',
-      defaultValue: 0
+      defaultValue: 5
     };
   }
 

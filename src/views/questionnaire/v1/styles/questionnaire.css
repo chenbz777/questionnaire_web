@@ -20,13 +20,15 @@
   background-image: var(--questionnaire-bg-image);
 }
 
-.questionnaire-page__container {
+.questionnaire__container {
   width: 800px;
   height: fit-content;
   border-radius: 10px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
   background-color: var(--questionnaire-content-bg-color);
   color: var(--questionnaire-text-color);
+  position: relative;
+  padding: 20px;
 }
 
 .questionnaire__progress {
@@ -37,11 +39,6 @@
   transform: translateX(-50%); */
   width: 100%;
   z-index: 3;
-}
-
-.questionnaire__container {
-  position: relative;
-  padding: 20px;
 }
 
 .questionnaire__container__logo {

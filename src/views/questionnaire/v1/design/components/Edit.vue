@@ -79,14 +79,14 @@ const isDesign = (route.name === 'questionnaireV1Design');
 .my-draggable {
   position: relative;
   cursor: move;
-  min-height: 500px;
+  min-height: 100%;
 }
 
 .my-draggable:empty {
   border: 1px dashed rgba(17, 31, 44, .2);
   background-image: -webkit-repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 0, 0, .08) 4px, rgba(0, 0, 0, .08) 0);
   display: flex;
-  border-radius: 8px;
+  border-radius: 6px;
   transition: all 0.3s;
 }
 

@@ -1,26 +1,14 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import Configuration from './components/Configuration/index.vue';
 import Edit from './components/Edit.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
 import LeftSide from './components/LeftSide/index.vue';
 import PreviewPopup from './components/PreviewPopup.vue';
+import userDefined from '@/utils/userDefined';
 
 
 const { questionnaireData, subscribe } = useDesignV1();
-
-watch(() => questionnaireData.value.questionList, (questionList) => {
-
-  const totalPoints = questionList.reduce((total, question) => {
-    return total + (question.props.score || 0);
-  }, 0);
-
-  questionnaireData.value.props.totalPoints = totalPoints;
-}, {
-  deep: true,
-  immediate: true
-});
-
 
 // 预览弹窗实例
 const previewPopupRef = ref(null);
@@ -30,45 +18,18 @@ function questionnaireSetting() {
   subscribe.emit('editClickComponent', questionnaireData.value);
 }
 
-
 // 导出配置JSON
 const exportJSON = () => {
-  const data = JSON.parse(JSON.stringify(questionnaireData.value));
+  const fileName = questionnaireData.value.key + '的问卷配置.json';
 
-  const blob = new Blob([JSON.stringify(data)], { type: 'application/json;charset=utf-8' });
-
-  const fileName = data.key + '的问卷配置.json';
-
-  if (window.navigator.msSaveOrOpenBlob) {
-    navigator.msSaveBlob(blob, fileName);
-  } else {
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
-    link.click();
-    window.URL.revokeObjectURL(link.href);
-  }
+  userDefined.exportJSON(questionnaireData.value, fileName);
 };
 
 // 导入配置JSON
 const importJSON = () => {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = '.json';
-  input.click();
-
-  input.onchange = (e) => {
-    const file = e.target.files[0];
-
-    const reader = new FileReader();
-    reader.readAsText(file);
-
-    reader.onload = (e) => {
-      const data = JSON.parse(e.target.result);
-
-      questionnaireData.value = data;
-    };
-  };
+  userDefined.importJSON().then((data) => {
+    questionnaireData.value = data;
+  });
 };
 </script>
 
@@ -124,44 +85,8 @@ const importJSON = () => {
         </div>
       </div>
       <div class="page__edit__content">
-        <div class="questionnaire-page__container">
-          <div class="questionnaire__container">
-
-            <div class="questionnaire__container__pushpin">
-              <div class="questionnaire__container__tips" v-if="questionnaireData.props.totalPoints">
-                总分: {{ questionnaireData.props.totalPoints }}分
-              </div>
-              <div class="questionnaire__container__tips" v-if="questionnaireData.questionList.length">
-                题目数: {{ questionnaireData.questionList.length }}
-              </div>
-            </div>
-
-            <div class="questionnaire__container__logo"
-              v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
-              <img :src="questionnaireData.props.logo" alt="logo" class="questionnaire__container__logo__image" />
-            </div>
-
-            <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
-              {{ questionnaireData.props.title }}
-            </div>
-
-            <div class="questionnaire__container__desc"
-              v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
-              <div v-html="questionnaireData.props.desc"></div>
-            </div>
-
-            <Edit class="questionnaire__container__content" />
-
-            <div class="questionnaire__container__submit">
-              <div class="questionnaire__container__submit__btn">
-                {{ questionnaireData.props.btnText }}
-              </div>
-            </div>
-
-            <div class="technical-support" v-if="questionnaireData.props.copyrightText">
-              {{ questionnaireData.props.copyrightText }}
-            </div>
-          </div>
+        <div class="questionnaire__container">
+          <Edit />
         </div>
       </div>
     </div>
@@ -220,7 +145,6 @@ const importJSON = () => {
 .page__edit__content {
   width: 100%;
   height: calc(100% - 60px);
-  overflow-y: auto;
 }
 
 .page__configuration {
@@ -232,12 +156,9 @@ const importJSON = () => {
   padding: 0;
 }
 
-.questionnaire-page__container {
+.questionnaire__container {
   width: 100%;
-  min-height: 100%;
-}
-
-.questionnaire__container__title {
-  cursor: pointer;
+  height: 100%;
+  overflow-y: auto;
 }
 </style>

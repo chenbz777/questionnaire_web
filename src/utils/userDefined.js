@@ -41,8 +41,7 @@ const goTop = (top = 0) => {
 };
 
 const isMobile = () => {
-
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
 };
 
 const isWx = () => {
@@ -196,6 +195,58 @@ const replaceHtmlTags = (html, replacements) => {
   return html;
 };
 
+/**
+ * @author: chenbz
+ * @description: 滚动到指定dom元素
+ * @param domId {string} dom元素id
+ * @return {*}
+ */
+const scrollIntoView = (domId) => {
+  const targetNode = document.getElementById(domId);
+
+  if (targetNode) {
+    // 滚动targetNode到parentNode的可视区域
+    targetNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+  }
+};
+
+const exportJSON = (data, fileName) => {
+
+  const blob = new Blob([JSON.stringify(data)], { type: 'application/json;charset=utf-8' });
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    navigator.msSaveBlob(blob, fileName);
+  } else {
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  }
+};
+
+const importJSON = () => {
+  return new Promise((resolve, reject) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.click();
+
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+
+      const reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = (e) => {
+        const data = JSON.parse(e.target.result);
+
+        resolve(data);
+      };
+    };
+  });
+};
+
 export default {
   localFullScreen,
   getParameter,
@@ -205,5 +256,8 @@ export default {
   isWx,
   copyText,
   replaceHtmlTags,
-  convertToRichText
+  convertToRichText,
+  scrollIntoView,
+  exportJSON,
+  importJSON
 };

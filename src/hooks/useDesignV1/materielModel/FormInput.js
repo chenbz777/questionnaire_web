@@ -69,7 +69,7 @@ export default class FormInput extends BaseMateriel {
     return this.props.defaultValue;
   }
 
-  setValue(value = 0) {
+  setValue(value = '') {
     this.props.defaultValue = value;
   }
 

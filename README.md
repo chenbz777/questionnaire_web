@@ -1,12 +1,8 @@
 # 离线版问卷
 
+## 💡 前言
 
-
-## 💡前言
-
-  某天在【掘金】看到低代码相关文章，结合自己开发过那么多的项目，系统集成 “表单”、“问卷”、”考试” 还是挺常见的，查阅了好多开源项目，都是独立的一个系统，很难集成到现有的项目中，于是我在想：为什么不能有一款【离线版问卷】，它提供 ”设计问卷页面“ ，也提供 “渲染问卷页面”，它只关心数据，不关心集成到哪个系统，不关心集成到哪个功能。
-
-
+某天在【掘金】看到低代码相关文章，结合自己开发过那么多的项目，系统集成 “表单”、“问卷”、”考试” 还是挺常见的，查阅了好多开源项目，都是独立的一个系统，很难集成到现有的项目中，于是我在想：为什么不能有一款【离线版问卷】，它提供 ”设计问卷页面“ ，也提供 “渲染问卷页面”，它只关心数据，不关心集成到哪个系统，不关心集成到哪个功能。
 
 #### 亮点
 
@@ -17,14 +13,10 @@
 5. 提供 “简洁只读问卷” 页面
 6. 数据安全，点击【提交】按钮后，提交回调函数由“宿主系统”提供
 
-
-
 #### 场景
 
-- 想开发一款【问卷系统】，不用从0开始去构建：控件模型、事件交互、逻辑解析、问卷渲染，拿来即用。
+- 想开发一款【问卷系统】，不用从 0 开始去构建：控件模型、事件交互、逻辑解析、问卷渲染，拿来即用。
 - 想开发一款【活动系统】，每个活动需要填写的 “报名信息” 不一样，引入【离线版问卷】，可进行动态配置填写字段。
-
-
 
 #### 题外话
 
@@ -42,21 +34,15 @@
 
 ![设计页面](https://ice.frostsky.com/2024/09/07/9333849b177c02567493135777dcbb1c.png)
 
-
-
 ## 🌈 技术栈
 
 ```
 vue3
 ```
 
-
-
 ## 📦 仓库
 
 [questionnaire_web](https://github.com/chenbz777/questionnaire_web)
-
-
 
 ## 💻 初始化
 
@@ -64,23 +50,17 @@ vue3
 pnpm install
 ```
 
-
-
 ## 🚀 启动
 
 ```bash
 pnpm dev
 ```
 
-
-
 ## 🛠️ 打包
 
 ```bash
 pnpm build
 ```
-
-
 
 ## 🗂 目录结构
 
@@ -121,10 +101,6 @@ pnpm build
 └── vite.config.js
 ```
 
-
-
-
-
 ## ✨ 使用方法
 
 ### 集成【设计问卷】
@@ -132,23 +108,24 @@ pnpm build
 ```vue
 <script setup>
 // 第一步: 拼凑地址, 后续换成部署后的域名
-const designUrl = 'https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/design';
+const designUrl =
+  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/design";
 
 // 第二步: 问卷数据, 实际上应该是通过接口获取
 let questionnaireData = {};
 
 // 第三步: 设置问卷数据
 function setQuestionnaireData() {
-  console.log('setQuestionnaireData', questionnaireData);
+  console.log("setQuestionnaireData", questionnaireData);
   // setQuestionnaireData 方法是“离线版问卷”挂载上去的
   window.myIframe.contentWindow.setQuestionnaireData(questionnaireData);
 }
-  
+
 // 第四步: 配置完成后获取问卷数据存起来, 这里实际上应该是传递给接口进行保存
 function getQuestionnaireData() {
   // getQuestionnaireData 方法是“离线版问卷”挂载上去的
   questionnaireData = window.myIframe.contentWindow.getQuestionnaireData();
-  console.log('getQuestionnaireData', questionnaireData);
+  console.log("getQuestionnaireData", questionnaireData);
 }
 </script>
 
@@ -168,27 +145,26 @@ function getQuestionnaireData() {
 </style>
 ```
 
-
-
 ### 集成【填写问卷】
 
 ```vue
 <script setup>
-import { onMounted, nextTick } from 'vue';
+import { onMounted, nextTick } from "vue";
 
 // 第一步: 拼凑地址, 后续换成部署后的域名
-const answerUrl = 'https://chenbz777.github.io/questionnaire_web/questionnaire/v1/answer';
+const answerUrl =
+  "https://chenbz777.github.io/questionnaire_web/questionnaire/v1/answer";
 
 // 第二步: 问卷数据, 实际上应该是通过接口获取
 let questionnaireData = {};
 
 // 第三步: 设置问卷数据
 function setQuestionnaireData() {
-  console.log('setQuestionnaireData', questionnaireData);
-  
+  console.log("setQuestionnaireData", questionnaireData);
+
   // data 是问卷填答数据,把onSubmit获取到的 submitData.data 原样传回去就可以进行数据回显
   const data = {};
-  
+
   // setQuestionnaireData 方法是“离线版问卷”挂载上去的
   window.myIframe.contentWindow.setQuestionnaireData(questionnaireData, data);
 }
@@ -202,10 +178,11 @@ nextTick(() => {
      *  data: {},  // 问卷数据
      *  totalScore: 0,  // 总分
      *  score: 0,  // 得分
-     *  questionAnswer: [],  // 答题情况: 题目-得分、不得分、未答
-     *  answerTimer: 0,  // 答题时长
+     *  answerSheet: [],  // 答题卡: 题目 - 得分、不得分0、未答-1
+     *  startTime: 0,  // 开始答题时间(时间戳)
+     *  endTime: 0,  // 答题结束时间(时间戳)
      */
-    console.log('onSubmit', submitData);
+    console.log("onSubmit", submitData);
   };
 });
 
@@ -231,31 +208,30 @@ onMounted(() => {
 </style>
 ```
 
-
-
 ### 集成【只读问卷】
 
 ```vue
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 
 // 第一步: 拼凑地址, 后续换成部署后的域名
-const readonlyUrl = 'https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/readonly';
+const readonlyUrl =
+  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/readonly";
 
 // 第二步: 问卷数据, 实际上应该是通过接口获取
 let questionnaireData = {};
 
 // 第三步: 设置问卷数据
 function setQuestionnaireData() {
-  console.log('setQuestionnaireData', questionnaireData);
-  
+  console.log("setQuestionnaireData", questionnaireData);
+
   // data 是问卷填答数据,把onSubmit获取到的 submitData.data 原样传回去就可以进行数据回显
   const data = {};
-  
+
   // setQuestionnaireData 方法是“离线版问卷”挂载上去的
   window.myIframe.contentWindow.setQuestionnaireData(questionnaireData, data);
 }
-  
+
 onMounted(() => {
   // 设置问卷数据: 实际上应该是请求数据获取后再调用
   setQuestionnaireData();
@@ -278,27 +254,23 @@ onMounted(() => {
 </style>
 ```
 
-
-
 ### 集成【填答简洁版问卷】
 
 ```js
-const answerEasyUrl = 'https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/answer/easy';
+const answerEasyUrl =
+  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/answer/easy";
 ```
 
 > 用法与【填答问卷】一致，只是去掉了"皮肤"样式
 
-
-
 ### 集成【只读简洁版问卷】
 
 ```js
-const readonlyEasyUrl = 'https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/readonly/easy';
+const readonlyEasyUrl =
+  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/readonly/easy";
 ```
 
 > 用法与【只读问卷】一致，只是去掉了"皮肤"样式
-
-
 
 ## 🏗️ 待完善
 
@@ -310,13 +282,9 @@ const readonlyEasyUrl = 'https://chenbz777.github.io/questionnaire_web/#/questio
 
    > 暂时还没找到好的日期时间插件，后续再补充
 
-
-
 ## 📌 许可协议
 
 本项目基于 MIT 许可证开源，详情请参阅 [LICENSE](./LICENSE) 文件。
-
-
 
 ## 🎨 展示
 

@@ -21,7 +21,8 @@ export default class FormCheckbox extends BaseMateriel {
           image: ''
         }
       ],
-      score: 0,  // 主观题分数
+      score: 0,  // 选择题全对分数
+      partialScore: 0,  // 部分选对得分
       answer: [],  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
@@ -61,9 +62,18 @@ export default class FormCheckbox extends BaseMateriel {
         return 0;
       }
 
+      const answerStr = this.props.answer.join('');
+
+      const defaultValueStr = this.props.defaultValue.join('');
+
       // 答案正确, 返回分数
-      if (this.props.defaultValue.join('') === this.props.answer.join('')) {
+      if (answerStr === defaultValueStr) {
         return this.props.score;
+      }
+
+      // 部分选对得分
+      if (answerStr.includes(defaultValueStr)) {
+        return this.props.partialScore;
       }
 
       // 答案错误, 返回0分
@@ -71,7 +81,7 @@ export default class FormCheckbox extends BaseMateriel {
     }
 
     // 如果没有分数, 默认返回0分
-    return 0;
+    return -1;
   }
 
   getValueText() {
@@ -194,6 +204,12 @@ export default class FormCheckbox extends BaseMateriel {
         type: 'number',
         min: 0,
         propsKey: 'score'
+      },
+      {
+        title: '部分选对得分',
+        type: 'number',
+        min: 0,
+        propsKey: 'partialScore'
       },
       {
         title: '题目难度',

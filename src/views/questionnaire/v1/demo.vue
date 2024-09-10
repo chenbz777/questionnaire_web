@@ -42,7 +42,7 @@ nextTick(() => {
      *  data: {},  // 问卷数据
      *  totalScore: 0,  // 总分
      *  score: 0,  // 得分
-     *  questionAnswer: [],  // 答题情况
+     *  answerSheet: [],  // 答题卡
      *  answerTimer: 0,  // 答题时长
      */
     console.log('onSubmit', data);

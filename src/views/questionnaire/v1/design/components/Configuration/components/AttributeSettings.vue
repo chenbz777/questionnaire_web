@@ -21,10 +21,10 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const propsData = ref(JSON.parse(JSON.stringify(props.modelValue)));
+const propsData = ref(props.modelValue);
 
 watch(() => propsData.value, (value) => {
-  emit('update:modelValue', JSON.parse(JSON.stringify(value)));
+  emit('update:modelValue', value);
 }, {
   deep: true
 });

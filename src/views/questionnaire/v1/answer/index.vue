@@ -7,6 +7,7 @@ import materielModel from '@/hooks/useDesignV1/materielModel';
 import useAnimate from '@/hooks/useAnimate';
 import localStorage from '@/utils/localStorage';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import userDefined from '@/utils/userDefined';
 
 
 const { questionnaireData, checkData, subscribe, initSkin } = useDesignV1();
@@ -21,13 +22,6 @@ const isReadonly = (route.name === 'questionnaireV1Readonly') || (route.name ===
 // 判断是否是简易模式
 const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === 'questionnaireV1ReadonlyEasy');
 
-// 监听答题时常
-let answerTimer = 0;
-
-const taskId = setInterval(() => {
-  answerTimer += 1;
-}, 1000);
-
 
 // 答题倒计时
 const countdown = ref(0);
@@ -35,28 +29,23 @@ const countdown = ref(0);
 // 是否显示提交按钮
 const showSubmitBtn = ref(true);
 
-// 获取ua
-const ua = window.parent.navigator.userAgent;
-
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-const isPc = !isMobile;
-
-const isWx = /MicroMessenger/i.test(ua);
-
 let uaText = '';
 
-if (isMobile) {
+if (userDefined.isMobile()) {
   uaText = '手机';
 }
 
-if (isPc) {
+if (!userDefined.isMobile()) {
   uaText = '电脑';
 }
 
-if (isWx) {
+if (userDefined.isWx()) {
   uaText = '微信';
 }
+
+
+// 拓展提交数据
+let expansionSubmitData = {};
 
 /**
  * @author: chenbz
@@ -66,10 +55,12 @@ if (isWx) {
 function onSubmit() {
   const submitData = checkData();
 
-  // 计算答题时长
-  submitData.answerTimer = answerTimer;
-  // 清除定时器
-  clearInterval(taskId);
+  const endTime = Date.now();
+
+  // 拓展提交数据: 结束时间
+  expansionSubmitData.endTime = endTime;
+
+  Object.assign(submitData, expansionSubmitData);
 
   console.log('submitData: ', submitData);
 
@@ -96,12 +87,7 @@ function handleSubmit() {
 
     animateElement('#submitBtn', 'animate__shakeX');
 
-    const targetNode = document.getElementById(errorList[0].key);
-
-    if (targetNode) {
-      // 滚动targetNode到parentNode的可视区域
-      targetNode.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-    }
+    userDefined.scrollIntoView(errorList[0].key);
 
     return;
   }
@@ -123,8 +109,9 @@ function handleSubmit() {
 
 // 初始化
 function init() {
-  // 重置答题时长
-  answerTimer = 0;
+
+  // 拓展提交数据: 开始时间
+  expansionSubmitData.startTime = Date.now();
 
   // 简介模式不需要初始化皮肤
   if (!isEasy) {
@@ -233,6 +220,19 @@ function init() {
       }
     );
   }
+
+
+  /**
+   * 计算总分
+   */
+  const totalPoints = questionnaireData.value.questionList.reduce((total, question) => {
+    return total + (question.props.score || 0);
+  }, 0);
+
+  questionnaireData.value.props.totalPoints = totalPoints;
+  /**
+   * end
+   */
 }
 
 // 重新渲染组件
@@ -252,31 +252,40 @@ const percentage = ref(0);
 
 // 监听问卷数据变化
 watch(() => questionnaireData.value, () => {
+  // 问题列表, 过滤隐藏的问题
   const questionList = questionnaireData.value.questionList.filter(item => item.props.status !== 'hidden');
 
+  // 答题进度
   let total = 0;
 
+  // 当前未答题key
+  let unAnsweredKey = '';
+
+  // 遍历问题列表
   questionList.forEach((question) => {
+
+    const _question = JSON.parse(JSON.stringify(question));
+
+    _question.props.required = true;
+
     // 创建问题实例
-    const model = new materielModel[question.type](question);
+    const model = new materielModel[_question.type](_question);
 
     /**
      * 计算答题进度
      */
-    const value = model.getValue();
+    const isOk = model.verifyRequired();
 
-    if ((typeof value) === 'object') {
-
-      const length = Array.isArray(value) ? value.length : Object.values(value).filter(item => item).length;
-
-      if (length) {
-        total += 1;
-      }
-
-    } else if (value !== '' && value !== null && value !== undefined) {
+    if (isOk) {
       total += 1;
+    } else if (!unAnsweredKey) {
+      unAnsweredKey = question.key;
     }
   });
+
+  if (unAnsweredKey) {
+    userDefined.scrollIntoView(unAnsweredKey);
+  }
 
   // 计算百分比
   percentage.value = Math.round((total / questionList.length) * 100) || 0;
@@ -311,7 +320,7 @@ watch(() => questionnaireData.value, () => {
     <div class="questionnaire__progress">
       <van-progress :percentage="percentage" pivot-text="" />
     </div>
-    <div :class="{ 'questionnaire-page__container': !isEasy }">
+    <div :class="{ 'questionnaire__container': !isEasy }">
       <QuestionnaireDetail :questionnaireData="questionnaireData" :showSubmitBtn="showSubmitBtn" :countdown="countdown"
         :key="renderKey" @submit="handleSubmit" />
     </div>

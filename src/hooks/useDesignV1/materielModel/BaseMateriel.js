@@ -106,6 +106,7 @@ export default class BaseMateriel {
 
   // 校验分数
   verifyScore() {
+
     // 如果有分数
     if (this.props.score) {
       // 如果有答案 && 默认答案等于答案
@@ -129,8 +130,8 @@ export default class BaseMateriel {
       return 0;
     }
 
-    // 如果没有分数, 默认返回0分
-    return 0;
+    // 如果没有分数, 默认返回-1
+    return -1;
   }
 
   // 获取组件值的文本
