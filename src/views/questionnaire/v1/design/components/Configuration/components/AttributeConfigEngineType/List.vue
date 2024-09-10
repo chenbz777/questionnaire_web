@@ -160,7 +160,7 @@ function confirmClick() {
 
     <el-drawer v-model="drawer" title="编辑子项" direction="rtl" size="460px" destroy-on-close>
       <div>
-        <AttributeSettings :settings="setting.listSettings" :data="drawerData" dataKey="itemKey" />
+        <AttributeSettings :settings="setting.listSettings" v-model="drawerData" dataKey="itemKey" />
       </div>
 
       <template #footer>

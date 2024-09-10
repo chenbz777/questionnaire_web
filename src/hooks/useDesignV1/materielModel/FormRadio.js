@@ -27,7 +27,8 @@ export default class FormRadio extends BaseMateriel {
       answer: '',  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
+      difficulty: '',  // 题目难度: 简单, 普通, 困难
+      showEnglishSerialNumber: false
     };
   }
 
@@ -215,6 +216,11 @@ export default class FormRadio extends BaseMateriel {
         title: '答案解析',
         type: 'textarea',
         propsKey: 'answerAnalysis'
+      },
+      {
+        title: '显示英文序号',
+        type: 'switch',
+        propsKey: 'showEnglishSerialNumber'
       }
     ];
   }

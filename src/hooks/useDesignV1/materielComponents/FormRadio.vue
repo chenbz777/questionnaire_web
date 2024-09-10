@@ -1,5 +1,6 @@
 <script setup>
 import { toRefs, onMounted } from 'vue';
+import englishSerialNumber from '../common/englishSerialNumber.js';
 
 
 const props = defineProps({
@@ -36,13 +37,14 @@ function handleClear() {
 <template>
   <div class="form-radio">
     <el-radio-group v-model="componentData.props.defaultValue" @change="handleChange" class="form-radio__group">
-      <el-radio v-for="option in data.props.options" :key="option.value" :value="option.value"
+      <el-radio v-for="(option, index) in data.props.options" :key="option.value" :value="option.value"
         :disabled="componentData.props.status === 'disabled'" class="form-select--block"
         :class="{ 'form-select-card--image': option.image }">
         <div class="form-select-card__label">
           <img v-if="option.image" :src="option.image" alt="" class="form-select-card__image" />
 
           <div class="form-select-card__text">
+            <span v-if="data.props.showEnglishSerialNumber">{{ englishSerialNumber(index) }}</span>
             {{ option.label }}
           </div>
         </div>
