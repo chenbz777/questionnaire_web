@@ -52,7 +52,7 @@ function removeRow(index) {
       <el-col :md="24" :xs="0">
         <div>
           <el-table :data="componentData.props.defaultValue" style="width: 100%" border>
-            <el-table-column type="index" />
+            <el-table-column type="index" label="序号" width="60" />
             <el-table-column v-for="(option, index) in data.props.options" :key="option.key" :prop="option.key"
               :label="option.title" :width="data.props.options.length < 4 ? '' : 260">
               <template #header>
