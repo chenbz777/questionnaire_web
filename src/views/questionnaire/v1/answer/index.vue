@@ -262,9 +262,6 @@ watch(() => questionnaireData.value, () => {
   // 答题进度
   let total = 0;
 
-  // 当前未答题key
-  let unAnsweredKey = '';
-
   // 遍历问题列表
   questionList.forEach((question) => {
 
@@ -282,14 +279,8 @@ watch(() => questionnaireData.value, () => {
 
     if (isOk) {
       total += 1;
-    } else if (!unAnsweredKey) {
-      unAnsweredKey = question.key;
     }
   });
-
-  if (unAnsweredKey) {
-    userDefined.scrollIntoView(unAnsweredKey);
-  }
 
   // 计算百分比
   percentage.value = Math.round((total / questionList.length) * 100) || 0;
