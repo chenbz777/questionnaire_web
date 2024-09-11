@@ -14,7 +14,6 @@ export default class AdvancedAttachment extends BaseMateriel {
       required: false,
       status: 'normal',
       defaultValue: [],
-      uploadUrl: '',  // 上传请求地址
       uploadType: '',  // 上传文件类型
       maxSize: 10,  // 上传文件大小限制, 单位M
       uploadLimit: 9,  // 上传文件数量限制
@@ -40,15 +39,21 @@ export default class AdvancedAttachment extends BaseMateriel {
   }
 
   getValueText() {
-    if (this.props.defaultValue) {
-      return `<img src="${this.props.defaultValue}" style="width: auto; height: 100px; display: block;" />`;
+    if (this.props.defaultValue.length) {
+      let html = '';
+
+      this.props.defaultValue.forEach(item => {
+        html += `<a href="${item.url}" target="_blank">${item.name}</a><br>`;
+      });
+
+      return html;
     }
 
     return '';
   }
 
   getValue() {
-    return this.props.defaultValue;
+    return this.props.defaultValue.filter(item => item.url);
   }
 
   setValue(value = '') {
@@ -111,11 +116,6 @@ export default class AdvancedAttachment extends BaseMateriel {
         type: 'block',
         children: [
           {
-            title: '上传请求地址',
-            type: 'input',
-            propsKey: 'uploadUrl'
-          },
-          {
             title: '文件类型(用英文","进行分割)',
             type: 'input',
             propsKey: 'uploadType'
@@ -138,9 +138,13 @@ export default class AdvancedAttachment extends BaseMateriel {
             propsKey: 'uploadText'
           },
           {
+            title: '默认值',
+            type: 'uploadFile',
+            propsKey: 'defaultValue'
+          },
+          {
             title: '模版文件列表',
             type: 'uploadFile',
-            uploadUrl: this.props.uploadUrl,
             propsKey: 'templateFiles'
           }
         ]

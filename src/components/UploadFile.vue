@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { ElMessage } from 'element-plus';
+import useDesignV1 from '@/hooks/useDesignV1';
 
 
 const props = defineProps({
@@ -28,7 +29,13 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 
-const fileList = ref(props.modelValue);
+const fileList = ref([]);
+
+watch(() => props.modelValue, (value) => {
+  fileList.value = value;
+}, {
+  immediate: true
+});
 
 watch(() => fileList.value, (value) => {
   emit('update:modelValue', value);
@@ -36,12 +43,13 @@ watch(() => fileList.value, (value) => {
   deep: true
 });
 
+const { questionnaireData } = useDesignV1();
+
 const option = Object.assign({
   uploadText: '上传附件',
   uploadLimit: 10,
   uploadType: '',
-  maxSize: 100,
-  uploadUrl: ''
+  maxSize: 100
 }, props.option);
 
 function handleBeforeUpload(file) {
@@ -144,7 +152,7 @@ function handleRemove(index) {
       </div>
     </div>
 
-    <el-upload v-model:file-list="fileList" :action="option.uploadUrl" :limit="option.uploadLimit"
+    <el-upload v-model:file-list="fileList" :action="questionnaireData.props.uploadUrl" :limit="option.uploadLimit"
       :before-upload="handleBeforeUpload" :disabled="disabled || (fileList.length >= option.uploadLimit)"
       :show-file-list="false" :on-success="onSuccess" :on-error="onError">
       <div class="questionnaire__btn" :class="{

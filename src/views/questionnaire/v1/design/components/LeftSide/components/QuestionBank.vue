@@ -2,14 +2,21 @@
 import useDesignV1 from '@/hooks/useDesignV1';
 import materielModel from '@/hooks/useDesignV1/materielModel';
 import { vDraggable } from 'vue-draggable-plus';
-import textFormat from '@/hooks/useDesignV1/common/textFormat';
 
 
 const { addQuestion } = useDesignV1();
 
-const formInput = new materielModel.FormInput();
-const formRadio = new materielModel.FormRadio();
-const formSelect = new materielModel.FormSelect();
+// 模型实例集合
+const modelMap = {};
+
+function getModelTitle(type) {
+
+  if (!modelMap[type]) {
+    modelMap[type] = new materielModel[type]();
+  }
+
+  return modelMap[type].title;
+}
 
 const questionBankList = [
   {
@@ -18,27 +25,24 @@ const questionBankList = [
       {
         label: '姓名',
         type: 'FormInput',
-        typeText: formInput.title,
         props: {
           title: '您的姓名是？',
           placeholder: '请输入您的姓名',
-          format: textFormat.find(item => item.label === '中文姓名').value
+          format: '中文姓名'
         }
       },
       {
         label: '身份证',
         type: 'FormInput',
-        typeText: formInput.title,
         props: {
           title: '您的身份证号是？',
           placeholder: '请输入您的身份证号',
-          format: textFormat.find(item => item.label === '身份证').value
+          format: '身份证'
         }
       },
       {
         label: '性别',
         type: 'FormRadio',
-        typeText: formRadio.title,
         props: {
           title: '您的性别是？',
           options: [
@@ -56,7 +60,6 @@ const questionBankList = [
       {
         label: '学历',
         type: 'FormSelect',
-        typeText: formSelect.title,
         props: {
           title: '到目前为止，您的最高学历(包括在读)是？',
           options: [
@@ -103,21 +106,19 @@ const questionBankList = [
       {
         label: '手机号',
         type: 'FormInput',
-        typeText: formInput.title,
         props: {
           title: '您的手机号是？',
           placeholder: '请输入您的手机号',
-          format: textFormat.find(item => item.label === '手机号').value
+          format: '手机号'
         }
       },
       {
         label: '邮箱',
         type: 'FormInput',
-        typeText: formInput.title,
         props: {
           title: '您的邮箱是？',
           placeholder: '请输入您的邮箱',
-          format: textFormat.find(item => item.label === '邮箱').value
+          format: '邮箱'
         }
       }
     ]
@@ -165,7 +166,7 @@ const draggableOption = {
           <div class="question-bank__item" v-for="item in questionBankItems.children" :key="item.label"
             @click="handleClick(item)">
             <div>{{ item.label }}</div>
-            <div class="question-bank__item__text">{{ item.typeText }}</div>
+            <div class="question-bank__item__text">{{ getModelTitle(item.type) }}</div>
           </div>
         </div>
       </el-collapse-item>

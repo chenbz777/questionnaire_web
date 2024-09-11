@@ -189,7 +189,7 @@ export default class FormRadio extends BaseMateriel {
       },
       {
         title: '正确答案',
-        type: 'radio',
+        type: 'select',
         propsKey: 'answer',
         propsOptionsKey: 'options'
       },

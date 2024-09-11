@@ -27,7 +27,8 @@ export default class FormCheckbox extends BaseMateriel {
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: '',  // 题目难度: 简单, 普通, 困难
-      showEnglishSerialNumber: false
+      showEnglishSerialNumber: false,  // 显示英文序号
+      isAnswerOrderConsistent: false  // 答案顺序完全一致: 例如正确答案是A,B,C, 如果勾选了这个选项, 那么用户答案必须是A,B,C, 如果没有勾选, 那么用户答案可以是B,A,C
     };
   }
 
@@ -67,8 +68,16 @@ export default class FormCheckbox extends BaseMateriel {
 
       const defaultValueStr = this.props.defaultValue.join('');
 
+      // 是否要求答案顺序完全一致
+      if (this.props.isAnswerOrderConsistent) {
+        return answerStr === defaultValueStr ? this.props.score : 0;
+      }
+
+      // 答案不要求顺序一致, 取两个数组的交集
+      const intersection = this.props.answer.filter(value => this.props.defaultValue.includes(value));
+
       // 答案正确, 返回分数
-      if (answerStr === defaultValueStr) {
+      if ((intersection.length === this.props.answer.length) && (intersection.length === this.props.defaultValue.length)) {
         return this.props.score;
       }
 
@@ -233,9 +242,14 @@ export default class FormCheckbox extends BaseMateriel {
       },
       {
         title: '正确答案',
-        type: 'checkbox',
+        type: 'multiple',
         propsKey: 'answer',
         propsOptionsKey: 'options'
+      },
+      {
+        title: '要求答案顺序一致',
+        type: 'switch',
+        propsKey: 'isAnswerOrderConsistent'
       },
       {
         title: '答案解析',

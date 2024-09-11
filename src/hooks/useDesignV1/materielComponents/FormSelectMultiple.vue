@@ -1,6 +1,6 @@
 <script setup>
 import { toRefs, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import englishSerialNumber from '../common/englishSerialNumber.js';
 
 
 const props = defineProps({
@@ -41,10 +41,6 @@ function handleSelectAll() {
 
   handleChange(value);
 }
-
-const route = useRoute();
-
-const isDesign = (route.name === 'questionnaireV1Design');
 </script>
 
 <template>
@@ -52,10 +48,10 @@ const isDesign = (route.name === 'questionnaireV1Design');
     <el-select v-model="componentData.props.defaultValue" multiple :placeholder="data.props.placeholder"
       @change="handleChange" :disabled="componentData.props.status === 'disabled'" clearable :teleported="false"
       size="large">
-      <el-option v-for="option in data.props.options" :key="option.value" :label="option.label" :value="option.value">
+      <el-option v-for="(option, index) in data.props.options" :key="option.value" :label="option.label"
+        :value="option.value">
+        <span v-if="data.props.showEnglishSerialNumber">{{ englishSerialNumber(index) }}</span>
         {{ option.label }}
-        <span class="questionnaire__correct"
-          v-if="isDesign && (componentData.props.answer.includes(option.value))">正确答案</span>
       </el-option>
     </el-select>
 
