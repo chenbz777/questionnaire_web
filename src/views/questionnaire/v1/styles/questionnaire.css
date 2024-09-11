@@ -100,8 +100,8 @@
   border-radius: 6px;
   margin-top: 10px;
   cursor: pointer;
-  background-color: var(--questionnaire-btn-bg-color) !important;
-  color: var(--questionnaire-btn-text-color) !important;
+  background-color: var(--questionnaire-btn-bg-color);
+  color: var(--questionnaire-btn-text-color);
 }
 
 .questionnaire__correct {

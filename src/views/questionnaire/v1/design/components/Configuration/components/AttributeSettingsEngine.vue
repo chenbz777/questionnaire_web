@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, defineAsyncComponent } from 'vue';
+import UploadFile from '@/components/UploadFile.vue';
 
 
 const props = defineProps({
@@ -127,6 +128,9 @@ const componentName = props.setting.type === 'slot' ? defineAsyncComponent(() =>
 
       <!-- richText 富文本 -->
       <RichText v-model="propsData[dataKey]" v-if="setting.type === 'richText'" />
+
+      <!-- uploadFile -->
+      <UploadFile v-model="propsData[dataKey]" :option="setting" v-if="setting.type === 'uploadFile'" />
     </div>
   </div>
 </template>
