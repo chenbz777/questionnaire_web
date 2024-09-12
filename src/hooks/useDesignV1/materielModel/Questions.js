@@ -15,10 +15,6 @@ export default class Questions extends BaseMateriel {
     this.logicList = [];
     // 事件列表
     this.eventList = [];
-    // 考试答案列表
-    this.examAnswerList = [];
-    // [多余字段] 题目配置, 方便表格展示
-    this.tableConfig = [];
   }
 
   get defaultProps() {

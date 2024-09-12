@@ -21,7 +21,14 @@ export default class FormCheckbox extends BaseMateriel {
           image: ''
         }
       ],
-      showEnglishSerialNumber: false
+      showEnglishSerialNumber: false,
+      score: 0,  // 选择题全对分数
+      partialScore: 0,  // 部分选对得分
+      answer: [],  // 答案
+      answerAnalysis: '',  // 答案解析
+      answerAnalysisAttachment: [],  // 答案解析附件
+      difficulty: '',  // 题目难度: 简单, 普通, 困难
+      isAnswerOrderConsistent: false  // 答案顺序完全一致: 例如正确答案是A,B,C, 如果勾选了这个选项, 那么用户答案必须是A,B,C, 如果没有勾选, 那么用户答案可以是B,A,C
     };
   }
 
@@ -63,19 +70,6 @@ export default class FormCheckbox extends BaseMateriel {
 
   setValue(values = []) {
     this.props.defaultValue = values;
-  }
-
-  get examProps() {
-    return {
-      options: [],
-      score: 0,  // 选择题全对分数
-      partialScore: 0,  // 部分选对得分
-      answer: [],  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: '',  // 题目难度: 简单, 普通, 困难
-      isAnswerOrderConsistent: false  // 答案顺序完全一致: 例如正确答案是A,B,C, 如果勾选了这个选项, 那么用户答案必须是A,B,C, 如果没有勾选, 那么用户答案可以是B,A,C
-    };
   }
 
   get attributeSettings() {

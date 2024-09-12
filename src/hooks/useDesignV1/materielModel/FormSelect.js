@@ -78,10 +78,6 @@ export default class FormSelect extends BaseMateriel {
     }
   }
 
-  get examProps() {
-    return {};
-  }
-
   get attributeSettings() {
     return [
       {

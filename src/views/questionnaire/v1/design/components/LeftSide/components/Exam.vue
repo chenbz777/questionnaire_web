@@ -9,17 +9,7 @@ const { questionnaireData } = useDesignV1();
 // 模型实例集合
 const modelMap = {};
 
-function getExamSettings(index) {
-
-  const examAnswer = questionnaireData.value.examAnswerList[index];
-
-  const { type, key } = examAnswer;
-
-  const question = questionnaireData.value.questionList.find(question => question.key === key);
-
-  if (['FormRadio', 'FormCheckbox'].includes(type)) {
-    examAnswer.props.options = question.props.options;
-  }
+function getExamSettings(type) {
 
   if (!modelMap[type]) {
     modelMap[type] = new materielModel[type]();
@@ -27,29 +17,18 @@ function getExamSettings(index) {
 
   return modelMap[type].examSettings;
 }
-
-function getTitle(key) {
-
-  const question = questionnaireData.value.questionList.find(question => question.key === key);
-
-  if (question) {
-    return question.props.title;
-  }
-
-  return '';
-}
 </script>
 
 <template>
   <div class="exam">
     <AnimateTransitionGroup>
-      <div class="exam__content__item" v-for="(item, index) in questionnaireData.examAnswerList" :key="item.key">
-        <div class="exam__content__item__source">
-          Q{{ index + 1 }} {{ getTitle(item.key) }}
+      <div class="exam__content__item" v-for="(question, index) in questionnaireData.questionList" :key="question.key">
+        <div class="exam__content__item__source exam__content__item__title">
+          Q{{ index + 1 }} {{ question.props.title }}
         </div>
         <div class="exam__content__item__source">
-          <AttributeSettings :settings="getExamSettings(index)" v-model="item.props"
-            v-if="Object.keys(item.props).length" />
+          <AttributeSettings :settings="getExamSettings(question.type)" v-model="question.props"
+            v-if="Object.keys(question.props).includes('answer')" />
           <div v-else class="exam__content__item--null">该题目没有考试配置项</div>
         </div>
       </div>
@@ -88,5 +67,10 @@ function getTitle(key) {
 
 .exam__content__item--null {
   color: #999999;
+}
+
+.exam__content__item__title {
+  font-size: 14px;
+  font-weight: 500;
 }
 </style>

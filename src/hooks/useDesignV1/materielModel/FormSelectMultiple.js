@@ -64,10 +64,6 @@ export default class FormSelectMultiple extends BaseMateriel {
     this.props.defaultValue = values;
   }
 
-  get examProps() {
-    return {};
-  }
-
   get attributeSettings() {
     return [
       {

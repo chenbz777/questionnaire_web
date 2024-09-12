@@ -46,17 +46,6 @@ function addQuestion(question) {
   subscribe.emit('editClickQuestion', question);
 }
 
-// 订阅添加题目事件
-subscribe.on('addQuestion', (data) => {
-  const model = new materielModel[data.type]();
-
-  questionnaireData.value.examAnswerList.push({
-    key: data.key,
-    type: data.type,
-    props: model.examProps
-  });
-});
-
 // 订阅编辑区点击题目事件
 subscribe.on('editClickQuestion', (data) => {
   currentQuestionData.value = data;
@@ -229,15 +218,6 @@ function getQuestionnaireData() {
 
     return null;
   }
-
-  // 表格配置
-  questionnaireData.value.tableConfig = questionnaireData.value.questionList.map((question) => {
-    return {
-      key: question.key,
-      title: question.props.title,
-      type: question.type
-    };
-  });
 
   // 旧的题目key
   const oldQuestionKeys = JSON.parse(JSON.stringify(questionnaireData.value.questionKeys));

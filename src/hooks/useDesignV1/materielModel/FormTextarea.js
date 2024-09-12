@@ -17,7 +17,12 @@ export default class FormTextarea extends BaseMateriel {
       placeholder: '请输入',
       minLength: 0,  // 最小长度
       maxLength: 1000,  // 最大长度
-      showWordLimit: true  // 是否显示字数统计
+      showWordLimit: true,  // 是否显示字数统计
+      score: 0,  // 主观题分数
+      answer: '',  // 答案
+      answerAnalysis: '',  // 答案解析
+      answerAnalysisAttachment: [],  // 答案解析附件
+      difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
   }
 
@@ -47,16 +52,6 @@ export default class FormTextarea extends BaseMateriel {
 
   setValue(value = '') {
     this.props.defaultValue = value;
-  }
-
-  get examProps() {
-    return {
-      score: 0,  // 主观题分数
-      answer: '',  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
-    };
   }
 
   get attributeSettings() {

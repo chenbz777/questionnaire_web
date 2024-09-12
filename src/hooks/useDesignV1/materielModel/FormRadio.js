@@ -23,7 +23,12 @@ export default class FormRadio extends BaseMateriel {
       ],
       showOther: false,  // 是否显示其它
       otherValue: '',  // 其它值
-      showEnglishSerialNumber: false
+      showEnglishSerialNumber: false,
+      score: 0,  // 选择题分数
+      answer: '',  // 答案
+      answerAnalysis: '',  // 答案解析
+      answerAnalysisAttachment: [],  // 答案解析附件
+      difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
   }
 
@@ -77,17 +82,6 @@ export default class FormRadio extends BaseMateriel {
     } else {
       this.props.defaultValue = value;
     }
-  }
-
-  get examProps() {
-    return {
-      options: [],
-      score: 0,  // 选择题分数
-      answer: '',  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
-    };
   }
 
   get attributeSettings() {

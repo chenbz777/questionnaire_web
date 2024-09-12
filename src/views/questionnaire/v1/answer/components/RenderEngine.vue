@@ -1,8 +1,6 @@
 <script setup>
-import { reactive } from 'vue';
 import materielComponents from '@/hooks/useDesignV1/materielComponents';
 import materielModel from '@/hooks/useDesignV1/materielModel';
-import useDesignV1 from '@/hooks/useDesignV1';
 
 
 const props = defineProps({
@@ -63,10 +61,6 @@ function emitSubscribe(eventName, data) {
 
 // 实例化题目模型
 const model = new materielModel[props.data.type]();
-
-const { questionnaireData } = useDesignV1();
-
-const examAnswerData = reactive(questionnaireData.value.examAnswerList.find(item => item.key === props.data.key));
 </script>
 
 <template>
@@ -78,9 +72,9 @@ const examAnswerData = reactive(questionnaireData.value.examAnswerList.find(item
       <span v-if="sequence">Q{{ sequence }}</span>
       {{ data.props.title }}
       <span class="base-container__tips" v-if="model.title">{{ model.title }}</span>
-      <span class="base-container__tips" v-if="examAnswerData.props.score">{{ examAnswerData.props.score }}分</span>
-      <span class="base-container__tips" v-if="examAnswerData.props.difficulty">
-        {{ examAnswerData.props.difficulty }}
+      <span class="base-container__tips" v-if="data.props.score">{{ data.props.score }}分</span>
+      <span class="base-container__tips" v-if="data.props.difficulty">
+        {{ data.props.difficulty }}
       </span>
     </div>
     <!-- 描述 -->

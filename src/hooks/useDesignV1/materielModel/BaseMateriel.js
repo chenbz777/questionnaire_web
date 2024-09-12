@@ -119,11 +119,6 @@ export default class BaseMateriel {
     this.props.defaultValue = value;
   }
 
-  // 考试属性
-  get examProps() {
-    return {};
-  }
-
   // 组件属性设置
   get attributeSettings() {
     return [];

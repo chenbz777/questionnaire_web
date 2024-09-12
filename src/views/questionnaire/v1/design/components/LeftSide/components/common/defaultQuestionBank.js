@@ -120,7 +120,11 @@ export default [
               label: '错误',
               value: '错误'
             }
-          ]
+          ],
+          score: 10,
+          answer: '正确',
+          answerAnalysis: '1+1=2',
+          difficulty: '简单'
         }
       },
       {
@@ -145,7 +149,10 @@ export default [
               label: '书',
               value: '书'
             }
-          ]
+          ],
+          score: 10,
+          answer: '狗',
+          difficulty: '简单'
         }
       },
       {
@@ -170,7 +177,10 @@ export default [
               label: '书',
               value: '书'
             }
-          ]
+          ],
+          score: 10,
+          answer: ['狗'],
+          difficulty: '简单'
         }
       },
       {
@@ -179,7 +189,10 @@ export default [
         props: {
           title: '1 + 1 = ？',
           placeholder: '请输入答案',
-          format: '数字'
+          format: '数字',
+          score: 10,
+          answer: '2',
+          difficulty: '简单'
         }
       },
       {
@@ -187,7 +200,9 @@ export default [
         type: 'FormTextarea',
         props: {
           title: '您怎么看待人工智能？',
-          placeholder: '请输入您的观点'
+          placeholder: '请输入您的观点',
+          score: 10,
+          difficulty: '普通'
         }
       }
     ]

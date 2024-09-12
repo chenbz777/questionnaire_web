@@ -23,7 +23,12 @@ export default class MatrixFill extends BaseMateriel {
         }
       ],
       defaultValue: {},
-      arrange: '水平'  // 排列方式: 水平、垂直
+      arrange: '水平',  // 排列方式: 水平、垂直
+      score: 0,  // 主观题分数
+      answer: {},  // 答案
+      answerAnalysis: '',  // 答案解析
+      answerAnalysisAttachment: [],  // 答案解析附件
+      difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
   }
 
@@ -89,16 +94,6 @@ export default class MatrixFill extends BaseMateriel {
 
   setValue(value = {}) {
     this.props.defaultValue = value;
-  }
-
-  get examProps() {
-    return {
-      score: 0,  // 主观题分数
-      answer: {},  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
-    };
   }
 
   get attributeSettings() {

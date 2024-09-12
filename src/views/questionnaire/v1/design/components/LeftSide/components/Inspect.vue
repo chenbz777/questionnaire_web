@@ -232,7 +232,7 @@ watch(() => questionnaireData, () => {
         <el-collapse-item name="2">
           <template #title>
             <div class="my-collapse-item">
-              题目标题是否重复
+              题目标题不重复
               <el-tag :type="errorTitleRepeatList.length ? 'warning' : 'success'" effect="dark">
                 {{ errorTitleRepeatList.length ? '不通过' : '通过' }}
               </el-tag>
@@ -246,7 +246,7 @@ watch(() => questionnaireData, () => {
         <el-collapse-item name="3">
           <template #title>
             <div class="my-collapse-item">
-              题目选项标题是否重复
+              题目"选项"标题不重复
               <el-tag :type="errorOptionRepeatList.length ? 'warning' : 'success'" effect="dark">
                 {{ errorOptionRepeatList.length ? '不通过' : '通过' }}
               </el-tag>
@@ -260,7 +260,7 @@ watch(() => questionnaireData, () => {
         <el-collapse-item name="4">
           <template #title>
             <div class="my-collapse-item">
-              题目选项大于等于2个
+              题目"选项"大于1个
               <el-tag :type="errorOptionLengthList.length ? 'warning' : 'success'" effect="dark">
                 {{ errorOptionLengthList.length ? '不通过' : '通过' }}
               </el-tag>
