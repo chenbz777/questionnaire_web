@@ -6,7 +6,7 @@ import useDesignV1 from '@/hooks/useDesignV1';
 
 const props = defineProps({
   modelValue: {
-    type: Array,
+    type: [Array, String],
     required: true
   },
   option: {
@@ -28,17 +28,40 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
+const isArray = Array.isArray(props.modelValue);
 
 const fileList = ref([]);
 
 watch(() => props.modelValue, (value) => {
-  fileList.value = value;
+
+  if (isArray) {
+    fileList.value = value || [];
+  } else {
+
+    if (!value) {
+      return;
+    }
+
+    // value: 'http://xxx.com/xxx.jpg'
+    const name = value.split('/').pop();
+
+    fileList.value = [{
+      name,
+      url: value,
+      size: 0,
+      uid: Date.now()
+    }];
+  }
 }, {
   immediate: true
 });
 
-watch(() => fileList.value, (value) => {
-  emit('update:modelValue', value);
+watch(() => fileList.value, (files) => {
+  if (isArray) {
+    emit('update:modelValue', files);
+  } else {
+    emit('update:modelValue', files[0]?.url || '');
+  }
 }, {
   deep: true
 });
@@ -74,7 +97,8 @@ function handleBeforeUpload(file) {
   if (option.uploadType) {
     const fileType = file.name.split('.').pop();
 
-    const uploadTypes = option.uploadType.split(',');
+    // 去除空格
+    const uploadTypes = option.uploadType.split(',').map(item => item.trim());
 
     if (!uploadTypes.includes(fileType)) {
       ElMessage({

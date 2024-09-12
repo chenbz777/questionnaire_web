@@ -70,7 +70,7 @@ const importJSON = () => {
             </template>
           </el-dropdown>
 
-          <el-button type="success" plain @click="previewPopupRef.open()">
+          <el-button type="success" plain @click="previewPopupRef.open(questionnaireData)">
             预览问卷
             <el-icon class="ml-1">
               <View />

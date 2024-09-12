@@ -71,7 +71,7 @@ function changeComponent(item) {
 }
 
 onMounted(() => {
-  changeComponent(menus[8]);
+  changeComponent(menus[0]);
 });
 </script>
 

@@ -154,7 +154,11 @@ export default class FormCheckbox extends BaseMateriel {
               {
                 title: '图片',
                 itemKey: 'image',
-                type: 'input'
+                type: 'uploadFile',
+                uploadText: '上传图片',
+                maxSize: 1,
+                uploadLimit: 1,
+                uploadType: 'jpg, jpeg, png, gif'
               }
             ]
           }

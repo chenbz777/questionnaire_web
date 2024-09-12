@@ -1,9 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import useDesignV1 from '@/hooks/useDesignV1';
 
 
-const { questionnaireData } = useDesignV1();
+const questionnaireData = ref(null);
 
 // 选项
 const options = ['电脑预览', '手机预览'];
@@ -15,7 +14,13 @@ const platform = ref('电脑预览');
 const popup = ref(false);
 
 // 打开弹窗
-function open() {
+function open(_questionnaireData) {
+
+  if (!_questionnaireData) {
+    return;
+  }
+
+  questionnaireData.value = _questionnaireData;
 
   platform.value = '电脑预览';
 
