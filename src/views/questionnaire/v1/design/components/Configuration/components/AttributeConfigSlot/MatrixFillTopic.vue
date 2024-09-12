@@ -22,9 +22,9 @@ function handleChange() {
 
 <template>
   <div>
-    <div v-for="option in propsData.options" :key="option.key" class="matrix-fill__item">
-      {{ option.title }}
-      <ContenteditableDiv v-model="propsData.answer[option.key]" @update:modelValue="handleChange"
+    <div v-for="item in propsData.gapFillingList" :key="item.key" class="matrix-fill__item">
+      {{ item.title }}
+      <ContenteditableDiv v-model="propsData.answer[item.key]" @update:modelValue="handleChange"
         class="matrix-fill__item__input" />
     </div>
   </div>
@@ -45,5 +45,8 @@ function handleChange() {
   border: 0;
   border-bottom: 1px solid var(--questionnaire-text-color);
   min-width: 100px;
+  font-size: 14px;
+  word-wrap: break-word;
+  word-break: normal;
 }
 </style>
