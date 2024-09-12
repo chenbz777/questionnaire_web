@@ -120,7 +120,7 @@ function init() {
   // 简介模式不需要初始化皮肤
   if (!isEasy) {
     // 初始化皮肤
-    initSkin(questionnaireData.value.props);
+    initSkin();
   }
 
   // 如果是只读模式

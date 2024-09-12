@@ -39,15 +39,21 @@ const menus = [
     width: '250px'
   },
   {
+    title: '皮肤',
+    icon: 'Collection',
+    component: defineAsyncComponent(() => import('./components/Skin.vue')),
+    width: '250px'
+  },
+  {
     title: '题库',
     icon: 'Notebook',
     component: defineAsyncComponent(() => import('./components/QuestionBank.vue')),
     width: '250px'
   },
   {
-    title: '皮肤',
-    icon: 'Collection',
-    component: defineAsyncComponent(() => import('./components/Skin.vue')),
+    title: '模版库',
+    icon: 'Files',
+    component: defineAsyncComponent(() => import('./components/TemplateBase.vue')),
     width: '250px'
   }
 ];
@@ -65,7 +71,7 @@ function changeComponent(item) {
 }
 
 onMounted(() => {
-  changeComponent(menus[0]);
+  changeComponent(menus[8]);
 });
 </script>
 

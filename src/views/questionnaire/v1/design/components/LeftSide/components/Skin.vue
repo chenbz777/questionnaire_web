@@ -128,13 +128,13 @@ function handleSkinChange(data) {
     .then(() => {
       Object.assign(questionnaireData.value.props, JSON.parse(JSON.stringify(data)));
 
-      initSkin(questionnaireData.value.props);
+      initSkin();
     })
     .catch(() => { });
 }
 
 watch(() => questionnaireData.value.props, (value) => {
-  initSkin(value);
+  initSkin();
 }, {
   deep: true
 });

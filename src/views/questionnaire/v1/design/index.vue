@@ -89,6 +89,8 @@ const importJSON = () => {
           <Edit />
         </div>
       </div>
+
+      {{ questionnaireData.questionList }}
     </div>
 
     <!-- 配置区 -->

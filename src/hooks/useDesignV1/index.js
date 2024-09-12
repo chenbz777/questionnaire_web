@@ -82,6 +82,11 @@ function copyQuestion(question) {
 
 // 初始化皮肤
 function initSkin(data) {
+
+  if (!data) {
+    data = questionnaireData.value.props;
+  }
+
   document.documentElement.style.setProperty('--questionnaire-bg-color', data.bgColor);
   document.documentElement.style.setProperty('--questionnaire-bg-image', `url(${data.bgImage})`);
   document.documentElement.style.setProperty('--questionnaire-content-bg-color', data.contentBgColor);
@@ -157,7 +162,6 @@ function setQuestionnaireData(_questionnaireData, data = {}) {
   if (data && ((typeof data) !== 'object')) {
     throw new Error('[useDesignV1](setQuestionnaireData): 数据必须为对象');
   }
-
 
   // 没有题目数据, 尝试从本地存储中获取
   if (!Object.keys(data).length) {
@@ -290,6 +294,8 @@ export default function useEdit() {
     addQuestion,
     copyQuestion,
     currentQuestionData,
-    setQuestion
+    setQuestion,
+    setQuestionnaireData,
+    getQuestionnaireData
   };
 }
