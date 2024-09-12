@@ -1,4 +1,6 @@
 import BaseMateriel from './BaseMateriel';
+import difficultyOptions from '../common/difficultyOptions';
+
 
 export default class FormTextarea extends BaseMateriel {
 
@@ -146,20 +148,7 @@ export default class FormTextarea extends BaseMateriel {
         title: '题目难度',
         type: 'radioButton',
         propsKey: 'difficulty',
-        options: [
-          {
-            label: '简单',
-            value: '简单'
-          },
-          {
-            label: '普通',
-            value: '普通'
-          },
-          {
-            label: '困难',
-            value: '困难'
-          }
-        ]
+        options: difficultyOptions
       },
       {
         title: '正确答案',

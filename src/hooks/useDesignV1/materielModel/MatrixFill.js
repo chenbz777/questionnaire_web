@@ -1,5 +1,6 @@
 import BaseMateriel from './BaseMateriel';
 import textFormat from '../common/textFormat';
+import difficultyOptions from '../common/difficultyOptions';
 
 
 export default class MatrixFill extends BaseMateriel {
@@ -199,20 +200,7 @@ export default class MatrixFill extends BaseMateriel {
         title: '题目难度',
         type: 'radioButton',
         propsKey: 'difficulty',
-        options: [
-          {
-            label: '简单',
-            value: '简单'
-          },
-          {
-            label: '普通',
-            value: '普通'
-          },
-          {
-            label: '困难',
-            value: '困难'
-          }
-        ]
+        options: difficultyOptions
       },
       {
         title: '正确答案',
