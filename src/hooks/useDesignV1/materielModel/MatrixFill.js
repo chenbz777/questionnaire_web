@@ -199,7 +199,7 @@ export default class MatrixFill extends BaseMateriel {
         title: '题目难度',
         type: 'radioButton',
         propsKey: 'difficulty',
-        gapFillingList: [
+        options: [
           {
             label: '简单',
             value: '简单'
