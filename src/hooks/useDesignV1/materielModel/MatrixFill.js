@@ -14,7 +14,7 @@ export default class MatrixFill extends BaseMateriel {
       desc: '',
       remark: '',
       status: 'normal',
-      options: [
+      gapFillingList: [
         {
           key: 'one',
           title: '填空1',
@@ -36,12 +36,12 @@ export default class MatrixFill extends BaseMateriel {
   }
 
   verifyRequired() {
-    if (this.props.options && this.props.options.length) {
+    if (this.props.gapFillingList && this.props.gapFillingList.length) {
       let result = true;
 
-      for (let i = 0; i < this.props.options.length; i++) {
+      for (let i = 0; i < this.props.gapFillingList.length; i++) {
 
-        const option = this.props.options[i];
+        const option = this.props.gapFillingList[i];
 
         const value = this.props.defaultValue[option.key];
 
@@ -74,8 +74,8 @@ export default class MatrixFill extends BaseMateriel {
 
     let html = '';
 
-    for (let i = 0; i < this.props.options.length; i++) {
-      const option = this.props.options[i];
+    for (let i = 0; i < this.props.gapFillingList.length; i++) {
+      const option = this.props.gapFillingList[i];
 
       html += `<div class="mb-2">${option.title} ${this.props.defaultValue[option.key] || ''}</div>`;
     }
@@ -126,7 +126,7 @@ export default class MatrixFill extends BaseMateriel {
             title: '状态',
             type: 'radioButton',
             propsKey: 'status',
-            options: [
+            gapFillingList: [
               {
                 label: '正常',
                 value: 'normal'
@@ -147,7 +147,7 @@ export default class MatrixFill extends BaseMateriel {
             title: '排列方式',
             type: 'radioButton',
             propsKey: 'arrange',
-            options: [
+            gapFillingList: [
               {
                 label: '水平',
                 value: '水平'
@@ -161,7 +161,7 @@ export default class MatrixFill extends BaseMateriel {
           {
             title: '列管理',
             type: 'list',
-            propsKey: 'options',
+            propsKey: 'gapFillingList',
             listKey: 'key',
             listSettings: [
               {
@@ -173,7 +173,7 @@ export default class MatrixFill extends BaseMateriel {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                options: textFormat
+                gapFillingList: textFormat
               },
               {
                 title: '必填',
@@ -204,7 +204,7 @@ export default class MatrixFill extends BaseMateriel {
         title: '题目难度',
         type: 'radioButton',
         propsKey: 'difficulty',
-        options: [
+        gapFillingList: [
           {
             label: '简单',
             value: '简单'

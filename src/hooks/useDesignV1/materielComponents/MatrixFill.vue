@@ -31,10 +31,10 @@ function handleChange() {
   <div class="matrix-fill" :class="{
     'matrix-fill--level': data.props.arrange === '水平'
   }">
-    <div v-for="option in data.props.options" :key="option.key" class="matrix-fill__item">
-      {{ option.title }}
-      <span class="matrix-fill__required" v-if="option.required">*</span>
-      <ContenteditableDiv v-model="componentData.props.defaultValue[option.key]" @update:modelValue="handleChange"
+    <div v-for="item in data.props.gapFillingList" :key="item.key" class="matrix-fill__item">
+      {{ item.title }}
+      <span class="matrix-fill__required" v-if="item.required">*</span>
+      <ContenteditableDiv v-model="componentData.props.defaultValue[item.key]" @update:modelValue="handleChange"
         class="matrix-fill__item__input" />
     </div>
   </div>
