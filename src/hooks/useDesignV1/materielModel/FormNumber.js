@@ -130,7 +130,7 @@ export default class FormNumber extends BaseMateriel {
     ];
   }
 
-  get topicSettings() {
+  get examSettings() {
     return [];
   }
 

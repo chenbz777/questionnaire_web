@@ -3,14 +3,13 @@ import { VueDraggable } from 'vue-draggable-plus';
 import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
 import { ElMessageBox } from 'element-plus';
-import { useRoute } from 'vue-router';
 
 
 const { questionnaireData, subscribe, currentQuestionData, copyQuestion } = useDesignV1();
 
 // 点击组件
 function handleClick(data) {
-  subscribe.emit('editClickComponent', data);
+  subscribe.emit('editClickQuestion', data);
 }
 
 // 删除组件
@@ -29,7 +28,7 @@ function handleDeleteComponent(index) {
 
       questionnaireData.value.questionList.splice(index, 1);
 
-      subscribe.emit('editDeleteComponent', data);
+      subscribe.emit('editDeleteQuestion', data);
     })
     .catch(() => { });
 }
@@ -38,11 +37,6 @@ function handleDeleteComponent(index) {
 function handleCopyComponent(data) {
   copyQuestion(data);
 }
-
-
-const route = useRoute();
-
-const isDesign = (route.name === 'questionnaireV1Design');
 </script>
 
 <template>
@@ -52,7 +46,7 @@ const isDesign = (route.name === 'questionnaireV1Design');
       :key="question.key">
       <template #reference>
         <RenderEngine :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
-          :showAnalyze="isDesign" @click="handleClick(question)" class="my-draggable__render" :class="{
+          @click="handleClick(question)" class="my-draggable__render" :class="{
             'my-draggable__render--active': (currentQuestionData && currentQuestionData.key) === question.key,
             'my-draggable__render--hidden': question.props.status === 'hidden'
           }" />
@@ -78,7 +72,6 @@ const isDesign = (route.name === 'questionnaireV1Design');
 <style scoped>
 .my-draggable {
   position: relative;
-  cursor: move;
   min-height: 100%;
 }
 
@@ -96,6 +89,10 @@ const isDesign = (route.name === 'questionnaireV1Design');
   font-size: 18px;
   line-height: 100%;
   margin: auto;
+}
+
+.my-draggable__render {
+  cursor: move;
 }
 
 .my-draggable__render::after {

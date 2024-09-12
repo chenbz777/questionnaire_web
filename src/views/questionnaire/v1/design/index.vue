@@ -15,7 +15,7 @@ const previewPopupRef = ref(null);
 
 // 问卷设置
 function questionnaireSetting() {
-  subscribe.emit('editClickComponent', questionnaireData.value);
+  subscribe.emit('editClickQuestion', questionnaireData.value);
 }
 
 // 导出配置JSON

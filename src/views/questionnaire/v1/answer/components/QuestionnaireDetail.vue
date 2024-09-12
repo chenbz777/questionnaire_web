@@ -48,7 +48,7 @@ const questionMap = new Map();
 
 /**
  * @author: chenbz
- * @description: 设置问题值
+ * @description: 设置题目值
  * @param key {string} 题目key
  * @param value {*} 题目值
  * @return {*}
@@ -68,7 +68,7 @@ function setValue(key, value, targetKey = 'defaultValue') {
 
 // 题目map集合
 questionList.forEach((question) => {
-  questionMap.set(question.asKey, question);
+  questionMap.set(question.key, question);
 });
 
 // 逻辑处理
@@ -79,28 +79,28 @@ logicList.forEach((logic) => {
     return;
   }
 
-  // 源问题实例
+  // 源题目实例
   const sourceQuestion = questionList.find((item) => item.key === logic.sourceKey);
 
-  // 如果没有源问题
+  // 如果没有源题目
   if (!sourceQuestion) {
     return;
   }
 
-  // 目标问题实例
+  // 目标题目实例
   const targetQuestionList = questionList.filter((item) => {
     return logic.targetKeyList.includes(item.key);
   });
 
-  // 目标问题实例初始状态集合
+  // 目标题目实例初始状态集合
   const targetQuestionOldStatusMap = new Map();
 
-  // 目标问题实例初始状态
+  // 目标题目实例初始状态
   targetQuestionList.forEach((item) => {
     targetQuestionOldStatusMap.set(item.key, item.props.status);
   });
 
-  // 如果源问题和目标问题都存在
+  // 如果源题目和目标题目都存在
   if (sourceQuestion && targetQuestionList.length) {
 
     // 逻辑处理函数
@@ -200,10 +200,10 @@ eventList.forEach((event) => {
     return;
   }
 
-  // 源问题实例
+  // 源题目实例
   const sourceQuestion = questionList.find((item) => item.key === sourceKey);
 
-  // 如果没有源问题
+  // 如果没有源题目
   if (!sourceQuestion) {
     return;
   }

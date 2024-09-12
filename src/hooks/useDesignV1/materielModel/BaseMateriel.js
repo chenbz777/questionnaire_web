@@ -104,36 +104,6 @@ export default class BaseMateriel {
     return true;
   }
 
-  // 校验分数
-  verifyScore() {
-
-    // 如果有分数
-    if (this.props.score) {
-      // 如果有答案 && 默认答案等于答案
-
-      // 没有填写答案, 返回-1分
-      if (!this.props.defaultValue) {
-        return -1;
-      }
-
-      // 没有标准答案, 返回0分
-      if (!this.props.answer) {
-        return 0;
-      }
-
-      // 答案正确, 返回分数
-      if (this.props.defaultValue === this.props.answer) {
-        return this.props.score;
-      }
-
-      // 答案错误, 返回0分
-      return 0;
-    }
-
-    // 如果没有分数, 默认返回-1
-    return -1;
-  }
-
   // 获取组件值的文本
   getValueText(value) {
     return value;
@@ -149,13 +119,18 @@ export default class BaseMateriel {
     this.props.defaultValue = value;
   }
 
+  // 考试属性
+  get examProps() {
+    return {};
+  }
+
   // 组件属性设置
   get attributeSettings() {
     return [];
   }
 
-  // 题目属性设置
-  get topicSettings() {
+  // 考试属性设置
+  get examSettings() {
     return [];
   }
 

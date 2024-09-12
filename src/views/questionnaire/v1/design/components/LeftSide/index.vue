@@ -27,6 +27,12 @@ const menus = [
     width: '350px'
   },
   {
+    title: '考试',
+    icon: 'Document',
+    component: defineAsyncComponent(() => import('./components/Exam.vue')),
+    width: '350px'
+  },
+  {
     title: '检查',
     icon: 'Odometer',
     component: defineAsyncComponent(() => import('./components/Inspect.vue')),

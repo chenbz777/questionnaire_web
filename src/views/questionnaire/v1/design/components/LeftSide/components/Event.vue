@@ -28,8 +28,8 @@ function addEvent() {
 
 /**
  * @author: chenbz
- * @description: 处理条件问题变化
- * @param sourceKey {string} 条件问题key
+ * @description: 处理条件题目变化
+ * @param sourceKey {string} 条件题目key
  * @param index {number} 逻辑索引
  * @return {*}
  */
@@ -37,7 +37,7 @@ function handleSourceKeyChange(sourceKey, index) {
   // 逻辑项
   const eventItem = questionnaireData.value.eventList[index];
 
-  // 如果没有条件问题key
+  // 如果没有条件题目key
   if (!sourceKey) {
 
     eventItem.sourceEventName = '';
@@ -46,10 +46,10 @@ function handleSourceKeyChange(sourceKey, index) {
     return;
   }
 
-  // 条件问题类型
+  // 条件题目类型
   const sourceType = questionnaireData.value.questionList.find(question => question.key === sourceKey).type;
 
-  // 设置条件问题类型
+  // 设置条件题目类型
   eventItem.sourceType = sourceType;
 }
 
@@ -165,7 +165,7 @@ function handleConfirmAction(actionData) {
           <div class="event__content__item__source">
             <div class="mr-4">当</div>
 
-            <el-select v-model="item.sourceKey" placeholder="请选择问题" size="small" clearable
+            <el-select v-model="item.sourceKey" placeholder="请选择题目" size="small" clearable
               @change="handleSourceKeyChange($event, index)" class="flex-1 mr-1">
               <el-option v-for="question in questionnaireData.questionList" :key="question.key"
                 :label="question.props.title" :value="question.key" />

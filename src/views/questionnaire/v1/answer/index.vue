@@ -128,7 +128,7 @@ function init() {
     // 不显示提交按钮
     showSubmitBtn.value = false;
 
-    // 设置问题只读
+    // 设置题目只读
     questionnaireData.value.questionList.forEach((question) => {
       if (question.props.status !== 'hidden') {
         question.props.status = 'readonly';
@@ -256,20 +256,20 @@ const percentage = ref(0);
 
 // 监听问卷数据变化
 watch(() => questionnaireData.value, () => {
-  // 问题列表, 过滤隐藏的问题
+  // 题目列表, 过滤隐藏的题目
   const questionList = questionnaireData.value.questionList.filter(item => item.props.status !== 'hidden');
 
   // 答题进度
   let total = 0;
 
-  // 遍历问题列表
+  // 遍历题目列表
   questionList.forEach((question) => {
 
     const _question = JSON.parse(JSON.stringify(question));
 
     _question.props.required = true;
 
-    // 创建问题实例
+    // 创建题目实例
     const model = new materielModel[_question.type](_question);
 
     /**

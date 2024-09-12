@@ -23,11 +23,6 @@ export default class FormRadio extends BaseMateriel {
       ],
       showOther: false,  // 是否显示其它
       otherValue: '',  // 其它值
-      score: 0,  // 选择题分数
-      answer: '',  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: '',  // 题目难度: 简单, 普通, 困难
       showEnglishSerialNumber: false
     };
   }
@@ -82,6 +77,17 @@ export default class FormRadio extends BaseMateriel {
     } else {
       this.props.defaultValue = value;
     }
+  }
+
+  get examProps() {
+    return {
+      options: [],
+      score: 0,  // 选择题分数
+      answer: '',  // 答案
+      answerAnalysis: '',  // 答案解析
+      answerAnalysisAttachment: [],  // 答案解析附件
+      difficulty: ''  // 题目难度: 简单, 普通, 困难
+    };
   }
 
   get attributeSettings() {
@@ -173,13 +179,18 @@ export default class FormRadio extends BaseMateriel {
             title: '添加【其它】',
             type: 'switch',
             propsKey: 'showOther'
+          },
+          {
+            title: '显示英文序号',
+            type: 'switch',
+            propsKey: 'showEnglishSerialNumber'
           }
         ]
       }
     ];
   }
 
-  get topicSettings() {
+  get examSettings() {
     return [
       {
         title: '选择题分数',
@@ -216,11 +227,6 @@ export default class FormRadio extends BaseMateriel {
         title: '答案解析',
         type: 'textarea',
         propsKey: 'answerAnalysis'
-      },
-      {
-        title: '显示英文序号',
-        type: 'switch',
-        propsKey: 'showEnglishSerialNumber'
       }
     ];
   }

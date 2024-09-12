@@ -10,7 +10,9 @@ const { Subscribe } = useGlobal();
 
 /**
  * 订阅事件汇总
- * editClickComponent: 编辑区点击组件
+ * editClickQuestion: 编辑区点击题目
+ * addQuestion: 添加题目
+ * editDeleteQuestion: 编辑区删除题目
  */
 const subscribe = new Subscribe();
 
@@ -26,10 +28,10 @@ const questionnaireModel = new materielModel.Questions();
 // 问卷数据
 const questionnaireData = ref(questionnaireModel);
 
-// 当前编辑的问题数据
+// 当前编辑的题目数据
 const currentQuestionData = ref(null);
 
-// 添加问题
+// 添加题目
 function addQuestion(question) {
 
   if (currentQuestionData.value) {
@@ -40,22 +42,49 @@ function addQuestion(question) {
     questionnaireData.value.questionList.push(question);
   }
 
-  subscribe.emit('editClickComponent', question);
+  subscribe.emit('addQuestion', question);
+  subscribe.emit('editClickQuestion', question);
 }
 
-// 订阅编辑区点击组件事件
-subscribe.on('editClickComponent', (data) => {
+// 订阅添加题目事件
+subscribe.on('addQuestion', (data) => {
+  const model = new materielModel[data.type]();
+
+  questionnaireData.value.examAnswerList.push({
+    key: data.key,
+    type: data.type,
+    props: model.examProps
+  });
+});
+
+// 订阅编辑区点击题目事件
+subscribe.on('editClickQuestion', (data) => {
   currentQuestionData.value = data;
 });
 
-// 订阅编辑区点击组件事件
-subscribe.on('editDeleteComponent', (data) => {
+// 订阅编辑区删除题目事件
+subscribe.on('editDeleteQuestion', (data) => {
   if (data.key === currentQuestionData.value.key) {
     currentQuestionData.value = null;
   }
+
+  // 同步删除逻辑
+  questionnaireData.value.logicList = questionnaireData.value.logicList.filter((logic) => {
+    return logic.sourceKey !== data.key;
+  });
+
+  // 同步删除事件
+  questionnaireData.value.eventList = questionnaireData.value.eventList.filter((event) => {
+    return event.sourceKey !== data.key;
+  });
+
+  // 同步删除考试答案
+  questionnaireData.value.examAnswerList = questionnaireData.value.examAnswerList.filter((answer) => {
+    return answer.key !== data.key;
+  });
 });
 
-// 复制问题
+// 复制题目
 function copyQuestion(question) {
   const questionModel = new materielModel[question.type](question);
 
@@ -75,7 +104,7 @@ function initSkin(data) {
 
 // 校验数据
 function checkData() {
-  // 问题列表
+  // 题目列表
   const questionList = questionnaireData.value.questionList;
 
   // 错误列表
@@ -84,52 +113,26 @@ function checkData() {
   // 数据
   const data = {};
 
-  // 总分数
-  let totalScore = 0;
-
-  // 所得分数
-  let score = 0;
-
-  // 答题卡
-  const answerSheet = {};
-
   questionList.forEach((question, index) => {
     const model = new materielModel[question.type](question);
 
     const key = question.key;
 
-    const asKey = question.asKey || key;
-
-    // 校验问题选项
+    // 校验题目选项
     if (model.verifyRequired()) {
-      data[asKey] = model.getValue();
+      data[key] = model.getValue();
     } else {
       errorList.push({
         index,
-        key: asKey,
-        message: `${question.props.title}问题选项校验不通过`
+        key,
+        message: `${question.props.title}题目选项校验不通过`
       });
     }
-
-    // 校验问题分数
-    totalScore += question.props.score || 0;
-
-    const verifyScore = model.verifyScore();
-
-    // -1 是未填写答案, 不计分
-    if (verifyScore !== -1) {
-      score += verifyScore;
-    }
-
-    answerSheet[asKey] = verifyScore;
   });
 
   return {
     errorList,
     data,
-    totalScore,
-    score,
-    answerSheet,
     openUserKey
   };
 }
@@ -192,16 +195,16 @@ function setQuestionnaireData(_questionnaireData, data = {}) {
     const model = new materielModel[question.type](question);
 
     if (model) {
-      // 问题数据存在时, 设置问题数据
-      if (Object.keys(data).includes(question.asKey)) {
-        // 设置问题数据
-        model.setValue(data[question.asKey]);
+      // 题目数据存在时, 设置题目数据
+      if (Object.keys(data).includes(question.key)) {
+        // 设置题目数据
+        model.setValue(data[question.key]);
       }
 
-      // 设置问题属性
+      // 设置题目属性
       question.props = model.props;
     } else {
-      throw new Error(`[useDesignV1](setQuestionnaireData): 问题类型: ${question.type} 不存在`);
+      throw new Error(`[useDesignV1](setQuestionnaireData): 题目类型: ${question.type} 不存在`);
     }
   });
 
@@ -217,7 +220,7 @@ function getQuestionnaireData() {
     return question.key;
   });
 
-  // 问题key重复
+  // 题目key重复
   if (new Set(questionKeys).size !== questionKeys.length) {
     ElMessage({
       message: '题目标识重复',
@@ -230,16 +233,16 @@ function getQuestionnaireData() {
   // 表格配置
   questionnaireData.value.tableConfig = questionnaireData.value.questionList.map((question) => {
     return {
-      key: question.asKey,
+      key: question.key,
       title: question.props.title,
       type: question.type
     };
   });
 
-  // 旧的问题key
+  // 旧的题目key
   const oldQuestionKeys = JSON.parse(JSON.stringify(questionnaireData.value.questionKeys));
 
-  // 旧的问题key不存在时, 说明是新的问卷, 重新生成问题key
+  // 旧的题目key不存在时, 说明是新的问卷, 重新生成题目key
   if (!oldQuestionKeys.length) {
     questionnaireData.value.questionKeys = questionnaireData.value.questionList.map((question) => {
       return question.key;
@@ -248,8 +251,8 @@ function getQuestionnaireData() {
     return JSON.parse(JSON.stringify(questionnaireData.value));
   }
 
-  // 旧的问题key存在时, 说明是旧的问卷
-  // 问题key长度有变化时, 说明问题有变化, 版本号+1
+  // 旧的题目key存在时, 说明是旧的问卷
+  // 题目key长度有变化时, 说明题目有变化, 版本号+1
   if (oldQuestionKeys.length !== questionKeys.length) {
     questionnaireData.value.version += 1;
 
@@ -258,10 +261,10 @@ function getQuestionnaireData() {
     return JSON.parse(JSON.stringify(questionnaireData.value));
   }
 
-  // 问题key长度没有变化时, 需要判断问题key是否有变化, 取两个数组的差集
+  // 题目key长度没有变化时, 需要判断题目key是否有变化, 取两个数组的差集
   const diff = questionKeys.filter((key) => !oldQuestionKeys.includes(key));
 
-  // 问题key有变化时, 说明问题有变化, 版本号+1
+  // 题目key有变化时, 说明题目有变化, 版本号+1
   if (diff.length) {
     questionnaireData.value.version += 1;
 
@@ -275,8 +278,8 @@ function getQuestionnaireData() {
 
 /**
  * @author: chenbz
- * @description: 设置问题
- * @param questionKey {string} 问题key
+ * @description: 设置题目
+ * @param questionKey {string} 题目key
  * @param variableName {string} 变量名
  * @param value {*} 值
  * @return {*}

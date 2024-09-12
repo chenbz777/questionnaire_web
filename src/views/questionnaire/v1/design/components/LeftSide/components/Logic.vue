@@ -32,8 +32,8 @@ const selectLicenseType = ['FormRadio', 'FormCheckbox', 'FormSelect', 'FormSelec
 
 /**
  * @author: chenbz
- * @description: 处理条件问题变化
- * @param sourceKey {string} 条件问题key
+ * @description: 处理条件题目变化
+ * @param sourceKey {string} 条件题目key
  * @param index {number} 逻辑索引
  * @return {*}
  */
@@ -41,7 +41,7 @@ function handleSourceKeyChange(sourceKey, index) {
   // 逻辑项
   const logicItem = questionnaireData.value.logicList[index];
 
-  // 如果没有条件问题key
+  // 如果没有条件题目key
   if (!sourceKey) {
 
     logicItem.sourceRule = '';
@@ -51,21 +51,21 @@ function handleSourceKeyChange(sourceKey, index) {
     return;
   }
 
-  // 条件问题类型
+  // 条件题目类型
   const sourceType = questionnaireData.value.questionList.find(question => question.key === sourceKey).type;
 
-  // 设置条件问题类型
+  // 设置条件题目类型
   logicItem.sourceType = sourceType;
 
   // 重置条件规则
   logicItem.sourceRule = '';
 
-  // 如果条件问题类型是输入框
+  // 如果条件题目类型是输入框
   if (inputLicenseType.includes(sourceType)) {
     logicItem.sourceValue = '';
   }
 
-  // 如果条件问题类型是选择框
+  // 如果条件题目类型是选择框
   if (selectLicenseType.includes(sourceType)) {
     logicItem.sourceValue = [];
   }
@@ -111,7 +111,7 @@ function removeLogic(index) {
           <div class="logic__content__item__source">
             <div class="mr-1">如果</div>
 
-            <el-select v-model="item.sourceKey" placeholder="请选择问题" size="small" clearable
+            <el-select v-model="item.sourceKey" placeholder="请选择题目" size="small" clearable
               @change="handleSourceKeyChange($event, index)" class="mr-1" style="width: 100px">
               <el-option v-for="question in questionnaireData.questionList" :key="question.key"
                 :label="question.props.title" :value="question.key" />
@@ -147,7 +147,7 @@ function removeLogic(index) {
               <el-option label="隐藏" value="hidden" />
             </el-select>
 
-            <el-select v-model="item.targetKeyList" multiple placeholder="请选择问题" size="small" clearable
+            <el-select v-model="item.targetKeyList" multiple placeholder="请选择题目" size="small" clearable
               style="flex: 1;">
               <el-option v-for="question in questionnaireData.questionList" :key="question.key"
                 :label="question.props.title" :value="question.key" />

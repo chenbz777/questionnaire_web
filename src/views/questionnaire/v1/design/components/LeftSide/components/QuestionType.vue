@@ -1,11 +1,10 @@
 <script setup>
-import { ref } from 'vue';
 import materielModel from '@/hooks/useDesignV1/materielModel';
 import { vDraggable } from 'vue-draggable-plus';
 import useDesignV1 from '@/hooks/useDesignV1';
 
 
-const { subscribe, addQuestion } = useDesignV1();
+const { addQuestion } = useDesignV1();
 
 const groups = {
   '文本': [],
@@ -43,12 +42,6 @@ const draggableOption = {
     return new materielModel[data.type];
   }
 };
-
-const currentComponentData = ref(null);
-
-subscribe.on('editClickComponent', (data) => {
-  currentComponentData.value = data;
-});
 
 // 点击组件
 function handleClick(data) {

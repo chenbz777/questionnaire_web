@@ -100,7 +100,7 @@ function inspect() {
   // 3. 题目[单选、多选]选项标题是否重复: 不完整扣分
   if (questionList && questionList.length) {
     questionList.forEach((question, index) => {
-      if (['FormRadio', 'FormCheckbox'].includes(question.type)) {
+      if (['FormRadio', 'FormCheckbox', 'FormSelect', 'FormSelectMultiple'].includes(question.type)) {
         const optionLabelList = question.props.options.map(option => option.label);
 
         if (optionLabelList.length !== new Set(optionLabelList).size) {

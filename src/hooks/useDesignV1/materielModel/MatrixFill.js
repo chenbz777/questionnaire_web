@@ -23,12 +23,7 @@ export default class MatrixFill extends BaseMateriel {
         }
       ],
       defaultValue: {},
-      arrange: '水平',  // 排列方式: 水平、垂直
-      score: 0,  // 主观题分数
-      answer: {},  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
+      arrange: '水平'  // 排列方式: 水平、垂直
     };
   }
 
@@ -75,34 +70,6 @@ export default class MatrixFill extends BaseMateriel {
     return true;
   }
 
-  // 校验分数
-  verifyScore() {
-    // 如果有分数
-    if (this.props.score) {
-
-      // 填写的答案
-      const valueText = Object.values(this.props.defaultValue).join('');
-      // 标准答案
-      const answerText = Object.values(this.props.answer).join('');
-
-      // 没有填写答案, 返回-1分
-      if (!valueText) {
-        return -1;
-      }
-
-      // 答案正确, 返回分数
-      if (answerText === valueText) {
-        return this.props.score;
-      }
-
-      // 答案错误, 返回0分
-      return 0;
-    }
-
-    // 如果没有分数, 默认返回0分
-    return 0;
-  }
-
   getValueText() {
 
     let html = '';
@@ -122,6 +89,16 @@ export default class MatrixFill extends BaseMateriel {
 
   setValue(value = {}) {
     this.props.defaultValue = value;
+  }
+
+  get examProps() {
+    return {
+      score: 0,  // 主观题分数
+      answer: {},  // 答案
+      answerAnalysis: '',  // 答案解析
+      answerAnalysisAttachment: [],  // 答案解析附件
+      difficulty: ''  // 题目难度: 简单, 普通, 困难
+    };
   }
 
   get attributeSettings() {
@@ -215,7 +192,7 @@ export default class MatrixFill extends BaseMateriel {
     ];
   }
 
-  get topicSettings() {
+  get examSettings() {
     return [
       {
         title: '主观题分数',

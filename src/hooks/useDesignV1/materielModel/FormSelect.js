@@ -22,12 +22,7 @@ export default class FormSelect extends BaseMateriel {
         }
       ],
       showOther: false,  // 是否显示其它
-      otherValue: '',  // 其它值
-      score: 0,  // 选择题分数
-      answer: '',  // 答案
-      answerAnalysis: '',  // 答案解析
-      answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
+      otherValue: ''  // 其它值
     };
   }
 
@@ -81,6 +76,10 @@ export default class FormSelect extends BaseMateriel {
     } else {
       this.props.defaultValue = value;
     }
+  }
+
+  get examProps() {
+    return {};
   }
 
   get attributeSettings() {
@@ -173,47 +172,6 @@ export default class FormSelect extends BaseMateriel {
             propsKey: 'showOther'
           }
         ]
-      }
-    ];
-  }
-
-  get topicSettings() {
-    return [
-      {
-        title: '选择题分数',
-        type: 'number',
-        min: 0,
-        propsKey: 'score'
-      },
-      {
-        title: '题目难度',
-        type: 'radioButton',
-        propsKey: 'difficulty',
-        options: [
-          {
-            label: '简单',
-            value: '简单'
-          },
-          {
-            label: '普通',
-            value: '普通'
-          },
-          {
-            label: '困难',
-            value: '困难'
-          }
-        ]
-      },
-      {
-        title: '正确答案',
-        type: 'radio',
-        propsKey: 'answer',
-        propsOptionsKey: 'options'
-      },
-      {
-        title: '答案解析',
-        type: 'textarea',
-        propsKey: 'answerAnalysis'
       }
     ];
   }

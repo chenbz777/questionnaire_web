@@ -7,15 +7,17 @@ export default class Questions extends BaseMateriel {
 
     // 问卷版本
     this.version = 1;
-    // 问题列表
+    // 题目列表
     this.questionList = [];
-    // 问题key列表, 作为判断版本是否更新的依据
+    // 题目key列表, 作为判断版本是否更新的依据
     this.questionKeys = [];
     // 逻辑列表
     this.logicList = [];
     // 事件列表
     this.eventList = [];
-    // [多余字段] 问题配置, 方便表格展示
+    // 考试答案列表
+    this.examAnswerList = [];
+    // [多余字段] 题目配置, 方便表格展示
     this.tableConfig = [];
   }
 
