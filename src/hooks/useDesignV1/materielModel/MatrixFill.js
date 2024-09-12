@@ -122,7 +122,7 @@ export default class MatrixFill extends BaseMateriel {
             title: '状态',
             type: 'radioButton',
             propsKey: 'status',
-            gapFillingList: [
+            options: [
               {
                 label: '正常',
                 value: 'normal'
@@ -143,7 +143,7 @@ export default class MatrixFill extends BaseMateriel {
             title: '排列方式',
             type: 'radioButton',
             propsKey: 'arrange',
-            gapFillingList: [
+            options: [
               {
                 label: '水平',
                 value: '水平'
@@ -169,7 +169,7 @@ export default class MatrixFill extends BaseMateriel {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                gapFillingList: textFormat
+                options: textFormat
               },
               {
                 title: '必填',
