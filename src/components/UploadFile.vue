@@ -75,6 +75,22 @@ const option = Object.assign({
   maxSize: 100
 }, props.option);
 
+const uploadConfig = ref({
+  uploadUrl: '',
+  headers: {},
+  data: {}
+});
+
+/**
+ * 临时解决方案: 因为没有上传接口, 所以通过window.uploadConfig获取上传配置
+ * 正确解决方案: 企业内部开发上传接口
+ */
+setTimeout(() => {
+  if (window.uploadConfig) {
+    uploadConfig.value = window.uploadConfig;
+  }
+}, 1000);
+
 function handleBeforeUpload(file) {
 
   // 文件大小判断
@@ -160,10 +176,12 @@ function onError(error, file) {
   fileList.value.splice(index, 1);
 }
 
+// 删除文件
 function handleRemove(index) {
   fileList.value.splice(index, 1);
 }
 
+// 预览文件
 function handlePreview(url) {
   window.open(url);
 }
@@ -180,9 +198,10 @@ function handlePreview(url) {
         </div>
       </div>
 
-      <el-upload v-model:file-list="fileList" :action="questionnaireData.props.uploadUrl" :limit="option.uploadLimit"
-        :before-upload="handleBeforeUpload" :disabled="disabled || (fileList.length >= option.uploadLimit)"
-        :show-file-list="false" :on-success="onSuccess" :on-error="onError">
+      <el-upload v-model:file-list="fileList" :action="uploadConfig.uploadUrl" :headers="uploadConfig.headers"
+        :data="uploadConfig.data" :limit="option.uploadLimit" :before-upload="handleBeforeUpload"
+        :disabled="disabled || (fileList.length >= option.uploadLimit)" :show-file-list="false" :on-success="onSuccess"
+        :on-error="onError">
         <div class="questionnaire__btn" :class="{
           'upload-file__btn--disabled': disabled || (fileList.length >= option.uploadLimit)
         }">
@@ -205,7 +224,7 @@ function handlePreview(url) {
     </template>
 
     <div class="upload-file__no-api" v-else>
-      未配置上传接口: 请联系管理员配置上传接口(问卷设置-上传请求地址)
+      未配置上传接口
     </div>
   </div>
 </template>

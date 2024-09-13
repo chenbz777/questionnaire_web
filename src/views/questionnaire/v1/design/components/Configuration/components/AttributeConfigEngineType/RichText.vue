@@ -41,7 +41,7 @@ function handleCancel() {
   <div>
     <el-button plain @click="dialogVisible = true">编辑富文本</el-button>
 
-    <el-dialog v-model="dialogVisible" title="富文本编辑器" width="800px" destroy-on-close>
+    <el-dialog v-model="dialogVisible" title="富文本编辑器" destroy-on-close class="rich-text__dialog">
 
       <RichTextEditor v-model="htmlValue" />
 
@@ -55,4 +55,9 @@ function handleCancel() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+:deep(.rich-text__dialog) {
+  min-width: 500px;
+  max-width: 800px;
+}
+</style>

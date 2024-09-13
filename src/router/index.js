@@ -38,6 +38,11 @@ const routes = [
     component: () => import('@/views/questionnaire/v1/demo.vue')
   },
   {
+    path: '/questionnaire/v1/design/question',
+    name: 'questionnaireV1DesignQuestion',
+    component: () => import('@/views/questionnaire/v1/design/question.vue')
+  },
+  {
     path: '/:pathMatch(.*)',
     name: '404',
     component: () => import('@/views/404.vue')

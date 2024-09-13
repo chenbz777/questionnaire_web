@@ -1,0 +1,98 @@
+<script setup>
+import { ref } from 'vue';
+import materielModel from '@/hooks/useDesignV1/materielModel';
+import AttributeSettings from './components/Configuration/components/AttributeSettings.vue';
+import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
+
+
+const currentModel = ref(null);
+
+function setQuestionData(type, props) {
+  if (materielModel[type]) {
+    currentModel.value = new materielModel[type](props);
+    console.log('currentModel.value: ', currentModel.value);
+  }
+}
+
+window.setQuestionData = setQuestionData;
+
+setQuestionData('FormRadio');
+
+const options = [
+  {
+    label: '基础',
+    value: '基础'
+  },
+  {
+    label: '考试',
+    value: '考试'
+  }
+];
+
+const segmented = ref('基础');
+
+</script>
+
+<template>
+  <div class="question">
+    <div class="question__container" v-if="currentModel">
+      <div class="question__head">
+        <RenderEngine :data="currentModel" />
+      </div>
+
+      <div class="question-segmented">
+        <el-segmented v-model="segmented" :options="options" block>
+          <template #default="{ item }">
+            {{ item.label }}
+          </template>
+        </el-segmented>
+      </div>
+
+      <div class="question__content">
+        <div class="configuration__content" :key="currentModel.key">
+          <AnimateTransition v-if="segmented === '基础'">
+            <AttributeSettings :settings="currentModel.attributeSettings" v-model="currentModel.props" />
+          </AnimateTransition>
+          <AnimateTransition v-if="segmented === '考试'">
+            <AttributeSettings :settings="currentModel.examSettings" v-model="currentModel.props" />
+          </AnimateTransition>
+        </div>
+      </div>
+    </div>
+
+    <van-empty image="error" description="题目类型错误" v-else />
+  </div>
+</template>
+
+<style>
+@import url('../styles/questionnaire.css');
+</style>
+
+<style scoped>
+.question__container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.question__head {
+  border-bottom: 2px solid rgba(31, 56, 88, 0.1);
+}
+
+.question__content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.question-segmented {
+  background-color: white;
+  padding: 6px 2px;
+  border-bottom: 1px solid rgba(31, 56, 88, 0.1);
+}
+
+.question-segmented .el-segmented {
+  --el-border-radius-base: 16px;
+  --el-segmented-bg-color: white;
+}
+</style>

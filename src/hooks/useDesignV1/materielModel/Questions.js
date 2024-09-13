@@ -38,8 +38,7 @@ export default class Questions extends BaseMateriel {
       endTime: '',  // 问卷结束
       limitTime: 0,  // 限制问卷填答总时长
       autoSubmit: false,  // 问卷结束自动提交
-      allowDevices: ['电脑', '手机', '微信'],  // 允许填写设备
-      uploadUrl: ''  // 上传请求地址
+      allowDevices: ['电脑', '手机', '微信']  // 允许填写设备
     };
   }
 
@@ -76,11 +75,6 @@ export default class Questions extends BaseMateriel {
             title: '版权信息',
             type: 'input',
             propsKey: 'copyrightText'
-          },
-          {
-            title: '上传请求地址',
-            type: 'input',
-            propsKey: 'uploadUrl'
           }
         ]
       },

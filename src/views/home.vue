@@ -28,6 +28,9 @@ function openUrl(url) {
       <el-button type="primary" @click="openUrl('/questionnaire/v1/readonly/easy')">
         简易只读问卷
       </el-button>
+      <el-button type="primary" @click="openUrl('/questionnaire/v1/design/question')">
+        设计题目
+      </el-button>
     </div>
   </div>
 </template>
