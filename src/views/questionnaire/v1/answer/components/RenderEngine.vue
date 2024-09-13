@@ -107,7 +107,7 @@ const model = new materielModel[props.data.type]();
   color: red;
   font-size: 20px;
   position: absolute;
-  left: 1px;
+  left: -1px;
   top: 12px;
   z-index: 2;
 }
