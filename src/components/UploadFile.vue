@@ -191,7 +191,7 @@ function handlePreview(url) {
       </div>
     </el-upload>
 
-    <div class="upload-file__item" v-for="(item, index) in fileList" :key="item.uid">
+    <div class="upload-file__item" v-for="(item, index) in fileList" :key="item.uid || item.url || item.name">
       <div class="upload-file__item__title">
         {{ item.name }}
       </div>
@@ -212,6 +212,7 @@ function handlePreview(url) {
   background-color: var(--questionnaire-bg-color);
   color: var(--questionnaire-text-color);
   font-size: 14px;
+  border: 1px solid var(--questionnaire-content-bg-color);
 }
 
 .upload-file__item__title {

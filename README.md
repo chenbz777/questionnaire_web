@@ -32,7 +32,7 @@
 
 [点击链接直达预览地址](https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/design)
 
-![设计页面](https://ice.frostsky.com/2024/09/07/9333849b177c02567493135777dcbb1c.png)
+![设计页面](https://ice.frostsky.com/2024/09/13/b7987b8e01f2b9ec622aaab65dbc39a8.png)
 
 ## 🌈 技术栈
 
@@ -173,14 +173,12 @@ nextTick(() => {
   // 第四步: 挂载提交方法进行回调
   window.myIframe2.contentWindow.onSubmit = function (submitData) {
     /**
-     * submitData: {
-     *  errorList: [],  // 错误列表
-     *  data: {},  // 问卷数据
-     *  totalScore: 0,  // 总分
-     *  score: 0,  // 得分
-     *  answerSheet: [],  // 答题卡: 题目 - 得分、不得分0、未答-1
-     *  startTime: 0,  // 开始答题时间(时间戳)
-     *  endTime: 0,  // 答题结束时间(时间戳)
+     * errorList: 题目校验错误列表
+     * data: 提交的数据
+     * // 一般情况下, 提交的数据中会包含开始答题时间和结束答题时间, 以及开放用户标识(不要依赖)
+     * data.startAnswerTime: 开始答题时间
+     * data.endAnswerTime: 结束答题时间
+     * data.openUserKey: 开放用户标识
      */
     console.log("onSubmit", submitData);
   };
@@ -274,17 +272,17 @@ const readonlyEasyUrl =
 
 ## 🏗️ 待完善
 
-1. [控件] 附件上传
-
-   > 因为没有存储库，所以没有接上传功能
-
-2. [控件] 日期时间
+1. [控件] 日期时间
 
    > 暂时还没找到好的日期时间插件，后续再补充
+
+
 
 ## 📌 许可协议
 
 本项目基于 MIT 许可证开源，详情请参阅 [LICENSE](./LICENSE) 文件。
+
+
 
 ## 🎨 展示
 
@@ -319,3 +317,18 @@ const readonlyEasyUrl =
 预览
 
 ![预览](https://ice.frostsky.com/2024/09/07/e37e78575c73ec34f34c1cde35dbc27b.png)
+
+
+
+## 🆕 更新
+
+2024/9/12，新增【考试】、【模版库】功能
+
+考试
+
+![考试](https://ice.frostsky.com/2024/09/13/ce5450424fbe5599ad2b28f9832e7d75.png)
+
+模版库
+
+![模版库](https://ice.frostsky.com/2024/09/13/b20d0ce86fddd0b7c5d1017c89803a6a.png)
+

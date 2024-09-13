@@ -60,6 +60,14 @@ function onSubmit() {
   endAnswerTime = Date.now();
 
   if (window.onSubmit) {
+    /**
+     * errorList: 题目校验错误列表
+     * data: 提交的数据
+     * // 一般情况下, 提交的数据中会包含开始答题时间和结束答题时间, 以及开放用户标识(不要依赖)
+     * data.startAnswerTime: 开始答题时间
+     * data.endAnswerTime: 结束答题时间
+     * data.openUserKey: 开放用户标识
+     */
     window.onSubmit({
       errorList,
       data: {

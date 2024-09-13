@@ -159,6 +159,12 @@ export default class FormTextarea extends BaseMateriel {
         title: '答案解析',
         type: 'textarea',
         propsKey: 'answerAnalysis'
+      },
+      {
+        title: '答案解析附件',
+        type: 'uploadFile',
+        propsKey: 'answerAnalysisAttachment',
+        uploadLimit: 9
       }
     ];
   }
