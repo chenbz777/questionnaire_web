@@ -10,11 +10,15 @@ const currentModel = ref(null);
 function setQuestionData(type, props) {
   if (materielModel[type]) {
     currentModel.value = new materielModel[type](props);
-    console.log('currentModel.value: ', currentModel.value);
   }
 }
 
+function getQuestionData() {
+  return JSON.parse(JSON.stringify(currentModel.value));
+}
+
 window.setQuestionData = setQuestionData;
+window.getQuestionData = getQuestionData;
 
 setQuestionData('FormRadio');
 
