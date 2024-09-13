@@ -171,36 +171,41 @@ function handlePreview(url) {
 
 <template>
   <div class="upload-file">
+    <template v-if="questionnaireData.props.uploadUrl">
+      <div class="upload-file__template" v-if="templateFiles.length">
+        <div>为了保证资料上传顺利，请先下载模板，并按照规范示例上传资料</div>
 
-    <div class="upload-file__template" v-if="templateFiles.length">
-      <div>为了保证资料上传顺利，请先下载模板，并按照规范示例上传资料</div>
+        <div v-for="item in templateFiles" :key="item.uid" class="upload-file__template__item">
+          <a :href="item.url" download target="_blank">{{ item.name }}</a>
+        </div>
+      </div>
 
-      <div v-for="item in templateFiles" :key="item.uid" class="upload-file__template__item">
-        <a :href="item.url" download target="_blank">{{ item.name }}</a>
-      </div>
-    </div>
+      <el-upload v-model:file-list="fileList" :action="questionnaireData.props.uploadUrl" :limit="option.uploadLimit"
+        :before-upload="handleBeforeUpload" :disabled="disabled || (fileList.length >= option.uploadLimit)"
+        :show-file-list="false" :on-success="onSuccess" :on-error="onError">
+        <div class="questionnaire__btn" :class="{
+          'upload-file__btn--disabled': disabled || (fileList.length >= option.uploadLimit)
+        }">
+          {{ option.uploadText }}
+          ({{ fileList.length }}/{{ option.uploadLimit }})
+        </div>
+      </el-upload>
 
-    <el-upload v-model:file-list="fileList" :action="questionnaireData.props.uploadUrl" :limit="option.uploadLimit"
-      :before-upload="handleBeforeUpload" :disabled="disabled || (fileList.length >= option.uploadLimit)"
-      :show-file-list="false" :on-success="onSuccess" :on-error="onError">
-      <div class="questionnaire__btn" :class="{
-        'upload-file__btn--disabled': disabled || (fileList.length >= option.uploadLimit)
-      }">
-        {{ option.uploadText }}
-        ({{ fileList.length }}/{{ option.uploadLimit }})
+      <div class="upload-file__item" v-for="(item, index) in fileList" :key="item.uid || item.url || item.name">
+        <div class="upload-file__item__title">
+          {{ item.name }}
+        </div>
+        <div class="upload-file__item__foot">
+          <el-button type="primary" text @click="handlePreview(item.url)">预览</el-button>
+          <el-button type="danger" text @click="handleRemove(index)">删除</el-button>
+        </div>
+        <el-progress :percentage="item.percentage" status="success" v-if="item.percentage"
+          class="upload-file__item__percentage" />
       </div>
-    </el-upload>
+    </template>
 
-    <div class="upload-file__item" v-for="(item, index) in fileList" :key="item.uid || item.url || item.name">
-      <div class="upload-file__item__title">
-        {{ item.name }}
-      </div>
-      <div class="upload-file__item__foot">
-        <el-button type="primary" text @click="handlePreview(item.url)">预览</el-button>
-        <el-button type="danger" text @click="handleRemove(index)">删除</el-button>
-      </div>
-      <el-progress :percentage="item.percentage" status="success" v-if="item.percentage"
-        class="upload-file__item__percentage" />
+    <div class="upload-file__no-api" v-else>
+      未配置上传接口: 请联系管理员配置上传接口(问卷设置-上传请求地址)
     </div>
   </div>
 </template>
@@ -260,5 +265,13 @@ function handlePreview(url) {
 
 .upload-file__template__item {
   margin-top: 6px;
+}
+
+.upload-file__no-api {
+  background-color: var(--questionnaire-bg-color);
+  color: var(--questionnaire-text-color);
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
 }
 </style>
