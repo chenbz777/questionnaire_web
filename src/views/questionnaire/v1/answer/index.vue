@@ -43,9 +43,11 @@ if (userDefined.isWx()) {
   uaText = '微信';
 }
 
+// 开始答题时间
+let startAnswerTime = Date.now();
 
-// 拓展提交数据
-let expansionSubmitData = {};
+// 结束答题时间
+let endAnswerTime = Date.now();
 
 /**
  * @author: chenbz
@@ -53,19 +55,20 @@ let expansionSubmitData = {};
  * @return {*}
  */
 function onSubmit() {
-  const submitData = checkData();
+  const { errorList, data, openUserKey } = checkData();
 
-  const endTime = Date.now();
-
-  // 拓展提交数据: 结束时间
-  expansionSubmitData.endTime = endTime;
-
-  Object.assign(submitData, expansionSubmitData);
-
-  console.log('submitData: ', submitData);
+  endAnswerTime = Date.now();
 
   if (window.onSubmit) {
-    window.onSubmit(submitData);
+    window.onSubmit({
+      errorList,
+      data: {
+        ...data,
+        startAnswerTime,
+        endAnswerTime,
+        openUserKey
+      }
+    });
   }
 }
 
@@ -115,7 +118,7 @@ function handleSubmit() {
 function init() {
 
   // 拓展提交数据: 开始时间
-  expansionSubmitData.startTime = Date.now();
+  startAnswerTime = Date.now();
 
   // 简介模式不需要初始化皮肤
   if (!isEasy) {

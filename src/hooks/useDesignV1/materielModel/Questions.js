@@ -22,7 +22,7 @@ export default class Questions extends BaseMateriel {
       title: '问卷标题',  // 标题
       desc: '问卷描述',  // 描述
       totalPoints: 0,  // 总分
-      showLogo: true,  // 是否显示logo
+      showLogo: false,  // 是否显示logo
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',  // logo
       logoPosition: 'center',  // logo位置: left-左, center-中, right-右
       bgImage: 'https://ice.frostsky.com/2024/08/25/5623a87824a71855cbf09cec9e3202a5.png',

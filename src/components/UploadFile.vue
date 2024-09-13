@@ -163,6 +163,10 @@ function onError(error, file) {
 function handleRemove(index) {
   fileList.value.splice(index, 1);
 }
+
+function handlePreview(url) {
+  window.open(url);
+}
 </script>
 
 <template>
@@ -189,10 +193,11 @@ function handleRemove(index) {
 
     <div class="upload-file__item" v-for="(item, index) in fileList" :key="item.uid">
       <div class="upload-file__item__title">
-        <div>{{ item.name }}</div>
-        <div class="ml-2">
-          <el-button type="danger" text @click="handleRemove(index)">删除</el-button>
-        </div>
+        {{ item.name }}
+      </div>
+      <div class="upload-file__item__foot">
+        <el-button type="primary" text @click="handlePreview(item.url)">预览</el-button>
+        <el-button type="danger" text @click="handleRemove(index)">删除</el-button>
       </div>
       <el-progress :percentage="item.percentage" status="success" v-if="item.percentage"
         class="upload-file__item__percentage" />
@@ -202,7 +207,6 @@ function handleRemove(index) {
 
 <style scoped>
 .upload-file__item {
-  padding: 4px 16px;
   border-radius: 6px;
   margin: 10px 0;
   background-color: var(--questionnaire-bg-color);
@@ -211,9 +215,18 @@ function handleRemove(index) {
 }
 
 .upload-file__item__title {
+  word-wrap: break-word;
+  word-break: normal;
+  padding: 4px 10px;
+}
+
+.upload-file__item__foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-top: 1px dashed var(--questionnaire-content-bg-color);
 }
 
 .upload-file__item__percentage {

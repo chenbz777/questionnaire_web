@@ -2,6 +2,7 @@
 import { watch } from 'vue';
 import useDesignV1 from '@/hooks/useDesignV1';
 import { ElMessageBox } from 'element-plus';
+import UploadFile from '@/components/UploadFile.vue';
 
 
 const { questionnaireData, initSkin } = useDesignV1();
@@ -25,7 +26,7 @@ const skinList = [
   {
     title: '默认皮肤',
     data: {
-      showLogo: true,
+      showLogo: false,
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',
       logoPosition: 'center',
       bgImage: 'https://ice.frostsky.com/2024/08/25/5623a87824a71855cbf09cec9e3202a5.png',
@@ -40,7 +41,7 @@ const skinList = [
   {
     title: '公益小红花',
     data: {
-      showLogo: true,
+      showLogo: false,
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',
       logoPosition: 'center',
       bgImage: 'https://ice.frostsky.com/2024/08/26/ace653c084c48c7cd54d91d912c0bac8.jpeg',
@@ -55,7 +56,7 @@ const skinList = [
   {
     title: '新年快乐',
     data: {
-      showLogo: true,
+      showLogo: false,
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',
       logoPosition: 'center',
       bgImage: 'https://ice.frostsky.com/2024/08/26/7d7b983a88d022525fb8c3bc7d18a6c8.png',
@@ -70,7 +71,7 @@ const skinList = [
   {
     title: '卫生医疗',
     data: {
-      showLogo: true,
+      showLogo: false,
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',
       logoPosition: 'center',
       bgImage: 'https://ice.frostsky.com/2024/08/26/5be28be4a1e749bc678a87bfb9c0c057.png',
@@ -85,7 +86,7 @@ const skinList = [
   {
     title: '研究调查',
     data: {
-      showLogo: true,
+      showLogo: false,
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',
       logoPosition: 'center',
       bgImage: 'https://ice.frostsky.com/2024/08/26/e26f669e6e5ac5d625e9d972b47112d5.png',
@@ -100,7 +101,7 @@ const skinList = [
   {
     title: '婚礼庆典',
     data: {
-      showLogo: true,
+      showLogo: false,
       logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',
       logoPosition: 'center',
       bgImage: 'https://ice.frostsky.com/2024/08/26/35f3334cdc4809e44c51789544d18490.png',
@@ -138,6 +139,12 @@ watch(() => questionnaireData.value.props, (value) => {
 }, {
   deep: true
 });
+
+const uploadFileConfig = {
+  uploadText: '上传图片',
+  uploadLimit: 1,
+  uploadType: 'jpg, jpeg, png, gif'
+};
 </script>
 
 <template>
@@ -156,22 +163,27 @@ watch(() => questionnaireData.value.props, (value) => {
       <div>显示品牌logo</div>
       <el-switch v-model="questionnaireData.props.showLogo"></el-switch>
     </div>
-    <div v-show="questionnaireData.props.showLogo">
-      <el-input v-model="questionnaireData.props.logo" placeholder="请输入[logo]远程地址" clearable />
-    </div>
 
-    <div class="skin__title">
-      <div>品牌logo位置</div>
-    </div>
-    <div>
-      <el-segmented v-model="questionnaireData.props.logoPosition" :options="logoPositionOptions" block />
-    </div>
+    <template v-if="questionnaireData.props.showLogo">
+      <div>
+        <!-- <el-input v-model="questionnaireData.props.logo" placeholder="请输入[logo]远程地址" clearable /> -->
+        <UploadFile v-model="questionnaireData.props.logo" :option="uploadFileConfig" />
+      </div>
+
+      <div class="skin__title">
+        <div>品牌logo位置</div>
+      </div>
+      <div>
+        <el-segmented v-model="questionnaireData.props.logoPosition" :options="logoPositionOptions" block />
+      </div>
+    </template>
 
     <div class="skin__title">
       <div>背景图</div>
     </div>
     <div>
-      <el-input v-model="questionnaireData.props.bgImage" placeholder="请输入[背景图]远程地址" clearable />
+      <!-- <el-input v-model="questionnaireData.props.bgImage" placeholder="请输入[背景图]远程地址" clearable /> -->
+      <UploadFile v-model="questionnaireData.props.bgImage" :option="uploadFileConfig" />
     </div>
 
     <div class="skin__title">

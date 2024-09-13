@@ -20,7 +20,8 @@ export default class FormCheckbox extends BaseMateriel {
         {
           label: '选项1',
           value: '选项1',
-          image: ''
+          image: '',
+          score: 0
         }
       ],
       showEnglishSerialNumber: false,
@@ -156,7 +157,6 @@ export default class FormCheckbox extends BaseMateriel {
                 itemKey: 'image',
                 type: 'uploadFile',
                 uploadText: '上传图片',
-                maxSize: 1,
                 uploadLimit: 1,
                 uploadType: 'jpg, jpeg, png, gif'
               }

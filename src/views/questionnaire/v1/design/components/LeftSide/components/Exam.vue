@@ -29,7 +29,7 @@ function getExamSettings(type) {
         <div class="exam__content__item__source">
           <AttributeSettings :settings="getExamSettings(question.type)" v-model="question.props"
             v-if="Object.keys(question.props).includes('answer')" />
-          <div v-else class="exam__content__item--null">该题目没有考试配置项</div>
+          <div v-else class="exam__content__item--null">该题目不支持考试配置</div>
         </div>
       </div>
     </AnimateTransitionGroup>
