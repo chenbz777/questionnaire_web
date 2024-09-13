@@ -18,7 +18,8 @@ export default class MatrixFill extends BaseMateriel {
       gapFillingList: [
         {
           key: 'one',
-          title: '填空1',
+          prependTitle: '填空1',
+          appendTitle: '',
           format: '不限制',
           required: false
         }
@@ -83,7 +84,9 @@ export default class MatrixFill extends BaseMateriel {
     for (let i = 0; i < this.props.gapFillingList.length; i++) {
       const option = this.props.gapFillingList[i];
 
-      html += `<div class="mb-2">${option.title} ${this.props.defaultValue[option.key] || ''}</div>`;
+      const htmlTag = this.props.arrange === '水平' ? 'span' : 'div';
+
+      html += `<${htmlTag} class="m-2">${option.prependTitle} ${this.props.defaultValue[option.key] || ''} ${option.appendTitle}</${htmlTag}>`;
     }
 
     return html;
@@ -161,9 +164,14 @@ export default class MatrixFill extends BaseMateriel {
             listKey: 'key',
             listSettings: [
               {
-                title: '列标题',
+                title: '列前置标题',
                 type: 'input',
-                itemKey: 'title'
+                itemKey: 'prependTitle'
+              },
+              {
+                title: '列后置标题',
+                type: 'input',
+                itemKey: 'appendTitle'
               },
               {
                 title: '文本格式',
@@ -175,11 +183,6 @@ export default class MatrixFill extends BaseMateriel {
                 title: '必填',
                 type: 'switch',
                 itemKey: 'required'
-              },
-              {
-                title: '默认值',
-                type: 'input',
-                itemKey: 'value'
               }
             ]
           }
