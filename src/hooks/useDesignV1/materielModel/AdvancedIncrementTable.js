@@ -127,7 +127,7 @@ export default class AdvancedIncrementTable extends BaseMateriel {
           },
           {
             title: '描述',
-            type: 'input',
+            type: 'richText',
             propsKey: 'desc'
           },
           {

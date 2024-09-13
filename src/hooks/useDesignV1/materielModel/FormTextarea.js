@@ -69,7 +69,7 @@ export default class FormTextarea extends BaseMateriel {
           },
           {
             title: '描述',
-            type: 'input',
+            type: 'richText',
             propsKey: 'desc'
           },
           {

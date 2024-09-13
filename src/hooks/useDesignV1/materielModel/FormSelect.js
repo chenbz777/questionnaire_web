@@ -91,7 +91,7 @@ export default class FormSelect extends BaseMateriel {
           },
           {
             title: '描述',
-            type: 'input',
+            type: 'richText',
             propsKey: 'desc'
           },
           {

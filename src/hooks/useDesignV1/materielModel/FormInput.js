@@ -87,7 +87,7 @@ export default class FormInput extends BaseMateriel {
           },
           {
             title: '描述',
-            type: 'input',
+            type: 'richText',
             propsKey: 'desc'
           },
           {
