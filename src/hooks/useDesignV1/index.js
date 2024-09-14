@@ -280,6 +280,17 @@ function setQuestion(questionKey, variableName, value) {
 window.getQuestionnaireData = getQuestionnaireData;
 window.setQuestionnaireData = setQuestionnaireData;
 
+
+/**
+ * 临时解决方案: 因为没有上传接口, 所以暂时使用这个配置
+ * 正确解决方案: 企业内部开发上传接口
+ */
+const uploadConfig = ref({
+  uploadUrl: '',
+  headers: {},
+  data: {}
+});
+
 export default function useEdit() {
   return {
     subscribe,
@@ -291,6 +302,7 @@ export default function useEdit() {
     currentQuestionData,
     setQuestion,
     setQuestionnaireData,
-    getQuestionnaireData
+    getQuestionnaireData,
+    uploadConfig
   };
 }

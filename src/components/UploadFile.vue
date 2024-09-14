@@ -66,7 +66,7 @@ watch(() => fileList.value, (files) => {
   deep: true
 });
 
-const { questionnaireData } = useDesignV1();
+const { questionnaireData, uploadConfig } = useDesignV1();
 
 const option = Object.assign({
   uploadText: '上传附件',
@@ -74,22 +74,6 @@ const option = Object.assign({
   uploadType: '',
   maxSize: 100
 }, props.option);
-
-const uploadConfig = ref({
-  uploadUrl: '',
-  headers: {},
-  data: {}
-});
-
-/**
- * 临时解决方案: 因为没有上传接口, 所以通过window.uploadConfig获取上传配置
- * 正确解决方案: 企业内部开发上传接口
- */
-setTimeout(() => {
-  if (window.uploadConfig) {
-    uploadConfig.value = window.uploadConfig;
-  }
-}, 1000);
 
 function handleBeforeUpload(file) {
 

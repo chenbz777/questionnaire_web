@@ -34,15 +34,21 @@
 
 ![设计页面](https://ice.frostsky.com/2024/09/13/b7987b8e01f2b9ec622aaab65dbc39a8.png)
 
+<br />
+
 ## 🌈 技术栈
 
 ```
 vue3
 ```
 
+<br />
+
 ## 📦 仓库
 
 [questionnaire_web](https://github.com/chenbz777/questionnaire_web)
+
+<br />
 
 ## 💻 初始化
 
@@ -50,17 +56,23 @@ vue3
 pnpm install
 ```
 
+<br />
+
 ## 🚀 启动
 
 ```bash
 pnpm dev
 ```
 
+<br />
+
 ## 🛠️ 打包
 
 ```bash
 pnpm build
 ```
+
+<br />
 
 ## 🗂 目录结构
 
@@ -101,174 +113,45 @@ pnpm build
 └── vite.config.js
 ```
 
+<br />
+
 ## ✨ 使用方法
 
 ### 集成【设计问卷】
 
-```vue
-<script setup>
-// 第一步: 拼凑地址, 后续换成部署后的域名
-const designUrl =
-  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/design";
+> 集成demo在项目目录 `src/views/questionnaire/v1/demo/design.vue`
 
-// 第二步: 问卷数据, 实际上应该是通过接口获取
-let questionnaireData = {};
-
-// 第三步: 设置问卷数据
-function setQuestionnaireData() {
-  console.log("setQuestionnaireData", questionnaireData);
-  // setQuestionnaireData 方法是“离线版问卷”挂载上去的
-  window.myIframe.contentWindow.setQuestionnaireData(questionnaireData);
-}
-
-// 第四步: 配置完成后获取问卷数据存起来, 这里实际上应该是传递给接口进行保存
-function getQuestionnaireData() {
-  // getQuestionnaireData 方法是“离线版问卷”挂载上去的
-  questionnaireData = window.myIframe.contentWindow.getQuestionnaireData();
-  console.log("getQuestionnaireData", questionnaireData);
-}
-</script>
-
-<template>
-  <div>
-    <iframe :src="designUrl" id="myIframe" class="my-iframe"></iframe>
-  </div>
-</template>
-
-<style scoped>
-.my-iframe {
-  display: block;
-  width: 100%;
-  height: 100vh;
-  border: 0;
-}
-</style>
-```
+<br />
 
 ### 集成【填写问卷】
 
-```vue
-<script setup>
-import { onMounted, nextTick } from "vue";
+> 集成demo在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
 
-// 第一步: 拼凑地址, 后续换成部署后的域名
-const answerUrl =
-  "https://chenbz777.github.io/questionnaire_web/questionnaire/v1/answer";
-
-// 第二步: 问卷数据, 实际上应该是通过接口获取
-let questionnaireData = {};
-
-// 第三步: 设置问卷数据
-function setQuestionnaireData() {
-  console.log("setQuestionnaireData", questionnaireData);
-
-  // data 是问卷填答数据,把onSubmit获取到的 submitData.data 原样传回去就可以进行数据回显
-  const data = {};
-
-  // setQuestionnaireData 方法是“离线版问卷”挂载上去的
-  window.myIframe.contentWindow.setQuestionnaireData(questionnaireData, data);
-}
-
-nextTick(() => {
-  // 第四步: 挂载提交方法进行回调
-  window.myIframe2.contentWindow.onSubmit = function (submitData) {
-    /**
-     * errorList: 题目校验错误列表
-     * data: 提交的数据
-     * // 一般情况下, 提交的数据中会包含开始答题时间和结束答题时间, 以及开放用户标识(不要依赖)
-     * data.startAnswerTime: 开始答题时间
-     * data.endAnswerTime: 结束答题时间
-     * data.openUserKey: 开放用户标识
-     */
-    console.log("onSubmit", submitData);
-  };
-});
-
-onMounted(() => {
-  // 设置问卷数据: 实际上应该是请求数据获取后再调用
-  setQuestionnaireData();
-});
-</script>
-
-<template>
-  <div>
-    <iframe :src="answerUrl" id="myIframe" class="my-iframe"></iframe>
-  </div>
-</template>
-
-<style scoped>
-.my-iframe {
-  display: block;
-  width: 100%;
-  height: 100vh;
-  border: 0;
-}
-</style>
-```
+<br />
 
 ### 集成【只读问卷】
 
-```vue
-<script setup>
-import { onMounted } from "vue";
+> 集成demo在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
 
-// 第一步: 拼凑地址, 后续换成部署后的域名
-const readonlyUrl =
-  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/readonly";
+<br />
 
-// 第二步: 问卷数据, 实际上应该是通过接口获取
-let questionnaireData = {};
+### 集成【设计题目】
 
-// 第三步: 设置问卷数据
-function setQuestionnaireData() {
-  console.log("setQuestionnaireData", questionnaireData);
+> 集成demo在项目目录 `src/views/questionnaire/v1/demo/designQuestion.vue`
 
-  // data 是问卷填答数据,把onSubmit获取到的 submitData.data 原样传回去就可以进行数据回显
-  const data = {};
-
-  // setQuestionnaireData 方法是“离线版问卷”挂载上去的
-  window.myIframe.contentWindow.setQuestionnaireData(questionnaireData, data);
-}
-
-onMounted(() => {
-  // 设置问卷数据: 实际上应该是请求数据获取后再调用
-  setQuestionnaireData();
-});
-</script>
-
-<template>
-  <div>
-    <iframe :src="readonlyUrl" id="myIframe" class="my-iframe"></iframe>
-  </div>
-</template>
-
-<style scoped>
-.my-iframe {
-  display: block;
-  width: 100%;
-  height: 100vh;
-  border: 0;
-}
-</style>
-```
+<br />
 
 ### 集成【填答简洁版问卷】
 
-```js
-const answerEasyUrl =
-  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/answer/easy";
-```
-
 > 用法与【填答问卷】一致，只是去掉了"皮肤"样式
+
+<br />
 
 ### 集成【只读简洁版问卷】
 
-```js
-const readonlyEasyUrl =
-  "https://chenbz777.github.io/questionnaire_web/#/questionnaire/v1/readonly/easy";
-```
-
 > 用法与【只读问卷】一致，只是去掉了"皮肤"样式
+
+<br />
 
 ## 🏗️ 待完善
 
@@ -276,13 +159,13 @@ const readonlyEasyUrl =
 
    > 暂时还没找到好的日期时间插件，后续再补充
 
-
+<br />
 
 ## 📌 许可协议
 
 本项目基于 MIT 许可证开源，详情请参阅 [LICENSE](./LICENSE) 文件。
 
-
+<br />
 
 ## 🎨 展示
 
@@ -318,7 +201,7 @@ const readonlyEasyUrl =
 
 ![预览](https://ice.frostsky.com/2024/09/07/e37e78575c73ec34f34c1cde35dbc27b.png)
 
-
+<br />
 
 ## 🆕 更新
 
@@ -332,3 +215,6 @@ const readonlyEasyUrl =
 
 ![模版库](https://ice.frostsky.com/2024/09/13/b20d0ce86fddd0b7c5d1017c89803a6a.png)
 
+<br />
+
+2024-9-14，新增【设计题目】页面，设计好的题目通过接口存储到数据库，后面可以慢慢形式“题库”的功能，集成方法已同步到上方“使用方法”

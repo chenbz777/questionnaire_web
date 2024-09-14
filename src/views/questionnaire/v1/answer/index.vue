@@ -12,7 +12,7 @@ import useGlobal from '@/hooks/useGlobal';
 
 
 // 问卷数据
-const { questionnaireData, checkData, subscribe, initSkin, setQuestionnaireData, getQuestionnaireData } = useDesignV1();
+const { questionnaireData, checkData, subscribe, initSkin, setQuestionnaireData, getQuestionnaireData, uploadConfig } = useDesignV1();
 
 // 引入通讯SDK
 const { IframeMessageSDK } = useGlobal();
@@ -99,6 +99,10 @@ iframeMessage.onMessage = (event) => {
 
     if (name === 'getSubmitData') {
       iframeMessage.reply(sendId, getSubmitData());
+    }
+
+    if (name === 'setUploadConfig') {
+      uploadConfig.value = data;
     }
   }
 };

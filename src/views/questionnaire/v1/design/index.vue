@@ -9,7 +9,7 @@ import userDefined from '@/utils/userDefined';
 import useGlobal from '@/hooks/useGlobal';
 
 
-const { questionnaireData, subscribe, setQuestionnaireData, getQuestionnaireData } = useDesignV1();
+const { questionnaireData, subscribe, setQuestionnaireData, getQuestionnaireData, uploadConfig } = useDesignV1();
 
 const { IframeMessageSDK } = useGlobal();
 
@@ -51,6 +51,10 @@ iframeMessage.onMessage = (event) => {
 
     if (name === 'getQuestionnaireData') {
       iframeMessage.reply(sendId, getQuestionnaireData());
+    }
+
+    if (name === 'setUploadConfig') {
+      uploadConfig.value = data;
     }
   }
 };

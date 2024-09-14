@@ -4,11 +4,14 @@ import materielModel from '@/hooks/useDesignV1/materielModel';
 import AttributeSettings from './components/Configuration/components/AttributeSettings.vue';
 import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
 import useGlobal from '@/hooks/useGlobal';
+import useDesignV1 from '@/hooks/useDesignV1';
 
 
 const { IframeMessageSDK } = useGlobal();
 
 const iframeMessage = new IframeMessageSDK();
+
+const { uploadConfig } = useDesignV1();
 
 const currentModel = ref(null);
 
@@ -41,6 +44,10 @@ iframeMessage.onMessage = (event) => {
 
     if (name === 'getQuestionData') {
       iframeMessage.reply(sendId, getQuestionData());
+    }
+
+    if (name === 'setUploadConfig') {
+      uploadConfig.value = data;
     }
   }
 };
