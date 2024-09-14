@@ -278,12 +278,7 @@ function setQuestion(questionKey, variableName, value) {
 
 // 暴露方法
 window.getQuestionnaireData = getQuestionnaireData;
-
-// 暴露方法
 window.setQuestionnaireData = setQuestionnaireData;
-
-// 暴露方法
-window.setQuestion = setQuestion;
 
 export default function useEdit() {
   return {

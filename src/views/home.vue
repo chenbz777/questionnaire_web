@@ -2,7 +2,7 @@
 // import { ref, reactive } from 'vue';
 
 function openUrl(url) {
-  const baseUrl = window.location.origin + window.location.pathname + '#';
+  const baseUrl = window.location.origin;
 
   window.open(baseUrl + url, '_blank');
 }
@@ -10,26 +10,20 @@ function openUrl(url) {
 
 <template>
   <div class="p-5">
-    <h2>开放问卷平台</h2>
+    <h2>开放问卷平台(V1)</h2>
 
     <div>
       <el-button type="primary" @click="openUrl('/questionnaire/v1/design')">
         设计问卷
       </el-button>
-      <el-button type="primary" @click="openUrl('/questionnaire/v1/answer')">
-        填答问卷
+      <el-button type="primary" @click="openUrl('/questionnaire/v1/demo/design')">
+        集成【设计问卷】示例
       </el-button>
-      <el-button type="primary" @click="openUrl('/questionnaire/v1/readonly')">
-        只读问卷
+      <el-button type="primary" @click="openUrl('/questionnaire/v1/demo/answer')">
+        集成【填答问卷】示例
       </el-button>
-      <el-button type="primary" @click="openUrl('/questionnaire/v1/answer/easy')">
-        简易填答问卷
-      </el-button>
-      <el-button type="primary" @click="openUrl('/questionnaire/v1/readonly/easy')">
-        简易只读问卷
-      </el-button>
-      <el-button type="primary" @click="openUrl('/questionnaire/v1/design/question')">
-        设计题目
+      <el-button type="primary" @click="openUrl('/questionnaire/v1/demo/design/question')">
+        集成【设计题目】示例
       </el-button>
     </div>
   </div>

@@ -79,7 +79,7 @@ const model = new materielModel[props.data.type]();
     </div>
     <!-- 描述 -->
     <div class="base-container__desc" v-if="data.props.desc">
-      {{ data.props.desc }}
+      <div v-html="data.props.desc"></div>
     </div>
     <!-- 内容主体 -->
     <template v-if="data.props.status === 'readonly'">

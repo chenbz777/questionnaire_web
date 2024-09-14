@@ -27,26 +27,16 @@ function open(_questionnaireData) {
   popup.value = true;
 }
 
+// 获取编辑地址
+let editUrl = window.location.origin + '/questionnaire/v1/answer';
+
 // 弹窗打开后回调
 function onOpened() {
-  // 获取 iframe
-  const iframe = document.getElementById('myIframe');
-
-  // 获取编辑地址
-  const baseUrl = window.location.origin + window.location.pathname + '#';
-  const editUrl = baseUrl + '/questionnaire/v1/answer';
-
-  // 设置 iframe 地址
-  iframe.src = editUrl;
-
-  // iframe 加载完成后设置数据
-  iframe.onload = function () {
-    // 延迟是为了确保 iframe 加载完成
-    setTimeout(() => {
-      // 设置数据
-      window.myIframe.contentWindow.setQuestionnaireData(questionnaireData.value);
-    }, 300);
-  };
+  // 延迟是为了确保 iframe 加载完成
+  setTimeout(() => {
+    // 设置数据
+    window.previewIframe.contentWindow.setQuestionnaireData(questionnaireData.value);
+  }, 500);
 }
 
 // 暴露函数
@@ -67,7 +57,7 @@ defineExpose({
             'preview__container__content--pc': platform === '电脑预览',
             'preview__container__content--phone': platform === '手机预览'
           }">
-            <iframe src="" id="myIframe" class="my-iframe"></iframe>
+            <iframe :src="editUrl" id="previewIframe" class="my-iframe"></iframe>
           </div>
         </div>
       </div>

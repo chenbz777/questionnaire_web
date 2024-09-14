@@ -8,10 +8,16 @@ import useAnimate from '@/hooks/useAnimate';
 import localStorage from '@/utils/localStorage';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import userDefined from '@/utils/userDefined';
+import useGlobal from '@/hooks/useGlobal';
 
 
-const { questionnaireData, checkData, subscribe, initSkin } = useDesignV1();
+// 问卷数据
+const { questionnaireData, checkData, subscribe, initSkin, setQuestionnaireData, getQuestionnaireData } = useDesignV1();
 
+// 引入通讯SDK
+const { IframeMessageSDK } = useGlobal();
+
+// 引入动画
 const { animateElement } = useAnimate();
 
 const route = useRoute();
@@ -22,13 +28,13 @@ const isReadonly = (route.name === 'questionnaireV1Readonly') || (route.name ===
 // 判断是否是简易模式
 const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === 'questionnaireV1ReadonlyEasy');
 
-
 // 答题倒计时
 const countdown = ref(0);
 
 // 是否显示提交按钮
 const showSubmitBtn = ref(true);
 
+// 用户设备类型
 let uaText = '';
 
 if (userDefined.isMobile()) {
@@ -49,34 +55,67 @@ let startAnswerTime = Date.now();
 // 结束答题时间
 let endAnswerTime = Date.now();
 
+// 获取提交数据
+function getSubmitData() {
+  const { errorList, data, openUserKey } = checkData();
+
+  endAnswerTime = Date.now();
+
+  const submitData = {
+    errorList,
+    data: {
+      ...data,
+      startAnswerTime,
+      endAnswerTime,
+      openUserKey
+    }
+  };
+
+  return submitData;
+}
+
+// 挂载到全局
+window.getSubmitData = getSubmitData;
+
+// 初始化通讯SDK
+const iframeMessage = new IframeMessageSDK();
+
+// 监听消息
+iframeMessage.onMessage = (event) => {
+
+  const { sendId, data: messageData } = event;
+
+  if (messageData && messageData.name) {
+    const { name, data } = messageData;
+
+    if (name === 'setQuestionnaireData') {
+      setQuestionnaireData(data);
+      iframeMessage.reply(sendId);
+    }
+
+    if (name === 'getQuestionnaireData') {
+      iframeMessage.reply(sendId, getQuestionnaireData());
+    }
+
+    if (name === 'getSubmitData') {
+      iframeMessage.reply(sendId, getSubmitData());
+    }
+  }
+};
+
 /**
  * @author: chenbz
  * @description: 提交问卷
  * @return {*}
  */
 function onSubmit() {
-  const { errorList, data, openUserKey } = checkData();
-
-  endAnswerTime = Date.now();
-
-  if (window.onSubmit) {
-    /**
-     * errorList: 题目校验错误列表
-     * data: 提交的数据
-     * // 一般情况下, 提交的数据中会包含开始答题时间和结束答题时间, 以及开放用户标识(不要依赖)
-     * data.startAnswerTime: 开始答题时间
-     * data.endAnswerTime: 结束答题时间
-     * data.openUserKey: 开放用户标识
-     */
-    window.onSubmit({
-      errorList,
-      data: {
-        ...data,
-        startAnswerTime,
-        endAnswerTime,
-        openUserKey
-      }
+  try {
+    iframeMessage.sendPromise({
+      name: 'submitQuestionnaire',
+      data: getSubmitData()
     });
+  } catch (error) {
+    console.error('submitQuestionnaire error: ', error);
   }
 }
 

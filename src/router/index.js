@@ -1,5 +1,5 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-
+import { createRouter, createWebHistory } from 'vue-router';
+// createWebHashHistory
 
 const routes = [
   {
@@ -33,14 +33,24 @@ const routes = [
     component: () => import('@/views/questionnaire/v1/answer/index.vue')
   },
   {
-    path: '/questionnaire/v1/demo',
-    name: 'questionnaireV1Demo',
-    component: () => import('@/views/questionnaire/v1/demo.vue')
-  },
-  {
     path: '/questionnaire/v1/design/question',
     name: 'questionnaireV1DesignQuestion',
     component: () => import('@/views/questionnaire/v1/design/question.vue')
+  },
+  {
+    path: '/questionnaire/v1/demo/design',
+    name: 'questionnaireV1DemoDesign',
+    component: () => import('@/views/questionnaire/v1/demo/design.vue')
+  },
+  {
+    path: '/questionnaire/v1/demo/answer',
+    name: 'questionnaireV1DemoAnswer',
+    component: () => import('@/views/questionnaire/v1/demo/answer.vue')
+  },
+  {
+    path: '/questionnaire/v1/demo/design/question',
+    name: 'questionnaireV1DemoDesignQuestion',
+    component: () => import('@/views/questionnaire/v1/demo/designQuestion.vue')
   },
   {
     path: '/:pathMatch(.*)',
@@ -50,7 +60,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 });
 

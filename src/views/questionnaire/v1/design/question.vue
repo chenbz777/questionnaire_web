@@ -3,7 +3,12 @@ import { ref } from 'vue';
 import materielModel from '@/hooks/useDesignV1/materielModel';
 import AttributeSettings from './components/Configuration/components/AttributeSettings.vue';
 import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
+import useGlobal from '@/hooks/useGlobal';
 
+
+const { IframeMessageSDK } = useGlobal();
+
+const iframeMessage = new IframeMessageSDK();
 
 const currentModel = ref(null);
 
@@ -20,7 +25,25 @@ function getQuestionData() {
 window.setQuestionData = setQuestionData;
 window.getQuestionData = getQuestionData;
 
-setQuestionData('FormRadio');
+// 监听消息
+iframeMessage.onMessage = (event) => {
+
+  const { sendId, data: messageData } = event;
+
+  if (messageData && messageData.name) {
+
+    const { name, data } = messageData;
+
+    if (name === 'setQuestionData') {
+      setQuestionData(data.type, data.props);
+      iframeMessage.reply(sendId);
+    }
+
+    if (name === 'getQuestionData') {
+      iframeMessage.reply(sendId, getQuestionData());
+    }
+  }
+};
 
 const options = [
   {
@@ -34,14 +57,13 @@ const options = [
 ];
 
 const segmented = ref('基础');
-
 </script>
 
 <template>
   <div class="question">
     <div class="question__container" v-if="currentModel">
       <div class="question__head">
-        <RenderEngine :data="currentModel" />
+        <RenderEngine :data="currentModel" :key="currentModel.key" />
       </div>
 
       <div class="question-segmented">
