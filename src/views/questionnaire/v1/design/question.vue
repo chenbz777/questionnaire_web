@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import AttributeSettings from './components/Configuration/components/AttributeSettings.vue';
 import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
 import useGlobal from '@/hooks/useGlobal';
@@ -16,9 +16,7 @@ const { uploadConfig } = useDesignV1();
 const currentModel = ref(null);
 
 function setQuestionData(type, props) {
-  if (materielModel[type]) {
-    currentModel.value = new materielModel[type](props);
-  }
+  currentModel.value = MaterielFactory.createMateriel(type, props);
 }
 
 function getQuestionData() {

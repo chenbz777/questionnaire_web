@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import AttributeSettings from './components/AttributeSettings.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 
 
 const { subscribe } = useDesignV1();
@@ -28,7 +28,7 @@ const currentModel = ref(null);
 
 // 订阅编辑组件事件
 subscribe.on('editClickQuestion', (data) => {
-  currentModel.value = new materielModel[data.type]();
+  currentModel.value = MaterielFactory.createMateriel(data.type);
   currentComponentData.value = data;
 
   segmented.value = '基础';

@@ -18,4 +18,20 @@ for (const path in importModules) {
 
 delete modules.Materiel;
 
-export default modules;
+// 定义工厂类，负责根据类型创建物料
+class MaterielFactory {
+  // 工厂方法，根据传入的类型决定创建哪种物料
+  static createMateriel(type, instance) {
+    if (modules[type]) {
+      return new modules[type](instance);
+    }
+
+    return;
+  }
+
+  static getModules() {
+    return modules;
+  }
+}
+
+export default MaterielFactory;

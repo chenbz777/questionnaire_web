@@ -1,6 +1,6 @@
 <script setup>
 import materielComponents from '@/hooks/useDesignV1/materielComponents';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 
 
 const props = defineProps({
@@ -60,7 +60,7 @@ function emitSubscribe(eventName, data) {
 }
 
 // 实例化题目模型
-const model = new materielModel[props.data.type]();
+const model = MaterielFactory.createMateriel(props.data.type);
 </script>
 
 <template>
@@ -83,7 +83,8 @@ const model = new materielModel[props.data.type]();
     </div>
     <!-- 内容主体 -->
     <template v-if="data.props.status === 'readonly'">
-      <div class="base-container__readonly" v-html="new materielModel[props.data.type](props.data).getValueText()" />
+      <div class="base-container__readonly"
+        v-html="MaterielFactory.createMateriel(props.data.type, props.data).getValueText()" />
     </template>
     <template v-else>
       <component :is="materielComponents[data.type]" :data="data" :emitSubscribe="emitSubscribe" :option="option" />

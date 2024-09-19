@@ -1,5 +1,5 @@
 <script setup>
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import { vDraggable } from 'vue-draggable-plus';
 import useDesignV1 from '@/hooks/useDesignV1';
 
@@ -13,7 +13,7 @@ const groups = {
   '矩阵': []
 };
 
-Object.values(materielModel).forEach((itemClass) => {
+Object.values(MaterielFactory.getModules()).forEach((itemClass) => {
 
   const model = new itemClass();
 
@@ -39,14 +39,14 @@ const draggableOption = {
   },
   clone: (data) => {
     // 自定义克隆函数: 拖拽时克隆一个新的组件
-    return new materielModel[data.type];
+    return MaterielFactory.createMateriel(data.type);
   }
 };
 
 // 点击组件
 function handleClick(data) {
   // 生成组件实例
-  const model = new materielModel[data.type]();
+  const model = MaterielFactory.createMateriel(data.type);
 
   addQuestion(model);
 }

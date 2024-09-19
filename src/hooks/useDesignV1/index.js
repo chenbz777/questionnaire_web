@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import useGlobal from '../useGlobal';
-import materielModel from './materielModel';
+import MaterielFactory from './materielFactory';
 import { ElMessage } from 'element-plus';
 import localStorage from '@/utils/localStorage';
 import BrowserFingerprint from './common/browserFingerprint';
@@ -23,7 +23,7 @@ const browserFingerprint = new BrowserFingerprint();
 const openUserKey = browserFingerprint.getShortIdentificationKey();
 
 // 问卷模型
-const questionnaireModel = new materielModel.Questions();
+const questionnaireModel = MaterielFactory.createMateriel('Questions');
 
 // 问卷数据
 const questionnaireData = ref(questionnaireModel);
@@ -75,7 +75,7 @@ subscribe.on('editDeleteQuestion', (data) => {
 
 // 复制题目
 function copyQuestion(question) {
-  const questionModel = new materielModel[question.type](question);
+  const questionModel = MaterielFactory.createMateriel(question.type, question);
 
   addQuestion(questionModel);
 }
@@ -108,7 +108,7 @@ function checkData() {
   const data = {};
 
   questionList.forEach((question, index) => {
-    const model = new materielModel[question.type](question);
+    const model = MaterielFactory.createMateriel(question.type, question);
 
     const key = question.key;
 
@@ -153,7 +153,7 @@ function setQuestionnaireData(_questionnaireData, data = {}) {
   // 兜底问卷数据
   if (!Object.keys(data).length) {
     // 问卷数据模型
-    const questionnaireModel = new materielModel.Questions();
+    const questionnaireModel = MaterielFactory.createMateriel('Questions');
 
     _questionnaireData = Object.assign(questionnaireModel, _questionnaireData);
   }
@@ -185,7 +185,7 @@ function setQuestionnaireData(_questionnaireData, data = {}) {
 
   // 合并最新模型
   questionnaireData.value.questionList.forEach((question) => {
-    const model = new materielModel[question.type](question);
+    const model = MaterielFactory.createMateriel(question.type, question);
 
     if (model) {
       // 题目数据存在时, 设置题目数据

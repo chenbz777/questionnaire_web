@@ -1,6 +1,6 @@
 <script setup>
 import useDesignV1 from '@/hooks/useDesignV1';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import AttributeSettings from '../../Configuration/components/AttributeSettings.vue';
 
 
@@ -12,7 +12,7 @@ const modelMap = {};
 function getExamSettings(type) {
 
   if (!modelMap[type]) {
-    modelMap[type] = new materielModel[type]();
+    modelMap[type] = MaterielFactory.createMateriel(type);
   }
 
   return modelMap[type].examSettings;

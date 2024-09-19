@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import useDesignV1 from '@/hooks/useDesignV1';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import random from '@/utils/random.js';
 import { ElMessageBox } from 'element-plus';
 import ActionList from './ActionList.vue';
@@ -82,7 +82,7 @@ function getModelEventSettings(type) {
     return [];
   }
 
-  const model = new materielModel[type]();
+  const model = MaterielFactory.createMateriel(type);
 
   return model.eventSettings;
 }

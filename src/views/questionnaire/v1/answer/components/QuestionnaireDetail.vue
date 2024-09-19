@@ -1,7 +1,7 @@
 <script setup>
 import RenderEngine from './RenderEngine.vue';
 import useGlobal from '@/hooks/useGlobal';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import action from '@/hooks/useDesignV1/common/action';
 
 
@@ -107,7 +107,7 @@ logicList.forEach((logic) => {
     const handleLogicFn = (newValue) => {
 
       // 源模型
-      const sourceModel = new materielModel[logic.sourceType](sourceQuestion);
+      const sourceModel = MaterielFactory.createMateriel(logic.sourceType, sourceQuestion);
       // 源模型赋值必填
       sourceModel.props.required = true;
 

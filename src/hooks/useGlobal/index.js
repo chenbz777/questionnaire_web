@@ -18,10 +18,6 @@ class Subscribe {
 
   // 一次性订阅
   once(type, fn) {
-    if (!this.subscribeCenter.has(type)) {
-      this.subscribeCenter.set(type, []);
-    }
-
     const _this = this;
 
     function newFn(data) {
@@ -30,7 +26,7 @@ class Subscribe {
       _this.off(type, newFn);
     }
 
-    this.subscribeCenter.get(type).push(newFn);
+    this.on(type, newFn);
   }
 
   // 发布
@@ -50,12 +46,10 @@ class Subscribe {
       const fnList = this.subscribeCenter.get(type);
 
       if (fnList.length) {
-        for (let i = 0; i < fnList.length; i++) {
-          if (fnList[i] === fn) {
-            fnList.splice(i, 1);
+        const index = fnList.findIndex(itemFn => itemFn === fn);
 
-            break;
-          }
+        if (index !== -1) {
+          fnList.splice(index, 1);
         }
       }
     }

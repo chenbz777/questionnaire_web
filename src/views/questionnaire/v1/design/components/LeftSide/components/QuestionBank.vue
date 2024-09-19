@@ -1,6 +1,6 @@
 <script setup>
 import useDesignV1 from '@/hooks/useDesignV1';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import { vDraggable } from 'vue-draggable-plus';
 import defaultQuestionBank from './common/defaultQuestionBank';
 
@@ -13,14 +13,14 @@ const modelMap = {};
 function getModelTitle(type) {
 
   if (!modelMap[type]) {
-    modelMap[type] = new materielModel[type]();
+    modelMap[type] = MaterielFactory.createMateriel(type);
   }
 
   return modelMap[type].title;
 }
 
 function handleClick(item) {
-  const model = new materielModel[item.type]();
+  const model = MaterielFactory[item.type]();
 
   Object.assign(model.props, item.props);
 
@@ -37,7 +37,7 @@ const draggableOption = {
     pull: 'clone'
   },
   clone: (data) => {
-    const model = new materielModel[data.type]();
+    const model = MaterielFactory.createMateriel(data.type);
 
     Object.assign(model.props, data.props);
 

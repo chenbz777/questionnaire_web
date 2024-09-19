@@ -94,7 +94,7 @@ pnpm build
 │   │   │   ├── common  // 常用函数
 │   │   │   ├── index.js
 │   │   │   ├── materielComponents  // 控件源码
-│   │   │   └── materielModel  // 控件模型
+│   │   │   └── materielFactory  // 控件模型
 │   │   └── useGlobal  // 全局
 │   ├── main.js
 │   ├── router  // 路由
@@ -119,25 +119,25 @@ pnpm build
 
 ### 集成【设计问卷】
 
-> 集成demo在项目目录 `src/views/questionnaire/v1/demo/design.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/design.vue`
 
 <br />
 
 ### 集成【填写问卷】
 
-> 集成demo在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
 
 <br />
 
 ### 集成【只读问卷】
 
-> 集成demo在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
 
 <br />
 
 ### 集成【设计题目】
 
-> 集成demo在项目目录 `src/views/questionnaire/v1/demo/designQuestion.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/designQuestion.vue`
 
 <br />
 

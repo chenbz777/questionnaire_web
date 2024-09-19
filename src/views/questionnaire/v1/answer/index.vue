@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import QuestionnaireDetail from './components/QuestionnaireDetail.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
-import materielModel from '@/hooks/useDesignV1/materielModel';
+import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import useAnimate from '@/hooks/useAnimate';
 import localStorage from '@/utils/localStorage';
 import { ElMessage, ElMessageBox } from 'element-plus';
@@ -113,6 +113,8 @@ iframeMessage.onMessage = (event) => {
  * @return {*}
  */
 function onSubmit() {
+  console.log('SubmitData(): ', getSubmitData());
+
   try {
     iframeMessage.sendPromise({
       name: 'submitQuestionnaire',
@@ -324,7 +326,7 @@ watch(() => questionnaireData.value, () => {
     _question.props.required = true;
 
     // 创建题目实例
-    const model = new materielModel[_question.type](_question);
+    const model = MaterielFactory.createMateriel(_question.type, _question);
 
     /**
      * 计算答题进度
