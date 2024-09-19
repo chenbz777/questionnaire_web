@@ -27,8 +27,13 @@ function handleChange(value) {
 </script>
 
 <template>
-  <van-rate v-model="componentData.props.defaultValue" @change="handleChange" clearable size="26px"
-    color="var(--questionnaire-btn-bg-color)" />
+  <div>
+    <van-rate v-model="componentData.props.defaultValue" @change="handleChange" clearable size="26px"
+      color="var(--questionnaire-btn-bg-color)" />
+
+    <el-input v-model="componentData.props.evaluate" :rows="3" type="textarea"
+      :placeholder="componentData.props.evaluatePlaceholder" v-if="data.props.showEvaluate" class="mt-2" />
+  </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped></style>

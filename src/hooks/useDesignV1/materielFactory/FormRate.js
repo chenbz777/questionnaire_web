@@ -13,7 +13,10 @@ export default class FormRate extends BaseMateriel {
       remark: '',
       required: false,
       status: 'normal',
-      defaultValue: 5
+      defaultValue: 5,
+      showEvaluate: false, // 是否显示评价
+      evaluate: '', // 评价
+      evaluatePlaceholder: '请填写评价'
     };
   }
 
@@ -96,6 +99,27 @@ export default class FormRate extends BaseMateriel {
             title: '默认值',
             type: 'number',
             propsKey: 'defaultValue'
+          },
+          {
+            title: '显示评价',
+            type: 'switch',
+            propsKey: 'showEvaluate'
+          },
+          {
+            title: '评价',
+            type: 'textarea',
+            propsKey: 'evaluate',
+            condition: (props) => {
+              return props.showEvaluate;
+            }
+          },
+          {
+            title: '评价占位符',
+            type: 'input',
+            propsKey: 'evaluatePlaceholder',
+            condition: (props) => {
+              return props.showEvaluate;
+            }
           }
         ]
       }
