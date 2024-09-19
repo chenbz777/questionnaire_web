@@ -32,7 +32,8 @@ function handleChange(value) {
       color="var(--questionnaire-btn-bg-color)" />
 
     <el-input v-model="componentData.props.evaluate" :rows="3" type="textarea"
-      :placeholder="componentData.props.evaluatePlaceholder" v-if="data.props.showEvaluate" class="mt-2" />
+      :placeholder="componentData.props.evaluatePlaceholder"
+      v-if="data.props.showEvaluateThreshold >= componentData.props.defaultValue" class="mt-2" />
   </div>
 </template>
 
