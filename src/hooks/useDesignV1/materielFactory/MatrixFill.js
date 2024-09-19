@@ -15,7 +15,7 @@ export default class MatrixFill extends BaseMateriel {
       desc: '',
       remark: '',
       status: 'normal',
-      gapFillingList: [
+      fillOptions: [
         {
           key: 'one',
           prependTitle: '填空1',
@@ -43,12 +43,12 @@ export default class MatrixFill extends BaseMateriel {
   }
 
   verifyRequired() {
-    if (this.props.gapFillingList && this.props.gapFillingList.length) {
+    if (this.props.fillOptions && this.props.fillOptions.length) {
       let result = true;
 
-      for (let i = 0; i < this.props.gapFillingList.length; i++) {
+      for (let i = 0; i < this.props.fillOptions.length; i++) {
 
-        const option = this.props.gapFillingList[i];
+        const option = this.props.fillOptions[i];
 
         const value = this.props.defaultValue[option.key];
 
@@ -81,8 +81,8 @@ export default class MatrixFill extends BaseMateriel {
 
     let html = '';
 
-    for (let i = 0; i < this.props.gapFillingList.length; i++) {
-      const option = this.props.gapFillingList[i];
+    for (let i = 0; i < this.props.fillOptions.length; i++) {
+      const option = this.props.fillOptions[i];
 
       const htmlTag = this.props.arrange === '水平' ? 'span' : 'div';
 
@@ -160,29 +160,33 @@ export default class MatrixFill extends BaseMateriel {
           {
             title: '列管理',
             type: 'list',
-            propsKey: 'gapFillingList',
+            propsKey: 'fillOptions',
             listKey: 'key',
             listSettings: [
               {
                 title: '列前置标题',
                 type: 'input',
-                itemKey: 'prependTitle'
+                itemKey: 'prependTitle',
+                value: '填空'
               },
               {
                 title: '列后置标题',
                 type: 'input',
-                itemKey: 'appendTitle'
+                itemKey: 'appendTitle',
+                value: ''
               },
               {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                options: textFormat
+                options: textFormat,
+                value: '不限制'
               },
               {
                 title: '必填',
                 type: 'switch',
-                itemKey: 'required'
+                itemKey: 'required',
+                value: false
               }
             ]
           }

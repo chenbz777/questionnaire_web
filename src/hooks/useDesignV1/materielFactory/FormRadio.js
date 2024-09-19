@@ -20,8 +20,7 @@ export default class FormRadio extends BaseMateriel {
         {
           label: '选项1',
           value: '选项1',
-          image: '',
-          score: 0
+          image: ''
         }
       ],
       showOther: false,  // 是否显示其它
@@ -159,17 +158,20 @@ export default class FormRadio extends BaseMateriel {
               {
                 title: '显示值',
                 itemKey: 'label',
-                type: 'input'
+                type: 'input',
+                value: '选项'
               },
               {
                 title: '选中值',
                 itemKey: 'value',
-                type: 'input'
+                type: 'input',
+                value: '选项'
               },
               {
                 title: '图片',
                 itemKey: 'image',
                 type: 'uploadFile',
+                value: '',
                 uploadText: '上传图片',
                 uploadLimit: 1,
                 uploadType: 'jpg, jpeg, png, gif'

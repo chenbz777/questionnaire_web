@@ -119,17 +119,20 @@ export default class AdvancedSort extends BaseMateriel {
               {
                 title: '显示值',
                 itemKey: 'label',
-                type: 'input'
+                type: 'input',
+                value: '选项'
               },
               {
                 title: '选中值',
                 itemKey: 'value',
-                type: 'input'
+                type: 'input',
+                value: '选项'
               },
               {
                 title: '图片',
                 itemKey: 'image',
                 type: 'uploadFile',
+                value: '',
                 uploadText: '上传图片',
                 uploadLimit: 1,
                 uploadType: 'jpg, jpeg, png, gif'

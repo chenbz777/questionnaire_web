@@ -33,7 +33,7 @@ function handleChange(value) {
 
     <el-input v-model="componentData.props.evaluate" :rows="3" type="textarea"
       :placeholder="componentData.props.evaluatePlaceholder"
-      v-if="data.props.showEvaluateThreshold >= componentData.props.defaultValue" class="mt-2" />
+      v-if="data.props.showEvaluateThreshold >= componentData.props.defaultValue" clearable class="mt-2" />
   </div>
 </template>
 

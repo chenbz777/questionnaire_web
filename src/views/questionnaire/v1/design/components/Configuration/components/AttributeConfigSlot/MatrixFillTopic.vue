@@ -22,7 +22,7 @@ function handleChange() {
 
 <template>
   <div>
-    <div v-for="item in propsData.gapFillingList" :key="item.key" class="matrix-fill__item">
+    <div v-for="item in propsData.fillOptions" :key="item.key" class="matrix-fill__item">
       {{ item.prependTitle }}
       <ContenteditableDiv v-model="propsData.answer[item.key]" @update:modelValue="handleChange"
         class="matrix-fill__item__input" />

@@ -139,12 +139,14 @@ export default class FormSelectMultiple extends BaseMateriel {
               {
                 title: '显示值',
                 itemKey: 'label',
-                type: 'input'
+                type: 'input',
+                value: '选项'
               },
               {
                 title: '选中值',
                 itemKey: 'value',
-                type: 'input'
+                type: 'input',
+                value: '选项'
               }
             ]
           }

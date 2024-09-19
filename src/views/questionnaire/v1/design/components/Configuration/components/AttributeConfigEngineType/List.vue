@@ -46,25 +46,26 @@ const showAddBtn = computed(() => {
  * @return {*}
  */
 function addItem() {
+
   // 新增的子项
-  const newItem = JSON.parse(JSON.stringify(options.value[0]));
+  const newData = {};
+
+  props.setting.listSettings.forEach(item => {
+    newData[item.itemKey] = item.value;
+  });
+
   // 唯一标识类型
-  const keyType = (typeof newItem[props.setting.listKey]);
+  const keyType = (typeof newData[props.setting.listKey]);
 
   if (keyType === 'number') {
-    newItem[props.setting.listKey] = random.number(8);
+    newData[props.setting.listKey] = random.number(8);
   } else {
-    newItem[props.setting.listKey] = random.lowerCase(8);
+    newData[props.setting.listKey] = random.lowerCase(8);
   }
 
   // 添加
-  options.value.push(newItem);
+  options.value.push(newData);
 }
-
-// 是否显示删除按钮
-const showRemoveBtn = computed(() => {
-  return options.value.length > 1;
-});
 
 // 删除子项
 function removeItem(index) {
@@ -156,6 +157,12 @@ function quickItemOptionsToStr(options) {
   return str;
 }
 
+function openDialogVisible() {
+  quickOptionsStr.value = quickItemOptionsToStr(options.value);
+
+  dialogVisible.value = true;
+}
+
 // 快捷添加选项点击
 function quickItemClick(item) {
   quickOptionsStr.value = quickItemOptionsToStr(item.options);
@@ -196,7 +203,7 @@ function quickAddItem() {
   <div class="ace-list">
     <VueDraggable v-model="options" :animation="300" handle=".ace-list__item__icon2">
       <div class="ace-list__item" v-for="(item, index) in options" :key="item[setting.listKey]">
-        <el-icon class="ace-list__item__icon" @click="removeItem(index)" v-show="showRemoveBtn">
+        <el-icon class="ace-list__item__icon" @click="removeItem(index)">
           <Remove />
         </el-icon>
 
@@ -215,7 +222,7 @@ function quickAddItem() {
       添加子项
     </el-button>
 
-    <el-button text bg size="small" @click="dialogVisible = true" class="ace-list__add-btn" v-if="setting.quickOptions">
+    <el-button text bg size="small" @click="openDialogVisible()" class="ace-list__add-btn" v-if="setting.quickOptions">
       快捷选项
     </el-button>
 
@@ -236,9 +243,9 @@ function quickAddItem() {
 
       <div class="quick">
         <div class="quick__left">
-          <div class="quick__item" v-for="item in quickList" :key="item.title" @click="quickItemClick(item)">{{
-            item.title
-          }}</div>
+          <div class="quick__item" v-for="item in quickList" :key="item.title" @click="quickItemClick(item)">
+            {{ item.title }}
+          </div>
         </div>
 
         <el-input v-model="quickOptionsStr" class="flex-1" :rows="10" type="textarea" placeholder="" />

@@ -169,18 +169,21 @@ export default class AdvancedIncrementTable extends BaseMateriel {
               {
                 title: '列标题',
                 type: 'input',
-                itemKey: 'title'
+                itemKey: 'title',
+                value: '标题'
               },
               {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                options: textFormat
+                options: textFormat,
+                value: '不限制'
               },
               {
                 title: '必填',
                 type: 'switch',
-                itemKey: 'required'
+                itemKey: 'required',
+                value: false
               }
             ]
           }
