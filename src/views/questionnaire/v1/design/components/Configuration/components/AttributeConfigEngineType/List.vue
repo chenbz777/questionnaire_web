@@ -21,7 +21,6 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const options = ref(props.modelValue);
-console.log('props: ', props.setting);
 
 watch(() => props.modelValue, (value) => {
   options.value = value;
@@ -233,13 +232,13 @@ function quickAddItem() {
       </template>
     </el-drawer>
 
-    <el-dialog v-model="dialogVisible" title="快捷添加选项" width="700px">
+    <el-dialog v-model="dialogVisible" title="快捷添加选项" width="520px">
 
       <div class="quick">
         <div class="quick__left">
           <div class="quick__item" v-for="item in quickList" :key="item.title" @click="quickItemClick(item)">{{
             item.title
-            }}</div>
+          }}</div>
         </div>
 
         <el-input v-model="quickOptionsStr" class="flex-1" :rows="10" type="textarea" placeholder="" />
