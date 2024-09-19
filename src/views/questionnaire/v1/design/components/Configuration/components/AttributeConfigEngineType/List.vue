@@ -4,6 +4,7 @@ import AttributeSettings from '../AttributeSettings.vue';
 import { VueDraggable } from 'vue-draggable-plus';
 import random from '@/utils/random';
 import { ElMessage } from 'element-plus';
+import quickList from './common/quickList';
 
 
 const props = defineProps({
@@ -20,6 +21,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const options = ref(props.modelValue);
+console.log('props: ', props.setting);
 
 watch(() => props.modelValue, (value) => {
   options.value = value;
@@ -133,6 +135,62 @@ function confirmClick() {
   // 关闭抽屉
   drawer.value = false;
 }
+
+// 快捷添加选项弹窗
+const dialogVisible = ref(false);
+
+// 快捷添加选项字符串
+const quickOptionsStr = ref('');
+
+// 快捷添加选项转字符串
+function quickItemOptionsToStr(options) {
+  let str = '';
+
+  options.forEach(option => {
+    if (option.label === option.value) {
+      str += `${option.label}\n`;
+    } else {
+      str += `${option.label}|${option.value}\n`;
+    }
+  });
+
+  return str;
+}
+
+// 快捷添加选项点击
+function quickItemClick(item) {
+  quickOptionsStr.value = quickItemOptionsToStr(item.options);
+}
+
+// 快捷添加选项
+function quickAddItem() {
+  const str = quickOptionsStr.value;
+
+  const arr = str.split('\n') // 按换行符分割
+    .map(item => {
+      const cleanedItem = item.replace(/\s+/g, ''); // 去掉每个项的空格
+      const [label, value] = cleanedItem.split('|'); // 按竖线分割
+      return {
+        label: label,
+        value: value ? value : label // 如果没有value，value与label一致
+      };
+    })
+    .filter(item => item.label); // 过滤掉空项
+
+  arr.forEach(item => {
+    // 添加多余字段
+    item.image = '';
+    item.score = 0;
+  });
+
+  options.value = arr;
+
+  // 关闭弹窗
+  dialogVisible.value = false;
+
+  // 重置快捷添加选项
+  quickOptionsStr.value = '';
+}
 </script>
 
 <template>
@@ -154,8 +212,12 @@ function confirmClick() {
       </div>
     </VueDraggable>
 
-    <el-button text bg size="small" @click="addItem()" class="ace-list__add-btn" v-show="showAddBtn">
+    <el-button text bg size="small" type="primary" @click="addItem()" class="ace-list__add-btn" v-show="showAddBtn">
       添加子项
+    </el-button>
+
+    <el-button text bg size="small" @click="dialogVisible = true" class="ace-list__add-btn" v-if="setting.quickOptions">
+      快捷选项
     </el-button>
 
     <el-drawer v-model="drawer" title="编辑子项" direction="rtl" size="460px" destroy-on-close>
@@ -170,6 +232,28 @@ function confirmClick() {
         </div>
       </template>
     </el-drawer>
+
+    <el-dialog v-model="dialogVisible" title="快捷添加选项" width="700px">
+
+      <div class="quick">
+        <div class="quick__left">
+          <div class="quick__item" v-for="item in quickList" :key="item.title" @click="quickItemClick(item)">{{
+            item.title
+            }}</div>
+        </div>
+
+        <el-input v-model="quickOptionsStr" class="flex-1" :rows="10" type="textarea" placeholder="" />
+      </div>
+
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="quickAddItem()">
+            确定
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -213,5 +297,27 @@ function confirmClick() {
 
 .ace-list__add-btn {
   background-color: #f0f0f0 !important;
+}
+
+.quick {
+  display: flex;
+}
+
+.quick__left {
+  width: 200px;
+  margin-right: 20px;
+}
+
+.quick__item {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.quick__item:hover {
+  border-color: #409eff;
 }
 </style>

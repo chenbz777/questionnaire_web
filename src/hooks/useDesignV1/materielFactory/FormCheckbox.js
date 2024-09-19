@@ -139,6 +139,7 @@ export default class FormCheckbox extends BaseMateriel {
           {
             title: '选项列表',
             type: 'list',
+            quickOptions: true,
             propsKey: 'options',
             listKey: 'value',
             listSettings: [

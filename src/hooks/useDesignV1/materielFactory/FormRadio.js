@@ -153,6 +153,7 @@ export default class FormRadio extends BaseMateriel {
             title: '选项列表',
             type: 'list',
             propsKey: 'options',
+            quickOptions: true,
             listKey: 'value',
             listSettings: [
               {
