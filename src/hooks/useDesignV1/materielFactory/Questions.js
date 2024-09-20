@@ -3,7 +3,7 @@ import BaseMateriel from './BaseMateriel';
 export default class Questions extends BaseMateriel {
 
   constructor() {
-    super('Questions');
+    super();
 
     // 问卷版本
     this.version = 1;
@@ -19,7 +19,7 @@ export default class Questions extends BaseMateriel {
 
   get defaultProps() {
     return {
-      title: '问卷标题',  // 标题
+      title: this.title,  // 标题
       desc: '问卷描述',  // 描述
       totalPoints: 0,  // 总分
       showLogo: false,  // 是否显示logo
@@ -42,8 +42,12 @@ export default class Questions extends BaseMateriel {
     };
   }
 
+  get materielType() {
+    return 'Questions';
+  }
+
   get title() {
-    return '';
+    return '问卷';
   }
 
   get group() {

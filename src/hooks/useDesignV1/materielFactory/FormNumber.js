@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class FormNumber extends BaseMateriel {
 
   constructor(instance) {
-    super('FormNumber', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '数字文本',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -19,6 +19,10 @@ export default class FormNumber extends BaseMateriel {
       min: -99999,
       max: 99999
     };
+  }
+
+  get materielType() {
+    return 'FormNumber';
   }
 
   get title() {

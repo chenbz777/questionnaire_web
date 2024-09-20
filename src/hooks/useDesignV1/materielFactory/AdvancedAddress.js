@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class AdvancedAddress extends BaseMateriel {
 
   constructor(instance) {
-    super('AdvancedAddress', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '地址',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -19,6 +19,10 @@ export default class AdvancedAddress extends BaseMateriel {
       area: '',
       detailedAddress: ''
     };
+  }
+
+  get materielType() {
+    return 'AdvancedAddress';
   }
 
   get title() {

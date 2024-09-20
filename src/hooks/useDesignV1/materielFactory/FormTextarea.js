@@ -5,12 +5,12 @@ import difficultyOptions from '../common/difficultyOptions';
 export default class FormTextarea extends BaseMateriel {
 
   constructor(instance) {
-    super('FormTextarea', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '多行文本',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -26,6 +26,10 @@ export default class FormTextarea extends BaseMateriel {
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
+  }
+
+  get materielType() {
+    return 'FormTextarea';
   }
 
   get title() {

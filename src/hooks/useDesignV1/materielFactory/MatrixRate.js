@@ -4,12 +4,12 @@ import BaseMateriel from './BaseMateriel';
 export default class MatrixRate extends BaseMateriel {
 
   constructor(instance) {
-    super('MatrixRate', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '矩阵评分',
+      title: this.title,
       desc: '',
       remark: '',
       status: 'normal',
@@ -34,6 +34,10 @@ export default class MatrixRate extends BaseMateriel {
       },
       tagDefaultValue: []
     };
+  }
+
+  get materielType() {
+    return 'MatrixRate';
   }
 
   get title() {

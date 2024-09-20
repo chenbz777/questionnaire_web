@@ -6,12 +6,12 @@ import difficultyOptions from '../common/difficultyOptions';
 export default class FormInput extends BaseMateriel {
 
   constructor(instance) {
-    super('FormInput', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '单行文本',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -30,6 +30,10 @@ export default class FormInput extends BaseMateriel {
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
+  }
+
+  get materielType() {
+    return 'FormInput';
   }
 
   get title() {

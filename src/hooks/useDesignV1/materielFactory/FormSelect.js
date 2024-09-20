@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class FormSelect extends BaseMateriel {
 
   constructor(instance) {
-    super('FormSelect', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '下拉单选',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -24,6 +24,10 @@ export default class FormSelect extends BaseMateriel {
       showOther: false,  // 是否显示其它
       otherValue: ''  // 其它值
     };
+  }
+
+  get materielType() {
+    return 'FormSelect';
   }
 
   get title() {

@@ -5,12 +5,12 @@ import difficultyOptions from '../common/difficultyOptions';
 export default class FormCheckbox extends BaseMateriel {
 
   constructor(instance) {
-    super('FormCheckbox', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '多选',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -32,6 +32,10 @@ export default class FormCheckbox extends BaseMateriel {
       difficulty: '',  // 题目难度: 简单, 普通, 困难
       isAnswerOrderConsistent: false  // 答案顺序完全一致: 例如正确答案是A,B,C, 如果勾选了这个选项, 那么用户答案必须是A,B,C, 如果没有勾选, 那么用户答案可以是B,A,C
     };
+  }
+
+  get materielType() {
+    return 'FormCheckbox';
   }
 
   get title() {

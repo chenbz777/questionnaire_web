@@ -5,12 +5,12 @@ import difficultyOptions from '../common/difficultyOptions';
 export default class FormRadio extends BaseMateriel {
 
   constructor(instance) {
-    super('FormRadio', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '单选',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -32,6 +32,10 @@ export default class FormRadio extends BaseMateriel {
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
+  }
+
+  get materielType() {
+    return 'FormRadio';
   }
 
   get title() {

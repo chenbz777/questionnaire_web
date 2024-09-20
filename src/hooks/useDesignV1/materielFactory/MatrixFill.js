@@ -6,12 +6,12 @@ import difficultyOptions from '../common/difficultyOptions';
 export default class MatrixFill extends BaseMateriel {
 
   constructor(instance) {
-    super('MatrixFill', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '矩阵填空',
+      title: this.title,
       desc: '',
       remark: '',
       status: 'normal',
@@ -32,6 +32,10 @@ export default class MatrixFill extends BaseMateriel {
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: ''  // 题目难度: 简单, 普通, 困难
     };
+  }
+
+  get materielType() {
+    return 'MatrixFill';
   }
 
   get title() {

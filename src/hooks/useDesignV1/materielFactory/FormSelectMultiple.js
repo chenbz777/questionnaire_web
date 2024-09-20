@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class FormSelectMultiple extends BaseMateriel {
 
   constructor(instance) {
-    super('FormSelectMultiple', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '下拉多选',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -22,6 +22,10 @@ export default class FormSelectMultiple extends BaseMateriel {
         }
       ]
     };
+  }
+
+  get materielType() {
+    return 'FormSelectMultiple';
   }
 
   get title() {

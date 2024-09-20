@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class FormRate extends BaseMateriel {
 
   constructor(instance) {
-    super('FormRate', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '评分',
+      title: this.title,
       desc: '5分表示非常满意，0分表示非常不满意，分值越低表示满意度越低',
       remark: '',
       required: false,
@@ -18,6 +18,10 @@ export default class FormRate extends BaseMateriel {
       evaluate: '', // 评价
       evaluatePlaceholder: '请填写评价'
     };
+  }
+
+  get materielType() {
+    return 'FormRate';
   }
 
   get title() {

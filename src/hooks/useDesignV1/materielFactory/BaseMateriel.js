@@ -1,17 +1,16 @@
 import random from '@/utils/random.js';
 
 export default class BaseMateriel {
-  constructor(componentType = '', instance) {
-
+  constructor(instance) {
 
     // 组件类型
-    this.type = componentType;
+    this.type = this.materielType;
 
     // 随机字符串
     const randomStr = random.lowerCase();
 
     // 组件唯一标识
-    const key = `${componentType}_${randomStr}`;
+    const key = `${this.type}_${randomStr}`;
 
     // 组件唯一标识
     this.key = key;
@@ -23,8 +22,8 @@ export default class BaseMateriel {
     this.props = this.defaultProps;
 
     if (instance && instance.type) {
-      if (instance.type !== componentType) {
-        throw new Error(`组件类型不匹配, 期望类型为: ${componentType}, 实际类型为: ${instance.type}`);
+      if (instance.type !== this.type) {
+        throw new Error(`组件类型不匹配, 期望类型为: ${this.type}, 实际类型为: ${instance.type}`);
       }
 
       Object.assign(this.props, JSON.parse(JSON.stringify(instance.props)));
@@ -37,16 +36,21 @@ export default class BaseMateriel {
       throw new Error('BaseMateriel类不能被实例化');
     }
 
-    Reflect.ownKeys(BaseMateriel.prototype).forEach(key => {
-      if (!Object.prototype.hasOwnProperty.call(new.target.prototype, key)) {
+    // Reflect.ownKeys(BaseMateriel.prototype).forEach(key => {
+    //   if (!Object.prototype.hasOwnProperty.call(new.target.prototype, key)) {
 
-        // 指定部分方法为抽象方法
-        if (['defaultProps', 'title', 'group', 'verifyRequired', 'getValueText', 'getValue', 'setValue'].includes(key)) {
-          console.warn(`请类 "${this.constructor.name}" 重写父类 BaseMateriel 的 [${key}] 方法`);
-        }
-      }
-    });
+    //     // 指定部分方法为抽象方法
+    //     if (['materielType', 'defaultProps', 'title', 'group', 'verifyRequired', 'getValueText', 'getValue', 'setValue'].includes(key)) {
+    //       console.warn(`请类 "${this.constructor.name}" 重写父类 BaseMateriel 的 [${key}] 方法`);
+    //     }
+    //   }
+    // });
     // 模拟抽象类 end
+  }
+
+  get materielType() {
+
+    return '';
   }
 
   // 组件属性

@@ -5,12 +5,12 @@ import TextFormat from '../common/textFormat';
 export default class AdvancedIncrementTable extends BaseMateriel {
 
   constructor(instance) {
-    super('AdvancedIncrementTable', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '自增表格',
+      title: this.title,
       desc: '',
       remark: '',
       status: 'normal',
@@ -24,6 +24,10 @@ export default class AdvancedIncrementTable extends BaseMateriel {
       ],
       defaultValue: []
     };
+  }
+
+  get materielType() {
+    return 'AdvancedIncrementTable';
   }
 
   get title() {

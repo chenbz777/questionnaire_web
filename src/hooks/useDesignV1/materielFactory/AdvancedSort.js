@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class AdvancedSort extends BaseMateriel {
 
   constructor(instance) {
-    super('AdvancedSort', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '排序',
+      title: this.title,
       desc: '',
       remark: '',
       status: 'normal',
@@ -30,6 +30,10 @@ export default class AdvancedSort extends BaseMateriel {
         }
       ]
     };
+  }
+
+  get materielType() {
+    return 'AdvancedSort';
   }
 
   get title() {

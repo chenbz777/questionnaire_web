@@ -3,18 +3,22 @@ import BaseMateriel from './BaseMateriel';
 export default class AdvancedSignature extends BaseMateriel {
 
   constructor(instance) {
-    super('AdvancedSignature', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '手写签名',
+      title: this.title,
       desc: '请在下方手写签名',
       remark: '',
       required: false,
       status: 'normal',
       defaultValue: ''
     };
+  }
+
+  get materielType() {
+    return 'AdvancedSignature';
   }
 
   get title() {

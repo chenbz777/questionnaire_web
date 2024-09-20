@@ -3,12 +3,12 @@ import BaseMateriel from './BaseMateriel';
 export default class AdvancedAttachment extends BaseMateriel {
 
   constructor(instance) {
-    super('AdvancedAttachment', instance);
+    super(instance);
   }
 
   get defaultProps() {
     return {
-      title: '附件',
+      title: this.title,
       desc: '',
       remark: '',
       required: false,
@@ -20,6 +20,10 @@ export default class AdvancedAttachment extends BaseMateriel {
       uploadText: '上传附件',  // 上传按钮文案
       templateFiles: []  // 模版文件列表
     };
+  }
+
+  get materielType() {
+    return 'AdvancedAttachment';
   }
 
   get title() {
