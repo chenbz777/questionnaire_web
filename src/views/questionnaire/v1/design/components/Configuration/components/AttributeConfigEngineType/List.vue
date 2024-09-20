@@ -136,13 +136,13 @@ function confirmClick() {
   drawer.value = false;
 }
 
-// 快捷添加选项弹窗
+// 快捷选项弹窗
 const dialogVisible = ref(false);
 
-// 快捷添加选项字符串
+// 快捷选项字符串
 const quickOptionsStr = ref('');
 
-// 快捷添加选项转字符串
+// 快捷选项转字符串
 function quickItemOptionsToStr(options) {
   let str = '';
 
@@ -163,12 +163,12 @@ function openDialogVisible() {
   dialogVisible.value = true;
 }
 
-// 快捷添加选项点击
+// 快捷选项点击
 function quickItemClick(item) {
   quickOptionsStr.value = quickItemOptionsToStr(item.options);
 }
 
-// 快捷添加选项
+// 快捷选项
 function quickAddItem() {
   const str = quickOptionsStr.value;
 
@@ -193,7 +193,7 @@ function quickAddItem() {
   // 关闭弹窗
   dialogVisible.value = false;
 
-  // 重置快捷添加选项
+  // 重置快捷选项
   quickOptionsStr.value = '';
 }
 </script>
@@ -238,7 +238,7 @@ function quickAddItem() {
       </template>
     </el-drawer>
 
-    <el-dialog v-model="dialogVisible" title="快捷添加选项" width="520px">
+    <el-dialog v-model="dialogVisible" title="快捷选项" width="520px">
 
       <div class="quick">
         <div class="quick__left">
@@ -247,7 +247,7 @@ function quickAddItem() {
           </div>
         </div>
 
-        <el-input v-model="quickOptionsStr" class="flex-1" :rows="10" type="textarea" placeholder="" />
+        <el-input v-model="quickOptionsStr" class="flex-1" :rows="12" type="textarea" placeholder="" />
       </div>
 
       <template #footer>
@@ -306,10 +306,13 @@ function quickAddItem() {
 
 .quick {
   display: flex;
+  height: 260px;
 }
 
 .quick__left {
   width: 200px;
+  height: 100%;
+  overflow-y: auto;
   margin-right: 20px;
 }
 

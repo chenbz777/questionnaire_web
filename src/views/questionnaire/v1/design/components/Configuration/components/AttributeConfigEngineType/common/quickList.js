@@ -26,6 +26,49 @@ export default [
     ]
   },
   {
+    title: '同意/不同意',
+    options: [
+      {
+        label: '同意',
+        value: '同意'
+      },
+      {
+        label: '不同意',
+        value: '不同意'
+      }
+    ]
+  },
+  {
+    title: '高/中/低',
+    options: [
+      {
+        label: '高',
+        value: '高'
+      },
+      {
+        label: '中',
+        value: '中'
+      },
+      {
+        label: '低',
+        value: '低'
+      }
+    ]
+  },
+  {
+    title: '通过/未通过',
+    options: [
+      {
+        label: '通过',
+        value: '通过'
+      },
+      {
+        label: '未通过',
+        value: '未通过'
+      }
+    ]
+  },
+  {
     title: '男/女',
     options: [
       {
@@ -39,19 +82,54 @@ export default [
     ]
   },
   {
-    title: '选项123',
+    title: '开/关',
     options: [
       {
-        label: '选项1',
-        value: '选项1'
+        label: '开',
+        value: '开'
       },
       {
-        label: '选项2',
-        value: '选项2'
+        label: '关',
+        value: '关'
+      }
+    ]
+  },
+  {
+    title: '大/小',
+    options: [
+      {
+        label: '大',
+        value: '大'
       },
       {
-        label: '选项3',
-        value: '选项3'
+        label: '小',
+        value: '小'
+      }
+    ]
+  },
+  {
+    title: '赞成/反对',
+    options: [
+      {
+        label: '赞成',
+        value: '赞成'
+      },
+      {
+        label: '反对',
+        value: '反对'
+      }
+    ]
+  },
+  {
+    title: '真/假',
+    options: [
+      {
+        label: '真',
+        value: '真'
+      },
+      {
+        label: '假',
+        value: '假'
       }
     ]
   }
