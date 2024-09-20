@@ -186,7 +186,6 @@ function quickAddItem() {
   arr.forEach(item => {
     // 添加多余字段
     item.image = '';
-    item.score = 0;
   });
 
   options.value = arr;
