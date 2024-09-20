@@ -121,7 +121,7 @@ export default class AdvancedSort extends BaseMateriel {
         type: 'block',
         children: [
           {
-            title: '选项列表',
+            title: '排序列表',
             type: 'list',
             propsKey: 'defaultValue',
             listKey: 'value',

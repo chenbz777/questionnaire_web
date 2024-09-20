@@ -131,7 +131,7 @@ export default class MatrixRate extends BaseMateriel {
         type: 'block',
         children: [
           {
-            title: '列管理',
+            title: '评分列管理',
             type: 'list',
             propsKey: 'rateOptions',
             listKey: 'key',
@@ -145,7 +145,7 @@ export default class MatrixRate extends BaseMateriel {
             ]
           },
           {
-            title: '列管理',
+            title: '标签管理',
             type: 'list',
             propsKey: 'tagOptions',
             listKey: 'label',

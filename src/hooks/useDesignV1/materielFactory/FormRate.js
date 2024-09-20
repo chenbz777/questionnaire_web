@@ -115,7 +115,7 @@ export default class FormRate extends BaseMateriel {
             propsKey: 'defaultValue'
           },
           {
-            title: '显示评价',
+            title: '低于多少分显示评价',
             type: 'number',
             min: -1,
             max: 5,
