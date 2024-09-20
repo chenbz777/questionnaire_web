@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import textFormat from '../common/textFormat';
+import TextFormat from '../common/textFormat';
 
 
 export default class AdvancedIncrementTable extends BaseMateriel {
@@ -52,11 +52,7 @@ export default class AdvancedIncrementTable extends BaseMateriel {
 
           // 校验文本格式
           if (value) {
-            const formatData = textFormat.find(item => item.value === option.format);
-
-            const regex = new RegExp(formatData.format.slice(1, -1));
-
-            if (!regex.test(value)) {
+            if (!TextFormat.verify(option.format, value)) {
               result = false;
               break;
             }
@@ -176,7 +172,7 @@ export default class AdvancedIncrementTable extends BaseMateriel {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                options: textFormat,
+                options: TextFormat.getFormatList(),
                 value: '不限制'
               },
               {

@@ -1,4 +1,4 @@
-export default [
+const formatList = [
   {
     label: '不限制',
     value: '不限制',
@@ -90,3 +90,27 @@ export default [
     format: '^[+-]?(\\d+([.]\\d*)?([eE][+-]?\\d+)?|[.]\\d+([eE][+-]?\\d+)?)$'
   }
 ];
+
+class TextFormat {
+  constructor() {
+    this.formatList = formatList;
+  }
+
+  static getFormatList() {
+    return this.formatList;
+  }
+
+  static getFormat(value) {
+    return this.formatList.find(item => item.value === value);
+  }
+
+  static verify(formatType, value) {
+    const formatData = formatList.find(item => item.value === formatType);
+
+    const regex = new RegExp(formatData.format.slice(1, -1));
+
+    return regex;
+  }
+}
+
+export default TextFormat;

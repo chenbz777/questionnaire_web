@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import textFormat from '../common/textFormat';
+import TextFormat from '../common/textFormat';
 import difficultyOptions from '../common/difficultyOptions';
 
 
@@ -45,11 +45,7 @@ export default class FormInput extends BaseMateriel {
 
     // 校验文本格式
     if (value) {
-      const formatData = textFormat.find(_item => _item.value === this.props.format);
-
-      const regex = new RegExp(formatData.format.slice(1, -1));
-
-      if (!regex.test(value)) {
+      if (!TextFormat.verify(this.props.format, value)) {
         return false;
       }
     }
@@ -168,7 +164,7 @@ export default class FormInput extends BaseMateriel {
             title: '文本格式',
             type: 'select',
             propsKey: 'format',
-            options: textFormat
+            options: TextFormat.getFormatList()
           }
         ]
       }
