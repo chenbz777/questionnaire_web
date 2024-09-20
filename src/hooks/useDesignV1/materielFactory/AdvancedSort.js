@@ -53,13 +53,23 @@ export default class AdvancedSort extends BaseMateriel {
   }
 
   getValueText() {
-    let html = '<ul>';
+    let html = '<div>';
 
     this.props.defaultValue.forEach((item, index) => {
-      html += `<li>${index + 1}. ${item.label}</li>`;
+      html += `<div class="advanced-sort__item">
+        <div class="advanced-sort__item__index ${index > 2 ? 'advanced-sort__item__index--backward' : ''}">
+          ${index + 1}
+        </div>
+        <div class="advanced-sort__item__content">
+          ${item.image ? `<img src="${item.image}" alt="" class="advanced-sort__item__image" />` : ''}
+          <div class="advanced-sort__item__content__text">
+            ${item.label}
+          </div>
+        </div>
+      </div>`;
     });
 
-    html += '</ul>';
+    html += '</div>';
 
     return html;
   }

@@ -33,15 +33,27 @@ export default class FormRate extends BaseMateriel {
   }
 
   getValueText() {
-    return `${this.props.defaultValue}分`;
+    let html = '';
+
+    html += `<div>评分: ${this.props.defaultValue}分</div>`;
+
+    if (this.props.evaluate) {
+      html += `<div>评价: ${this.props.evaluate}</div>`;
+    }
+
+    return html;
   }
 
   getValue() {
-    return this.props.defaultValue;
+    return {
+      defaultValue: this.props.defaultValue,
+      evaluate: this.props.evaluate
+    };
   }
 
-  setValue(value = 0) {
-    this.props.defaultValue = value;
+  setValue(data = {}) {
+    this.props.defaultValue = data.defaultValue;
+    this.props.evaluate = data.evaluate;
   }
 
   get attributeSettings() {

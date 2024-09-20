@@ -49,17 +49,39 @@ export default class MatrixRate extends BaseMateriel {
   }
 
   getValueText() {
-    let html = '';
+    let html = '<div>';
+
+    this.props.rateOptions.forEach((item) => {
+      html += `<div>
+                <div>${item.label}: ${this.props.defaultValue[item.key]}分</div>
+              </div>`;
+    });
+
+    if (this.props.tagDefaultValue.length) {
+      html += `<div>标签: ${this.props.tagDefaultValue.join('、')}</div>`;
+    }
+
+    if (this.props.evaluate) {
+      html += `<div>评价: ${this.props.evaluate}</div>`;
+    }
+
+    html += '</div>';
 
     return html;
   }
 
   getValue() {
-    return this.props.defaultValue;
+    return {
+      defaultValue: this.props.defaultValue,
+      evaluate: this.props.evaluate,
+      tagDefaultValue: this.props.tagDefaultValue
+    };
   }
 
-  setValue(value = {}) {
-    this.props.defaultValue = value;
+  setValue(data = {}) {
+    this.props.defaultValue = data.defaultValue;
+    this.props.evaluate = data.evaluate;
+    this.props.tagDefaultValue = data.tagDefaultValue;
   }
 
   get attributeSettings() {
@@ -95,6 +117,10 @@ export default class MatrixRate extends BaseMateriel {
               {
                 label: '只读',
                 value: 'readonly'
+              },
+              {
+                label: '隐藏',
+                value: 'hidden'
               }
             ]
           }
