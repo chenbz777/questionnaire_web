@@ -93,15 +93,14 @@ const formatList = [
 
 class TextFormat {
   constructor() {
-    this.formatList = formatList;
   }
 
   static getFormatList() {
-    return this.formatList;
+    return formatList;
   }
 
   static getFormat(value) {
-    return this.formatList.find(item => item.value === value);
+    return formatList.find(item => item.value === value);
   }
 
   static verify(formatType, value) {
@@ -109,7 +108,7 @@ class TextFormat {
 
     const regex = new RegExp(formatData.format.slice(1, -1));
 
-    return regex;
+    return regex.test(value);
   }
 }
 

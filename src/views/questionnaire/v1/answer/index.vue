@@ -110,6 +110,8 @@ iframeMessage.onMessage = (event) => {
  * @return {*}
  */
 function onSubmit() {
+  console.log('submitData: ', getSubmitData());
+
   try {
     iframeMessage.sendPromise({
       name: 'submitQuestionnaire',
