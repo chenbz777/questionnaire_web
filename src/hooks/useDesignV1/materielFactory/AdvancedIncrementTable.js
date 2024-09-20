@@ -16,10 +16,10 @@ export default class AdvancedIncrementTable extends BaseMateriel {
       status: 'normal',
       options: [
         {
-          key: 'one',
           title: '标题1',
           format: '不限制',
-          required: false
+          required: false,
+          key: 'one'
         }
       ],
       defaultValue: []

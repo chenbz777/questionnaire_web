@@ -15,8 +15,8 @@ export default class MatrixRate extends BaseMateriel {
       status: 'normal',
       rateOptions: [
         {
-          key: 'one',
-          label: '总体评价'
+          label: '总体评价',
+          key: 'one'
         }
       ],
       tagOptions: [

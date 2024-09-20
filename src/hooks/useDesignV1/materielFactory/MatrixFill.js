@@ -17,11 +17,11 @@ export default class MatrixFill extends BaseMateriel {
       status: 'normal',
       fillOptions: [
         {
-          key: 'one',
           prependTitle: '填空1',
           appendTitle: '',
           format: '不限制',
-          required: false
+          required: false,
+          key: 'one'
         }
       ],
       defaultValue: {},
