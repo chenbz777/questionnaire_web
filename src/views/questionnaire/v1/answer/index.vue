@@ -57,18 +57,15 @@ let endAnswerTime = Date.now();
 
 // 获取提交数据
 function getSubmitData() {
-  const { errorList, data, openUserKey } = checkData();
+  const { data, openUserKey } = checkData();
 
   endAnswerTime = Date.now();
 
   const submitData = {
-    errorList,
-    data: {
-      ...data,
-      startAnswerTime,
-      endAnswerTime,
-      openUserKey
-    }
+    ...data,
+    startAnswerTime,
+    endAnswerTime,
+    openUserKey
   };
 
   return submitData;
@@ -113,8 +110,6 @@ iframeMessage.onMessage = (event) => {
  * @return {*}
  */
 function onSubmit() {
-  console.log('SubmitData(): ', getSubmitData());
-
   try {
     iframeMessage.sendPromise({
       name: 'submitQuestionnaire',
