@@ -14,8 +14,6 @@ function handleClick(data) {
 
 // 删除组件
 function handleDeleteComponent(index) {
-  const data = questionnaireData.value.questionList[index];
-
   ElMessageBox.confirm(
     '确认删除该题目吗？',
     '删除题目',
@@ -26,13 +24,11 @@ function handleDeleteComponent(index) {
     }
   )
     .then(() => {
+      const data = questionnaireData.value.questionList[index];
 
       questionnaireData.value.questionList.splice(index, 1);
-      console.log('questionnaireData.value.questionList: ', questionnaireData.value.questionList);
 
-      console.log('subscribe: ', subscribe.emit);
       subscribe.emit('editDeleteQuestion', data);
-      console.log('data222: ', data);
     })
     .catch(() => { });
 }

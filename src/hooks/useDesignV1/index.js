@@ -64,11 +64,6 @@ subscribe.on('editDeleteQuestion', (data) => {
   questionnaireData.value.eventList = questionnaireData.value.eventList.filter((event) => {
     return event.sourceKey !== data.key;
   });
-
-  // 同步删除考试答案
-  questionnaireData.value.examAnswerList = questionnaireData.value.examAnswerList.filter((answer) => {
-    return answer.key !== data.key;
-  });
 });
 
 // 复制题目
