@@ -1,6 +1,6 @@
 <script setup>
 import { VueDraggable } from 'vue-draggable-plus';
-import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
+import RenderEngine from '@/views/questionnaire/v1/components/RenderEngine.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
 import { ElMessageBox } from 'element-plus';
 

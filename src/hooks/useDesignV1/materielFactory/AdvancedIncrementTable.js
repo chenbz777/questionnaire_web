@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import TextFormat from '../common/textFormat';
+import TextFormat from '@/common/TextFormat';
 
 
 export default class AdvancedIncrementTable extends BaseMateriel {

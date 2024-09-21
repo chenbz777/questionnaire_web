@@ -3,7 +3,7 @@ import Subscribe from '@/common/Subscribe';
 import MaterielFactory from './materielFactory';
 import { ElMessage } from 'element-plus';
 import localStorage from '@/utils/localStorage';
-import BrowserFingerprint from './common/browserFingerprint';
+import BrowserFingerprint from '@/common/BrowserFingerprint';
 
 
 /**
