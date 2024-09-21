@@ -36,6 +36,8 @@ subscribe.on('editClickQuestion', (data) => {
 
 // 订阅删除组件事件
 subscribe.on('editDeleteQuestion', (data) => {
+  console.log('data: ', data);
+  console.log('currentComponentData.value: ', currentComponentData.value);
   if (data.key === currentComponentData.value.key) {
     currentComponentData.value = null;
     currentModel.value = null;

@@ -1,4 +1,4 @@
-export default class IframeMessageSDK {
+export default class IframeMessage {
 
   constructor(iframeId) {
 
@@ -16,7 +16,7 @@ export default class IframeMessageSDK {
       const iframe = document.getElementById(iframeId);
 
       if (!iframe) {
-        console.error('[IframeMessageSDK](constructor): 没有找到iframe节点,请检查iframeId是否正确');
+        console.error('[IframeMessage](constructor): 没有找到iframe节点,请检查iframeId是否正确');
         return;
       }
 
@@ -44,7 +44,7 @@ export default class IframeMessageSDK {
           }
         }
       } catch (error) {
-        console.error('[IframeMessageSDK](constructor): ', error);
+        console.error('[IframeMessage](constructor): ', error);
       }
     });
   }

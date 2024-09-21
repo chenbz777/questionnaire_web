@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import IframeMessageSDK from '@/utils/iframeMessageSDK';
+import IframeMessage from '@/common/IframeMessage';
 
 
 const iframeUrl = window.location.origin + '/questionnaire/v1/design';
@@ -11,7 +11,7 @@ onMounted(() => {
   const myIframe = document.getElementById('myIframe');
 
   myIframe.onload = function () {
-    iframeMessage = new IframeMessageSDK('myIframe');
+    iframeMessage = new IframeMessage('myIframe');
   };
 });
 

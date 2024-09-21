@@ -1,12 +1,10 @@
 import { ref } from 'vue';
-import useGlobal from '../useGlobal';
+import Subscribe from '@/common/Subscribe';
 import MaterielFactory from './materielFactory';
 import { ElMessage } from 'element-plus';
 import localStorage from '@/utils/localStorage';
 import BrowserFingerprint from './common/browserFingerprint';
 
-
-const { Subscribe } = useGlobal();
 
 /**
  * 订阅事件汇总

@@ -3,13 +3,11 @@ import { ref } from 'vue';
 import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import AttributeSettings from './components/Configuration/components/AttributeSettings.vue';
 import RenderEngine from '@/views/questionnaire/v1/answer/components/RenderEngine.vue';
-import useGlobal from '@/hooks/useGlobal';
+import IframeMessage from '@/common/IframeMessage';
 import useDesignV1 from '@/hooks/useDesignV1';
 
 
-const { IframeMessageSDK } = useGlobal();
-
-const iframeMessage = new IframeMessageSDK();
+const iframeMessage = new IframeMessage();
 
 const { uploadConfig } = useDesignV1();
 

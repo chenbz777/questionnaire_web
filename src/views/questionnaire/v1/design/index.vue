@@ -6,12 +6,10 @@ import useDesignV1 from '@/hooks/useDesignV1';
 import LeftSide from './components/LeftSide/index.vue';
 import PreviewPopup from './components/PreviewPopup.vue';
 import userDefined from '@/utils/userDefined';
-import useGlobal from '@/hooks/useGlobal';
+import IframeMessage from '@/common/IframeMessage';
 
 
 const { questionnaireData, subscribe, setQuestionnaireData, getQuestionnaireData, uploadConfig } = useDesignV1();
-
-const { IframeMessageSDK } = useGlobal();
 
 // 预览弹窗实例
 const previewPopupRef = ref(null);
@@ -35,7 +33,7 @@ const importJSON = () => {
   });
 };
 
-const iframeMessage = new IframeMessageSDK();
+const iframeMessage = new IframeMessage();
 
 // 监听消息
 iframeMessage.onMessage = (event) => {

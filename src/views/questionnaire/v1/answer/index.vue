@@ -8,14 +8,11 @@ import useAnimate from '@/hooks/useAnimate';
 import localStorage from '@/utils/localStorage';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import userDefined from '@/utils/userDefined';
-import useGlobal from '@/hooks/useGlobal';
+import IframeMessage from '@/common/IframeMessage';
 
 
 // 问卷数据
 const { questionnaireData, checkData, subscribe, initSkin, setQuestionnaireData, getQuestionnaireData, uploadConfig } = useDesignV1();
-
-// 引入通讯SDK
-const { IframeMessageSDK } = useGlobal();
 
 // 引入动画
 const { animateElement } = useAnimate();
@@ -75,7 +72,7 @@ function getSubmitData() {
 window.getSubmitData = getSubmitData;
 
 // 初始化通讯SDK
-const iframeMessage = new IframeMessageSDK();
+const iframeMessage = new IframeMessage();
 
 // 监听消息
 iframeMessage.onMessage = (event) => {

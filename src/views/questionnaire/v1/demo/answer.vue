@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import IframeMessageSDK from '@/utils/iframeMessageSDK';
+import IframeMessage from '@/common/IframeMessage';
 
 
 const iframeUrl = ref(window.location.origin + '/questionnaire/v1/answer');
@@ -13,7 +13,7 @@ onMounted(() => {
   myIframe.onload = function () {
     console.log('myIframe.onload');
 
-    iframeMessage = new IframeMessageSDK('myIframe');
+    iframeMessage = new IframeMessage('myIframe');
 
     // 延迟取保证网页 iframeMessage 对象已经初始化
     setTimeout(() => {

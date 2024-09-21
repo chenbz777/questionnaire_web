@@ -1,6 +1,6 @@
 <script setup>
 import RenderEngine from './RenderEngine.vue';
-import useGlobal from '@/hooks/useGlobal';
+import Subscribe from '@/common/Subscribe';
 import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import action from '@/hooks/useDesignV1/common/action';
 
@@ -23,8 +23,6 @@ const props = defineProps({
 });
 
 const { parseActionList } = action;
-
-const { Subscribe } = useGlobal();
 
 const subscribe = new Subscribe();
 
