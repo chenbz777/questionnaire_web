@@ -19,12 +19,8 @@ function getModelTitle(type) {
   return modelMap[type].title;
 }
 
-function handleClick(item) {
-  const model = MaterielFactory[item.type]();
-
-  Object.assign(model.props, item.props);
-
-  addQuestion(model);
+function handleClick(data) {
+  addQuestion(MaterielFactory.createMateriel(data.type, data));
 }
 
 // 拖拽配置
@@ -37,12 +33,8 @@ const draggableOption = {
     pull: 'clone'
   },
   clone: (data) => {
-    const model = MaterielFactory.createMateriel(data.type);
-
-    Object.assign(model.props, data.props);
-
     // 自定义克隆函数: 拖拽时克隆一个新的组件
-    return model;
+    return MaterielFactory.createMateriel(data.type, data);
   }
 };
 </script>
