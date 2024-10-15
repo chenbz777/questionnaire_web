@@ -22,7 +22,10 @@ export default class AdvancedIncrementTable extends BaseMateriel {
           key: 'one'
         }
       ],
-      defaultValue: []
+      defaultValue: [],
+      showAddBtn: true, // 是否显示添加按钮
+      showRemoveBtn: true, // 是否显示删除按钮
+      maxTotal: 99 // 最大填空数量
     };
   }
 
@@ -186,6 +189,28 @@ export default class AdvancedIncrementTable extends BaseMateriel {
                 value: false
               }
             ]
+          },
+          {
+            title: '显示添加按钮',
+            type: 'switch',
+            propsKey: 'showAddBtn'
+          },
+          {
+            title: '显示删除按钮',
+            type: 'switch',
+            propsKey: 'showRemoveBtn'
+          },
+          {
+            title: '最大行数',
+            type: 'number',
+            propsKey: 'maxTotal',
+            min: 1
+          },
+          {
+            title: '默认值',
+            type: 'slot',
+            slotName: 'AdvancedIncrementTable',
+            propsKey: 'defaultValue'
           }
         ]
       }

@@ -63,15 +63,16 @@ function removeRow(index) {
                 <el-input v-model="row[option.key]" clearable />
               </template>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column fixed="right" label="操作" width="100" v-if="data.props.showRemoveBtn">
               <template #default="{ $index }">
-                <el-button type="danger" text @click="removeRow($index)">删除</el-button>
+                <el-button type="danger" text @click="removeRow($index)" v-if="data.props.showRemoveBtn">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
 
-          <div class="questionnaire__btn" @click="addRow()">
-            新增一行
+          <div class="questionnaire__btn" @click="addRow()"
+            v-if="data.props.showAddBtn && (componentData.props.defaultValue.length < data.props.maxTotal)">
+            新增一行({{ componentData.props.defaultValue.length }}/{{ data.props.maxTotal }})
           </div>
         </div>
       </el-col>
@@ -83,7 +84,8 @@ function removeRow(index) {
               <div class="flex-1 mr-2">
                 第 {{ index + 1 }} 行
               </div>
-              <van-button plain type="danger" @click="removeRow(index)" size="small">删除</van-button>
+              <van-button plain type="danger" @click="removeRow(index)" size="small"
+                v-if="data.props.showRemoveBtn">删除</van-button>
             </div>
             <div class="increment-table__item__content">
               <template v-for="option in data.props.options" :key="option.key">
@@ -93,8 +95,9 @@ function removeRow(index) {
             </div>
           </div>
 
-          <div class="questionnaire__btn" @click="addRow()">
-            新增一行
+          <div class="questionnaire__btn" @click="addRow()"
+            v-if="data.props.showAddBtn && (componentData.props.defaultValue.length < data.props.maxTotal)">
+            新增一行({{ componentData.props.defaultValue.length }}/{{ data.props.maxTotal }})
           </div>
         </div>
       </el-col>
