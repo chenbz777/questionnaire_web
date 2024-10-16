@@ -23,9 +23,9 @@ export default class Questions extends BaseMateriel {
       desc: '问卷描述',  // 描述
       totalPoints: 0,  // 总分
       showLogo: false,  // 是否显示logo
-      logo: 'https://ice.frostsky.com/2024/08/25/7f210d873010e4c29a4e20813e8c63d2.png',  // logo
+      logo: 'https://s21.ax1x.com/2024/10/16/pANZu8O.png',  // logo
       logoPosition: 'center',  // logo位置: left-左, center-中, right-右
-      bgImage: 'https://ice.frostsky.com/2024/08/25/5623a87824a71855cbf09cec9e3202a5.png',
+      bgImage: 'https://s21.ax1x.com/2024/10/16/pANZK2D.png',
       bgColor: '#f0f0f0',  // 背景颜色: #f0f0f0
       contentBgColor: '#ffffff',  // 内容背景颜色: #ffffff
       textColor: '#333333',  // 文字颜色: #333333
