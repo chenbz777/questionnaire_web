@@ -9,6 +9,16 @@ let iframeMessage = null;
 
 nextTick(() => {
   iframeMessage = new IframeMessage('myIframe');
+
+  // 监听消息
+  iframeMessage.onMessage = (event) => {
+    const { name } = event;
+
+    // iframeMessage 对象已经初始化
+    if (name === 'onload') {
+      setQuestionnaireData();
+    }
+  };
 });
 
 function getQuestionnaireData() {

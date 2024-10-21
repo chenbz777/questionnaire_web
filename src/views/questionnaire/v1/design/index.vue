@@ -35,6 +35,11 @@ const importJSON = () => {
 
 const iframeMessage = new IframeMessage();
 
+// 发送初始化完成消息
+iframeMessage.send({
+  name: 'onload'
+});
+
 // 监听消息
 iframeMessage.onMessage = (event) => {
   const { sendId, data: messageData } = event;
