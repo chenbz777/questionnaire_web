@@ -81,6 +81,11 @@ window.getSubmitData = getSubmitData;
 // 初始化通讯SDK
 const iframeMessage = new IframeMessage();
 
+// 发送初始化完成消息
+iframeMessage.send({
+  name: 'onload'
+});
+
 // 监听消息
 iframeMessage.onMessage = (event) => {
 

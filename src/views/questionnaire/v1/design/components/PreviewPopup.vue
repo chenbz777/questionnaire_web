@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 
 
 const questionnaireData = ref(null);
@@ -32,13 +32,12 @@ let editUrl = window.location.origin + '/questionnaire/v1/answer';
 
 // 弹窗打开后回调
 function onOpened() {
-  // 延迟是为了确保 iframe 加载完成
-  setTimeout(() => {
+  nextTick(() => {
     // 设置数据
     window.previewIframe.contentWindow.setQuestionnaireData({
       questionnaireData: questionnaireData.value
     });
-  }, 500);
+  });
 }
 
 // 暴露函数

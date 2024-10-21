@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, nextTick } from 'vue';
 import IframeMessage from '@/common/IframeMessage';
 
 
@@ -7,34 +7,28 @@ const iframeUrl = ref(window.location.origin + '/questionnaire/v1/answer');
 
 let iframeMessage = null;
 
-onMounted(() => {
-  const myIframe = document.getElementById('myIframe');
+nextTick(() => {
+  iframeMessage = new IframeMessage('myIframe');
 
-  myIframe.onload = function () {
-    console.log('myIframe.onload');
+  // 监听消息
+  iframeMessage.onMessage = (event) => {
+    const { sendId, data: messageData, name } = event;
 
-    iframeMessage = new IframeMessage('myIframe');
-
-    // 延迟取保证网页 iframeMessage 对象已经初始化
-    setTimeout(() => {
+    // iframeMessage 对象已经初始化
+    if (name === 'onload') {
       setQuestionnaireData();
-    }, 500);
+    }
 
-    // 监听消息
-    iframeMessage.onMessage = (event) => {
-      const { sendId, data: messageData } = event;
+    if (messageData && messageData.name) {
+      const { name, data } = messageData;
 
-      if (messageData && messageData.name) {
-        const { name, data } = messageData;
-
-        // 提交问卷
-        if (name === 'submitQuestionnaire') {
-          onSubmit(data);
-          // 答复消息
-          iframeMessage.reply(sendId);
-        }
+      // 提交问卷
+      if (name === 'submitQuestionnaire') {
+        onSubmit(data);
+        // 答复消息
+        iframeMessage.reply(sendId);
       }
-    };
+    }
   };
 });
 

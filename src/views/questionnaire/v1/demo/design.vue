@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { nextTick } from 'vue';
 import IframeMessage from '@/common/IframeMessage';
 
 
@@ -7,12 +7,8 @@ const iframeUrl = window.location.origin + '/questionnaire/v1/design';
 
 let iframeMessage = null;
 
-onMounted(() => {
-  const myIframe = document.getElementById('myIframe');
-
-  myIframe.onload = function () {
-    iframeMessage = new IframeMessage('myIframe');
-  };
+nextTick(() => {
+  iframeMessage = new IframeMessage('myIframe');
 });
 
 function getQuestionnaireData() {
