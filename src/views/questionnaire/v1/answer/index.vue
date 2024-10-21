@@ -52,6 +52,13 @@ let startAnswerTime = Date.now();
 // 结束答题时间
 let endAnswerTime = Date.now();
 
+// 是否缓存填写: 默认true
+let isCacheFill = true;
+// 是否缓存填写
+if (route.query.isCacheFill) {
+  isCacheFill = route.query.isCacheFill === 'true';
+}
+
 // 获取提交数据
 function getSubmitData() {
   const { data, openUserKey } = checkData();
@@ -83,7 +90,10 @@ iframeMessage.onMessage = (event) => {
     const { name, data } = messageData;
 
     if (name === 'setQuestionnaireData') {
-      setQuestionnaireData(data);
+      setQuestionnaireData({
+        ...data,
+        isCacheFill
+      });
       iframeMessage.reply(sendId);
     }
 
@@ -342,16 +352,18 @@ watch(() => questionnaireData.value, () => {
   /**
    * 存储答案数据, 用于刷新页面时恢复数据
    */
-  const submitData = checkData();
+  if (isCacheFill) {
+    const submitData = checkData();
 
-  // 获取答案数据
-  const answerData = localStorage.get('answerData');
+    // 获取答案数据
+    const answerData = localStorage.get('answerData');
 
-  // 存储答案数据
-  answerData[questionnaireData.value.key] = submitData.data;
+    // 存储答案数据
+    answerData[questionnaireData.value.key] = submitData.data;
 
-  // 保存数据
-  localStorage.set('answerData', answerData);
+    // 保存数据
+    localStorage.set('answerData', answerData);
+  }
   /**
    * end
    */

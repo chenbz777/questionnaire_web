@@ -35,7 +35,9 @@ function onOpened() {
   // 延迟是为了确保 iframe 加载完成
   setTimeout(() => {
     // 设置数据
-    window.previewIframe.contentWindow.setQuestionnaireData(questionnaireData.value);
+    window.previewIframe.contentWindow.setQuestionnaireData({
+      questionnaireData: questionnaireData.value
+    });
   }, 500);
 }
 

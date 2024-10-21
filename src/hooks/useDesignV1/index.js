@@ -131,7 +131,19 @@ function checkData() {
  * @param data {object} 数据
  * @return {*}
  */
-function setQuestionnaireData(_questionnaireData, data = {}) {
+function setQuestionnaireData(props = {}) {
+
+  /**
+  * props
+  * questionnaireData {object} 问卷数据
+  * data {object} 数据
+  * isCacheFill {boolean} 是否从缓存中填充数据
+  */
+  let {
+    questionnaireData: _questionnaireData,
+    data = {},
+    isCacheFill
+  } = props;
 
   // 校验问卷数据
   if (!_questionnaireData) {
@@ -144,7 +156,7 @@ function setQuestionnaireData(_questionnaireData, data = {}) {
   }
 
   // 兜底问卷数据
-  if (!Object.keys(data).length) {
+  if (!Object.keys(_questionnaireData).length) {
     // 问卷数据模型
     const questionnaireModel = MaterielFactory.createMateriel('Questions');
 
@@ -157,7 +169,7 @@ function setQuestionnaireData(_questionnaireData, data = {}) {
   }
 
   // 没有题目数据, 尝试从本地存储中获取
-  if (!Object.keys(data).length) {
+  if (!Object.keys(data).length && isCacheFill) {
     // 如果没有存储答案数据, 则初始化, 有效期7天
     if (!localStorage.get('answerData')) {
       localStorage.set('answerData', {}, 7 * 24 * 60 * 60);
@@ -269,10 +281,8 @@ function setQuestion(questionKey, variableName, value) {
   }
 }
 
-// 暴露方法
-window.getQuestionnaireData = getQuestionnaireData;
 window.setQuestionnaireData = setQuestionnaireData;
-
+window.getQuestionnaireData = getQuestionnaireData;
 
 /**
  * 临时解决方案: 因为没有上传接口, 所以暂时使用这个配置

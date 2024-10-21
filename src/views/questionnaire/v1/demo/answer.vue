@@ -456,7 +456,9 @@ function setQuestionnaireData() {
 
   iframeMessage.sendPromise({
     name: 'setQuestionnaireData',
-    data: questionnaireData
+    data: {
+      questionnaireData
+    }
   }).then((data) => {
     console.log('setQuestionnaireData', data);
   });
