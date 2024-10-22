@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import QuestionnaireDetail from './components/QuestionnaireDetail.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
@@ -81,38 +81,37 @@ window.getSubmitData = getSubmitData;
 // 初始化通讯SDK
 const iframeMessage = new IframeMessage();
 
-// 发送初始化完成消息
-iframeMessage.send({
-  name: 'onload'
+onUnmounted(() => {
+  iframeMessage.destroy();
 });
 
 // 监听消息
 iframeMessage.onMessage = (event) => {
+  const { type, data } = event;
 
-  const { sendId, data: messageData } = event;
+  if (type === 'setQuestionnaireData') {
+    setQuestionnaireData({
+      ...data,
+      isCacheFill
+    });
+  }
 
-  if (messageData && messageData.name) {
-    const { name, data } = messageData;
+  if (type === 'getQuestionnaireData') {
+    iframeMessage.send({
+      type: 'getQuestionnaireData',
+      data: getQuestionnaireData()
+    });
+  }
 
-    if (name === 'setQuestionnaireData') {
-      setQuestionnaireData({
-        ...data,
-        isCacheFill
-      });
-      iframeMessage.reply(sendId);
-    }
+  if (type === 'getSubmitData') {
+    iframeMessage.send({
+      type: 'getSubmitData',
+      data: getSubmitData()
+    });
+  }
 
-    if (name === 'getQuestionnaireData') {
-      iframeMessage.reply(sendId, getQuestionnaireData());
-    }
-
-    if (name === 'getSubmitData') {
-      iframeMessage.reply(sendId, getSubmitData());
-    }
-
-    if (name === 'setUploadConfig') {
-      uploadConfig.value = data;
-    }
+  if (type === 'setUploadConfig') {
+    uploadConfig.value = data;
   }
 };
 

@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick } from 'vue';
+import { nextTick, onUnmounted } from 'vue';
 import IframeMessage from '@/common/IframeMessage';
 
 
@@ -7,24 +7,20 @@ const iframeUrl = window.location.origin + '/questionnaire/v1/design';
 
 let iframeMessage = null;
 
+onUnmounted(() => {
+  iframeMessage.destroy();
+});
+
 nextTick(() => {
   iframeMessage = new IframeMessage('myIframe');
 
-  // 监听消息
-  iframeMessage.onMessage = (event) => {
-    const { name } = event;
-
-    // iframeMessage 对象已经初始化
-    if (name === 'onload') {
-      setQuestionnaireData();
-    }
-  };
+  setQuestionnaireData();
 });
 
 function getQuestionnaireData() {
-  iframeMessage.sendPromise({
-    name: 'getQuestionnaireData'
-  }).then((data) => {
+  iframeMessage.send({
+    type: 'getQuestionnaireData'
+  }, (data) => {
     console.log('getQuestionnaireData', data);
   });
 }
@@ -178,13 +174,11 @@ function setQuestionnaireData() {
     'eventList': []
   };
 
-  iframeMessage.sendPromise({
-    name: 'setQuestionnaireData',
+  iframeMessage.send({
+    type: 'setQuestionnaireData',
     data: {
       questionnaireData
     }
-  }).then((data) => {
-    console.log('setQuestionnaireData', data);
   });
 }
 </script>

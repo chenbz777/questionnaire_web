@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import AttributeSettings from './components/Configuration/components/AttributeSettings.vue';
 import RenderEngine from '@/views/questionnaire/v1/components/RenderEngine.vue';
@@ -8,6 +8,10 @@ import useDesignV1 from '@/hooks/useDesignV1';
 
 
 const iframeMessage = new IframeMessage();
+
+onUnmounted(() => {
+  iframeMessage.destroy();
+});
 
 const { uploadConfig } = useDesignV1();
 
@@ -27,24 +31,21 @@ window.getQuestionData = getQuestionData;
 // 监听消息
 iframeMessage.onMessage = (event) => {
 
-  const { sendId, data: messageData } = event;
+  const { type, data } = event;
 
-  if (messageData && messageData.name) {
+  if (type === 'setQuestionData') {
+    setQuestionData(data.type, data.props);
+  }
 
-    const { name, data } = messageData;
+  if (type === 'getQuestionData') {
+    iframeMessage.send({
+      type: 'getQuestionData',
+      data: getQuestionData()
+    });
+  }
 
-    if (name === 'setQuestionData') {
-      setQuestionData(data.type, data.props);
-      iframeMessage.reply(sendId);
-    }
-
-    if (name === 'getQuestionData') {
-      iframeMessage.reply(sendId, getQuestionData());
-    }
-
-    if (name === 'setUploadConfig') {
-      uploadConfig.value = data;
-    }
+  if (type === 'setUploadConfig') {
+    uploadConfig.value = data;
   }
 };
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, onUnmounted } from 'vue';
 import IframeMessage from '@/common/IframeMessage';
 
 
@@ -7,35 +7,39 @@ const iframeUrl = ref(window.location.origin + '/questionnaire/v1/answer');
 
 let iframeMessage = null;
 
-nextTick(() => {
+onUnmounted(() => {
+  iframeMessage.destroy();
+});
+
+function init() {
+
+  if (iframeMessage) {
+    iframeMessage.destroy();
+  }
+
   iframeMessage = new IframeMessage('myIframe');
+
+  setQuestionnaireData();
 
   // 监听消息
   iframeMessage.onMessage = (event) => {
-    const { sendId, data: messageData, name } = event;
+    const { type, data } = event;
 
-    // iframeMessage 对象已经初始化
-    if (name === 'onload') {
-      setQuestionnaireData();
-    }
-
-    if (messageData && messageData.name) {
-      const { name, data } = messageData;
-
-      // 提交问卷
-      if (name === 'submitQuestionnaire') {
-        onSubmit(data);
-        // 答复消息
-        iframeMessage.reply(sendId);
-      }
+    // 提交问卷
+    if (type === 'submitQuestionnaire') {
+      onSubmit(data);
     }
   };
+}
+
+nextTick(() => {
+  init();
 });
 
 function getQuestionnaireData() {
-  iframeMessage.sendPromise({
-    name: 'getQuestionnaireData'
-  }).then((data) => {
+  iframeMessage.send({
+    type: 'getQuestionnaireData'
+  }, (data) => {
     console.log('getQuestionnaireData', data);
   });
 }
@@ -448,20 +452,18 @@ function setQuestionnaireData() {
     'eventList': []
   };
 
-  iframeMessage.sendPromise({
-    name: 'setQuestionnaireData',
+  iframeMessage.send({
+    type: 'setQuestionnaireData',
     data: {
       questionnaireData
     }
-  }).then((data) => {
-    console.log('setQuestionnaireData', data);
   });
 }
 
 function getSubmitData() {
-  iframeMessage.sendPromise({
-    name: 'getSubmitData'
-  }).then((data) => {
+  iframeMessage.send({
+    type: 'getSubmitData'
+  }, (data) => {
     console.log('getSubmitData', data);
   });
 }
@@ -472,14 +474,17 @@ function onSubmit(data) {
 
 function toAnswerEasy() {
   iframeUrl.value = window.location.origin + '/questionnaire/v1/answer/easy';
+  init();
 }
 
 function toReadonly() {
   iframeUrl.value = window.location.origin + '/questionnaire/v1/readonly';
+  init();
 }
 
 function toReadonlyEasy() {
   iframeUrl.value = window.location.origin + '/questionnaire/v1/readonly/easy';
+  init();
 }
 </script>
 
@@ -494,7 +499,7 @@ function toReadonlyEasy() {
       <el-button type="primary" @click="toReadonlyEasy()">换成简单只读</el-button>
     </div>
 
-    <iframe :src="iframeUrl" id="myIframe" frameborder="0"></iframe>
+    <iframe :src="iframeUrl" id="myIframe" frameborder="0" :key="iframeUrl"></iframe>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import Configuration from './components/Configuration/index.vue';
 import Edit from './components/Edit.vue';
 import useDesignV1 from '@/hooks/useDesignV1';
@@ -35,30 +35,27 @@ const importJSON = () => {
 
 const iframeMessage = new IframeMessage();
 
-// 发送初始化完成消息
-iframeMessage.send({
-  name: 'onload'
+onUnmounted(() => {
+  iframeMessage.destroy();
 });
 
 // 监听消息
 iframeMessage.onMessage = (event) => {
-  const { sendId, data: messageData } = event;
+  const { type, data } = event;
 
-  if (messageData && messageData.name) {
-    const { name, data } = messageData;
+  if (type === 'setQuestionnaireData') {
+    setQuestionnaireData(data);
+  }
 
-    if (name === 'setQuestionnaireData') {
-      setQuestionnaireData(data);
-      iframeMessage.reply(sendId);
-    }
+  if (type === 'getQuestionnaireData') {
+    iframeMessage.send({
+      type: 'getQuestionnaireData',
+      data: getQuestionnaireData()
+    });
+  }
 
-    if (name === 'getQuestionnaireData') {
-      iframeMessage.reply(sendId, getQuestionnaireData());
-    }
-
-    if (name === 'setUploadConfig') {
-      uploadConfig.value = data;
-    }
+  if (type === 'setUploadConfig') {
+    uploadConfig.value = data;
   }
 };
 </script>

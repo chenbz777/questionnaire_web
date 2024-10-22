@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { nextTick, onUnmounted } from 'vue';
 import IframeMessage from '@/common/IframeMessage';
 
 
@@ -7,17 +7,19 @@ const iframeUrl = window.location.origin + '/questionnaire/v1/design/question';
 
 let iframeMessage = null;
 
-onMounted(() => {
-  const myIframe = document.getElementById('myIframe');
+onUnmounted(() => {
+  iframeMessage.destroy();
+});
 
-  myIframe.onload = function () {
-    iframeMessage = new IframeMessage('myIframe');
-  };
+nextTick(() => {
+  iframeMessage = new IframeMessage('myIframe');
+
+  setQuestionData('FormInput');
 });
 
 function setQuestionData(type) {
-  iframeMessage.sendPromise({
-    name: 'setQuestionData',
+  iframeMessage.send({
+    type: 'setQuestionData',
     data: {
       type
     }
