@@ -124,8 +124,8 @@ function onSubmit() {
   console.log('submitData: ', getSubmitData());
 
   try {
-    iframeMessage.sendPromise({
-      name: 'submitQuestionnaire',
+    iframeMessage.send({
+      type: 'submitQuestionnaire',
       data: getSubmitData()
     });
   } catch (error) {
