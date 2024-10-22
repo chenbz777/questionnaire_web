@@ -23,7 +23,10 @@ function handleClick(templateBaseItem) {
     }
   )
     .then(() => {
-      setQuestionnaireData(templateBaseItem.data);
+
+      setQuestionnaireData({
+        questionnaireData: templateBaseItem.data
+      });
 
       initSkin();
     })

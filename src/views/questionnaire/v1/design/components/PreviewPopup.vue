@@ -15,7 +15,6 @@ const popup = ref(false);
 
 // 打开弹窗
 function open(_questionnaireData) {
-
   if (!_questionnaireData) {
     return;
   }

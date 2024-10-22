@@ -360,7 +360,7 @@ watch(() => questionnaireData.value, () => {
     const submitData = checkData();
 
     // 获取答案数据
-    const answerData = localStorage.get('answerData');
+    const answerData = localStorage.get('answerData') || {};
 
     // 存储答案数据
     answerData[questionnaireData.value.key] = submitData.data;
