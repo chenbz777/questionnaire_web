@@ -35,7 +35,7 @@ export default class AdvancedAttachment extends BaseMateriel {
   }
 
   verifyRequired() {
-    if (this.props.required && !this.props.defaultValue) {
+    if (this.props.required && !this.props.defaultValue.length) {
       return false;
     }
 
