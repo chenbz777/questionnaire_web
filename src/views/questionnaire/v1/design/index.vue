@@ -9,7 +9,7 @@ import userDefined from '@/utils/userDefined';
 import IframeMessage from '@/common/IframeMessage';
 
 
-const { questionnaireData, subscribe, setQuestionnaireData, getQuestionnaireData, uploadConfig } = useDesignV1();
+const { questionnaireData, subscribe, setQuestionnaireData, getQuestionnaireData, uploadConfig, initSkin } = useDesignV1();
 
 // 预览弹窗实例
 const previewPopupRef = ref(null);
@@ -45,6 +45,8 @@ iframeMessage.onMessage = (event) => {
 
   if (type === 'setQuestionnaireData') {
     setQuestionnaireData(data);
+
+    initSkin();
   }
 
   if (type === 'getQuestionnaireData') {
