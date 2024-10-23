@@ -334,8 +334,6 @@ watch(() => questionnaireData.value, () => {
 
     const _question = JSON.parse(JSON.stringify(question));
 
-    _question.props.required = true;
-
     // 创建题目实例
     const model = MaterielFactory.createMateriel(_question.type, _question);
 
