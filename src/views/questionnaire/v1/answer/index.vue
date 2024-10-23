@@ -149,8 +149,6 @@ function handleSubmit() {
       type: 'warning'
     });
 
-    // animateElement('#submitBtn', 'animate__shakeX');
-
     userDefined.scrollIntoView(errorList[0].key);
 
     setTimeout(() => {
@@ -318,6 +316,9 @@ subscribe.on('setQuestionnaireData', () => {
 // 答题进度百分比
 const percentage = ref(0);
 
+// 答题卡
+const answerSheet = ref([]);
+
 // 监听问卷数据变化
 watch(() => questionnaireData.value, () => {
   // 题目列表, 过滤隐藏的题目
@@ -325,6 +326,8 @@ watch(() => questionnaireData.value, () => {
 
   // 答题进度
   let total = 0;
+
+  const _answerSheet = [];
 
   // 遍历题目列表
   questionList.forEach((question) => {
@@ -341,10 +344,18 @@ watch(() => questionnaireData.value, () => {
      */
     const isOk = model.verifyRequired();
 
+    _answerSheet.push({
+      key: _question.key,
+      isOk
+    });
+
     if (isOk) {
       total += 1;
     }
   });
+
+  // 更新答题卡
+  answerSheet.value = _answerSheet;
 
   // 计算百分比
   percentage.value = Math.round((total / questionList.length) * 100) || 0;
@@ -372,8 +383,14 @@ watch(() => questionnaireData.value, () => {
    * end
    */
 }, {
-  deep: true
+  deep: true,
+  immediate: true
 });
+
+// 点击答题卡
+function handleClickAnswerSheet(key) {
+  userDefined.scrollIntoView(key);
+}
 </script>
 
 <template>
@@ -385,6 +402,20 @@ watch(() => questionnaireData.value, () => {
       <QuestionnaireDetail :questionnaireData="questionnaireData" :showSubmitBtn="showSubmitBtn" :countdown="countdown"
         :key="renderKey" @submit="handleSubmit" />
     </div>
+
+    <div class="answer-sheet">
+      <div class="mb-3">答题卡</div>
+      <el-row :gutter="10">
+        <el-col :span="4" v-for="(item, index) in answerSheet" :key="item.key">
+          <div class="answer-sheet__item" @click="handleClickAnswerSheet(item.key)" :class="{
+            'answer-sheet__item--success': item.isOk,
+            'answer-sheet__item--error': !item.isOk
+          }">
+            {{ index + 1 }}
+          </div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -392,4 +423,50 @@ watch(() => questionnaireData.value, () => {
 @import url('../styles/questionnaire.css');
 </style>
 
-<style scoped></style>
+<style scoped>
+.answer-sheet {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 300px;
+  height: fit-content;
+  border-radius: 10px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  background-color: var(--questionnaire-content-bg-color);
+  color: var(--questionnaire-text-color);
+  padding: 20px;
+  margin-left: 20px;
+}
+
+.answer-sheet__item {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--questionnaire-bg-color);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--questionnaire-bg-color);
+  cursor: pointer;
+}
+
+.answer-sheet__item--success {
+  background-color: #e4fff1;
+  color: #329a63;
+  border: 1px solid #329a63;
+}
+
+.answer-sheet__item--error {
+  background-color: #ffe3e4;
+  color: #df4853;
+  border: 1px solid #df4853;
+}
+
+/* 针对宽度小于 768px 的设备（通常是移动设备） */
+@media only screen and (max-width: 768px) {
+  .answer-sheet {
+    display: none;
+  }
+}
+</style>

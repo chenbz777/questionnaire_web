@@ -66,7 +66,8 @@ export default class AdvancedAddress extends BaseMateriel {
       province: this.props.province,
       city: this.props.city,
       area: this.props.area,
-      detailedAddress: this.props.detailedAddress
+      detailedAddress: this.props.detailedAddress,
+      provinceCityArea: this.getValueText()
     };
   }
 
