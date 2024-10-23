@@ -149,7 +149,8 @@ export default class AdvancedAttachment extends BaseMateriel {
           {
             title: '模版文件列表',
             type: 'uploadFile',
-            propsKey: 'templateFiles'
+            propsKey: 'templateFiles',
+            uploadText: '上传模版'
           }
         ]
       }

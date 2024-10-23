@@ -296,7 +296,7 @@ const uploadConfig = ref({
 });
 
 // 获取完整url
-function getFullUrl(url) {
+function getFullUrl(url = '') {
   return url.includes('http') ? url : uploadConfig.value.baseURL + url;
 }
 
