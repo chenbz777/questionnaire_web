@@ -289,7 +289,8 @@ window.getQuestionnaireData = getQuestionnaireData;
  * 正确解决方案: 企业内部开发上传接口
  */
 const uploadConfig = ref({
-  uploadUrl: '',
+  baseUrl: '',
+  url: '',
   headers: {},
   data: {}
 });

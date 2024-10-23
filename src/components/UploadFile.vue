@@ -66,7 +66,7 @@ watch(() => fileList.value, (files) => {
   deep: true
 });
 
-const { questionnaireData, uploadConfig } = useDesignV1();
+const { uploadConfig } = useDesignV1();
 
 const option = Object.assign({
   uploadText: '上传附件',
@@ -167,13 +167,15 @@ function handleRemove(index) {
 
 // 预览文件
 function handlePreview(url) {
-  window.open(url);
+  const _url = url.includes('http') ? url : `${uploadConfig.value.baseURL}${url}`;
+
+  window.open(_url);
 }
 </script>
 
 <template>
   <div class="upload-file">
-    <template v-if="questionnaireData.props.uploadUrl">
+    <template v-if="uploadConfig.url">
       <div class="upload-file__template" v-if="templateFiles.length">
         <div>为了保证资料上传顺利，请先下载模板，并按照规范示例上传资料</div>
 
@@ -182,7 +184,7 @@ function handlePreview(url) {
         </div>
       </div>
 
-      <el-upload v-model:file-list="fileList" :action="uploadConfig.uploadUrl" :headers="uploadConfig.headers"
+      <el-upload v-model:file-list="fileList" :action="uploadConfig.url" :headers="uploadConfig.headers"
         :data="uploadConfig.data" :limit="option.uploadLimit" :before-upload="handleBeforeUpload"
         :disabled="disabled || (fileList.length >= option.uploadLimit)" :show-file-list="false" :on-success="onSuccess"
         :on-error="onError">
