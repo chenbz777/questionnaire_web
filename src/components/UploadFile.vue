@@ -66,7 +66,7 @@ watch(() => fileList.value, (files) => {
   deep: true
 });
 
-const { uploadConfig } = useDesignV1();
+const { uploadConfig, getFullUrl } = useDesignV1();
 
 const option = Object.assign({
   uploadText: '上传附件',
@@ -167,9 +167,7 @@ function handleRemove(index) {
 
 // 预览文件
 function handlePreview(url) {
-  const _url = url.includes('http') ? url : `${uploadConfig.value.baseURL}${url}`;
-
-  window.open(_url);
+  window.open(getFullUrl(url));
 }
 </script>
 
@@ -180,7 +178,7 @@ function handlePreview(url) {
         <div>为了保证资料上传顺利，请先下载模板，并按照规范示例上传资料</div>
 
         <div v-for="item in templateFiles" :key="item.uid" class="upload-file__template__item">
-          <a :href="item.url" download target="_blank">{{ item.name }}</a>
+          <a :href="getFullUrl(item.url)" download target="_blank">{{ item.name }}</a>
         </div>
       </div>
 

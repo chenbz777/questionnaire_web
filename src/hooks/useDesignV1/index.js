@@ -81,7 +81,7 @@ function initSkin(data) {
   }
 
   document.documentElement.style.setProperty('--questionnaire-bg-color', data.bgColor);
-  document.documentElement.style.setProperty('--questionnaire-bg-image', `url(${data.bgImage})`);
+  document.documentElement.style.setProperty('--questionnaire-bg-image', `url(${getFullUrl(data.bgImage)})`);
   document.documentElement.style.setProperty('--questionnaire-content-bg-color', data.contentBgColor);
   document.documentElement.style.setProperty('--questionnaire-text-color', data.textColor);
   document.documentElement.style.setProperty('--questionnaire-btn-bg-color', data.btnBgColor);
@@ -289,11 +289,16 @@ window.getQuestionnaireData = getQuestionnaireData;
  * 正确解决方案: 企业内部开发上传接口
  */
 const uploadConfig = ref({
-  baseUrl: '',
+  baseURL: '',
   url: '',
   headers: {},
   data: {}
 });
+
+// 获取完整url
+function getFullUrl(url) {
+  return url.includes('http') ? url : uploadConfig.value.baseURL + url;
+}
 
 export default function useEdit() {
   return {
@@ -307,6 +312,7 @@ export default function useEdit() {
     setQuestion,
     setQuestionnaireData,
     getQuestionnaireData,
-    uploadConfig
+    uploadConfig,
+    getFullUrl
   };
 }

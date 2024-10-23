@@ -3,6 +3,7 @@ import RenderEngine from '@/views/questionnaire/v1/components/RenderEngine.vue';
 import Subscribe from '@/common/Subscribe';
 import MaterielFactory from '@/hooks/useDesignV1/materielFactory';
 import action from '@/hooks/useDesignV1/common/action';
+import useDesignV1 from '@/hooks/useDesignV1';
 
 
 const props = defineProps({
@@ -25,6 +26,8 @@ const props = defineProps({
 const { parseActionList } = action;
 
 const subscribe = new Subscribe();
+
+const { getFullUrl } = useDesignV1();
 
 const emit = defineEmits(['submit']);
 
@@ -234,7 +237,7 @@ eventList.forEach((event) => {
     </div>
 
     <div class="questionnaire__container__logo" v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
-      <img :src="questionnaireData.props.logo" alt="logo" class="questionnaire__container__logo__image" />
+      <img :src="getFullUrl(questionnaireData.props.logo)" alt="logo" class="questionnaire__container__logo__image" />
     </div>
 
     <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
