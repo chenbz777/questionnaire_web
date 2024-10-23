@@ -401,7 +401,8 @@ function handleClickAnswerSheet(key) {
         :key="renderKey" @submit="handleSubmit" />
     </div>
 
-    <div class="answer-sheet">
+    <!-- 简洁模式下不显示, 手机端不显示 -->
+    <div class="answer-sheet" v-if="!isEasy">
       <div class="mb-3">答题卡</div>
       <el-row :gutter="10">
         <el-col :span="4" v-for="(item, index) in answerSheet" :key="item.key">
