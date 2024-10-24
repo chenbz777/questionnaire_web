@@ -45,8 +45,12 @@ iframeMessage.onMessage = (event) => {
 
   if (type === 'setQuestionnaireData') {
     setQuestionnaireData(data);
-
     initSkin();
+
+    iframeMessage.send({
+      type: 'setQuestionnaireData',
+      data: data
+    });
   }
 
   if (type === 'getQuestionnaireData') {
@@ -58,6 +62,10 @@ iframeMessage.onMessage = (event) => {
 
   if (type === 'setUploadConfig') {
     uploadConfig.value = data;
+    iframeMessage.send({
+      type: 'setUploadConfig',
+      data
+    });
   }
 };
 </script>

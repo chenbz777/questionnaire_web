@@ -94,6 +94,10 @@ iframeMessage.onMessage = (event) => {
       ...data,
       isCacheFill
     });
+    iframeMessage.send({
+      type: 'setQuestionnaireData',
+      data
+    });
   }
 
   if (type === 'getQuestionnaireData') {
@@ -112,6 +116,10 @@ iframeMessage.onMessage = (event) => {
 
   if (type === 'setUploadConfig') {
     uploadConfig.value = data;
+    iframeMessage.send({
+      type: 'setUploadConfig',
+      data
+    });
   }
 };
 
