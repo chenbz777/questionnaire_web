@@ -61,6 +61,15 @@ function emitSubscribe(eventName, data) {
 
 // 实例化题目模型
 const model = MaterielFactory.createMateriel(props.data.type);
+
+function getModel(data) {
+  return MaterielFactory.createMateriel(data.type, data);
+}
+
+const url = new URL(window.location.href);
+
+// 是否显示答案
+const showAnswer = url.searchParams.get('showAnswer') && (url.searchParams.get('showAnswer') === 'true');
 </script>
 
 <template>
@@ -83,8 +92,7 @@ const model = MaterielFactory.createMateriel(props.data.type);
     </div>
     <!-- 内容主体 -->
     <template v-if="data.props.status === 'readonly'">
-      <div class="base-container__readonly"
-        v-html="MaterielFactory.createMateriel(props.data.type, props.data).getValueText()" />
+      <div class="base-container__readonly" v-html="getModel(props.data).getValueText()" />
     </template>
     <template v-else>
       <component :is="materielComponents[data.type]" :data="data" :emitSubscribe="emitSubscribe" :option="option" />
@@ -92,6 +100,29 @@ const model = MaterielFactory.createMateriel(props.data.type);
     <!-- 备注 -->
     <div class="base-container__remark" v-if="data.props.remark">
       {{ data.props.remark }}
+    </div>
+
+    <!-- 显示答案 -->
+    <div class="base-container__correct" v-if="showAnswer">
+      <div class="base-container__correct__title" v-if="data.props.answer">
+        正确答案: {{ data.props.answer }}
+      </div>
+      <div class="base-container__correct__title" v-if="getModel(props.data).getValueText()">
+        考生答案: <span v-html="getModel(props.data).getValueText()"></span>
+      </div>
+      <div class="base-container__correct__title" v-if="data.props.answerAnalysis">
+        答案解析: {{ data.props.answerAnalysis }}
+      </div>
+      <div class="base-container__correct__title" v-if="data.props.candidateScore">
+        考生得分: {{ data.props.candidateScore }}
+      </div>
+      <div class="base-container__correct__title"
+        v-if="data.props.answerAnalysisAttachment && data.props.answerAnalysisAttachment.length">
+        答案解析附件: <a :href="item.url" target="_blank" download=""
+          v-for="(item, index) in data.props.answerAnalysisAttachment" :key="index"
+          class="base-container__correct__a">{{
+            item.name }}</a>
+      </div>
     </div>
   </div>
 </template>
@@ -156,7 +187,7 @@ const model = MaterielFactory.createMateriel(props.data.type);
   /* background-color: rgba(0, 0, 0, 0.1); */
   background-color: var(--questionnaire-bg-color);
   border-radius: 6px;
-  padding: 2px 10px;
+  padding: 6px 10px;
   margin-top: 10px;
   font-size: 14px;
 }
@@ -165,12 +196,13 @@ const model = MaterielFactory.createMateriel(props.data.type);
   display: none;
 }
 
-.base-container__correct p {
-  margin: 10px 0;
+.base-container__correct__title {
+  font-size: 13px;
+  line-height: 22px;
 }
 
-.base-container__correct__title {
-  margin-right: 10px;
+.base-container__correct__a {
+  margin: 0 6px;
 }
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */

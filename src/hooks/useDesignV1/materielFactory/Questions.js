@@ -2,19 +2,19 @@ import BaseMateriel from './BaseMateriel';
 
 export default class Questions extends BaseMateriel {
 
-  constructor() {
-    super();
+  constructor(instance = {}) {
+    super(instance);
 
     // 问卷版本
-    this.version = 1;
+    this.version = instance.version || 1;
     // 题目列表
-    this.questionList = [];
+    this.questionList = instance.questionList || [];
     // 题目key列表, 作为判断版本是否更新的依据
-    this.questionKeys = [];
+    this.questionKeys = instance.questionKeys || [];
     // 逻辑列表
-    this.logicList = [];
+    this.logicList = instance.logicList || [];
     // 事件列表
-    this.eventList = [];
+    this.eventList = instance.eventList || [];
   }
 
   get defaultProps() {

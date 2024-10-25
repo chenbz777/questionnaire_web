@@ -397,6 +397,14 @@ watch(() => questionnaireData.value, () => {
 function handleClickAnswerSheet(key) {
   userDefined.scrollIntoView(key);
 }
+
+// 格式化秒数
+function formatSeconds(seconds) {
+  const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+  const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+  const secs = String(seconds % 60).padStart(2, '0');
+  return `${hrs}:${mins}:${secs}`;
+}
 </script>
 
 <template>
@@ -405,24 +413,35 @@ function handleClickAnswerSheet(key) {
       <van-progress :percentage="percentage" pivot-text="" />
     </div>
     <div :class="{ 'questionnaire__container': !isEasy }">
-      <QuestionnaireDetail :questionnaireData="questionnaireData" :showSubmitBtn="showSubmitBtn" :countdown="countdown"
-        :key="renderKey" @submit="handleSubmit" />
+      <QuestionnaireDetail :questionnaireData="questionnaireData" :showSubmitBtn="showSubmitBtn" :key="renderKey"
+        @submit="handleSubmit" />
     </div>
 
     <!-- 简洁模式下不显示, 手机端不显示 -->
-    <div class="answer-sheet" v-if="!isEasy">
-      <div class="mb-3">答题卡</div>
-      <el-row :gutter="10">
-        <el-col :span="4" v-for="(item, index) in answerSheet" :key="item.key">
-          <div class="answer-sheet__item" @click="handleClickAnswerSheet(item.key)" :class="{
-            'answer-sheet__item--success': item.isOk,
-            'answer-sheet__item--error': !item.isOk
-          }">
-            {{ index + 1 }}
-          </div>
-        </el-col>
-      </el-row>
+    <div class="questionnaire-page__right" v-if="!isEasy">
+      <div class="questionnaire-page__card" v-if="questionnaireData.props.limitTime">
+        <div class="mb-3">答题倒计时</div>
+
+        <div class="questionnaire-page__countdown">
+          {{ formatSeconds(countdown) }}
+        </div>
+      </div>
+
+      <div class="questionnaire-page__card">
+        <div class="mb-3">答题卡</div>
+        <el-row :gutter="10">
+          <el-col :span="4" v-for="(item, index) in answerSheet" :key="item.key">
+            <div class="answer-sheet__item" @click="handleClickAnswerSheet(item.key)" :class="{
+              'answer-sheet__item--success': item.isOk,
+              'answer-sheet__item--error': !item.isOk
+            }">
+              {{ index + 1 }}
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -431,17 +450,21 @@ function handleClickAnswerSheet(key) {
 </style>
 
 <style scoped>
-.answer-sheet {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  width: 300px;
-  height: fit-content;
+.questionnaire-page__card {
   border-radius: 10px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
   background-color: var(--questionnaire-content-bg-color);
   color: var(--questionnaire-text-color);
   padding: 20px;
+  margin-bottom: 20px;
+}
+
+.questionnaire-page__right {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 300px;
+  height: fit-content;
   margin-left: 20px;
 }
 
@@ -468,6 +491,13 @@ function handleClickAnswerSheet(key) {
   background-color: #ffe3e4;
   color: #df4853;
   border: 1px solid #df4853;
+}
+
+.questionnaire-page__countdown {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--questionnaire-btn-bg-color);
+  text-align: center;
 }
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */

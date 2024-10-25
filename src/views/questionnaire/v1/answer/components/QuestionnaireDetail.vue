@@ -225,9 +225,6 @@ eventList.forEach((event) => {
 <template>
   <div>
     <div class="questionnaire__container__pushpin">
-      <div class="questionnaire__container__tips" v-if="questionnaireData.props.limitTime">
-        答题结束: {{ countdown }}秒
-      </div>
       <div class="questionnaire__container__tips" v-if="questionnaireData.props.totalPoints">
         总分: {{ questionnaireData.props.totalPoints }}分
       </div>

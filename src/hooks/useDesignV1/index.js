@@ -156,12 +156,9 @@ function setQuestionnaireData(props = {}) {
   }
 
   // 兜底问卷数据
-  if (!Object.keys(_questionnaireData).length) {
-    // 问卷数据模型
-    const questionnaireModel = MaterielFactory.createMateriel('Questions');
-
-    _questionnaireData = Object.assign(questionnaireModel, _questionnaireData);
-  }
+  const questionnaireModel = MaterielFactory.createMateriel('Questions', _questionnaireData);
+  // 问卷数据模型
+  _questionnaireData = questionnaireModel;
 
   // 校验问卷数据
   if (data && ((typeof data) !== 'object')) {

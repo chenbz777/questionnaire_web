@@ -2,7 +2,10 @@
 import { ref, nextTick, onUnmounted } from 'vue';
 import IframeMessage from '@/common/IframeMessage';
 
-
+/**
+ * 支持参数
+ * showAnswer: 是否显示答案
+ */
 const iframeUrl = ref(window.location.origin + '/questionnaire/v1/answer');
 
 let iframeMessage = null;
