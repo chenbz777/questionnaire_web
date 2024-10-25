@@ -26,7 +26,7 @@ export default class BaseMateriel {
         throw new Error(`组件类型不匹配, 期望类型为: ${this.type}, 实际类型为: ${instance.type}`);
       }
 
-      Object.assign(this.props, JSON.parse(JSON.stringify(instance.props)));
+      Object.assign(this.props, JSON.parse(JSON.stringify(instance.props || {})));
     }
 
     /**

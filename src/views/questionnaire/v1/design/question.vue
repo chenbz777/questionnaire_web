@@ -17,8 +17,8 @@ const { uploadConfig } = useDesignV1();
 
 const currentModel = ref(null);
 
-function setQuestionData(type, props) {
-  currentModel.value = MaterielFactory.createMateriel(type, props);
+function setQuestionData(instance = {}) {
+  currentModel.value = MaterielFactory.createMateriel(instance.type, instance);
 }
 
 function getQuestionData() {
@@ -34,7 +34,7 @@ iframeMessage.onMessage = (event) => {
   const { type, data } = event;
 
   if (type === 'setQuestionData') {
-    setQuestionData(data.type, data.props);
+    setQuestionData(data);
 
     iframeMessage.send({
       type: 'setQuestionData',
