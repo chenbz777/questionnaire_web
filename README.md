@@ -30,7 +30,7 @@
 
 ## 🎨 预览
 
-[点击链接直达预览地址](http://questionnaire.ఠఠ.com/questionnaire/v1/design)
+[点击链接直达预览地址](http://questionnaire.ఠఠ.com/questionnaire/design)
 
 ![设计页面](https://ice.frostsky.com/2024/09/13/b7987b8e01f2b9ec622aaab65dbc39a8.png)
 
@@ -89,7 +89,7 @@ pnpm build
 │   ├── components
 │   ├── hooks
 │   │   ├── useAnimate  // 动画
-│   │   ├── useDesignV1  // 问卷设计V1
+│   │   ├── useDesign  // 问卷设计V1
 │   │   │   ├── action.js  // 解析动作函数
 │   │   │   ├── common  // 常用函数
 │   │   │   ├── index.js
@@ -119,25 +119,25 @@ pnpm build
 
 ### 集成【设计问卷】
 
-> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/design.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/demo/design.vue`
 
 <br />
 
 ### 集成【填写问卷】
 
-> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/demo/answer.vue`
 
 <br />
 
 ### 集成【只读问卷】
 
-> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/answer.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/demo/answer.vue`
 
 <br />
 
 ### 集成【设计题目】
 
-> 集成 demo 在项目目录 `src/views/questionnaire/v1/demo/designQuestion.vue`
+> 集成 demo 在项目目录 `src/views/questionnaire/demo/designQuestion.vue`
 
 <br />
 

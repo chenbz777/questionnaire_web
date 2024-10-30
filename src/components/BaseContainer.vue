@@ -30,6 +30,9 @@
 
   padding-top: constant(safe-area-inset-top);
   padding-top: env(safe-area-inset-top);
+
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .bc__head {
@@ -44,10 +47,12 @@
   position: relative;
 }
 
+.bc__content::-webkit-scrollbar {
+  display: none;
+}
+
 .bc__foot {
   box-sizing: border-box;
   position: relative;
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

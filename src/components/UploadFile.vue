@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { ElMessage } from 'element-plus';
-import useDesignV1 from '@/hooks/useDesignV1';
+import useQuestionnaire from '@/hooks/useQuestionnaire';
 
 
 const props = defineProps({
@@ -66,7 +66,7 @@ watch(() => fileList.value, (files) => {
   deep: true
 });
 
-const { uploadConfig, getFullUrl } = useDesignV1();
+const { uploadConfig, getFullUrl } = useQuestionnaire();
 
 const option = Object.assign({
   uploadText: '上传附件',
