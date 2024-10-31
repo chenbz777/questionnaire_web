@@ -68,7 +68,7 @@ if (route.query.isCacheFill) {
 }
 
 // 显示答题卡
-let isShowAnswerSheet = false;
+let isShowAnswerSheet = true;
 if (route.query.isShowAnswerSheet) {
   isShowAnswerSheet = route.query.isShowAnswerSheet === 'true';
 }
@@ -161,13 +161,20 @@ iframeMessage.onMessage = (event) => {
   }
 
   if (type === 'setUploadConfig') {
-    uploadConfig.value = data;
+    setUploadConfig(data);
     iframeMessage.send({
       type: 'setUploadConfigCallback',
       data
     });
   }
 };
+
+// 设置上传配置
+function setUploadConfig(data) {
+  uploadConfig.value = data;
+}
+
+window.setUploadConfig = setUploadConfig;
 
 /**
  * @author: chenbz
@@ -794,6 +801,10 @@ function addLifecycle(callback) {
 
   .questionnaire__page__foot {
     padding-top: 10px;
+  }
+
+  .page__right {
+    display: none;
   }
 }
 </style>

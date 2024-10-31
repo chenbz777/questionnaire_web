@@ -268,6 +268,8 @@ function handlePreview(url) {
 
 .upload-file__template__item {
   margin-top: 6px;
+  word-wrap: break-word;
+  word-break: normal;
 }
 
 .upload-file__no-api {

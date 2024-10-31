@@ -1,7 +1,11 @@
 <script setup>
 import { ref } from 'vue';
+import useQuestionnaire from '@/hooks/useQuestionnaire';
 
 
+const { uploadConfig } = useQuestionnaire();
+
+// 问卷数据
 const questionnaireData = ref(null);
 
 // 选项
@@ -47,6 +51,8 @@ function onOpened() {
       window.previewIframe.contentWindow.initQuestionnaire({
         questionnaireData: questionnaireData.value
       });
+
+      window.previewIframe.contentWindow.setUploadConfig(uploadConfig.value);
     }
   }, 100);
 }
