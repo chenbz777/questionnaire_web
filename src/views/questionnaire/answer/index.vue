@@ -20,7 +20,7 @@ import Lifecycle from '@/common/Lifecycle';
 const { initQuestionnaireData, getSkinStr, verifySubmitData, uploadConfig } = useQuestionnaire();
 
 // 问卷数据
-const questionnaireData = ref(initQuestionnaireData());
+const questionnaireData = ref(null);
 
 // 插件生命周期
 const lifecycle = new Lifecycle();
@@ -112,7 +112,9 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  initQuestionnaire();
+  initQuestionnaire({
+    questionnaireData: initQuestionnaireData()
+  });
 });
 
 // 监听消息
@@ -593,8 +595,7 @@ watch(() => questionnaireData.value, () => {
    * end
    */
 }, {
-  deep: true,
-  immediate: true
+  deep: true
 });
 
 // 添加插件生命周期
