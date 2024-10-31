@@ -57,14 +57,14 @@ iframeMessage.onMessage = (event) => {
     skinStr.value = getSkinStr(questionnaireData.value);
 
     iframeMessage.send({
-      type: 'setQuestionnaireData',
+      type: 'setQuestionnaireDataCallback',
       data: data
     });
   }
 
   if (type === 'getQuestionnaireData') {
     iframeMessage.send({
-      type: 'getQuestionnaireData',
+      type: 'getQuestionnaireDataCallback',
       data: questionnaireData.value
     });
   }
@@ -72,7 +72,7 @@ iframeMessage.onMessage = (event) => {
   if (type === 'setUploadConfig') {
     uploadConfig.value = data;
     iframeMessage.send({
-      type: 'setUploadConfig',
+      type: 'setUploadConfigCallback',
       data
     });
   }

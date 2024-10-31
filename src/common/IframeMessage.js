@@ -115,6 +115,7 @@ export default class IframeMessage {
         }
 
         if (_this.messageCallbackMap.has(type)) {
+
           const callback = _this.messageCallbackMap.get(type);
 
           callback(messageData.data);
@@ -152,7 +153,10 @@ export default class IframeMessage {
 
     if (callback) {
       const { type } = data;
-      this.messageCallbackMap.set(type, callback);
+
+      const key = `${type}Callback`;
+
+      this.messageCallbackMap.set(key, callback);
     }
 
     data.handshakeId = this.handshakeId;

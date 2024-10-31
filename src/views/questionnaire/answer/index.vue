@@ -112,7 +112,7 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  init();
+  initQuestionnaire();
 });
 
 // 监听消息
@@ -136,26 +136,24 @@ iframeMessage.onMessage = (event) => {
       }
     }
 
-    questionnaireData.value = initQuestionnaireData(data);
-
-    init();
+    initQuestionnaire(data);
 
     iframeMessage.send({
-      type: 'setQuestionnaireData',
+      type: 'setQuestionnaireDataCallback',
       data
     });
   }
 
   if (type === 'getQuestionnaireData') {
     iframeMessage.send({
-      type: 'getQuestionnaireData',
+      type: 'getQuestionnaireDataCallback',
       data: questionnaireData.value
     });
   }
 
   if (type === 'getSubmitData') {
     iframeMessage.send({
-      type: 'getSubmitData',
+      type: 'getSubmitDataCallback',
       data: getSubmitData()
     });
   }
@@ -163,7 +161,7 @@ iframeMessage.onMessage = (event) => {
   if (type === 'setUploadConfig') {
     uploadConfig.value = data;
     iframeMessage.send({
-      type: 'setUploadConfig',
+      type: 'setUploadConfigCallback',
       data
     });
   }
@@ -237,9 +235,16 @@ let subscribe = new Subscribe();
 const { getFullUrl } = useQuestionnaire();
 
 // 初始化
-function init() {
+function initQuestionnaire(data) {
 
-  lifecycle.init(questionnaireData.value);
+  if (!data) {
+    return;
+  }
+
+  questionnaireData.value = initQuestionnaireData(data);
+
+  // 深拷贝,防止被插件修改数据
+  lifecycle.init(JSON.parse(JSON.stringify(questionnaireData.value)));
 
   // 拓展提交数据: 开始时间
   startAnswerTime = Date.now();
@@ -545,10 +550,13 @@ function init() {
    */
 }
 
+window.initQuestionnaire = initQuestionnaire;
+
 // 监听问卷数据变化
 watch(() => questionnaireData.value, () => {
 
-  lifecycle.updated(questionnaireData.value);
+  // 深拷贝,防止被插件修改数据
+  lifecycle.updated(JSON.parse(JSON.stringify(questionnaireData.value)));
 
   /**
    * 存储答案数据, 用于刷新页面时恢复数据

@@ -13,8 +13,6 @@ onUnmounted(() => {
 
 nextTick(() => {
   iframeMessage = new IframeMessage('myIframe');
-
-  setQuestionnaireData();
 });
 
 function getQuestionnaireData() {
