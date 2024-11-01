@@ -169,7 +169,7 @@ watch(() => actionList.value, (value) => {
   font-size: 12px;
   background-color: #ffffff;
   border-radius: 4px;
-  border: 1px solid transparent;
+  border: 1px solid #f0f0f0;
   cursor: pointer;
 }
 

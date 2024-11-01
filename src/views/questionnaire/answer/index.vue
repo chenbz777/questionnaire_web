@@ -39,6 +39,15 @@ const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === '
 // 是否显示提交按钮
 const showSubmitBtn = ref(true);
 
+// 解析动作
+const { parseActionList } = action;
+
+// 订阅通知
+let subscribe = new Subscribe();
+
+// 获取完整路径
+const { getFullUrl } = useQuestionnaire();
+
 // 用户设备类型
 let uaText = '';
 
@@ -121,6 +130,7 @@ onMounted(() => {
 iframeMessage.onMessage = (event) => {
   const { type, data } = event;
 
+  // 设置问卷数据
   if (type === 'setQuestionnaireData') {
 
     if (!data.data || !Object.keys(data.data).length) {
@@ -146,6 +156,7 @@ iframeMessage.onMessage = (event) => {
     });
   }
 
+  // 获取问卷数据
   if (type === 'getQuestionnaireData') {
     iframeMessage.send({
       type: 'getQuestionnaireDataCallback',
@@ -153,6 +164,7 @@ iframeMessage.onMessage = (event) => {
     });
   }
 
+  // 获取提交数据
   if (type === 'getSubmitData') {
     iframeMessage.send({
       type: 'getSubmitDataCallback',
@@ -160,12 +172,18 @@ iframeMessage.onMessage = (event) => {
     });
   }
 
+  // 设置上传配置
   if (type === 'setUploadConfig') {
     setUploadConfig(data);
     iframeMessage.send({
       type: 'setUploadConfigCallback',
       data
     });
+  }
+
+  // 提交问卷后
+  if (type === 'questionsSubmitAfter') {
+    questionsSubmitAfter();
   }
 };
 
@@ -181,17 +199,24 @@ window.setUploadConfig = setUploadConfig;
  * @description: 提交问卷
  * @return {*}
  */
-function onSubmit() {
+async function onSubmit() {
   console.log('submitData: ', getSubmitData());
 
+  const submitData = getSubmitData();
+
+  // 提交前动作, 报错包起来, 防止影响提交
   try {
-    iframeMessage.send({
-      type: 'submitQuestionnaire',
-      data: getSubmitData()
+    await parseActionList(questionnaireData.value.props.submitBeforeAction, submitData, {
+      questionnaireData: questionnaireData.value
     });
   } catch (error) {
     console.error('submitQuestionnaire error: ', error);
   }
+
+  iframeMessage.send({
+    type: 'submitQuestionnaire',
+    data: submitData
+  });
 }
 
 /**
@@ -233,15 +258,6 @@ function handleSubmit() {
     })
     .catch(() => { });
 }
-
-// 解析动作
-const { parseActionList } = action;
-
-// 订阅通知
-let subscribe = new Subscribe();
-
-// 获取完整路径
-const { getFullUrl } = useQuestionnaire();
 
 // 初始化
 function initQuestionnaire(data) {
@@ -557,6 +573,14 @@ function initQuestionnaire(data) {
   /**
    * end
    */
+}
+
+// 问卷提交后
+function questionsSubmitAfter() {
+  // 执行提交后动作
+  parseActionList(questionnaireData.value.props.submitAfterAction, getSubmitData(), {
+    questionnaireData: questionnaireData.value
+  });
 }
 
 window.initQuestionnaire = initQuestionnaire;

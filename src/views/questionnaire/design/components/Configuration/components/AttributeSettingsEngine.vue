@@ -42,7 +42,7 @@ const componentName = props.setting.type === 'slot' ? defineAsyncComponent(() =>
     </div>
     <div class="attribute-setting-engine__content">
       <!-- slot 插槽 -->
-      <component :is="componentName" v-model="propsData" v-if="setting.type === 'slot'" />
+      <component :is="componentName" v-model="propsData" :setting="setting" v-if="setting.type === 'slot'" />
 
       <!-- input 文本 -->
       <el-input v-model="propsData[dataKey]" clearable :placeholder="`请填写${setting.title}`"

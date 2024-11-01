@@ -37,7 +37,9 @@ export default class Questions extends BaseMateriel {
       endTime: '',  // 问卷结束
       limitTime: 0,  // 限制问卷填答总时长
       autoSubmit: false,  // 问卷结束自动提交
-      allowDevices: ['电脑', '手机', '微信']  // 允许填写设备
+      allowDevices: ['电脑', '手机', '微信'],  // 允许填写设备
+      submitBeforeAction: [],  // 提交前回调
+      submitAfterAction: []  // 提交后回调
     };
   }
 
@@ -123,6 +125,35 @@ export default class Questions extends BaseMateriel {
                 value: '微信'
               }
             ]
+          }
+        ]
+      }
+    ];
+  }
+
+  get advancedSettings() {
+    return [
+      {
+        title: '问卷提交前',
+        type: 'block',
+        children: [
+          {
+            title: '',
+            type: 'slot',
+            slotName: 'QuestionsSubmitBefore',
+            propsKey: 'submitBeforeAction'
+          }
+        ]
+      },
+      {
+        title: '问卷提交后',
+        type: 'block',
+        children: [
+          {
+            title: '',
+            type: 'slot',
+            slotName: 'QuestionsSubmitBefore',
+            propsKey: 'submitAfterAction'
           }
         ]
       }

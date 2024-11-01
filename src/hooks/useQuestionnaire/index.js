@@ -26,11 +26,10 @@ function initQuestionnaireData(props = {}) {
     data = {}
   } = props;
 
-  // 校验问卷数据
-  if (!questionnaireData) {
-    // 兜底问卷数据
-    questionnaireData = MaterielFactory.createMateriel('Questions', questionnaireData);
-  }
+  // 兜底问卷数据
+  questionnaireData = MaterielFactory.createMateriel('Questions', questionnaireData, {
+    isFull: true
+  });
 
   // 校验问卷数据
   if (questionnaireData && ((typeof questionnaireData) !== 'object')) {

@@ -52,10 +52,14 @@ const parseAction = (actionData = {}, data, myThis = {}) => {
  */
 const parseActionList = async (actionList = [], data, myThis) => {
 
-  for (let i = 0; i < actionList.length; i++) {
-    const action = actionList[i];
+  try {
+    for (let i = 0; i < actionList.length; i++) {
+      const action = actionList[i];
 
-    await parseAction(action, data, myThis);
+      await parseAction(action, data, myThis);
+    }
+  } catch (error) {
+    console.log('[action.js](解析动作列表异常): ', error);
   }
 };
 

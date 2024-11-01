@@ -282,7 +282,7 @@ function quickAddItem() {
   font-size: 12px;
   background-color: #f0f0f0;
   border-radius: 4px;
-  border: 1px solid transparent;
+  border: 1px solid #f0f0f0;
   cursor: pointer;
 }
 

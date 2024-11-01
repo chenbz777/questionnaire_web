@@ -28,6 +28,7 @@ export default class BaseMateriel {
         throw new Error(`组件类型不匹配, 期望类型为: ${this.type}, 实际类型为: ${instance.type}`);
       }
 
+      // 数据兼容处理, 合并最新的属性
       Object.assign(this.props, JSON.parse(JSON.stringify(instance.props || {})));
     }
 
@@ -114,7 +115,7 @@ export default class BaseMateriel {
   verifyRequired() {
     const verifyResult = this.verify();
 
-    return verifyResult.status === 'success';
+    return verifyResult.status !== 'error';
   }
 
   // 获取组件值的文本

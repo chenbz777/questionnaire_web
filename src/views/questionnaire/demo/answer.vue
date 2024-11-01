@@ -70,7 +70,7 @@ function setQuestionnaireData() {
       'copyrightText': '【离线版问卷】提供技术支持',
       'startTime': '',
       'endTime': '',
-      'limitTime': 10,
+      'limitTime': 0,
       'autoSubmit': false,
       'allowDevices': [
         '电脑',
@@ -458,6 +458,13 @@ function getSubmitData() {
 
 function onSubmit(data) {
   console.log('onSubmit', data);
+
+  // 开始请求接口提交数据
+
+  // 提交成功后通知问卷提交成功, 执行后续操作
+  iframeMessage.send({
+    type: 'questionsSubmitAfter'
+  });
 }
 
 function toAnswer() {

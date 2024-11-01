@@ -18,7 +18,9 @@ const { uploadConfig } = useQuestionnaire();
 const currentModel = ref(null);
 
 function setQuestionData(instance = {}) {
-  currentModel.value = MaterielFactory.createMateriel(instance.type, instance);
+  currentModel.value = MaterielFactory.createMateriel(instance.type, instance, {
+    isFull: true
+  });
 }
 
 function getQuestionData() {
@@ -37,14 +39,14 @@ iframeMessage.onMessage = (event) => {
     setQuestionData(data);
 
     iframeMessage.send({
-      type: 'setQuestionData',
+      type: 'setQuestionDataCallback',
       data
     });
   }
 
   if (type === 'getQuestionData') {
     iframeMessage.send({
-      type: 'getQuestionData',
+      type: 'getQuestionDataCallback',
       data: getQuestionData()
     });
   }
@@ -52,7 +54,7 @@ iframeMessage.onMessage = (event) => {
   if (type === 'setUploadConfig') {
     uploadConfig.value = data;
     iframeMessage.send({
-      type: 'setUploadConfig',
+      type: 'setUploadConfigCallback',
       data
     });
   }
