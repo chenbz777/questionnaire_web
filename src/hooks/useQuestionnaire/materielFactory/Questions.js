@@ -38,8 +38,8 @@ export default class Questions extends BaseMateriel {
       limitTime: 0,  // 限制问卷填答总时长
       autoSubmit: false,  // 问卷结束自动提交
       allowDevices: ['电脑', '手机', '微信'],  // 允许填写设备
-      submitBeforeAction: [],  // 提交前回调
-      submitAfterAction: []  // 提交后回调
+      submitBeforeActionFn: 'function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n\n  return true;\n}',  // 提交前回调
+      submitAfterActionFn: 'function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n}'  // 提交后回调
     };
   }
 
@@ -141,7 +141,7 @@ export default class Questions extends BaseMateriel {
             title: '',
             type: 'slot',
             slotName: 'QuestionsSubmitBefore',
-            propsKey: 'submitBeforeAction'
+            propsKey: 'submitBeforeActionFn'
           }
         ]
       },
@@ -153,7 +153,7 @@ export default class Questions extends BaseMateriel {
             title: '',
             type: 'slot',
             slotName: 'QuestionsSubmitBefore',
-            propsKey: 'submitAfterAction'
+            propsKey: 'submitAfterActionFn'
           }
         ]
       }

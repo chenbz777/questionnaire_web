@@ -76,8 +76,7 @@ function setQuestionnaireData() {
         '电脑',
         '手机',
         '微信'
-      ],
-      'uploadUrl': ''
+      ]
     },
     'version': 1,
     'questionList': [

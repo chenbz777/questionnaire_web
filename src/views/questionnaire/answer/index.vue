@@ -40,7 +40,7 @@ const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === '
 const showSubmitBtn = ref(true);
 
 // 解析动作
-const { parseActionList } = action;
+const { parseActionList, executeCustomCode } = action;
 
 // 订阅通知
 let subscribe = new Subscribe();
@@ -204,13 +204,13 @@ async function onSubmit() {
 
   const submitData = getSubmitData();
 
-  // 提交前动作, 报错包起来, 防止影响提交
-  try {
-    await parseActionList(questionnaireData.value.props.submitBeforeAction, submitData, {
-      questionnaireData: questionnaireData.value
-    });
-  } catch (error) {
-    console.error('submitQuestionnaire error: ', error);
+  // 提交前动作
+  const isOk = await executeCustomCode(questionnaireData.value.props.submitBeforeActionFn, submitData, {
+    questionnaireData: questionnaireData.value
+  });
+
+  if (!isOk) {
+    return;
   }
 
   iframeMessage.send({
@@ -578,7 +578,7 @@ function initQuestionnaire(data) {
 // 问卷提交后
 function questionsSubmitAfter() {
   // 执行提交后动作
-  parseActionList(questionnaireData.value.props.submitAfterAction, getSubmitData(), {
+  executeCustomCode(questionnaireData.value.props.submitAfterActionFn, getSubmitData(), {
     questionnaireData: questionnaireData.value
   });
 }
