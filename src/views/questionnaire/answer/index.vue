@@ -262,10 +262,6 @@ function initQuestionnaire(data) {
 
   questionnaireData.value = initQuestionnaireData(data);
 
-  parseActionList(questionnaireData.value.props.onMountedActionList, {
-    questionnaireData: questionnaireData.value
-  }, {});
-
   // 深拷贝,防止被插件修改数据
   lifecycle.onMounted(JSON.parse(JSON.stringify(questionnaireData.value)));
 
@@ -411,6 +407,31 @@ function initQuestionnaire(data) {
     questionMap.set(question.key, question);
   });
 
+  const tempThis = {
+    questionMap,
+    setValue
+  };
+
+  // 问卷初始化动作
+  parseActionList(questionnaireData.value.props.onMountedActionList, {
+    questionnaireData: questionnaireData.value
+  }, tempThis);
+
+  // 监听问卷修改事件
+  questionList.forEach((question) => {
+    // 值变动事件名称
+    const eventName = `${question.key}_onChange`;
+
+    // 后续变动再继续执行
+    subscribe.on(eventName, () => {
+      // 执行问卷修改动作
+      parseActionList(questionnaireData.value.props.onUpdatedActionList, {
+        questionnaireData: questionnaireData.value
+      }, tempThis);
+    });
+  });
+
+
   // 逻辑处理
   logicList.forEach((logic) => {
 
@@ -553,10 +574,7 @@ function initQuestionnaire(data) {
     // 监听事件
     subscribe.on(eventName, (data) => {
       // 执行动作
-      parseActionList(actionList, data, {
-        questionMap,
-        setValue
-      });
+      parseActionList(actionList, data, tempThis);
     });
   });
 
@@ -588,10 +606,6 @@ watch(() => questionnaireData.value, () => {
 
   // 深拷贝,防止被插件修改数据, 防止修改数据时触发watch造成死循环
   const _questionnaireData = JSON.parse(JSON.stringify(questionnaireData.value));
-
-  parseActionList(questionnaireData.value.props.onUpdatedActionList, {
-    questionnaireData: _questionnaireData
-  }, {});
 
   lifecycle.onUpdated(_questionnaireData);
 

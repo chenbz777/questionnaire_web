@@ -61,7 +61,14 @@ subscribe.on('editDeleteQuestion', (data) => {
       </AnimateTransition>
       <AnimateTransition>
         <template v-if="segmented === '高级'">
-          <AttributeSettings :settings="currentModel.advancedSettings" v-model="currentComponentData.props" />
+          <div>
+            <div class="configuration__as-key">
+              <div class="configuration__as-key__title">自定义标识</div>
+              <el-input v-model="currentComponentData.asKey" placeholder="自定义标识" clearable
+                class="configuration__as-key__input" />
+            </div>
+            <AttributeSettings :settings="currentModel.advancedSettings" v-model="currentComponentData.props" />
+          </div>
         </template>
       </AnimateTransition>
     </div>
@@ -87,5 +94,22 @@ subscribe.on('editDeleteQuestion', (data) => {
 .configuration__content {
   height: calc(100% - 44px);
   overflow-y: auto;
+}
+
+.configuration__as-key {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.configuration__as-key__title {
+  color: #16191b;
+  font-weight: 400;
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.configuration__as-key__input {
+  flex: 1;
 }
 </style>
