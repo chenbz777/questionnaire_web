@@ -79,6 +79,17 @@ function handleClickAnswerSheet(key) {
         </div>
       </el-col>
     </el-row>
+
+    <div class="answer-sheet__status">
+      <div class="answer-sheet__item answer-sheet__item--success" />
+      <div class="answer-sheet__status__text">正确</div>
+
+      <div class="answer-sheet__item answer-sheet__item--error" />
+      <div class="answer-sheet__status__text">错误</div>
+
+      <div class="answer-sheet__item" />
+      <div class="answer-sheet__status__text">未答</div>
+    </div>
   </div>
 </template>
 
@@ -107,5 +118,24 @@ function handleClickAnswerSheet(key) {
   background-color: #ffe3e4;
   color: #df4853;
   border: 1px solid #df4853;
+}
+
+.answer-sheet__status {
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--questionnaire-bg-color);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.answer-sheet__status .answer-sheet__item {
+  width: 20px;
+  margin-bottom: 0;
+}
+
+.answer-sheet__status__text {
+  margin-left: 6px;
+  margin-right: 16px;
 }
 </style>

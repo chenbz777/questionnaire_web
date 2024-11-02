@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 
 const props = defineProps({
@@ -13,6 +14,8 @@ const questionnaireData = ref(null);
 
 const countdown = ref(0);
 
+const route = useRoute();
+
 // 显示倒计时
 const isShowCountdown = ref(false);
 
@@ -25,7 +28,11 @@ props.addLifecycle({
     // 设置了答题总时长(秒)
     if (questionnaireData.value.props.limitTime) {
 
-      isShowCountdown.value = true;
+      if (route.query.isShowCountdown) {
+        isShowCountdown.value = route.query.isShowCountdown === 'true';
+      } else {
+        isShowCountdown.value = true;
+      }
 
       const limitTime = questionnaireData.value.props.limitTime * 1000;
 
