@@ -15,6 +15,8 @@ const { questionnaireData } = useDesign();
         </div>
       </VueDraggable>
     </AnimateTransitionGroup>
+
+    <el-empty description="空空如也" v-if="!questionnaireData.questionList.length" />
   </div>
 </template>
 

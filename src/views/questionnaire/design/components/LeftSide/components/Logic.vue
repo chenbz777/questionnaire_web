@@ -155,6 +155,8 @@ function removeLogic(index) {
           </div>
         </div>
       </AnimateTransitionGroup>
+
+      <el-empty description="空空如也" v-if="!questionnaireData.logicList.length" />
     </div>
   </div>
 </template>

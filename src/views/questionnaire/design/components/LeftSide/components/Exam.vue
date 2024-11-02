@@ -33,6 +33,8 @@ function getExamSettings(type) {
         </div>
       </div>
     </AnimateTransitionGroup>
+
+    <el-empty description="空空如也" v-if="!questionnaireData.questionList.length" />
   </div>
 </template>
 

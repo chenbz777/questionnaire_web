@@ -185,6 +185,8 @@ function handleConfirmAction(actionData) {
           </div>
         </div>
       </AnimateTransitionGroup>
+
+      <el-empty description="空空如也" v-if="!questionnaireData.eventList.length" />
     </div>
 
   </div>

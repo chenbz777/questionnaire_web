@@ -65,7 +65,7 @@ function confirmActionDialog() {
       </template>
     </el-dialog>
 
-    <el-button @click="openActionDialog()">配置动作</el-button>
+    <el-button type="primary" @click="openActionDialog()">配置动作</el-button>
   </div>
 </template>
 
