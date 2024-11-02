@@ -13,6 +13,9 @@ const questionnaireData = ref(null);
 
 const countdown = ref(0);
 
+// 显示倒计时
+const isShowCountdown = ref(false);
+
 let taskId = null;
 
 props.addLifecycle({
@@ -21,6 +24,9 @@ props.addLifecycle({
 
     // 设置了答题总时长(秒)
     if (questionnaireData.value.props.limitTime) {
+
+      isShowCountdown.value = true;
+
       const limitTime = questionnaireData.value.props.limitTime * 1000;
 
       countdown.value = limitTime / 1000;
@@ -52,7 +58,7 @@ function formatSeconds(seconds) {
 </script>
 
 <template>
-  <div v-if="questionnaireData">
+  <div v-if="isShowCountdown">
     <div class="mb-3">答题倒计时</div>
 
     <div class="questionnaire-page__countdown">

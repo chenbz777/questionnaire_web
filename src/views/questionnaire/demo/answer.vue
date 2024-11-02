@@ -70,7 +70,7 @@ function setQuestionnaireData() {
       'copyrightText': '【离线版问卷】提供技术支持',
       'startTime': '',
       'endTime': '',
-      'limitTime': 0,
+      'limitTime': 3600,
       'autoSubmit': false,
       'allowDevices': [
         '电脑',

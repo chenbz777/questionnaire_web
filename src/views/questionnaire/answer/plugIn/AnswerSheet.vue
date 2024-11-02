@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import userDefined from '@/utils/userDefined';
+import { useRoute } from 'vue-router';
 
 
 const props = defineProps({
@@ -14,6 +15,15 @@ const props = defineProps({
 let questionnaireData = null;
 
 const answerSheet = ref([]);
+
+const route = useRoute();
+
+// 显示答题卡
+const isShowAnswerSheet = ref(true);
+
+if (route.query.isShowAnswerSheet) {
+  isShowAnswerSheet.value = route.query.isShowAnswerSheet === 'true';
+}
 
 function updateAnswerSheet() {
 
@@ -55,7 +65,7 @@ function handleClickAnswerSheet(key) {
 </script>
 
 <template>
-  <div>
+  <div v-if="isShowAnswerSheet">
     <div class="mb-3">答题卡</div>
     <el-row :gutter="10">
       <el-col :span="4" v-for="(item, index) in answerSheet" :key="item.key">

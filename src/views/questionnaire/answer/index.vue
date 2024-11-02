@@ -76,18 +76,6 @@ if (route.query.isCacheFill) {
   isCacheFill = route.query.isCacheFill === 'true';
 }
 
-// 显示答题卡
-let isShowAnswerSheet = true;
-if (route.query.isShowAnswerSheet) {
-  isShowAnswerSheet = route.query.isShowAnswerSheet === 'true';
-}
-
-// 显示倒计时
-let isShowCountdown = false;
-if (route.query.isShowCountdown) {
-  isShowCountdown = route.query.isShowCountdown === 'true';
-}
-
 // 显示答案
 let isShowAnswer = false;
 if (route.query.isShowAnswer) {
@@ -262,9 +250,6 @@ function initQuestionnaire(data) {
 
   questionnaireData.value = initQuestionnaireData(data);
 
-  // 深拷贝,防止被插件修改数据
-  lifecycle.onMounted(JSON.parse(JSON.stringify(questionnaireData.value)));
-
   // 拓展提交数据: 开始时间
   startAnswerTime = Date.now();
 
@@ -327,6 +312,7 @@ function initQuestionnaire(data) {
 
   // 设置了答题总时长(秒)
   if (questionnaireData.value.props.limitTime) {
+
     const limitTime = questionnaireData.value.props.limitTime * 1000;
 
     setTimeout(() => {
@@ -430,7 +416,6 @@ function initQuestionnaire(data) {
       }, tempThis);
     });
   });
-
 
   // 逻辑处理
   logicList.forEach((logic) => {
@@ -589,6 +574,9 @@ function initQuestionnaire(data) {
   /**
    * end
    */
+
+  // 深拷贝,防止被插件修改数据
+  lifecycle.onMounted(JSON.parse(JSON.stringify(questionnaireData.value)));
 }
 
 // 问卷提交后
@@ -707,8 +695,8 @@ function addLifecycle(callback) {
 
     <!-- 简洁模式下不显示, 手机端不显示 -->
     <div class="page__right" v-if="!isEasy">
-      <Countdown class="questionnaire__card mb-4" :addLifecycle="addLifecycle" v-if="isShowCountdown" />
-      <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" v-if="isShowAnswerSheet" />
+      <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" />
     </div>
   </div>
 </template>
