@@ -49,12 +49,12 @@ function updateProgress() {
 }
 
 props.addLifecycle({
-  init: (_questionnaireData) => {
+  onMounted: (_questionnaireData) => {
     questionnaireData = _questionnaireData;
 
     updateProgress();
   },
-  updated: (_questionnaireData) => {
+  onUpdated: (_questionnaireData) => {
     questionnaireData = _questionnaireData;
 
     updateProgress();

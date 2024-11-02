@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import useQuestionnaire from '@/hooks/useQuestionnaire';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
@@ -20,7 +20,7 @@ import Lifecycle from '@/common/Lifecycle';
 const { initQuestionnaireData, getSkinStr, verifySubmitData, uploadConfig } = useQuestionnaire();
 
 // 问卷数据
-const questionnaireData = ref(null);
+const questionnaireData = ref(initQuestionnaireData());
 
 // 插件生命周期
 const lifecycle = new Lifecycle();
@@ -118,12 +118,6 @@ const iframeMessage = new IframeMessage();
 
 onUnmounted(() => {
   iframeMessage.destroy();
-});
-
-onMounted(() => {
-  initQuestionnaire({
-    questionnaireData: initQuestionnaireData()
-  });
 });
 
 // 监听消息
@@ -268,8 +262,12 @@ function initQuestionnaire(data) {
 
   questionnaireData.value = initQuestionnaireData(data);
 
+  parseActionList(questionnaireData.value.props.onMountedActionList, {
+    questionnaireData: questionnaireData.value
+  }, {});
+
   // 深拷贝,防止被插件修改数据
-  lifecycle.init(JSON.parse(JSON.stringify(questionnaireData.value)));
+  lifecycle.onMounted(JSON.parse(JSON.stringify(questionnaireData.value)));
 
   // 拓展提交数据: 开始时间
   startAnswerTime = Date.now();
@@ -588,8 +586,14 @@ window.initQuestionnaire = initQuestionnaire;
 // 监听问卷数据变化
 watch(() => questionnaireData.value, () => {
 
-  // 深拷贝,防止被插件修改数据
-  lifecycle.updated(JSON.parse(JSON.stringify(questionnaireData.value)));
+  // 深拷贝,防止被插件修改数据, 防止修改数据时触发watch造成死循环
+  const _questionnaireData = JSON.parse(JSON.stringify(questionnaireData.value));
+
+  parseActionList(questionnaireData.value.props.onUpdatedActionList, {
+    questionnaireData: _questionnaireData
+  }, {});
+
+  lifecycle.onUpdated(_questionnaireData);
 
   /**
    * 存储答案数据, 用于刷新页面时恢复数据

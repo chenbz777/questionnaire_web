@@ -38,11 +38,11 @@ function updateAnswerSheet() {
 }
 
 props.addLifecycle({
-  init: (_questionnaireData) => {
+  onMounted: (_questionnaireData) => {
     questionnaireData = _questionnaireData;
     updateAnswerSheet();
   },
-  updated: (_questionnaireData) => {
+  onUpdated: (_questionnaireData) => {
     questionnaireData = _questionnaireData;
     updateAnswerSheet();
   }

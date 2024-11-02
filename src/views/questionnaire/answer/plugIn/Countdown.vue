@@ -16,7 +16,7 @@ const countdown = ref(0);
 let taskId = null;
 
 props.addLifecycle({
-  init: (_questionnaireData) => {
+  onMounted: (_questionnaireData) => {
     questionnaireData.value = _questionnaireData;
 
     // 设置了答题总时长(秒)

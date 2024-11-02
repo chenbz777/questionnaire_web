@@ -6,7 +6,7 @@
  * @param {object} myThis this指向
  * @return {*}
  */
-const executeCustomCode = (code = '', data = {}, myThis = {}) => {
+function executeCustomCode(code = '', data = {}, myThis = {}) {
   let myFn = () => { };
 
   try {
@@ -24,7 +24,7 @@ const executeCustomCode = (code = '', data = {}, myThis = {}) => {
   }
 
   return '';
-};
+}
 
 /**
  * @author: chenbz
@@ -32,7 +32,7 @@ const executeCustomCode = (code = '', data = {}, myThis = {}) => {
  * @param {object} actionData 动作数据
  * @return {*}
  */
-const parseAction = (actionData = {}, data, myThis = {}) => {
+function parseAction(actionData = {}, data, myThis = {}) {
   const { type } = actionData;
 
   if (type === 'code') {
@@ -40,7 +40,7 @@ const parseAction = (actionData = {}, data, myThis = {}) => {
   }
 
   return '';
-};
+}
 
 /**
  * @author: chenbz
@@ -50,7 +50,7 @@ const parseAction = (actionData = {}, data, myThis = {}) => {
  * @param myThis {Object} this指向
  * @return {*}
  */
-const parseActionList = async (actionList = [], data, myThis) => {
+async function parseActionList(actionList = [], data, myThis) {
 
   try {
     for (let i = 0; i < actionList.length; i++) {
@@ -61,7 +61,7 @@ const parseActionList = async (actionList = [], data, myThis) => {
   } catch (error) {
     console.log('[action.js](解析动作列表异常): ', error);
   }
-};
+}
 
 export default {
   executeCustomCode,

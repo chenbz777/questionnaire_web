@@ -39,7 +39,9 @@ export default class Questions extends BaseMateriel {
       autoSubmit: false,  // 问卷结束自动提交
       allowDevices: ['电脑', '手机', '微信'],  // 允许填写设备
       submitBeforeActionFn: 'function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n\n  return true;\n}',  // 提交前回调
-      submitAfterActionFn: 'function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n}'  // 提交后回调
+      submitAfterActionFn: 'function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n}',  // 提交后回调
+      onMountedActionList: [],  // 问卷初始化完成回调
+      onUpdatedActionList: []  // 问卷更新完成回调
     };
   }
 
@@ -154,6 +156,30 @@ export default class Questions extends BaseMateriel {
             type: 'slot',
             slotName: 'QuestionsSubmitBefore',
             propsKey: 'submitAfterActionFn'
+          }
+        ]
+      },
+      {
+        title: '问卷初始化完成',
+        type: 'block',
+        children: [
+          {
+            title: '',
+            type: 'slot',
+            slotName: 'QuestionsLifecycle',
+            propsKey: 'onMountedActionList'
+          }
+        ]
+      },
+      {
+        title: '问卷更新完成',
+        type: 'block',
+        children: [
+          {
+            title: '',
+            type: 'slot',
+            slotName: 'QuestionsLifecycle',
+            propsKey: 'onUpdatedActionList'
           }
         ]
       }

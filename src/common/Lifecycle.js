@@ -12,52 +12,35 @@ export default class Lifecycle {
     }
 
     const newLifecycle = Object.assign({
-      init: () => { },
-      mounted: () => { },
-      updated: () => { },
-      destroyed: () => { }
+      onMounted: () => { },
+      onUpdated: () => { },
+      onUnmounted: () => { }
     }, lifecycle);
 
-    if ((typeof newLifecycle.init) !== 'function') {
-      throw new Error('[Lifecycle](addLifecycle): init必须为函数');
-    }
-
-    if ((typeof newLifecycle.mounted) !== 'function') {
-      throw new Error('[Lifecycle](addLifecycle): mounted必须为函数');
-    }
-
-    if ((typeof newLifecycle.updated) !== 'function') {
-      throw new Error('[Lifecycle](addLifecycle): updated必须为函数');
-    }
-
-    if ((typeof newLifecycle.destroyed) !== 'function') {
-      throw new Error('[Lifecycle](addLifecycle): destroyed必须为函数');
+    for (const key in newLifecycle) {
+      if (typeof newLifecycle[key] !== 'function') {
+        throw new Error(`[Lifecycle](addLifecycle): ${key}必须是函数`);
+      }
     }
 
     this.#lifecycleList.push(newLifecycle);
   }
 
-  init(props) {
+  onMounted(props) {
     this.#lifecycleList.forEach(lifecycle => {
-      lifecycle.init(props);
+      lifecycle.onMounted(props);
     });
   }
 
-  mounted(props) {
+  onUpdated(props) {
     this.#lifecycleList.forEach(lifecycle => {
-      lifecycle.mounted(props);
+      lifecycle.onUpdated(props);
     });
   }
 
-  updated(props) {
+  onUnmounted(props) {
     this.#lifecycleList.forEach(lifecycle => {
-      lifecycle.updated(props);
-    });
-  }
-
-  destroyed(props) {
-    this.#lifecycleList.forEach(lifecycle => {
-      lifecycle.destroyed(props);
+      lifecycle.onUnmounted(props);
     });
   }
 }
