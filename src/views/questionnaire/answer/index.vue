@@ -642,12 +642,10 @@ function addLifecycle(callback) {
 </script>
 
 <template>
-  <div class="page" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
-    <BaseContainer class="questionnaire__card page__container">
-      <template #head>
-        <div class="page__head">
-          <AnswerProgress class="flex-1" :addLifecycle="addLifecycle" />
-
+  <BaseContainer class="page" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
+    <div class="page__content">
+      <div class="questionnaire__card questionnaire__container">
+        <div class="questionnaire__container__head">
           <div class="questionnaire__container__tips" v-if="questionnaireData.props.totalPoints">
             总分: {{ questionnaireData.props.totalPoints }}分
           </div>
@@ -655,31 +653,31 @@ function addLifecycle(callback) {
             题目数: {{ questionnaireData.questionList.length }}
           </div>
         </div>
-      </template>
 
-      <div class="questionnaire__container__logo"
-        v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
-        <img :src="getFullUrl(questionnaireData.props.logo)" alt="logo" class="questionnaire__container__logo__image" />
-      </div>
+        <div class="questionnaire__container__logo"
+          v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
+          <img :src="getFullUrl(questionnaireData.props.logo)" alt="logo"
+            class="questionnaire__container__logo__image" />
+        </div>
 
-      <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
-        {{ questionnaireData.props.title }}
-      </div>
+        <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
+          {{ questionnaireData.props.title }}
+        </div>
 
-      <div class="questionnaire__container__desc"
-        v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
-        <div v-html="questionnaireData.props.desc"></div>
-      </div>
+        <div class="questionnaire__container__desc"
+          v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
+          <div v-html="questionnaireData.props.desc"></div>
+        </div>
 
-      <div class="questionnaire__container__content">
-        <RenderEngine
-          v-for="(question, index) in questionnaireData.questionList.filter(item => item.props.status !== 'hidden')"
-          :key="question.key" :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
-          :subscribe="subscribe" :option="{ isShowAnswer }" />
-      </div>
+        <div class="questionnaire__container__content">
+          <RenderEngine
+            v-for="(question, index) in questionnaireData.questionList.filter(item => item.props.status !== 'hidden')"
+            :key="question.key" :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
+            :subscribe="subscribe" :option="{ isShowAnswer }" />
+        </div>
 
-      <template #foot>
-        <div class="questionnaire__page__foot">
+
+        <div class="questionnaire__container__foot">
           <div class="questionnaire__container__submit" v-if="showSubmitBtn">
             <div class="questionnaire__container__submit__btn" @click="handleSubmit()" id="submitBtn">
               {{ questionnaireData.props.btnText }}
@@ -690,15 +688,16 @@ function addLifecycle(callback) {
             {{ questionnaireData.props.copyrightText }}
           </div>
         </div>
-      </template>
-    </BaseContainer>
+      </div>
 
-    <!-- 简洁模式下不显示, 手机端不显示 -->
-    <div class="page__right" v-if="!isEasy">
-      <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-      <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" />
+      <!-- 简洁模式下不显示, 手机端不显示 -->
+      <div class="page__right" v-if="!isEasy">
+        <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+        <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+        <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" />
+      </div>
     </div>
-  </div>
+  </BaseContainer>
 </template>
 
 <style>
@@ -707,17 +706,27 @@ function addLifecycle(callback) {
 
 <style scoped>
 .page {
-  display: flex;
-  justify-content: center;
   height: 100vh;
-  overflow-y: auto;
   background-size: contain;
   background-repeat: no-repeat;
-  padding: 60px;
-  background-color: var(--questionnaire-bg-color);
   background-image: var(--questionnaire-bg-image);
+  background-color: var(--questionnaire-bg-color);
+  color: var(--questionnaire-text-color);
   background-size: 100%;
   background-repeat: no-repeat;
+}
+
+.page__head {
+  padding: 10px;
+  background-color: var(--questionnaire-bg-color);
+}
+
+.page__content {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  overflow-y: auto;
+  padding: 60px;
 }
 
 .page--easy {
@@ -730,13 +739,16 @@ function addLifecycle(callback) {
   border-radius: 0;
 }
 
-.page__head {
+.questionnaire__container__head {
   padding-bottom: 20px;
   display: flex;
   align-items: center;
 }
 
 .page__right {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   margin-left: 20px;
   width: 260px;
 }
@@ -745,9 +757,9 @@ function addLifecycle(callback) {
   display: none;
 }
 
-.page__container {
+.questionnaire__container {
   width: 800px;
-  padding: 20px;
+  height: fit-content;
 }
 
 .questionnaire__container__logo {
@@ -765,7 +777,7 @@ function addLifecycle(callback) {
   font-size: 30px;
   font-weight: 500;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 20px;
   height: 42px;
   line-height: 42px;
 }
@@ -808,28 +820,35 @@ function addLifecycle(callback) {
   margin-left: 10px;
 }
 
-.questionnaire__page__foot {
+.questionnaire__container__foot {
   padding-top: 20px;
-  border-top: 1px solid var(--questionnaire-bg-color);
+}
+
+.plug-in-popup {
+  height: 70vh;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: var(--questionnaire-bg-color);
+  color: var(--questionnaire-text-color);
 }
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
 
-  .page {
+  .page__content {
     padding: 16px;
   }
 
-  .page__container {
+  .questionnaire__container {
     width: 100%;
     padding: 10px;
   }
 
-  .page__head {
+  .questionnaire__container__head {
     padding-bottom: 10px;
   }
 
-  .questionnaire__page__foot {
+  .questionnaire__container__foot {
     padding-top: 10px;
   }
 

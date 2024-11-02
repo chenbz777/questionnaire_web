@@ -38,7 +38,9 @@ function updateAnswerSheet() {
 
   questionList.forEach(questionData => {
     // 创建题目实例
-    const model = MaterielFactory.createMateriel(questionData.type, questionData);
+    const model = MaterielFactory.createMateriel(questionData.type, questionData, {
+      isFull: true
+    });
 
     _answerSheet.push(model.verify());
   });

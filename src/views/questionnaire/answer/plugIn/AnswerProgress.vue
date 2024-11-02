@@ -64,7 +64,9 @@ props.addLifecycle({
 
 <template>
   <div>
-    <van-progress :percentage="percentage" pivot-text="" />
+    <div class="mb-3">答题进度</div>
+    <!-- pivot-text="" -->
+    <van-progress :percentage="percentage" color="var(--questionnaire-btn-bg-color)" />
   </div>
 </template>
 

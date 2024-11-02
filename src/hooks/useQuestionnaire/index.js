@@ -116,7 +116,9 @@ function verifySubmitData(questionnaireData) {
   const data = {};
 
   questionList.forEach((question, index) => {
-    const model = MaterielFactory.createMateriel(question.type, question);
+    const model = MaterielFactory.createMateriel(question.type, question, {
+      isFull: true
+    });
 
     const key = question.key;
 
