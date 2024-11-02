@@ -729,7 +729,7 @@ function addLifecycle(callback) {
   padding: 60px;
 }
 
-.page--easy {
+.page--easy .page__content {
   padding: 0;
 }
 
@@ -751,6 +751,7 @@ function addLifecycle(callback) {
   z-index: 10;
   margin-left: 20px;
   width: 260px;
+  overflow-y: auto;
 }
 
 .page__right:empty {
