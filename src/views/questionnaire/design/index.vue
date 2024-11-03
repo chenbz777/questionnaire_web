@@ -8,6 +8,7 @@ import LeftSide from './components/LeftSide/index.vue';
 import PreviewPopup from './components/PreviewPopup.vue';
 import userDefined from '@/utils/userDefined';
 import IframeMessage from '@/common/IframeMessage';
+import { ElMessageBox } from 'element-plus';
 
 
 const { questionnaireData, subscribe, skinStr } = useDesign();
@@ -77,6 +78,23 @@ iframeMessage.onMessage = (event) => {
     });
   }
 };
+
+// 清空问卷
+const clearQuestionnaire = () => {
+  ElMessageBox.confirm(
+    '确认清空问卷吗？',
+    '清空问卷',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }
+  )
+    .then(() => {
+      questionnaireData.value.questionList.length = 0;
+    })
+    .catch(() => { });
+};
 </script>
 
 <template>
@@ -116,6 +134,12 @@ iframeMessage.onMessage = (event) => {
             </template>
           </el-dropdown>
 
+          <el-button type="danger" plain @click="clearQuestionnaire()">
+            清空问卷
+            <el-icon class="ml-1">
+              <Delete />
+            </el-icon>
+          </el-button>
           <el-button type="success" plain @click="previewPopupRef.open(questionnaireData)">
             预览问卷
             <el-icon class="ml-1">
