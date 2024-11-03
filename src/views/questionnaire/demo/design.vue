@@ -31,7 +31,6 @@ function setQuestionnaireData() {
     'props': {
       'title': '问卷标题',
       'desc': '问卷描述',
-      'totalPoints': 0,
       'showLogo': false,
       'logo': 'http://img.chenbz.com/wj/pANZu8O.png',
       'logoPosition': 'center',

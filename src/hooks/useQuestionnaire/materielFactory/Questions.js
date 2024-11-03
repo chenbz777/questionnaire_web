@@ -20,7 +20,6 @@ export default class Questions extends BaseMateriel {
     return {
       title: this.title,  // 标题
       desc: '问卷描述',  // 描述
-      totalPoints: 0,  // 总分
       showLogo: false,  // 是否显示logo
       logo: 'http://img.chenbz.com/wj/pANZu8O.png',  // logo
       logoPosition: 'center',  // logo位置: left-左, center-中, right-右

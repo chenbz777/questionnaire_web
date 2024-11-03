@@ -12,7 +12,6 @@ export default [
           'props': {
             'title': '幼儿园新生入园报名表',
             'desc': '<p><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 16px;">家长您好！为了能够了解幼儿入园前的基本情况，以便我们能够根据每位幼儿特点有针对性地开展教育，促进幼儿全面和谐健康发展，特作此调查。请您如实填写，谢谢您的合作！</span></p>',
-            'totalPoints': 0,
             'showLogo': false,
             'logo': 'http://img.chenbz.com/wj/pANZu8O.png',
             'logoPosition': 'center',

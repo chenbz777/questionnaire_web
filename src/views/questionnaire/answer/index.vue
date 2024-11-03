@@ -82,6 +82,9 @@ if (route.query.isShowAnswer) {
   isShowAnswer = route.query.isShowAnswer === 'true';
 }
 
+// 问卷总分
+const totalPoints = ref(0);
+
 // 皮肤
 const skinStr = ref('');
 
@@ -566,11 +569,9 @@ function initQuestionnaire(data) {
   /**
    * 计算总分
    */
-  const totalPoints = questionnaireData.value.questionList.reduce((total, question) => {
+  totalPoints.value = questionnaireData.value.questionList.reduce((total, question) => {
     return total + (question.props.score || 0);
   }, 0);
-
-  questionnaireData.value.props.totalPoints = totalPoints;
   /**
    * end
    */
@@ -646,8 +647,8 @@ function addLifecycle(callback) {
     <div class="page__content">
       <div class="questionnaire__card questionnaire__container">
         <div class="questionnaire__container__head">
-          <div class="questionnaire__container__tips" v-if="questionnaireData.props.totalPoints">
-            总分: {{ questionnaireData.props.totalPoints }}分
+          <div class="questionnaire__container__tips" v-if="totalPoints">
+            总分: {{ totalPoints }}分
           </div>
           <div class="questionnaire__container__tips" v-if="questionnaireData.questionList.length">
             题目数: {{ questionnaireData.questionList.length }}
