@@ -16,7 +16,9 @@ const actionDialog = ref(false);
 const actionComponentName = ref('');
 
 // 动作组件数据
-const actionComponentData = ref({});
+const actionComponentData = ref({
+  title: ''
+});
 
 // 动作组件列表
 const actionComponents = {
@@ -83,6 +85,9 @@ defineExpose({
 
     <el-dialog v-model="actionDialog" width="800px" destroy-on-close :show-close="false">
       <div>
+        <el-input v-model="actionComponentData.title" placeholder="标题" class="w-100, mb-3">
+          <template #prepend>名称</template>
+        </el-input>
         <component :is="actionComponents[actionComponentName]" v-model="actionComponentData"
           v-if="actionComponentName && actionComponents[actionComponentName]" />
       </div>

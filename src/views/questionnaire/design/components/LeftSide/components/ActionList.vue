@@ -12,7 +12,7 @@ const props = defineProps({
 });
 
 // 事件
-const emit = defineEmits(['update:modelValue', 'clickAddEventBtn', 'clickActionItem']);
+const emit = defineEmits(['update:modelValue', 'clickAddActionBtn', 'clickActionItem']);
 
 // 动作列表
 const actionList = ref([]);
@@ -42,8 +42,8 @@ function removeAction(index) {
 }
 
 // 添加动作
-function clickAddEventBtn() {
-  emit('clickAddEventBtn');
+function clickAddActionBtn() {
+  emit('clickAddActionBtn');
 }
 
 // 点击动作项
@@ -75,7 +75,7 @@ function onSort() {
       </div>
     </VueDraggable>
 
-    <el-button size="small" type="primary" round @click="clickAddEventBtn()">
+    <el-button size="small" type="primary" round @click="clickAddActionBtn()">
       添加动作
     </el-button>
   </div>

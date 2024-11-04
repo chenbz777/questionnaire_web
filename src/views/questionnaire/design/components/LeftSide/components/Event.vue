@@ -112,7 +112,7 @@ function handleClickActionItem(actionData, index) {
  * @param index {number} 索引
  * @return {*}
  */
-function handleClickAddEventBtn(index) {
+function handleClickAddActionBtn(index) {
   _index = index;
 
   actionDialogRef.value.openActionDialog();
@@ -179,7 +179,7 @@ function handleConfirmAction(actionData) {
           <div class="event__content__item__source">
             <div class="mr-3">触发</div>
             <div class="flex-1">
-              <ActionList v-model="item.actionList" @clickAddEventBtn="handleClickAddEventBtn(index)"
+              <ActionList v-model="item.actionList" @clickAddActionBtn="handleClickAddActionBtn(index)"
                 @clickActionItem="handleClickActionItem($event, index)" />
             </div>
           </div>
