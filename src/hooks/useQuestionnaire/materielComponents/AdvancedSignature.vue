@@ -30,7 +30,7 @@ function onSubmit(data) {
 
   const { image } = data;
 
-  componentData.value.props.defineValue = image;
+  componentData.value.props.defaultValue = image;
 
   // 发送"提交"事件
   handleChange(image);
@@ -43,7 +43,7 @@ function onClear(value) {
     value = '';
   }
 
-  componentData.value.props.defineValue = value;
+  componentData.value.props.defaultValue = value;
 
   // 发送"清空"事件
   handleChange(value);
