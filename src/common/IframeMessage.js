@@ -30,7 +30,7 @@ export default class IframeMessage {
       taskId = setInterval(() => {
         // 如果任务次数小于等于0
         if (taskNum <= 0) {
-          console.error('[IframeMessage]: 没有找到iframe节点,请检查iframeId是否正确');
+          console.error(`[IframeMessage]: 没有找到id为${iframeId}的iframe节点,请检查iframeId是否正确`);
           clearInterval(taskId);
           return;
         }
@@ -66,7 +66,7 @@ export default class IframeMessage {
 
         if (_this.handshakeId && _handshakeId) {
           if (_this.handshakeId !== _handshakeId) {
-            console.log(`[IframeMessage]: 握手id不一致, 不处理消息, 期望握手id: ${_this.handshakeId}, 实际握手id: ${_handshakeId}`);
+            // console.log(`[IframeMessage]: 握手id不一致, 不处理消息, 期望握手id: ${_this.handshakeId}, 实际握手id: ${_handshakeId}`);
             return;
           }
         }
