@@ -229,8 +229,14 @@ function handleSubmit() {
     return;
   }
 
+  let title = questionnaireData.value.props.title;
+
+  if (title) {
+    title = `【${title}】`;
+  }
+
   ElMessageBox.confirm(
-    '确定提交问卷吗？',
+    `确定提交${title}吗？`,
     '提示',
     {
       confirmButtonText: '确定',
@@ -276,6 +282,12 @@ function initQuestionnaire(data) {
     });
   }
 
+  let title = questionnaireData.value.props.title;
+
+  if (title) {
+    title = `【${title}】`;
+  }
+
   // 如果设置了开始时间和结束时间
   if (questionnaireData.value.props.startTime && questionnaireData.value.props.endTime) {
     const startTime = new Date(questionnaireData.value.props.startTime).getTime();
@@ -286,7 +298,7 @@ function initQuestionnaire(data) {
       showSubmitBtn.value = false;
 
       ElMessageBox.confirm(
-        '问卷尚未开始，暂时无法填写',
+        `${title}尚未开始，暂时无法填写`,
         '提示',
         {
           confirmButtonText: '我知道了',
@@ -301,7 +313,7 @@ function initQuestionnaire(data) {
       showSubmitBtn.value = false;
 
       ElMessageBox.confirm(
-        '问卷已结束，无法继续填写',
+        `${title}已结束，无法继续填写`,
         '提示',
         {
           confirmButtonText: '我知道了',
@@ -320,7 +332,7 @@ function initQuestionnaire(data) {
 
     setTimeout(() => {
       ElMessageBox.confirm(
-        '答题时间已到',
+        `${title}答题时间已到`,
         '提示',
         {
           confirmButtonText: '我知道了',
@@ -345,7 +357,7 @@ function initQuestionnaire(data) {
     showSubmitBtn.value = false;
 
     ElMessageBox.confirm(
-      '当前设备不允许填写问卷',
+      `当前设备不允许填写${title}`,
       '提示',
       {
         confirmButtonText: '我知道了',

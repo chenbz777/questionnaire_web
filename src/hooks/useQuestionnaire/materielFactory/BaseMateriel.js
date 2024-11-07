@@ -47,7 +47,7 @@ export default class BaseMateriel {
           const newPropsType = Object.prototype.toString.call(newProps[_key]);
 
           if (propsType !== newPropsType) {
-            console.log(`${key} 组件属性类型不一致, 字段key: ${_key}, 期望类型: ${propsType}, 实际类型: ${newPropsType}`);
+            // console.log(`${key} 组件属性类型不一致, 字段key: ${_key}, 期望类型: ${propsType}, 实际类型: ${newPropsType}`);
 
             // 类型不一致则赋值
             newProps[_key] = defaultProps[_key];
