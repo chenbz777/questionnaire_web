@@ -46,12 +46,16 @@ export default class AdvancedSignature extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     if (this.props.defaultValue) {
       return `<img src="${this.props.defaultValue}" style="width: auto; height: 100px; display: block;" />`;
     }
 
     return '';
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {

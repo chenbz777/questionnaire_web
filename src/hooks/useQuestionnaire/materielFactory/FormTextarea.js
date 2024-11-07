@@ -55,8 +55,12 @@ export default class FormTextarea extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     return this.props.defaultValue;
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {

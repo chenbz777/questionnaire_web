@@ -69,8 +69,12 @@ export default class FormInput extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     return this.props.defaultValue;
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {

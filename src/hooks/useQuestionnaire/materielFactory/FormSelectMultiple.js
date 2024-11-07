@@ -52,7 +52,7 @@ export default class FormSelectMultiple extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     const values = this.props.defaultValue;
 
     if (!values.length) {
@@ -66,6 +66,10 @@ export default class FormSelectMultiple extends BaseMateriel {
     });
 
     return options.join('、');
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {

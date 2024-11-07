@@ -75,10 +75,14 @@ export default class AdvancedAddress extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     const arr = [this.props.province, this.props.city, this.props.area, this.props.detailedAddress].filter(item => item);
 
     return arr.join('/');
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {
@@ -87,7 +91,7 @@ export default class AdvancedAddress extends BaseMateriel {
       city: this.props.city,
       area: this.props.area,
       detailedAddress: this.props.detailedAddress,
-      provinceCityArea: this.getValueText()
+      provinceCityArea: this.getText()
     };
   }
 

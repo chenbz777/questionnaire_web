@@ -55,7 +55,25 @@ export default class MatrixRate extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
+    let text = '';
+
+    this.props.rateOptions.forEach((item) => {
+      text += `${item.label}: ${this.props.defaultValue[item.key]}分;`;
+    });
+
+    if (this.props.tagDefaultValue.length) {
+      text += `标签: ${this.props.tagDefaultValue.join('、')};`;
+    }
+
+    if (this.props.evaluate) {
+      text += `评价: ${this.props.evaluate};`;
+    }
+
+    return text;
+  }
+
+  getReadonly() {
     let html = '<div>';
 
     this.props.rateOptions.forEach((item) => {

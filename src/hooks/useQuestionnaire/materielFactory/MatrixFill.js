@@ -86,8 +86,21 @@ export default class MatrixFill extends BaseMateriel {
     return result;
   }
 
-  getValueText() {
+  getText() {
+    let text = '';
 
+    for (let i = 0; i < this.props.fillOptions.length; i++) {
+      const option = this.props.fillOptions[i];
+
+      const value = this.props.defaultValue[option.key];
+
+      text += `${option.prependTitle}[${value || ''}]${option.appendTitle};`;
+    }
+
+    return text;
+  }
+
+  getReadonly() {
     let html = '';
 
     for (let i = 0; i < this.props.fillOptions.length; i++) {

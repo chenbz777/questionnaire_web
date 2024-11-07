@@ -71,16 +71,24 @@ export default class FormRadio extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     const value = this.props.defaultValue;
 
     if (!value) {
       return '';
     }
 
+    if (value === '其它') {
+      return this.props.otherValue;
+    }
+
     const option = this.props.options.find(item => item.value === value);
 
     return option.label;
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {

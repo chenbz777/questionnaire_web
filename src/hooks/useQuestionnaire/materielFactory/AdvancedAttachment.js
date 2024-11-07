@@ -50,7 +50,7 @@ export default class AdvancedAttachment extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
     if (this.props.defaultValue.length) {
       let html = '';
 
@@ -62,6 +62,10 @@ export default class AdvancedAttachment extends BaseMateriel {
     }
 
     return '';
+  }
+
+  getReadonly() {
+    return this.getText();
   }
 
   getValue() {

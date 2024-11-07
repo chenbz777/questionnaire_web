@@ -60,7 +60,11 @@ export default class AdvancedSort extends BaseMateriel {
     this.props.defaultValue = value;
   }
 
-  getValueText() {
+  getText() {
+    return this.props.defaultValue.map(item => item.label).join('>');
+  }
+
+  getReadonly() {
     let html = '<div>';
 
     this.props.defaultValue.forEach((item, index) => {

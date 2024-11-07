@@ -87,7 +87,7 @@ function getModel(data) {
     </div>
     <!-- 内容主体 -->
     <template v-if="data.props.status === 'readonly'">
-      <div class="render-engine__readonly" v-html="getModel(props.data).getValueText()" />
+      <div class="render-engine__readonly" v-html="getModel(props.data).getReadonly()" />
     </template>
     <template v-else>
       <component :is="materielComponents[data.type]" :data="data" :emitSubscribe="emitSubscribe" :option="option" />
@@ -96,14 +96,13 @@ function getModel(data) {
     <div class="render-engine__remark" v-if="data.props.remark">
       {{ data.props.remark }}
     </div>
-
     <!-- 显示答案 -->
     <div class="render-engine__correct" v-if="option.isShowAnswer">
       <div class="render-engine__correct__title" v-if="data.props.answer">
         正确答案: {{ data.props.answer }}
       </div>
-      <div class="render-engine__correct__title" v-if="getModel(props.data).getValueText()">
-        考生答案: <span v-html="getModel(props.data).getValueText()"></span>
+      <div class="render-engine__correct__title" v-if="getModel(props.data).getText()">
+        考生答案: <span v-html="getModel(props.data).getText()"></span>
       </div>
       <div class="render-engine__correct__title" v-if="data.props.answerAnalysis">
         答案解析: {{ data.props.answerAnalysis }}

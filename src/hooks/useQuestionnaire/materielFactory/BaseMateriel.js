@@ -119,8 +119,12 @@ export default class BaseMateriel {
   }
 
   // 获取组件值的文本
-  getValueText(value) {
-    return value;
+  getText() {
+    return '';
+  }
+
+  getReadonly() {
+    return '';
   }
 
   // 获取组件值

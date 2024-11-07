@@ -16,7 +16,7 @@ export default class FormRate extends BaseMateriel {
       required: false,
       status: 'normal',
       defaultValue: 5,
-      showEvaluateThreshold: 0, // 显示评价的阈值
+      showEvaluateThreshold: 1, // 显示评价的阈值
       evaluate: '', // 评价
       evaluatePlaceholder: '请填写评价'
     };
@@ -40,7 +40,19 @@ export default class FormRate extends BaseMateriel {
     return verifyModel.success();
   }
 
-  getValueText() {
+  getText() {
+    let text = '';
+
+    text += `评分: ${this.props.defaultValue}分`;
+
+    if (this.props.evaluate) {
+      text += `;评价: ${this.props.evaluate}`;
+    }
+
+    return text;
+  }
+
+  getReadonly() {
     let html = '';
 
     html += `<div>评分: ${this.props.defaultValue}分</div>`;

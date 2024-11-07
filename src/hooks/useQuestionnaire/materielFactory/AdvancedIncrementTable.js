@@ -84,7 +84,20 @@ export default class AdvancedIncrementTable extends BaseMateriel {
     return result;
   }
 
-  getValueText() {
+  getText() {
+    let text = '';
+
+    if (this.props.defaultValue.length) {
+      this.props.defaultValue.forEach(value => {
+        const values = Object.values(value);
+        text += values.join(',') + '|';
+      });
+    }
+
+    return text;
+  }
+
+  getReadonly() {
     if (this.props.options.length) {
       let html = '<table class="increment-table-readonly" border="1">';
 
