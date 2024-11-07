@@ -29,7 +29,34 @@ export default class BaseMateriel {
       }
 
       // 数据兼容处理, 合并最新的属性
-      Object.assign(this.props, JSON.parse(JSON.stringify(instance.props || {})));
+      const newProps = JSON.parse(JSON.stringify(instance.props || {}));
+
+      const defaultProps = this.props;
+
+      const keys = Object.keys(this.props);
+
+      keys.forEach(_key => {
+        const propsType = Object.prototype.toString.call(defaultProps[_key]);
+
+        // 判断newProps是否存在key
+        if (newProps[_key] === undefined) {
+          // 不存在则赋值
+          newProps[_key] = defaultProps[_key];
+        } else {
+          // 存在则判断类型是否一致
+          const newPropsType = Object.prototype.toString.call(newProps[_key]);
+
+          if (propsType !== newPropsType) {
+            console.log(`${key} 组件属性类型不一致, 字段key: ${_key}, 期望类型: ${propsType}, 实际类型: ${newPropsType}`);
+
+            // 类型不一致则赋值
+            newProps[_key] = defaultProps[_key];
+          }
+        }
+      });
+
+      // 数据兼容处理, 合并最新的属性
+      Object.assign(this.props, newProps);
     }
 
     /**
