@@ -24,7 +24,7 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowAnswerProgress 是否显示答题进度 默认true
  * isShowCountdown 是否显示倒计时 默认true
  * isShowAnswerSheet 是否显示答题卡 默认true
- * isisShowSubmitBtn 是否显示提交按钮 默认true
+ * isShowSubmitBtn 是否显示提交按钮 默认true
  */
 
 

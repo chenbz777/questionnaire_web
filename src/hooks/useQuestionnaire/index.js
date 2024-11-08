@@ -22,9 +22,14 @@ function initQuestionnaireData(props = {}) {
   * data {object} 数据
   */
   let {
-    questionnaireData: questionnaireData,
-    data = {}
+    questionnaireData,
+    data
   } = props;
+
+  // 兜底data数据
+  if (!data) {
+    data = {};
+  }
 
   // 兜底问卷数据
   questionnaireData = MaterielFactory.createMateriel('Questions', questionnaireData, {
