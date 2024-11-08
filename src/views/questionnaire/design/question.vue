@@ -13,7 +13,11 @@ onUnmounted(() => {
   iframeMessage.destroy();
 });
 
-const { uploadConfig } = useQuestionnaire();
+const { initQuestionnaireData, uploadConfig, getSkinStr } = useQuestionnaire();
+
+const skinStr = ref('');
+
+skinStr.value = getSkinStr(initQuestionnaireData());
 
 const currentModel = ref(null);
 
@@ -75,7 +79,7 @@ const segmented = ref('基础');
 </script>
 
 <template>
-  <div class="question">
+  <div class="question" :style="skinStr">
     <div class="question__container" v-if="currentModel">
       <div class="question__head">
         <RenderEngine :data="currentModel" :key="currentModel.key" />
