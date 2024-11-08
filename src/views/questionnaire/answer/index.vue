@@ -17,6 +17,16 @@ import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.v
 import Lifecycle from '@/common/Lifecycle';
 
 
+/**
+ * 页面接收参数
+ * isCacheFill 是否缓存填写 默认true
+ * isShowAnswer 是否显示答案 默认false
+ * isShowAnswerProgress 是否显示答题进度 默认true
+ * isShowCountdown 是否显示倒计时 默认true
+ * isShowAnswerSheet 是否显示答题卡 默认true
+ */
+
+
 const { initQuestionnaireData, getSkinStr, verifySubmitData, uploadConfig } = useQuestionnaire();
 
 // 问卷数据

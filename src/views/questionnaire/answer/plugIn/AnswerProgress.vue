@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
+import { useRoute } from 'vue-router';
 
 
 const props = defineProps({
@@ -11,6 +12,16 @@ const props = defineProps({
 });
 
 let questionnaireData = null;
+
+const route = useRoute();
+
+// 是否显示答题进度
+const isShowAnswerProgress = ref(true);
+
+if (route.query.isShowAnswerProgress) {
+  isShowAnswerProgress.value = route.query.isShowAnswerProgress === 'true';
+}
+
 
 const percentage = ref(0);
 
@@ -63,7 +74,7 @@ props.addLifecycle({
 </script>
 
 <template>
-  <div>
+  <div v-if="isShowAnswerProgress">
     <div class="mb-3">答题进度</div>
     <!-- pivot-text="" -->
     <van-progress :percentage="percentage" color="var(--questionnaire-btn-bg-color)" />
