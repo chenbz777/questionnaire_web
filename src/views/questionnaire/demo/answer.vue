@@ -32,6 +32,11 @@ function init() {
     if (type === 'submitQuestionnaire') {
       onSubmit(data);
     }
+
+    // 问卷数据变动回调
+    if (type === 'questionnaireChange') {
+      console.log('questionnaireChange', data);
+    }
   };
 }
 

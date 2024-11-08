@@ -159,7 +159,7 @@ export default class Questions extends BaseMateriel {
         ]
       },
       {
-        title: '问卷初始化完成',
+        title: '问卷初始化完成时触发',
         type: 'block',
         children: [
           {
@@ -171,7 +171,7 @@ export default class Questions extends BaseMateriel {
         ]
       },
       {
-        title: '问卷更新完成',
+        title: '问卷数据更新时触发',
         type: 'block',
         children: [
           {

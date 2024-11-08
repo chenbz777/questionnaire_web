@@ -423,8 +423,15 @@ function initQuestionnaire(data) {
     // 值变动事件名称
     const eventName = `${question.key}_onChange`;
 
-    // 后续变动再继续执行
     subscribe.on(eventName, () => {
+      iframeMessage.send({
+        type: 'questionnaireChange',
+        data: {
+          questionnaireData: JSON.parse(JSON.stringify(questionnaireData.value)),
+          data: getSubmitData()
+        }
+      });
+
       // 执行问卷修改动作
       parseActionList(questionnaireData.value.props.onUpdatedActionList, {
         questionnaireData: questionnaireData.value
