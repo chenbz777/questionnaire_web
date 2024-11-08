@@ -24,6 +24,7 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowAnswerProgress 是否显示答题进度 默认true
  * isShowCountdown 是否显示倒计时 默认true
  * isShowAnswerSheet 是否显示答题卡 默认true
+ * isisShowSubmitBtn 是否显示提交按钮 默认true
  */
 
 
@@ -47,7 +48,7 @@ const isReadonly = (route.name === 'questionnaireV1Readonly') || (route.name ===
 const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === 'questionnaireV1ReadonlyEasy');
 
 // 是否显示提交按钮
-const showSubmitBtn = ref(true);
+const isShowSubmitBtn = ref(true);
 
 // 解析动作
 const { parseActionList, executeCustomCode } = action;
@@ -282,7 +283,7 @@ function initQuestionnaire(data) {
   // 如果是只读模式
   if (isReadonly) {
     // 不显示提交按钮
-    showSubmitBtn.value = false;
+    isShowSubmitBtn.value = false;
 
     // 设置题目只读
     questionnaireData.value.questionList.forEach((question) => {
@@ -305,7 +306,7 @@ function initQuestionnaire(data) {
     const nowTime = new Date().getTime();
 
     if (nowTime < startTime) {
-      showSubmitBtn.value = false;
+      isShowSubmitBtn.value = false;
 
       ElMessageBox.confirm(
         `${title}尚未开始，暂时无法填写`,
@@ -320,7 +321,7 @@ function initQuestionnaire(data) {
     }
 
     if (nowTime > endTime) {
-      showSubmitBtn.value = false;
+      isShowSubmitBtn.value = false;
 
       ElMessageBox.confirm(
         `${title}已结束，无法继续填写`,
@@ -354,7 +355,7 @@ function initQuestionnaire(data) {
 
       // 判断是否自动提交
       if (questionnaireData.value.props.autoSubmit) {
-        showSubmitBtn.value = false;
+        isShowSubmitBtn.value = false;
 
         // 不校验, 直接提交
         onSubmit();
@@ -364,7 +365,7 @@ function initQuestionnaire(data) {
 
   // 如果设置了限制填写设备
   if (!questionnaireData.value.props.allowDevices.includes(uaText)) {
-    showSubmitBtn.value = false;
+    isShowSubmitBtn.value = false;
 
     ElMessageBox.confirm(
       `当前设备不允许填写${title}`,
@@ -376,6 +377,10 @@ function initQuestionnaire(data) {
         showCancelButton: false
       }
     );
+  }
+
+  if (route.query.isShowSubmitBtn === 'false') {
+    isShowSubmitBtn.value = false;
   }
 
   // 初始化订阅事件
@@ -708,7 +713,7 @@ function addLifecycle(callback) {
 
 
         <div class="questionnaire__container__foot">
-          <div class="questionnaire__container__submit" v-if="showSubmitBtn">
+          <div class="questionnaire__container__submit" v-if="isShowSubmitBtn">
             <div class="questionnaire__container__submit__btn" @click="handleSubmit()" id="submitBtn">
               {{ questionnaireData.props.btnText }}
             </div>
