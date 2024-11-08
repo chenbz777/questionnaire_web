@@ -25,8 +25,9 @@ export default class FormCheckbox extends BaseMateriel {
         }
       ],
       showEnglishSerialNumber: false,
-      score: 0,  // 选择题全对分数
-      partialScore: 0,  // 部分选对得分
+      fraction: 0,  // 选择题全对分数
+      score: 0,  // 得分
+      partialFraction: 0,  // 部分选对分数
       answer: [],  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
@@ -196,13 +197,13 @@ export default class FormCheckbox extends BaseMateriel {
         title: '选择题分数',
         type: 'number',
         min: 0,
-        propsKey: 'score'
+        propsKey: 'fraction'
       },
       {
         title: '部分选对得分',
         type: 'number',
         min: 0,
-        propsKey: 'partialScore'
+        propsKey: 'partialFraction'
       },
       {
         title: '题目难度',

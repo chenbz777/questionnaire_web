@@ -27,7 +27,8 @@ export default class MatrixFill extends BaseMateriel {
       ],
       defaultValue: {},
       arrange: '水平',  // 排列方式: 水平、垂直
-      score: 0,  // 主观题分数
+      fraction: 0,  // 主观题分数
+      score: 0,  // 得分
       answer: {},  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
@@ -223,7 +224,7 @@ export default class MatrixFill extends BaseMateriel {
         title: '主观题分数',
         type: 'number',
         min: 0,
-        propsKey: 'score'
+        propsKey: 'fraction'
       },
       {
         title: '题目难度',

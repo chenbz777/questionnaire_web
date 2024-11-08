@@ -604,7 +604,7 @@ function initQuestionnaire(data) {
    * 计算总分
    */
   totalPoints.value = questionnaireData.value.questionList.reduce((total, question) => {
-    return total + (question.props.score || 0);
+    return total + (question.props.fraction || 0);
   }, 0);
   /**
    * end

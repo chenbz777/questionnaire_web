@@ -25,7 +25,8 @@ export default class FormInput extends BaseMateriel {
       showWordLimit: true,  // 是否显示字数统计
       clearable: true,  // 是否可清空
       format: '不限制',  // 文本格式
-      score: 0,  // 主观题分数
+      fraction: 0,  // 主观题分数
+      score: 0,  // 得分
       answer: '',  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
@@ -192,7 +193,7 @@ export default class FormInput extends BaseMateriel {
         title: '主观题分数',
         type: 'number',
         min: 0,
-        propsKey: 'score'
+        propsKey: 'fraction'
       },
       {
         title: '题目难度',

@@ -73,7 +73,7 @@ function setQuestionnaireData() {
           'showWordLimit': true,
           'clearable': true,
           'format': '不限制',
-          'score': 0,
+          'fraction': 0,
           'answer': '',
           'answerAnalysis': '',
           'answerAnalysisAttachment': [],
@@ -95,7 +95,7 @@ function setQuestionnaireData() {
           'minLength': 0,
           'maxLength': 1000,
           'showWordLimit': true,
-          'score': 0,
+          'fraction': 0,
           'answer': '',
           'answerAnalysis': '',
           'answerAnalysisAttachment': [],
@@ -118,13 +118,13 @@ function setQuestionnaireData() {
               'label': '选项1',
               'value': '选项1',
               'image': '',
-              'score': 0
+              'fraction': 0
             }
           ],
           'showOther': false,
           'otherValue': '',
           'showEnglishSerialNumber': false,
-          'score': 0,
+          'fraction': 0,
           'answer': '',
           'answerAnalysis': '',
           'answerAnalysisAttachment': [],
@@ -147,12 +147,12 @@ function setQuestionnaireData() {
               'label': '选项1',
               'value': '选项1',
               'image': '',
-              'score': 0
+              'fraction': 0
             }
           ],
           'showEnglishSerialNumber': false,
-          'score': 0,
-          'partialScore': 0,
+          'fraction': 0,
+          'partialFraction': 0,
           'answer': [],
           'answerAnalysis': '',
           'answerAnalysisAttachment': [],

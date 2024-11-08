@@ -76,7 +76,7 @@ function getModel(data) {
       <span v-if="sequence">Q{{ sequence }}</span>
       {{ data.props.title }}
       <span class="render-engine__tips" v-if="model.title">{{ model.title }}</span>
-      <span class="render-engine__tips" v-if="data.props.score">{{ data.props.score }}分</span>
+      <span class="render-engine__tips" v-if="data.props.fraction">{{ data.props.fraction }}分</span>
       <span class="render-engine__tips" v-if="data.props.difficulty">
         {{ data.props.difficulty }}
       </span>
@@ -107,8 +107,8 @@ function getModel(data) {
       <div class="render-engine__correct__title" v-if="data.props.answerAnalysis">
         答案解析: {{ data.props.answerAnalysis }}
       </div>
-      <div class="render-engine__correct__title" v-if="data.props.candidateScore">
-        考生得分: {{ data.props.candidateScore }}
+      <div class="render-engine__correct__title" v-if="data.props.score">
+        考生得分: {{ data.props.score }}
       </div>
       <div class="render-engine__correct__title"
         v-if="data.props.answerAnalysisAttachment && data.props.answerAnalysisAttachment.length">

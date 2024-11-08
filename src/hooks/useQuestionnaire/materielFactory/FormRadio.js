@@ -27,7 +27,8 @@ export default class FormRadio extends BaseMateriel {
       showOther: false,  // 是否显示其它
       otherValue: '',  // 其它值
       showEnglishSerialNumber: false,
-      score: 0,  // 选择题分数
+      fraction: 0,  // 选择题分数
+      score: 0,  // 得分
       answer: '',  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
@@ -220,7 +221,7 @@ export default class FormRadio extends BaseMateriel {
         title: '选择题分数',
         type: 'number',
         min: 0,
-        propsKey: 'score'
+        propsKey: 'fraction'
       },
       {
         title: '正确答案',
