@@ -14,15 +14,15 @@ onUnmounted(() => {
 nextTick(() => {
   iframeMessage = new IframeMessage('myIframe');
 
-  setQuestionData('FormInput');
+  setQuestionData({
+    type: 'FormInput'
+  });
 });
 
-function setQuestionData(type) {
+function setQuestionData(data = {}) {
   iframeMessage.send({
     type: 'setQuestionData',
-    data: {
-      type
-    }
+    data
   });
 }
 </script>
@@ -30,10 +30,10 @@ function setQuestionData(type) {
 <template>
   <div>
     <div>
-      <el-button type="primary" @click="setQuestionData('FormInput')">设置题目(单行文本)</el-button>
-      <el-button type="primary" @click="setQuestionData('FormTextarea')">设置题目(多行文本)</el-button>
-      <el-button type="primary" @click="setQuestionData('FormRadio')">设置题目(单选)</el-button>
-      <el-button type="primary" @click="setQuestionData('FormCheckbox')">设置题目(多选)</el-button>
+      <el-button type="primary" @click="setQuestionData({ type: 'FormInput' })">设置题目(单行文本)</el-button>
+      <el-button type="primary" @click="setQuestionData({ type: 'FormTextarea' })">设置题目(多行文本)</el-button>
+      <el-button type="primary" @click="setQuestionData({ type: 'FormRadio' })">设置题目(单选)</el-button>
+      <el-button type="primary" @click="setQuestionData({ type: 'FormCheckbox' })">设置题目(多选)</el-button>
     </div>
 
     <iframe :src="iframeUrl" id="myIframe" frameborder="0"></iframe>

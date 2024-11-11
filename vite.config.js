@@ -10,6 +10,8 @@ export default defineConfig(({ mode }) => {
       vue()
     ],
     server: { // 开发服务器配置
+      port: 3001, // 端口
+      open: true // 启动服务时自动打开浏览器
     },
     base: '/',
     resolve: {
