@@ -37,8 +37,8 @@ export default class Questions extends BaseMateriel {
       limitTime: 0,  // 限制问卷填答总时长
       autoSubmit: false,  // 问卷结束自动提交
       allowDevices: ['电脑', '手机', '微信'],  // 允许填写设备
-      submitBeforeActionFn: 'async function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n\n //return false 将会打断提交动作,支持promise \n return true;\n}',  // 提交前回调
-      submitAfterActionFn: 'function(data) {\n  console.log("data:", data);\n  console.log("this:", this);\n}',  // 提交后回调
+      submitBeforeActionFn: 'async function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n\n //return false 将会打断提交动作,支持promise \n return true;\n}',  // 提交前回调
+      submitAfterActionFn: 'function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n}',  // 提交后回调
       onMountedActionList: [],  // 问卷初始化完成回调
       onUpdatedActionList: []  // 问卷更新完成回调
     };

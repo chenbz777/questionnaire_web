@@ -1,3 +1,6 @@
+import userDefined from '@/utils/userDefined';
+
+
 /**
  * @author: chenbz
  * @description: 执行自定义代码
@@ -26,6 +29,11 @@ function executeCustomCode(code = '', data = {}, myThis = {}) {
   return '';
 }
 
+// 前往指定题目
+function toQuestion(questionKey) {
+  userDefined.scrollIntoView(questionKey);
+}
+
 /**
  * @author: chenbz
  * @description: 解析动作
@@ -37,6 +45,10 @@ function parseAction(actionData = {}, data, myThis = {}) {
 
   if (type === 'code') {
     return executeCustomCode(actionData.code, data, myThis);
+  }
+
+  if (type === 'toQuestion') {
+    return toQuestion(actionData.questionKey);
   }
 
   return '';

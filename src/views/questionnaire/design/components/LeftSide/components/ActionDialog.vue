@@ -22,7 +22,8 @@ const actionComponentData = ref({
 
 // 动作组件列表
 const actionComponents = {
-  code: defineAsyncComponent(() => import('./ActionEngineType/Code.vue'))
+  code: defineAsyncComponent(() => import('./ActionEngineType/Code.vue')),
+  toQuestion: defineAsyncComponent(() => import('./ActionEngineType/ToQuestion.vue'))
 };
 
 // 打开动作对话框
@@ -65,18 +66,35 @@ function confirmActionDialog() {
 defineExpose({
   openActionDialog
 });
+
+const actionTypeList = [
+  {
+    title: '应用动作',
+    type: 'appAction',
+    list: [
+      {
+        type: 'code',
+        title: 'Javascript代码'
+      },
+      {
+        type: 'toQuestion',
+        title: '前往指定题目'
+      }
+    ]
+  }
+];
 </script>
 
 <template>
   <div>
     <el-dialog v-model="actionListDialog" title="请选择下方的执行动作" width="800px">
-      <div>
-        <div class="g-tips mb-2">应用动作</div>
+      <div v-for="actionType in actionTypeList" :key="actionType.type">
+        <div class="g-tips mb-2">{{ actionType.title }}</div>
         <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="ac-btn" @click="openActionDialog('code')">
-              Javascript代码
-              <span class="g-tips">(code)</span>
+          <el-col :span="8" v-for="actionItem in actionType.list" :key="actionItem.type" class="mb-2">
+            <div class="ac-btn" @click="openActionDialog(actionItem.type)">
+              {{ actionItem.title }}
+              <span class="g-tips">({{ actionItem.type }})</span>
             </div>
           </el-col>
         </el-row>
@@ -86,7 +104,7 @@ defineExpose({
     <el-dialog v-model="actionDialog" width="800px" destroy-on-close :show-close="false">
       <div>
         <el-input v-model="actionComponentData.title" placeholder="标题" class="w-100, mb-3">
-          <template #prepend>名称</template>
+          <template #prepend>动作名称</template>
         </el-input>
         <component :is="actionComponents[actionComponentName]" v-model="actionComponentData"
           v-if="actionComponentName && actionComponents[actionComponentName]" />

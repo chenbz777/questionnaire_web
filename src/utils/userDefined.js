@@ -202,11 +202,26 @@ const replaceHtmlTags = (html, replacements) => {
  * @return {*}
  */
 const scrollIntoView = (domId) => {
+  if (!domId) {
+    return;
+  }
+
   const targetNode = document.getElementById(domId);
 
   if (targetNode) {
-    // 滚动targetNode到parentNode的可视区域
-    targetNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const focusedElement = document.activeElement;
+
+    if (focusedElement) {
+      // 尝试让当前焦点元素失去焦点
+      focusedElement.blur();
+    }
+
+    // 延迟0.1秒, 解决滚动不到位的问题
+    setTimeout(() => {
+      // 滚动targetNode到parentNode的可视区域
+      targetNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+    }, 100);
   }
 };
 
