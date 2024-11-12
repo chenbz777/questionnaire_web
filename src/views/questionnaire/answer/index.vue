@@ -25,8 +25,21 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowCountdown 是否显示倒计时 默认true
  * isShowAnswerSheet 是否显示答题卡 默认true
  * isShowSubmitBtn 是否显示提交按钮 默认true
+ * questionnaireTimeOutText 答题时间到提示文案 默认'${title}答题时间已到'
+ * questionnaireSubmitText 问卷提交文案 默认'确定提交${title}吗？'
  */
 
+
+/**
+  * 事件汇总
+  * setQuestionnaireData 设置问卷数据
+  * getQuestionnaireData 获取问卷数据
+  * getSubmitData 获取提交数据
+  * setUploadConfig 设置上传配置
+  * questionsSubmitAfter 提交问卷后
+  * submitQuestionnaire 提交问卷
+  * questionnaireTimeOut 答题时间已到
+  */
 
 const { initQuestionnaireData, getSkinStr, verifySubmitData, uploadConfig } = useQuestionnaire();
 
@@ -101,15 +114,18 @@ const skinStr = ref('');
 
 // 获取提交数据
 function getSubmitData() {
-  const { data, openUserKey } = verifySubmitData(questionnaireData.value);
+  const { data, openUserKey, errorList, verifyList } = verifySubmitData(questionnaireData.value);
 
   endAnswerTime = Date.now();
 
+  data.startAnswerTime = startAnswerTime;
+  data.endAnswerTime = endAnswerTime;
+  data.openUserKey = openUserKey;
+
   const submitData = {
-    ...data,
-    startAnswerTime,
-    endAnswerTime,
-    openUserKey
+    data,
+    errorList,
+    verifyList
   };
 
   return submitData;
@@ -196,8 +212,6 @@ window.setUploadConfig = setUploadConfig;
  * @return {*}
  */
 async function onSubmit() {
-  console.log('submitData: ', getSubmitData());
-
   const submitData = getSubmitData();
 
   // 提交前动作
@@ -247,7 +261,7 @@ function handleSubmit() {
   }
 
   ElMessageBox.confirm(
-    `确定提交${title}吗？`,
+    route.query.questionnaireSubmitText || `确定提交${title}吗？`,
     '提示',
     {
       confirmButtonText: '确定',
@@ -342,8 +356,18 @@ function initQuestionnaire(data) {
     const limitTime = questionnaireData.value.props.limitTime * 1000;
 
     setTimeout(() => {
+
+      // 超时提交文案
+      let questionnaireTimeOutText = `${title}答题时间已到`;
+
+      // 如果设置了自动提交, 追加文案
+      if (questionnaireData.value.props.autoSubmit) {
+        questionnaireTimeOutText += ', 系统将自动提交';
+      }
+
+      // 提示文案优先采用路由参数
       ElMessageBox.confirm(
-        `${title}答题时间已到`,
+        route.query.questionnaireTimeOutText || questionnaireTimeOutText,
         '提示',
         {
           confirmButtonText: '我知道了',
@@ -351,7 +375,14 @@ function initQuestionnaire(data) {
           type: 'warning',
           showCancelButton: false
         }
-      );
+      ).then(() => {
+        // 发送'答题时间已到'消息
+        iframeMessage.send({
+          type: 'questionnaireTimeOut',
+          data: {}
+        });
+      })
+        .catch(() => { });
 
       // 判断是否自动提交
       if (questionnaireData.value.props.autoSubmit) {

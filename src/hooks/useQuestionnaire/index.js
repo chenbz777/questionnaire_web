@@ -120,6 +120,9 @@ function verifySubmitData(questionnaireData) {
   // 数据
   const data = {};
 
+  // 校验列表
+  const verifyList = [];
+
   questionList.forEach((question, index) => {
     const model = MaterielFactory.createMateriel(question.type, question, {
       isFull: true
@@ -134,10 +137,14 @@ function verifySubmitData(questionnaireData) {
       return;
     }
 
+    // 校验题目
+    const verifyData = JSON.parse(JSON.stringify(model.verify()));
+
+    // 校验题目列表
+    verifyList.push(verifyData);
+
     // 校验题目选项
     if (!model.verifyRequired()) {
-      const verifyData = model.verify();
-
       errorList.push({
         index,
         ...verifyData
@@ -148,7 +155,8 @@ function verifySubmitData(questionnaireData) {
   return {
     errorList,
     data,
-    openUserKey
+    openUserKey,
+    verifyList
   };
 }
 
