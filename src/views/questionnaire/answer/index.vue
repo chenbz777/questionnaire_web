@@ -25,8 +25,9 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowCountdown 是否显示倒计时 默认true
  * isShowAnswerSheet 是否显示答题卡 默认true
  * isShowSubmitBtn 是否显示提交按钮 默认true
- * questionnaireTimeOutText 答题时间到提示文案 默认'${title}答题时间已到'
- * questionnaireSubmitText 问卷提交文案 默认'确定提交${title}吗？'
+ * isShowTimeOutMessageBox 是否显示答题时间到提示 默认true
+ * timeOutText 答题时间到提示文案 默认'${title}答题时间已到'
+ * submitText 问卷提交文案 默认'确定提交${title}吗？'
  */
 
 
@@ -261,7 +262,7 @@ function handleSubmit() {
   }
 
   ElMessageBox.confirm(
-    route.query.questionnaireSubmitText || `确定提交${title}吗？`,
+    route.query.submitText || `确定提交${title}吗？`,
     '提示',
     {
       confirmButtonText: '确定',
@@ -357,32 +358,46 @@ function initQuestionnaire(data) {
 
     setTimeout(() => {
 
-      // 超时提交文案
-      let questionnaireTimeOutText = `${title}答题时间已到`;
+      // 是否显示超时提示
+      let isShowTimeOutMessageBox = true;
 
-      // 如果设置了自动提交, 追加文案
-      if (questionnaireData.value.props.autoSubmit) {
-        questionnaireTimeOutText += ', 系统将自动提交';
+      if (route.query.isShowTimeOutMessageBox === 'false') {
+        isShowTimeOutMessageBox = false;
       }
 
-      // 提示文案优先采用路由参数
-      ElMessageBox.confirm(
-        route.query.questionnaireTimeOutText || questionnaireTimeOutText,
-        '提示',
-        {
-          confirmButtonText: '我知道了',
-          cancelButtonText: '取消',
-          type: 'warning',
-          showCancelButton: false
+      if (isShowTimeOutMessageBox) {
+        // 超时提交文案
+        let timeOutText = `${title}答题时间已到`;
+
+        // 如果设置了自动提交, 追加文案
+        if (questionnaireData.value.props.autoSubmit) {
+          timeOutText += ', 系统将自动提交';
         }
-      ).then(() => {
+
+        // 提示文案优先采用路由参数
+        ElMessageBox.confirm(
+          route.query.timeOutText || timeOutText,
+          '提示',
+          {
+            confirmButtonText: '我知道了',
+            cancelButtonText: '取消',
+            type: 'warning',
+            showCancelButton: false
+          }
+        ).then(() => {
+          // 发送'答题时间已到'消息
+          iframeMessage.send({
+            type: 'questionnaireTimeOut',
+            data: {}
+          });
+        }).catch(() => { });
+      } else {
         // 发送'答题时间已到'消息
         iframeMessage.send({
           type: 'questionnaireTimeOut',
           data: {}
         });
-      })
-        .catch(() => { });
+      }
 
       // 判断是否自动提交
       if (questionnaireData.value.props.autoSubmit) {
