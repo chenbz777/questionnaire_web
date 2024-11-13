@@ -504,7 +504,7 @@ function initQuestionnaire(data) {
   logicList.forEach((logic) => {
 
     // 如果没有设置规则
-    if (!logic.sourceKey || !logic.sourceRule || !logic.sourceType || !logic.targetStatus || !logic.targetKeyList.length) {
+    if (!logic.sourceKey || !logic.sourceRule || !logic.sourceType || !logic.targetRule || !logic.targetKeyList.length) {
       return;
     }
 
@@ -540,31 +540,46 @@ function initQuestionnaire(data) {
         // 源模型赋值必填
         sourceModel.props.required = true;
 
-        const newStatus = logic.targetStatus;
+        const targetRule = logic.targetRule;
 
-        if (logic.sourceRule === '已答') {
+        const handleTargetRule = (isCheckPass) => {
+          // 如果校验通过
+          if (isCheckPass) {
+            // 设置目标题目状态
+            if (['normal', 'disabled', 'readonly', 'hidden'].includes(targetRule)) {
+              targetQuestionList.forEach((targetQuestion) => {
+                targetQuestion.props.status = targetRule;
+              });
+            }
 
-          if (sourceModel.verifyRequired()) {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = newStatus;
-            });
+            // 滚动至指定题目
+            if (targetRule === 'toQuestion') {
+              targetQuestionList.forEach((targetQuestion) => {
+                userDefined.scrollIntoView(targetQuestion.key);
+              });
+            }
           } else {
             targetQuestionList.forEach((targetQuestion) => {
               targetQuestion.props.status = targetQuestionOldStatusMap.get(targetQuestion.key);
             });
+          }
+        };
+
+        if (logic.sourceRule === '已答') {
+
+          if (sourceModel.verifyRequired()) {
+            handleTargetRule(true);
+          } else {
+            handleTargetRule(false);
           }
         }
 
         if (logic.sourceRule === '未答') {
 
           if (!sourceModel.verifyRequired()) {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = newStatus;
-            });
+            handleTargetRule(true);
           } else {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = targetQuestionOldStatusMap.get(targetQuestion.key);
-            });
+            handleTargetRule(false);
           }
         }
 
@@ -576,13 +591,9 @@ function initQuestionnaire(data) {
           const isMatch = sourceValue.some((item) => newValue.includes(item));
 
           if (isMatch) {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = newStatus;
-            });
+            handleTargetRule(true);
           } else {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = targetQuestionOldStatusMap.get(targetQuestion.key);
-            });
+            handleTargetRule(false);
           }
         }
 
@@ -595,13 +606,9 @@ function initQuestionnaire(data) {
           const isMatch = newValue == sourceValue;
 
           if (isMatch) {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = newStatus;
-            });
+            handleTargetRule(true);
           } else {
-            targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = targetQuestionOldStatusMap.get(targetQuestion.key);
-            });
+            handleTargetRule(false);
           }
         }
       };

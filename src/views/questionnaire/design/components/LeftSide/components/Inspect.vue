@@ -146,7 +146,7 @@ function inspect() {
   if (logicList && logicList.length) {
     logicList.forEach((logic, index) => {
 
-      if (!logic.sourceKey || !logic.sourceRule || !logic.targetStatus || !logic.targetKeyList.length) {
+      if (!logic.sourceKey || !logic.sourceRule || !logic.targetRule || !logic.targetKeyList.length) {
         errorLogicList.push({
           key: random.lowerCase(),
           index,

@@ -14,7 +14,7 @@ function newLogic() {
     sourceRule: '',
     sourceValue: '',
     sourceType: '',
-    targetStatus: '',
+    targetRule: '',
     targetKeyList: []
   };
 }
@@ -87,6 +87,17 @@ function removeLogic(index) {
     })
     .catch(() => { });
 }
+
+// 处理targetRule变化
+function handleTargetRuleChange(targetRule, index) {
+  // 逻辑项
+  const logicItem = questionnaireData.value.logicList[index];
+
+  // 如果没有targetRule
+  if (!targetRule) {
+    logicItem.targetKeyList = [];
+  }
+}
 </script>
 
 <template>
@@ -100,8 +111,8 @@ function removeLogic(index) {
     <div class="logic__content">
       <AnimateTransitionGroup>
         <div class="logic__content__item" v-for="(item, index) in questionnaireData.logicList" :key="item.key" :class="{
-          'logic__content__item--error': (!item.sourceKey || !item.sourceRule || !item.targetStatus || !item.targetKeyList.length),
-          'logic__content__item--success': (item.sourceKey && item.sourceRule && item.targetStatus && item.targetKeyList.length)
+          'logic__content__item--error': (!item.sourceKey || !item.sourceRule || !item.targetRule || !item.targetKeyList.length),
+          'logic__content__item--success': (item.sourceKey && item.sourceRule && item.targetRule && item.targetKeyList.length)
         }">
           <div class="logic__content__remove" @click.stop="removeLogic(index)">
             <el-icon class="logic__content__remove__icon">
@@ -139,12 +150,13 @@ function removeLogic(index) {
           <div class="logic__content__item__source">
             <div class="mr-3">则</div>
 
-            <el-select v-model="item.targetStatus" placeholder="规则" size="small" class="mr-1" style="width: 100px"
-              clearable>
+            <el-select v-model="item.targetRule" placeholder="规则" size="small" class="mr-1" style="width: 100px"
+              clearable @change="handleTargetRuleChange">
               <el-option label="显示" value="normal" />
               <el-option label="禁用" value="disabled" />
               <el-option label="只读" value="readonly" />
               <el-option label="隐藏" value="hidden" />
+              <el-option label="滚动至" value="toQuestion" />
             </el-select>
 
             <el-select v-model="item.targetKeyList" multiple placeholder="请选择题目" size="small" clearable
