@@ -32,11 +32,6 @@ export default class Questions extends BaseMateriel {
       btnTextColor: '#ffffff',  // 按钮文字颜色: #ffffff
       showQuestionIndex: true,  // 显示题目序号
       copyrightText: '【离线版问卷】提供技术支持',  // 版权信息
-      startTime: '',  // 问卷开始
-      endTime: '',  // 问卷结束
-      limitTime: 0,  // 限制问卷填答总时长
-      autoSubmit: false,  // 问卷结束自动提交
-      allowDevices: ['电脑', '手机', '微信'],  // 允许填写设备
       submitBeforeActionFn: 'async function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n\n //return false 将会打断提交动作,支持promise \n return true;\n}',  // 提交前回调
       submitAfterActionFn: 'function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n}',  // 提交后回调
       onMountedActionList: [],  // 问卷初始化完成回调
@@ -81,51 +76,6 @@ export default class Questions extends BaseMateriel {
             title: '版权信息',
             type: 'input',
             propsKey: 'copyrightText'
-          }
-        ]
-      },
-      {
-        title: '填答限制',
-        type: 'block',
-        children: [
-          {
-            title: '问卷开始时间',
-            type: 'dateTime',
-            propsKey: 'startTime'
-          },
-          {
-            title: '问卷结束时间',
-            type: 'dateTime',
-            propsKey: 'endTime'
-          },
-          {
-            title: '答题总时长(秒)',
-            type: 'number',
-            propsKey: 'limitTime'
-          },
-          {
-            title: '问卷结束自动提交',
-            type: 'switch',
-            propsKey: 'autoSubmit'
-          },
-          {
-            title: '允许填答设备',
-            type: 'checkbox',
-            propsKey: 'allowDevices',
-            options: [
-              {
-                label: '电脑',
-                value: '电脑'
-              },
-              {
-                label: '手机',
-                value: '手机'
-              },
-              {
-                label: '微信',
-                value: '微信'
-              }
-            ]
           }
         ]
       }

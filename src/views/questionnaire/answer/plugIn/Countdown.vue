@@ -26,7 +26,7 @@ props.addLifecycle({
     questionnaireData.value = _questionnaireData;
 
     // 设置了答题总时长(秒)
-    if (questionnaireData.value.props.limitTime) {
+    if (route.query.limitTime && parseInt(route.query.limitTime)) {
 
       if (route.query.isShowCountdown) {
         isShowCountdown.value = route.query.isShowCountdown === 'true';
@@ -34,7 +34,7 @@ props.addLifecycle({
         isShowCountdown.value = true;
       }
 
-      const limitTime = questionnaireData.value.props.limitTime * 1000;
+      const limitTime = parseInt(route.query.limitTime) * 1000;
 
       countdown.value = limitTime / 1000;
 

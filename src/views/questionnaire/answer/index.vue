@@ -25,9 +25,8 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowCountdown 是否显示倒计时 默认true
  * isShowAnswerSheet 是否显示答题卡 默认true
  * isShowSubmitBtn 是否显示提交按钮 默认true
- * isShowTimeOutMessageBox 是否显示答题时间到提示 默认true
- * timeOutText 答题时间到提示文案 默认'${title}答题时间已到'
  * submitText 问卷提交文案 默认'确定提交${title}吗？'
+ * limitTime 答题总时长(秒) 默认0
  */
 
 
@@ -39,7 +38,7 @@ import Lifecycle from '@/common/Lifecycle';
   * setUploadConfig 设置上传配置
   * questionsSubmitAfter 提交问卷后
   * submitQuestionnaire 提交问卷
-  * questionnaireTimeOut 答题时间已到
+  * questionnaireChange 问卷数据变化
   */
 
 const { initQuestionnaireData, getSkinStr, verifySubmitData, uploadConfig } = useQuestionnaire();
@@ -72,21 +71,6 @@ let subscribe = new Subscribe();
 
 // 获取完整路径
 const { getFullUrl } = useQuestionnaire();
-
-// 用户设备类型
-let uaText = '';
-
-if (userDefined.isMobile()) {
-  uaText = '手机';
-}
-
-if (!userDefined.isMobile()) {
-  uaText = '电脑';
-}
-
-if (userDefined.isWx()) {
-  uaText = '微信';
-}
 
 // 开始答题时间
 let startAnswerTime = Date.now();
@@ -314,117 +298,6 @@ function initQuestionnaire(data) {
     title = `【${title}】`;
   }
 
-  // 如果设置了开始时间和结束时间
-  if (questionnaireData.value.props.startTime && questionnaireData.value.props.endTime) {
-    const startTime = new Date(questionnaireData.value.props.startTime).getTime();
-    const endTime = new Date(questionnaireData.value.props.endTime).getTime();
-    const nowTime = new Date().getTime();
-
-    if (nowTime < startTime) {
-      isShowSubmitBtn.value = false;
-
-      ElMessageBox.confirm(
-        `${title}尚未开始，暂时无法填写`,
-        '提示',
-        {
-          confirmButtonText: '我知道了',
-          cancelButtonText: '取消',
-          type: 'warning',
-          showCancelButton: false
-        }
-      );
-    }
-
-    if (nowTime > endTime) {
-      isShowSubmitBtn.value = false;
-
-      ElMessageBox.confirm(
-        `${title}已结束，无法继续填写`,
-        '提示',
-        {
-          confirmButtonText: '我知道了',
-          cancelButtonText: '取消',
-          type: 'warning',
-          showCancelButton: false
-        }
-      );
-    }
-  }
-
-  // 设置了答题总时长(秒)
-  if (questionnaireData.value.props.limitTime) {
-
-    const limitTime = questionnaireData.value.props.limitTime * 1000;
-
-    setTimeout(() => {
-
-      // 是否显示超时提示
-      let isShowTimeOutMessageBox = true;
-
-      if (route.query.isShowTimeOutMessageBox === 'false') {
-        isShowTimeOutMessageBox = false;
-      }
-
-      if (isShowTimeOutMessageBox) {
-        // 超时提交文案
-        let timeOutText = `${title}答题时间已到`;
-
-        // 如果设置了自动提交, 追加文案
-        if (questionnaireData.value.props.autoSubmit) {
-          timeOutText += ', 系统将自动提交';
-        }
-
-        // 提示文案优先采用路由参数
-        ElMessageBox.confirm(
-          route.query.timeOutText || timeOutText,
-          '提示',
-          {
-            confirmButtonText: '我知道了',
-            cancelButtonText: '取消',
-            type: 'warning',
-            showCancelButton: false
-          }
-        ).then(() => {
-          // 发送'答题时间已到'消息
-          iframeMessage.send({
-            type: 'questionnaireTimeOut',
-            data: {}
-          });
-        }).catch(() => { });
-      } else {
-        // 发送'答题时间已到'消息
-        iframeMessage.send({
-          type: 'questionnaireTimeOut',
-          data: {}
-        });
-      }
-
-      // 判断是否自动提交
-      if (questionnaireData.value.props.autoSubmit) {
-        isShowSubmitBtn.value = false;
-
-        // 不校验, 直接提交
-        onSubmit();
-      }
-    }, limitTime);
-  }
-
-  // 如果设置了限制填写设备
-  if (!questionnaireData.value.props.allowDevices.includes(uaText)) {
-    isShowSubmitBtn.value = false;
-
-    ElMessageBox.confirm(
-      `当前设备不允许填写${title}`,
-      '提示',
-      {
-        confirmButtonText: '我知道了',
-        cancelButtonText: '取消',
-        type: 'warning',
-        showCancelButton: false
-      }
-    );
-  }
-
   if (route.query.isShowSubmitBtn === 'false') {
     isShowSubmitBtn.value = false;
   }
@@ -456,11 +329,6 @@ function initQuestionnaire(data) {
 
     if (question) {
       question.props[targetKey] = value;
-
-      // 触发事件
-      if (targetKey === 'defaultValue') {
-        subscribe.emit(`${key}_onChange`, value);
-      }
     }
   }
 

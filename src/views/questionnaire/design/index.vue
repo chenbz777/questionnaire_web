@@ -147,7 +147,7 @@ const clearQuestionnaire = () => {
             </el-icon>
           </el-button>
           <el-button type="primary" plain @click="questionnaireSetting()">
-            问卷设置
+            问卷配置
             <el-icon class="ml-1">
               <Setting />
             </el-icon>
