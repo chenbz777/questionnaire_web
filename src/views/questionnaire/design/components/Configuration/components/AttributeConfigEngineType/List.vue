@@ -196,6 +196,27 @@ function quickAddItem() {
   // 重置快捷选项
   quickOptionsStr.value = '';
 }
+
+function getText(item) {
+
+  let _value = {};
+
+  for (const key in item) {
+    // 去掉key字段
+    if (key === 'key') {
+      continue;
+    }
+
+    // 去掉空字段
+    if (item[key] === '') {
+      continue;
+    }
+
+    _value[key] = item[key];
+  }
+
+  return Object.values(_value).join(' / ');
+}
 </script>
 
 <template>
@@ -208,7 +229,7 @@ function quickAddItem() {
 
         <div class="ace-list__item__content limit-line-1" :title="Object.values(item).join('/')"
           @click="openDrawer(item, index)">
-          {{ Object.values(item).join(' / ') }}
+          {{ getText(item) }}
         </div>
 
         <el-icon class="ace-list__item__icon2">

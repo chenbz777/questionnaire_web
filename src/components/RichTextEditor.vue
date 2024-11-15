@@ -2,6 +2,9 @@
 import { onBeforeUnmount, ref, shallowRef, watch } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import '@wangeditor/editor/dist/css/style.css'; // 引入 css 文件
+import useQuestionnaire from '@/hooks/useQuestionnaire';
+import request from '@/utils/request';
+
 
 const props = defineProps({
   modelValue: {
@@ -12,6 +15,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+const { uploadConfig, getFullUrl } = useQuestionnaire();
 
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef();
@@ -32,6 +37,36 @@ const toolbarConfig = {};
 const editorConfig = {
   placeholder: '请输入内容...',
   MENU_CONF: {}
+};
+
+function upload(file, insertFn) {
+  request.upload(uploadConfig.value.url, {
+    file,
+    ...uploadConfig.value.data
+  }, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      ...uploadConfig.value.headers
+    }
+  }).then(res => {
+    insertFn(getFullUrl(res.path || res.url), res.name);
+  });
+}
+
+editorConfig.MENU_CONF.uploadImage = {
+  // 上传图片的配置
+  // 自定义上传
+  customUpload(file, insertFn) {
+    upload(file, insertFn);
+  }
+};
+
+editorConfig.MENU_CONF.uploadVideo = {
+  // 上传视频的配置
+  // 自定义上传
+  async customUpload(file, insertFn) {
+    upload(file, insertFn);
+  }
 };
 
 // 组件销毁时，也及时销毁编辑器
