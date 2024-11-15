@@ -212,6 +212,11 @@ function getText(item) {
       continue;
     }
 
+    if ((typeof item[key]) === 'boolean') {
+      _value[key] = item[key] ? '是' : '否';
+      continue;
+    }
+
     _value[key] = item[key];
   }
 
