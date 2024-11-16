@@ -59,7 +59,7 @@ export default class MatrixFill extends BaseMateriel {
 
         const option = this.props.fillOptions[i];
 
-        const value = this.props.defaultValue[option.key].replace(/\s+/g, '');
+        const value = (this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
 
         // 校验文本格式
         if (value) {
