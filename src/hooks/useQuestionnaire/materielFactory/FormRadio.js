@@ -218,7 +218,7 @@ export default class FormRadio extends BaseMateriel {
   get examSettings() {
     return [
       {
-        title: '选择题分数',
+        title: '题目分数',
         type: 'number',
         min: 0,
         propsKey: 'fraction'

@@ -3,7 +3,7 @@ import difficultyOptions from '../common/difficultyOptions';
 import VerifyModel from './common/VerifyModel';
 
 
-export default class FormCheckbox extends BaseMateriel {
+export default class ExaminationQuestionAnswer extends BaseMateriel {
 
   constructor(instance) {
     super(instance);
@@ -16,19 +16,14 @@ export default class FormCheckbox extends BaseMateriel {
       remark: '',
       required: false,
       status: 'normal',
-      defaultValue: [],
-      options: [
-        {
-          label: '选项1',
-          value: '选项1',
-          image: ''
-        }
-      ],
-      showEnglishSerialNumber: false,
-      fraction: 0,  // 选择题全对分数
+      defaultValue: '',
+      placeholder: '请输入',
+      minLength: 0,  // 最小长度
+      maxLength: 1000,  // 最大长度
+      showWordLimit: true,  // 是否显示字数统计
+      fraction: 0,  // 主观题分数
       score: 0,  // 得分
-      partialFraction: 0,  // 部分选对分数
-      answer: [],  // 答案
+      answer: '',  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: ''  // 题目难度: 简单, 普通, 困难
@@ -36,25 +31,25 @@ export default class FormCheckbox extends BaseMateriel {
   }
 
   get materielType() {
-    return 'FormCheckbox';
+    return 'ExaminationQuestionAnswer';
   }
 
   get title() {
-    return '多选';
+    return '问答';
   }
 
   get group() {
-    return '选择';
+    return '文本';
   }
 
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required && !this.props.defaultValue.length) {
-      return verifyModel.error('请选择选项');
+    if (this.props.required && !this.props.defaultValue) {
+      return verifyModel.error('请输入内容');
     }
 
-    if (!this.props.defaultValue.length) {
+    if (!this.props.defaultValue) {
       return verifyModel.unverified();
     }
 
@@ -62,19 +57,7 @@ export default class FormCheckbox extends BaseMateriel {
   }
 
   getText() {
-    const values = this.props.defaultValue;
-
-    if (!values.length) {
-      return '';
-    }
-
-    const options = values.map(value => {
-      const option = this.props.options.find(item => item.value === value);
-
-      return option ? option.label : '';
-    });
-
-    return options.join('、');
+    return this.props.defaultValue;
   }
 
   getReadonly() {
@@ -85,8 +68,8 @@ export default class FormCheckbox extends BaseMateriel {
     return this.props.defaultValue;
   }
 
-  setValue(values = []) {
-    this.props.defaultValue = values;
+  setValue(value = '') {
+    this.props.defaultValue = value;
   }
 
   get attributeSettings() {
@@ -146,46 +129,25 @@ export default class FormCheckbox extends BaseMateriel {
         children: [
           {
             title: '默认值',
-            type: 'multiple',
-            propsKey: 'defaultValue',
-            propsOptionsKey: 'options'
+            type: 'textarea',
+            propsKey: 'defaultValue'
           },
           {
-            title: '选项列表',
-            type: 'list',
-            quickOptions: true,
-            propsKey: 'options',
-            listKey: 'value',
-            listSettings: [
-              {
-                title: '显示值',
-                itemKey: 'label',
-                type: 'input',
-                value: '选项'
-              },
-              {
-                title: '选中值',
-                itemKey: 'value',
-                type: 'input',
-                value: '选项'
-              },
-              {
-                title: '图片',
-                itemKey: 'image',
-                type: 'uploadFile',
-                value: '',
-                uploadText: '上传图片',
-                uploadLimit: 1,
-                uploadType: 'jpg, jpeg, png, gif'
-              }
-            ]
+            title: '占位符',
+            type: 'input',
+            propsKey: 'placeholder'
+          },
+          {
+            title: '最大长度',
+            type: 'number',
+            propsKey: 'maxLength'
+          },
+          {
+            title: '是否显示字数统计',
+            type: 'switch',
+            propsKey: 'showWordLimit'
           }
         ]
-      },
-      {
-        title: '显示英文序号',
-        type: 'switch',
-        propsKey: 'showEnglishSerialNumber'
       }
     ];
   }
@@ -199,12 +161,6 @@ export default class FormCheckbox extends BaseMateriel {
         propsKey: 'fraction'
       },
       {
-        title: '部分选对得分',
-        type: 'number',
-        min: 0,
-        propsKey: 'partialFraction'
-      },
-      {
         title: '题目难度',
         type: 'radioButton',
         propsKey: 'difficulty',
@@ -212,9 +168,8 @@ export default class FormCheckbox extends BaseMateriel {
       },
       {
         title: '正确答案',
-        type: 'multiple',
-        propsKey: 'answer',
-        propsOptionsKey: 'options'
+        type: 'textarea',
+        propsKey: 'answer'
       },
       {
         title: '答案解析',

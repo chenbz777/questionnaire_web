@@ -155,7 +155,7 @@ export default class FormTextarea extends BaseMateriel {
   get examSettings() {
     return [
       {
-        title: '主观题分数',
+        title: '题目分数',
         type: 'number',
         min: 0,
         propsKey: 'fraction'

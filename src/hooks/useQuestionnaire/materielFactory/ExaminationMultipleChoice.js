@@ -3,7 +3,7 @@ import difficultyOptions from '../common/difficultyOptions';
 import VerifyModel from './common/VerifyModel';
 
 
-export default class FormCheckbox extends BaseMateriel {
+export default class ExaminationMultipleChoice extends BaseMateriel {
 
   constructor(instance) {
     super(instance);
@@ -20,8 +20,7 @@ export default class FormCheckbox extends BaseMateriel {
       options: [
         {
           label: '选项1',
-          value: '选项1',
-          image: ''
+          value: '选项1'
         }
       ],
       showEnglishSerialNumber: false,
@@ -36,11 +35,11 @@ export default class FormCheckbox extends BaseMateriel {
   }
 
   get materielType() {
-    return 'FormCheckbox';
+    return 'ExaminationMultipleChoice';
   }
 
   get title() {
-    return '多选';
+    return '选择填空';
   }
 
   get group() {
@@ -168,15 +167,6 @@ export default class FormCheckbox extends BaseMateriel {
                 itemKey: 'value',
                 type: 'input',
                 value: '选项'
-              },
-              {
-                title: '图片',
-                itemKey: 'image',
-                type: 'uploadFile',
-                value: '',
-                uploadText: '上传图片',
-                uploadLimit: 1,
-                uploadType: 'jpg, jpeg, png, gif'
               }
             ]
           }
