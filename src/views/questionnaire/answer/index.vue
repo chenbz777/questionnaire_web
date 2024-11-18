@@ -182,6 +182,15 @@ iframeMessage.onMessage = (event) => {
   if (type === 'questionsSubmitAfter') {
     questionsSubmitAfter();
   }
+
+  // 滚动至指定题目
+  if (type === 'scrollIntoView') {
+    userDefined.scrollIntoView(data.key);
+    iframeMessage.send({
+      type: 'scrollIntoViewCallback',
+      data
+    });
+  }
 };
 
 // 设置上传配置
