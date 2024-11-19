@@ -56,8 +56,23 @@ function initQuestionnaireData(props = {}) {
     if (model) {
       // 题目数据存在时, 设置题目数据
       if (Object.keys(data).includes(question.key)) {
-        // 设置题目数据
-        model.setValue(data[question.key]);
+
+        /**
+         * 判断value值与默认值类型是否一致: 如果不一致, 则转换value值类型
+         */
+        const _value = model.getValue();
+
+        const _dataValue = data[question.key];
+
+        const _valueType = Object.prototype.toString.call(_value);
+
+        const _dataValueType = Object.prototype.toString.call(_dataValue);
+
+        // 类型一致, 直接设置题目数据
+        if (_valueType === _dataValueType) {
+          // 设置题目数据
+          model.setValue(data[question.key]);
+        }
       }
 
       // 设置题目属性
