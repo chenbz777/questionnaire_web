@@ -2,6 +2,8 @@
 import useDesign from '@/hooks/useDesign';
 import random from '@/utils/random.js';
 import { ElMessageBox } from 'element-plus';
+import selectLicenseType from './common/selectLicenseType';
+import inputLicenseType from './common/inputLicenseType';
 
 
 const { questionnaireData } = useDesign();
@@ -23,12 +25,6 @@ function newLogic() {
 function addLogic() {
   questionnaireData.value.logicList.push(newLogic());
 }
-
-// 逻辑输入框许可类型
-const inputLicenseType = ['FormInput', 'FormTextarea', 'FormNumber'];
-
-// 逻辑选择框许可类型
-const selectLicenseType = ['FormRadio', 'FormCheckbox', 'FormSelect', 'FormSelectMultiple'];
 
 /**
  * @author: chenbz

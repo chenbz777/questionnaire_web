@@ -2,6 +2,7 @@
 import { ref, reactive, watch } from 'vue';
 import useDesign from '@/hooks/useDesign';
 import random from '@/utils/random.js';
+import selectLicenseType from './common/selectLicenseType';
 
 
 /**
@@ -100,7 +101,7 @@ function inspect() {
   // 3. 题目[单选、多选]选项标题是否重复: 不完整扣分
   if (questionList && questionList.length) {
     questionList.forEach((question, index) => {
-      if (['FormRadio', 'FormCheckbox', 'FormSelect', 'FormSelectMultiple'].includes(question.type)) {
+      if (selectLicenseType.includes(question.type)) {
         const optionLabelList = question.props.options.map(option => option.label);
 
         if (optionLabelList.length !== new Set(optionLabelList).size) {
@@ -125,7 +126,7 @@ function inspect() {
   // 4. 题目[单选、多选]选项大于等于2个: 不满足扣分
   if (questionList && questionList.length) {
     questionList.forEach((question, index) => {
-      if (['FormRadio', 'FormCheckbox', 'FormSelect', 'FormSelectMultiple'].includes(question.type)) {
+      if (selectLicenseType.includes(question.type)) {
         if (question.props.options.length < 2) {
           errorOptionLengthList.push({
             key: random.lowerCase(),
