@@ -32,7 +32,9 @@ const exportJSON = () => {
 // 导入配置JSON
 const importJSON = () => {
   userDefined.importJSON().then((data) => {
-    questionnaireData.value = data;
+    questionnaireData.value = initQuestionnaireData({
+      questionnaireData: data
+    });
   });
 };
 
