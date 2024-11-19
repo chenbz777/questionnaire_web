@@ -130,6 +130,12 @@ iframeMessage.onMessage = (event) => {
   // 设置问卷数据
   if (type === 'setQuestionnaireData') {
 
+    // 没有问卷数据, 则初始化问卷数据
+    if (!data.questionnaireData || !Object.keys(data.questionnaireData).length) {
+      data.questionnaireData = initQuestionnaireData();
+    }
+
+    // 没有答案数据, 则判断是否使用缓存
     if (!data.data || !Object.keys(data.data).length) {
       // 如果使用缓存
       if (isCacheFill) {

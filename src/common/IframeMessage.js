@@ -127,7 +127,7 @@ export default class IframeMessage {
 
         _this.onMessage(messageData);
       } catch (error) {
-        console.log('[IframeMessage](error): ', event);
+        console.log('[IframeMessage](error): ', error, event);
       }
     };
 
