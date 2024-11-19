@@ -1,6 +1,7 @@
 <script setup>
 import materielComponents from '@/hooks/useQuestionnaire/materielComponents';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
+import userDefined from '@/utils/userDefined';
 
 
 const props = defineProps({
@@ -65,6 +66,13 @@ const model = MaterielFactory.createMateriel(props.data.type);
 function getModel(data) {
   return MaterielFactory.createMateriel(data.type, data);
 }
+
+const replacements = [
+  {
+    tag: 'img',
+    style: 'width: 100%; height: auto;'
+  }
+];
 </script>
 
 <template>
@@ -83,7 +91,7 @@ function getModel(data) {
     </div>
     <!-- 描述 -->
     <div class="render-engine__desc" v-if="data.props.desc">
-      <div v-html="data.props.desc"></div>
+      <div v-html="userDefined.replaceHtmlTags(data.props.desc, replacements)"></div>
     </div>
     <!-- 内容主体 -->
     <template v-if="data.props.status === 'readonly'">

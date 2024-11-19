@@ -35,7 +35,8 @@ export default class Questions extends BaseMateriel {
       submitBeforeActionFn: 'async function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n\n //return false 将会打断提交动作,支持promise \n return true;\n}',  // 提交前回调
       submitAfterActionFn: 'function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n}',  // 提交后回调
       onMountedActionList: [],  // 问卷初始化完成回调
-      onUpdatedActionList: []  // 问卷更新完成回调
+      onUpdatedActionList: [],  // 问卷更新完成回调
+      bottomDesc: ''  // 底部描述
     };
   }
 
@@ -76,6 +77,11 @@ export default class Questions extends BaseMateriel {
             title: '版权信息',
             type: 'input',
             propsKey: 'copyrightText'
+          },
+          {
+            title: '问卷底部描述',
+            type: 'richText',
+            propsKey: 'bottomDesc'
           }
         ]
       }

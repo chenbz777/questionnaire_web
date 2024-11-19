@@ -604,6 +604,13 @@ watch(() => questionnaireData.value, () => {
 function addLifecycle(callback) {
   lifecycle.addLifecycle(callback);
 }
+
+const replacements = [
+  {
+    tag: 'img',
+    style: 'width: 100%; height: auto;'
+  }
+];
 </script>
 
 <template>
@@ -631,7 +638,7 @@ function addLifecycle(callback) {
 
         <div class="questionnaire__container__desc"
           v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
-          <div v-html="questionnaireData.props.desc"></div>
+          <div v-html="userDefined.replaceHtmlTags(questionnaireData.props.desc, replacements)"></div>
         </div>
 
         <div class="questionnaire__container__content">
@@ -641,6 +648,10 @@ function addLifecycle(callback) {
             :subscribe="subscribe" :option="{ isShowAnswer }" />
         </div>
 
+        <div class="questionnaire__container__desc"
+          v-if="questionnaireData.props.bottomDesc && (questionnaireData.props.bottomDesc !== '<p><br></p>')">
+          <div v-html="userDefined.replaceHtmlTags(questionnaireData.props.bottomDesc, replacements)"></div>
+        </div>
 
         <div class="questionnaire__container__foot">
           <div class="questionnaire__container__submit" v-if="isShowSubmitBtn">
