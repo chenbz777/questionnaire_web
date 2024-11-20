@@ -15,6 +15,7 @@ import AnswerSheet from '@/views/questionnaire/answer/plugIn/AnswerSheet.vue';
 import Countdown from '@/views/questionnaire/answer/plugIn/Countdown.vue';
 import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.vue';
 import Lifecycle from '@/common/Lifecycle';
+import MobileScanCode from '@/views/questionnaire/answer/plugIn/MobileScanCode.vue';
 
 
 /**
@@ -27,6 +28,7 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowSubmitBtn 是否显示提交按钮 默认true
  * submitText 问卷提交文案 默认'确定提交${title}吗？'
  * limitTime 答题总时长(秒) 默认0
+ * isShowMobileScanCode 是否显示手机端扫码 默认true
  */
 
 
@@ -672,7 +674,8 @@ function getQuestionList(_questionnaireData) {
     <div class="page__right" v-if="!isEasy">
       <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-      <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" />
+      <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <MobileScanCode class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
     </div>
   </div>
 </template>
