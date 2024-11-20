@@ -40,6 +40,13 @@
   padding: 20px;
 }
 
+.questionnaire__tips {
+  color: var(--questionnaire-text-color);
+  font-size: 14px;
+  text-align: center;
+  margin: 10px 0;
+}
+
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
   .questionnaire__card {

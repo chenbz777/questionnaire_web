@@ -14,8 +14,10 @@ import action from '@/hooks/useQuestionnaire/common/action';
 import AnswerSheet from '@/views/questionnaire/answer/plugIn/AnswerSheet.vue';
 import Countdown from '@/views/questionnaire/answer/plugIn/Countdown.vue';
 import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.vue';
-import Lifecycle from '@/common/Lifecycle';
 import MobileScanCode from '@/views/questionnaire/answer/plugIn/MobileScanCode.vue';
+import MarkQuestion from '@/views/questionnaire/answer/plugIn/MarkQuestion.vue';
+import ClassifyAnswerSheet from '@/views/questionnaire/answer/plugIn/ClassifyAnswerSheet.vue';
+import Lifecycle from '@/common/Lifecycle';
 
 
 /**
@@ -29,6 +31,8 @@ import MobileScanCode from '@/views/questionnaire/answer/plugIn/MobileScanCode.v
  * submitText 问卷提交文案 默认'确定提交${title}吗？'
  * limitTime 答题总时长(秒) 默认0
  * isShowMobileScanCode 是否显示手机端扫码 默认true
+ * isShowMarkQuestion 是否显示标记题目列表 默认true
+ * isShowClassifyAnswerSheet 是否显示分类答题卡 默认true
  */
 
 
@@ -70,6 +74,9 @@ const { parseActionList, executeCustomCode } = action;
 
 // 订阅通知
 let subscribe = new Subscribe();
+
+// 页面订阅通知
+let pageSubscribe = new Subscribe();
 
 // 获取完整路径
 const { getFullUrl } = useQuestionnaire();
@@ -373,6 +380,14 @@ function initQuestionnaire(data) {
   // 题目map集合
   questionList.forEach((question) => {
     questionMap.set(question.key, question);
+
+    // 添加隐藏属性: 是否是标记题目
+    Object.defineProperty(question, 'isMarkers', {
+      value: false,
+      enumerable: false, // 设置为不可枚举
+      writable: true,    // 可以修改值
+      configurable: true // 可以删除或重新配置
+    });
   });
 
   const tempThis = {
@@ -391,14 +406,6 @@ function initQuestionnaire(data) {
     const eventName = `${question.key}_onChange`;
 
     subscribe.on(eventName, () => {
-      iframeMessage.send({
-        type: 'questionnaireChange',
-        data: {
-          questionnaireData: JSON.parse(JSON.stringify(questionnaireData.value)),
-          data: getSubmitData()
-        }
-      });
-
       // 执行问卷修改动作
       parseActionList(questionnaireData.value.props.onUpdatedActionList, {
         questionnaireData: questionnaireData.value
@@ -573,13 +580,38 @@ function questionsSubmitAfter() {
 
 window.initQuestionnaire = initQuestionnaire;
 
-// 监听问卷数据变化
-watch(() => questionnaireData.value, () => {
-
+// 处理数据变动
+function handleQuestionnaireDataChange() {
   // 深拷贝,防止被插件修改数据, 防止修改数据时触发watch造成死循环
   const _questionnaireData = JSON.parse(JSON.stringify(questionnaireData.value));
 
+  // 标记题目列表
+  const _markersQuestionList = [];
+
+  for (let i = 0; i < questionnaireData.value.questionList.length; i++) {
+    const item = questionnaireData.value.questionList[i];
+
+    if (item.isMarkers) {
+      _markersQuestionList.push({
+        key: item.key,
+        serialNumber: i + 1,
+        isMarkers: item.isMarkers
+      });
+    }
+  }
+
+  iframeMessage.send({
+    type: 'questionnaireChange',
+    data: {
+      questionnaireData: _questionnaireData,
+      data: getSubmitData(),
+      markersQuestionList: _markersQuestionList
+    }
+  });
+
   lifecycle.onUpdated(_questionnaireData);
+
+  lifecycle.onUpdatedOriginal(questionnaireData.value);
 
   /**
    * 存储答案数据, 用于刷新页面时恢复数据
@@ -615,6 +647,11 @@ watch(() => questionnaireData.value, () => {
   /**
    * end
    */
+}
+
+// 监听问卷数据变化
+watch(() => questionnaireData.value, () => {
+  handleQuestionnaireDataChange();
 }, {
   deep: true
 });
@@ -629,6 +666,18 @@ function getQuestionList(_questionnaireData) {
   // 过滤隐藏题目
   return _questionnaireData.questionList.filter(item => item.props.status !== 'hidden');
 }
+
+// 渲染引擎参数
+const renderEngineOption = {
+  isShowAnswer,
+  pageSubscribe,
+  subscribe
+};
+
+// 监听题目切换标记变动
+pageSubscribe.on('markersChange', () => {
+  handleQuestionnaireDataChange();
+});
 </script>
 
 <template>
@@ -651,8 +700,8 @@ function getQuestionList(_questionnaireData) {
 
       <div class="questionnaire__container__content">
         <RenderEngine v-for="(question, index) in getQuestionList(questionnaireData)" :key="question.key"
-          :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0" :subscribe="subscribe"
-          :option="{ isShowAnswer }" />
+          :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
+          :option="renderEngineOption" />
       </div>
 
       <div class="questionnaire__container__desc" v-if="questionnaireData.props.bottomDesc">
@@ -675,7 +724,9 @@ function getQuestionList(_questionnaireData) {
       <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <MobileScanCode class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
     </div>
   </div>
 </template>

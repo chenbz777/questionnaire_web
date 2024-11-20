@@ -30,8 +30,6 @@ props.addLifecycle({
 
       if (route.query.isShowCountdown) {
         isShowCountdown.value = route.query.isShowCountdown === 'true';
-      } else {
-        isShowCountdown.value = true;
       }
 
       const limitTime = parseInt(route.query.limitTime) * 1000;

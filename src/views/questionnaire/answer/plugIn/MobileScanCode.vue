@@ -16,14 +16,12 @@ const route = useRoute();
 const qrCodeUrl = ref('');
 
 // 显示移动端扫码
-const isShowMobileScanCode = ref(false);
+const isShowMobileScanCode = ref(true);
 
 props.addLifecycle({
   onMounted: () => {
     if (route.query.isShowMobileScanCode) {
       isShowMobileScanCode.value = route.query.isShowMobileScanCode === 'true';
-    } else {
-      isShowMobileScanCode.value = true;
     }
   }
 });

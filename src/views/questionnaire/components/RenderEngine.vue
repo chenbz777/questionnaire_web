@@ -14,13 +14,6 @@ const props = defineProps({
     required: false,
     default: 0
   },
-  subscribe: {  // 订阅事件
-    type: Object,
-    required: false,
-    default: () => {
-      return {};
-    }
-  },
   option: {  // 拓展参数
     type: Object,
     required: false,
@@ -43,7 +36,15 @@ function emitSubscribe(eventName, data) {
     return;
   }
 
-  if (!props.subscribe.emit) {
+  if (!props.option) {
+    return;
+  }
+
+  if (!props.option.subscribe) {
+    return;
+  }
+
+  if (!props.option.subscribe.emit) {
     return;
   }
 
@@ -57,7 +58,7 @@ function emitSubscribe(eventName, data) {
   const newEventName = `${key}_${eventName}`;
 
   // 触发订阅事件
-  props.subscribe.emit(newEventName, data);
+  props.option.subscribe.emit(newEventName, data);
 }
 
 // 实例化题目模型
@@ -73,6 +74,26 @@ const replacements = [
     style: 'width: 100%; height: auto;'
   }
 ];
+
+// 切换标记显示状态
+function toggleMarkers(_data) {
+  _data.isMarkers = !_data.isMarkers;
+
+  if (!props.option) {
+    return;
+  }
+
+  if (!props.option.pageSubscribe) {
+    return;
+  }
+
+  if (!props.option.pageSubscribe.emit) {
+    return;
+  }
+
+  // 触发标记题目列表更新
+  props.option.pageSubscribe.emit('markersChange');
+}
 </script>
 
 <template>
@@ -88,6 +109,14 @@ const replacements = [
       <span class="render-engine__tips" v-if="data.props.difficulty">
         {{ data.props.difficulty }}
       </span>
+
+      <div class="render-engine__title__markers">
+        <AnimateTransition animateName="animate__bounceIn">
+          <van-icon name="star" size="20" color="var(--questionnaire-btn-bg-color)" @click="toggleMarkers(data)"
+            v-if="data.isMarkers" />
+          <van-icon name="star-o" size="20" @click="toggleMarkers(data)" v-else />
+        </AnimateTransition>
+      </div>
     </div>
     <!-- 描述 -->
     <div class="render-engine__desc" v-if="data.props.desc">
@@ -146,8 +175,19 @@ const replacements = [
 }
 
 .render-engine__title {
+  position: relative;
   font-size: 16px;
   margin-bottom: 10px;
+  padding-right: 30px;
+}
+
+.render-engine__title__markers {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 2;
+  cursor: pointer;
 }
 
 .render-engine__desc {

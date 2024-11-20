@@ -105,7 +105,7 @@ const segmented = ref('基础');
       </div>
     </div>
 
-    <van-empty image="error" description="题目类型错误" v-else />
+    <el-empty description="题目类型错误" v-else />
   </div>
 </template>
 
