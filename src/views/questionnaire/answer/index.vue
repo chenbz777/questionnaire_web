@@ -631,7 +631,8 @@ function getQuestionList(_questionnaireData) {
 
 <template>
   <div class="page" :isPage="true" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
-    <div class="questionnaire__card questionnaire__container">
+
+    <div class="questionnaire__card questionnaire__container questionnaire__container--full">
 
       <div class="questionnaire__container__logo"
         v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
@@ -728,6 +729,9 @@ function getQuestionList(_questionnaireData) {
 
 .questionnaire__container {
   width: 800px;
+}
+
+.questionnaire__container--full {
   height: fit-content;
 }
 
@@ -792,15 +796,6 @@ function getQuestionList(_questionnaireData) {
 
   .page {
     padding: 16px;
-  }
-
-  .questionnaire__container {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .questionnaire__container__foot {
-    padding-top: 10px;
   }
 
   .page__right {
