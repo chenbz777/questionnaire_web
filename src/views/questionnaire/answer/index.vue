@@ -91,9 +91,6 @@ if (route.query.isShowAnswer) {
   isShowAnswer = route.query.isShowAnswer === 'true';
 }
 
-// 问卷总分
-const totalPoints = ref(0);
-
 // 皮肤
 const skinStr = ref('');
 
@@ -283,6 +280,18 @@ function initQuestionnaire(data) {
   }
 
   questionnaireData.value = initQuestionnaireData(data);
+
+
+  const replacements = [
+    {
+      tag: 'img',
+      style: 'width: 100%; height: auto;'
+    }
+  ];
+
+  // 富文本处理
+  questionnaireData.value.props.desc = userDefined.replaceHtmlTags(questionnaireData.value.props.desc, replacements);
+  questionnaireData.value.props.bottomDesc = userDefined.replaceHtmlTags(questionnaireData.value.props.bottomDesc, replacements);
 
   // 拓展提交数据: 开始时间
   startAnswerTime = Date.now();
@@ -536,16 +545,6 @@ function initQuestionnaire(data) {
     });
   });
 
-  /**
-   * 计算总分
-   */
-  totalPoints.value = questionnaireData.value.questionList.reduce((total, question) => {
-    return total + (question.props.fraction || 0);
-  }, 0);
-  /**
-   * end
-   */
-
   // 深拷贝,防止被插件修改数据
   lifecycle.onMounted(JSON.parse(JSON.stringify(questionnaireData.value)));
 }
@@ -611,75 +610,77 @@ function addLifecycle(callback) {
   lifecycle.addLifecycle(callback);
 }
 
-const replacements = [
-  {
-    tag: 'img',
-    style: 'width: 100%; height: auto;'
-  }
-];
+// 获取题目列表
+function getQuestionList(_questionnaireData) {
+  // 过滤隐藏题目
+  return _questionnaireData.questionList.filter(item => item.props.status !== 'hidden');
+}
+
+// 获取总分
+function getTotalPoints(_questionnaireData) {
+  return _questionnaireData.questionList.reduce((total, question) => {
+    return total + (question.props.fraction || 0);
+  }, 0);
+}
 </script>
 
 <template>
-  <BaseContainer class="page" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
-    <div class="page__content">
-      <div class="questionnaire__card questionnaire__container">
-        <div class="questionnaire__container__head">
-          <div class="questionnaire__container__tips" v-if="totalPoints">
-            总分: {{ totalPoints }}分
-          </div>
-          <div class="questionnaire__container__tips" v-if="questionnaireData.questionList.length">
-            题目数: {{ questionnaireData.questionList.length }}
-          </div>
+  <div class="page" :isPage="true" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
+    <div class="questionnaire__card questionnaire__container">
+      <div class="questionnaire__container__head">
+        <div class="questionnaire__container__tips" v-if="getTotalPoints(questionnaireData)">
+          总分: {{ getTotalPoints(questionnaireData) }}分
         </div>
-
-        <div class="questionnaire__container__logo"
-          v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
-          <img :src="getFullUrl(questionnaireData.props.logo)" alt="logo"
-            class="questionnaire__container__logo__image" />
-        </div>
-
-        <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
-          {{ questionnaireData.props.title }}
-        </div>
-
-        <div class="questionnaire__container__desc"
-          v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
-          <div v-html="userDefined.replaceHtmlTags(questionnaireData.props.desc, replacements)"></div>
-        </div>
-
-        <div class="questionnaire__container__content">
-          <RenderEngine
-            v-for="(question, index) in questionnaireData.questionList.filter(item => item.props.status !== 'hidden')"
-            :key="question.key" :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
-            :subscribe="subscribe" :option="{ isShowAnswer }" />
-        </div>
-
-        <div class="questionnaire__container__desc"
-          v-if="questionnaireData.props.bottomDesc && (questionnaireData.props.bottomDesc !== '<p><br></p>')">
-          <div v-html="userDefined.replaceHtmlTags(questionnaireData.props.bottomDesc, replacements)"></div>
-        </div>
-
-        <div class="questionnaire__container__foot">
-          <div class="questionnaire__container__submit" v-if="isShowSubmitBtn">
-            <div class="questionnaire__container__submit__btn" @click="handleSubmit()" id="submitBtn">
-              {{ questionnaireData.props.btnText }}
-            </div>
-          </div>
-
-          <div class="technical-support" v-if="questionnaireData.props.copyrightText">
-            {{ questionnaireData.props.copyrightText }}
-          </div>
+        <div class="questionnaire__container__tips" v-if="getQuestionList(questionnaireData).length">
+          题目数: {{ getQuestionList(questionnaireData).length }}
         </div>
       </div>
 
-      <!-- 简洁模式下不显示, 手机端不显示 -->
-      <div class="page__right" v-if="!isEasy">
-        <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-        <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-        <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" />
+      <div class="questionnaire__container__logo"
+        v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
+        <img :src="getFullUrl(questionnaireData.props.logo)" alt="logo" class="questionnaire__container__logo__image" />
+      </div>
+
+      <div class="questionnaire__container__title" v-if="questionnaireData.props.title">
+        {{ questionnaireData.props.title }}
+      </div>
+
+      <div class="questionnaire__container__desc"
+        v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
+        <div v-html="questionnaireData.props.desc"></div>
+      </div>
+
+      <div class="questionnaire__container__content">
+        <RenderEngine v-for="(question, index) in getQuestionList(questionnaireData)" :key="question.key"
+          :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0" :subscribe="subscribe"
+          :option="{ isShowAnswer }" />
+      </div>
+
+      <div class="questionnaire__container__desc"
+        v-if="questionnaireData.props.bottomDesc && (questionnaireData.props.bottomDesc !== '<p><br></p>')">
+        <div v-html="questionnaireData.props.bottomDesc"></div>
+      </div>
+
+      <div class="questionnaire__container__foot">
+        <div class="questionnaire__container__submit" v-if="isShowSubmitBtn">
+          <div class="questionnaire__container__submit__btn" @click="handleSubmit()" id="submitBtn">
+            {{ questionnaireData.props.btnText }}
+          </div>
+        </div>
+
+        <div class="technical-support" v-if="questionnaireData.props.copyrightText">
+          {{ questionnaireData.props.copyrightText }}
+        </div>
       </div>
     </div>
-  </BaseContainer>
+
+    <!-- 简洁模式下不显示, 手机端不显示 -->
+    <div class="page__right" v-if="!isEasy">
+      <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <AnswerSheet class="questionnaire__card" :addLifecycle="addLifecycle" />
+    </div>
+  </div>
 </template>
 
 <style>
@@ -688,6 +689,7 @@ const replacements = [
 
 <style scoped>
 .page {
+  width: 100vw;
   height: 100vh;
   background-size: contain;
   background-repeat: no-repeat;
@@ -696,6 +698,11 @@ const replacements = [
   color: var(--questionnaire-text-color);
   background-size: 100%;
   background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 60px;
 }
 
 .page__head {
@@ -703,15 +710,7 @@ const replacements = [
   background-color: var(--questionnaire-bg-color);
 }
 
-.page__content {
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  overflow-y: auto;
-  padding: 60px;
-}
-
-.page--easy .page__content {
+.page--easy {
   padding: 0;
 }
 
@@ -719,12 +718,6 @@ const replacements = [
   box-shadow: none;
   width: 100%;
   border-radius: 0;
-}
-
-.questionnaire__container__head {
-  padding-bottom: 20px;
-  display: flex;
-  align-items: center;
 }
 
 .page__right {
@@ -745,6 +738,12 @@ const replacements = [
   height: fit-content;
 }
 
+.questionnaire__container__head {
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
 .questionnaire__container__logo {
   margin-top: 30px;
   display: flex;
@@ -760,19 +759,14 @@ const replacements = [
   font-size: 30px;
   font-weight: 500;
   text-align: center;
-  margin-top: 20px;
   height: 42px;
   line-height: 42px;
-}
-
-.questionnaire__container__title .el-input__inner {
-  text-align: center !important;
 }
 
 .questionnaire__container__desc {
   font-size: 16px;
   font-weight: 400;
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 0 10px;
 }
 
@@ -818,7 +812,7 @@ const replacements = [
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
 
-  .page__content {
+  .page {
     padding: 16px;
   }
 

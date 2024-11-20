@@ -1,13 +1,27 @@
 <script setup>
+defineProps({
+  isPage: {
+    type: Boolean,
+    default: false
+  }
+});
 </script>
 
 <template>
-  <div class="bc">
+  <div class="bc" :class="{ 'bc--page': isPage }">
     <div class="bc__head">
       <slot name="head" />
     </div>
-    <div class="bc__content">
-      <slot />
+    <div class="bc__main">
+      <div class="bc__main__left">
+        <slot name="left" />
+      </div>
+      <div class="bc__main__content">
+        <slot />
+      </div>
+      <div class="bc__main__right">
+        <slot name="right" />
+      </div>
     </div>
     <div class="bc__foot">
       <slot name="foot" />
@@ -21,7 +35,9 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
 
+.bc--page {
   padding-left: constant(safe-area-inset-left);
   padding-left: env(safe-area-inset-left);
 
@@ -40,14 +56,44 @@
   position: relative;
 }
 
-.bc__content {
+.bc__main {
+  box-sizing: border-box;
   flex: 1;
   height: 0;
+  display: flex;
+}
+
+.bc__main__left {
+  box-sizing: border-box;
+  height: 100%;
   overflow: auto;
   position: relative;
 }
 
-.bc__content::-webkit-scrollbar {
+.bc__main__content {
+  flex: 1;
+  width: 0;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+}
+
+.bc__main__right {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+}
+
+.bc__main__content::-webkit-scrollbar {
+  display: none;
+}
+
+.bc__main__left::-webkit-scrollbar {
+  display: none;
+}
+
+.bc__main__right::-webkit-scrollbar {
   display: none;
 }
 
