@@ -281,7 +281,9 @@ function initQuestionnaire(data) {
 
   questionnaireData.value = initQuestionnaireData(data);
 
-
+  /**
+ * 富文本处理
+ */
   const replacements = [
     {
       tag: 'img',
@@ -289,9 +291,19 @@ function initQuestionnaire(data) {
     }
   ];
 
-  // 富文本处理
   questionnaireData.value.props.desc = userDefined.replaceHtmlTags(questionnaireData.value.props.desc, replacements);
   questionnaireData.value.props.bottomDesc = userDefined.replaceHtmlTags(questionnaireData.value.props.bottomDesc, replacements);
+
+  if (questionnaireData.value.props.desc === '<p><br></p>') {
+    questionnaireData.value.props.desc = '';
+  }
+
+  if (questionnaireData.value.props.bottomDesc === '<p><br></p>') {
+    questionnaireData.value.props.bottomDesc = '';
+  }
+  /**
+   * 富文本处理 end
+   */
 
   // 拓展提交数据: 开始时间
   startAnswerTime = Date.now();
@@ -615,26 +627,11 @@ function getQuestionList(_questionnaireData) {
   // 过滤隐藏题目
   return _questionnaireData.questionList.filter(item => item.props.status !== 'hidden');
 }
-
-// 获取总分
-function getTotalPoints(_questionnaireData) {
-  return _questionnaireData.questionList.reduce((total, question) => {
-    return total + (question.props.fraction || 0);
-  }, 0);
-}
 </script>
 
 <template>
   <div class="page" :isPage="true" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
     <div class="questionnaire__card questionnaire__container">
-      <div class="questionnaire__container__head">
-        <div class="questionnaire__container__tips" v-if="getTotalPoints(questionnaireData)">
-          总分: {{ getTotalPoints(questionnaireData) }}分
-        </div>
-        <div class="questionnaire__container__tips" v-if="getQuestionList(questionnaireData).length">
-          题目数: {{ getQuestionList(questionnaireData).length }}
-        </div>
-      </div>
 
       <div class="questionnaire__container__logo"
         v-if="questionnaireData.props.showLogo && questionnaireData.props.logo">
@@ -645,8 +642,7 @@ function getTotalPoints(_questionnaireData) {
         {{ questionnaireData.props.title }}
       </div>
 
-      <div class="questionnaire__container__desc"
-        v-if="questionnaireData.props.desc && (questionnaireData.props.desc !== '<p><br></p>')">
+      <div class="questionnaire__container__desc" v-if="questionnaireData.props.desc">
         <div v-html="questionnaireData.props.desc"></div>
       </div>
 
@@ -656,21 +652,18 @@ function getTotalPoints(_questionnaireData) {
           :option="{ isShowAnswer }" />
       </div>
 
-      <div class="questionnaire__container__desc"
-        v-if="questionnaireData.props.bottomDesc && (questionnaireData.props.bottomDesc !== '<p><br></p>')">
+      <div class="questionnaire__container__desc" v-if="questionnaireData.props.bottomDesc">
         <div v-html="questionnaireData.props.bottomDesc"></div>
       </div>
 
       <div class="questionnaire__container__foot">
-        <div class="questionnaire__container__submit" v-if="isShowSubmitBtn">
-          <div class="questionnaire__container__submit__btn" @click="handleSubmit()" id="submitBtn">
-            {{ questionnaireData.props.btnText }}
-          </div>
+        <div class="questionnaire__container__btn" @click="handleSubmit()" id="submitBtn" v-if="isShowSubmitBtn">
+          {{ questionnaireData.props.btnText }}
         </div>
+      </div>
 
-        <div class="technical-support" v-if="questionnaireData.props.copyrightText">
-          {{ questionnaireData.props.copyrightText }}
-        </div>
+      <div class="technical-support" v-if="questionnaireData.props.copyrightText">
+        {{ questionnaireData.props.copyrightText }}
       </div>
     </div>
 
@@ -738,14 +731,8 @@ function getTotalPoints(_questionnaireData) {
   height: fit-content;
 }
 
-.questionnaire__container__head {
-  padding-bottom: 20px;
-  display: flex;
-  align-items: center;
-}
-
 .questionnaire__container__logo {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   justify-content: var(--questionnaire-logo-position);
 }
@@ -761,6 +748,7 @@ function getTotalPoints(_questionnaireData) {
   text-align: center;
   height: 42px;
   line-height: 42px;
+  margin-top: 20px;
 }
 
 .questionnaire__container__desc {
@@ -774,31 +762,21 @@ function getTotalPoints(_questionnaireData) {
   margin-top: 30px;
 }
 
-.questionnaire__container__submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.questionnaire__container__submit__btn {
+.questionnaire__container__btn {
   margin: 0 auto;
   padding: 10px 60px;
   border-radius: 6px;
   cursor: pointer;
   background-color: var(--questionnaire-btn-bg-color);
   color: var(--questionnaire-btn-text-color);
-}
-
-.questionnaire__container__tips {
-  border-radius: 6px;
-  padding: 2px 10px;
-  background-color: var(--questionnaire-bg-color);
-  color: var(--questionnaire-text-color);
-  margin-left: 10px;
+  text-align: center;
 }
 
 .questionnaire__container__foot {
   padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .plug-in-popup {
@@ -819,10 +797,6 @@ function getTotalPoints(_questionnaireData) {
   .questionnaire__container {
     width: 100%;
     padding: 10px;
-  }
-
-  .questionnaire__container__head {
-    padding-bottom: 10px;
   }
 
   .questionnaire__container__foot {
