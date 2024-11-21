@@ -65,7 +65,10 @@ function handleClickAnswerSheet(key) {
 
 <template>
   <div v-if="isShowMarkQuestion">
-    <div class="mb-3">标记题目列表</div>
+    <div class="mb-3">
+      标记题目列表
+      <van-icon name="star" size="16" color="var(--questionnaire-btn-bg-color)" />
+    </div>
 
     <el-row :gutter="10" v-if="markersQuestionList.length">
       <el-col :span="4" v-for="item in markersQuestionList" :key="item.key">
