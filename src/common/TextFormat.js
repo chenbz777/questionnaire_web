@@ -106,6 +106,10 @@ class TextFormat {
   static verify(formatType, value) {
     const formatData = formatList.find(item => item.value === formatType);
 
+    if (!formatData) {
+      return true;
+    }
+
     const regex = new RegExp(formatData.format.slice(1, -1));
 
     return regex.test(value);
