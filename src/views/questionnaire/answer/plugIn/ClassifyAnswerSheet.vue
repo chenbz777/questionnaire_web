@@ -86,7 +86,9 @@ function handleClickAnswerSheet(key) {
     <div class="mb-3">分类答题卡</div>
 
     <div v-for="answerSheetItem in answerSheet" :key="answerSheetItem.type">
-      <div class="answer-sheet__title">{{ answerSheetItem.title }}</div>
+      <div class="answer-sheet__title">
+        {{ answerSheetItem.title }}({{ answerSheetItem.children.length }})
+      </div>
 
       <el-row :gutter="10">
         <el-col :span="4" v-for="item in answerSheetItem.children" :key="item.key">

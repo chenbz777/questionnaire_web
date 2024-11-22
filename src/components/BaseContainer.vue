@@ -12,14 +12,14 @@ defineProps({
     <div class="bc__head">
       <slot name="head" />
     </div>
-    <div class="bc__main">
-      <div class="bc__main__left">
+    <div class="bc__container">
+      <div class="bc__container__left">
         <slot name="left" />
       </div>
-      <div class="bc__main__content">
+      <div class="bc__container__content">
         <slot />
       </div>
-      <div class="bc__main__right">
+      <div class="bc__container__right">
         <slot name="right" />
       </div>
     </div>
@@ -56,21 +56,21 @@ defineProps({
   position: relative;
 }
 
-.bc__main {
+.bc__container {
   box-sizing: border-box;
   flex: 1;
   height: 0;
   display: flex;
 }
 
-.bc__main__left {
+.bc__container__left {
   box-sizing: border-box;
   height: 100%;
   overflow: auto;
   position: relative;
 }
 
-.bc__main__content {
+.bc__container__content {
   flex: 1;
   width: 0;
   height: 100%;
@@ -78,22 +78,22 @@ defineProps({
   position: relative;
 }
 
-.bc__main__right {
+.bc__container__right {
   box-sizing: border-box;
   height: 100%;
   overflow: auto;
   position: relative;
 }
 
-.bc__main__content::-webkit-scrollbar {
+.bc__container__content::-webkit-scrollbar {
   display: none;
 }
 
-.bc__main__left::-webkit-scrollbar {
+.bc__container__left::-webkit-scrollbar {
   display: none;
 }
 
-.bc__main__right::-webkit-scrollbar {
+.bc__container__right::-webkit-scrollbar {
   display: none;
 }
 
