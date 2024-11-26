@@ -198,7 +198,6 @@ function quickAddItem() {
 }
 
 function getText(item) {
-
   let _value = {};
 
   for (const key in item) {
@@ -209,6 +208,10 @@ function getText(item) {
 
     // 去掉空字段
     if (item[key] === '') {
+      continue;
+    }
+
+    if (item[key] === null) {
       continue;
     }
 

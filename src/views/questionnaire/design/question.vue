@@ -114,20 +114,8 @@ const segmented = ref('基础');
 </style>
 
 <style scoped>
-.question__container {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-}
-
 .question__head {
   border-bottom: 2px solid rgba(31, 56, 88, 0.1);
-}
-
-.question__content {
-  flex: 1;
-  overflow-y: auto;
 }
 
 .question-segmented {
