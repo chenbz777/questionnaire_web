@@ -187,16 +187,16 @@ export default class MatrixFill extends BaseMateriel {
             listKey: 'key',
             listSettings: [
               {
-                title: '列前置标题',
-                type: 'input',
-                itemKey: 'prependTitle',
-                value: '填空'
-              },
-              {
                 title: '列后置标题',
                 type: 'input',
                 itemKey: 'appendTitle',
                 value: ''
+              },
+              {
+                title: '列前置标题',
+                type: 'input',
+                itemKey: 'prependTitle',
+                value: '填空'
               },
               {
                 title: '文本格式',
