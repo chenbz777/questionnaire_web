@@ -42,7 +42,7 @@ const showAddBtn = computed(() => {
 
 /**
  * @author: chenbz
- * @description: 添加子项
+ * @description: 添加选项
  * @return {*}
  */
 function addItem() {
@@ -136,13 +136,13 @@ function confirmClick() {
   drawer.value = false;
 }
 
-// 快捷选项弹窗
+// 批量编辑弹窗
 const dialogVisible = ref(false);
 
-// 快捷选项字符串
+// 批量编辑字符串
 const quickOptionsStr = ref('');
 
-// 快捷选项转字符串
+// 批量编辑转字符串
 function quickItemOptionsToStr(options) {
   let str = '';
 
@@ -163,12 +163,12 @@ function openDialogVisible() {
   dialogVisible.value = true;
 }
 
-// 快捷选项点击
+// 批量编辑点击
 function quickItemClick(item) {
   quickOptionsStr.value = quickItemOptionsToStr(item.options);
 }
 
-// 快捷选项
+// 批量编辑
 function quickAddItem() {
   const str = quickOptionsStr.value;
 
@@ -193,7 +193,7 @@ function quickAddItem() {
   // 关闭弹窗
   dialogVisible.value = false;
 
-  // 重置快捷选项
+  // 重置批量编辑
   quickOptionsStr.value = '';
 }
 
@@ -247,11 +247,11 @@ function getText(item) {
     </VueDraggable>
 
     <el-button text bg size="small" type="primary" @click="addItem()" class="ace-list__add-btn" v-show="showAddBtn">
-      添加子项
+      添加选项
     </el-button>
 
     <el-button text bg size="small" @click="openDialogVisible()" class="ace-list__add-btn" v-if="setting.quickOptions">
-      快捷选项
+      批量编辑
     </el-button>
 
     <el-drawer v-model="drawer" title="编辑子项" direction="rtl" size="460px" destroy-on-close>
@@ -267,7 +267,7 @@ function getText(item) {
       </template>
     </el-drawer>
 
-    <el-dialog v-model="dialogVisible" title="快捷选项" width="520px">
+    <el-dialog v-model="dialogVisible" title="批量编辑" width="520px">
 
       <div class="quick">
         <div class="quick__left">
