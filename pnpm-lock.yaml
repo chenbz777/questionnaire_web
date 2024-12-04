@@ -59,6 +59,9 @@ dependencies:
   vue-router:
     specifier: ^4.3.0
     version: 4.4.3(vue@3.4.38)
+  vue-signature-pad:
+    specifier: ^3.0.2
+    version: 3.0.2(vue@3.4.38)
 
 devDependencies:
   '@vitejs/plugin-vue':
@@ -2287,6 +2290,10 @@ packages:
     resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
     dev: false
 
+  /merge-images@1.2.0:
+    resolution: {integrity: sha512-hEGvgnTdXr08uzGvEArxRsKpy7WmozM73YaSi4s5IYF4LxrhANpqfHaz9CgBZ5+0+s2NsjPnPdStz3aCc0Yulw==}
+    dev: false
+
   /mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -2749,6 +2756,10 @@ packages:
       get-intrinsic: 1.2.4
       object-inspect: 1.13.2
 
+  /signature_pad@3.0.0-beta.4:
+    resolution: {integrity: sha512-cOf2NhVuTiuNqe2X/ycEmizvCDXk0DoemhsEpnkcGnA4kS5iJYTCqZ9As7tFBbsch45Q1EdX61833+6sjJ8rrw==}
+    dev: false
+
   /slate-history@0.66.0(slate@0.72.8):
     resolution: {integrity: sha512-6MWpxGQZiMvSINlCbMW43E2YBSVMCMCIwQfBzGssjWw4kb0qfvj0pIdblWNRQZD0hR6WHP+dHHgGSeVdMWzfng==}
     peerDependencies:
@@ -3066,6 +3077,17 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.6.3
+      vue: 3.4.38
+    dev: false
+
+  /vue-signature-pad@3.0.2(vue@3.4.38):
+    resolution: {integrity: sha512-o25o+lROfCmzASS2+fU8ZV801kV+D4/02zkZ+ez3NKeiUmbxW7kwlUf5oKQkvA+l7Ou9xGsGLsirBLch3jyX8A==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      merge-images: 1.2.0
+      signature_pad: 3.0.0-beta.4
       vue: 3.4.38
     dev: false
 

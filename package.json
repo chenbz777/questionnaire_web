@@ -28,7 +28,8 @@
     "vue": "^3.3.4",
     "vue-codemirror": "^6.1.1",
     "vue-draggable-plus": "^0.5.3",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-signature-pad": "^3.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
