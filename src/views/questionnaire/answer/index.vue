@@ -14,7 +14,6 @@ import action from '@/hooks/useQuestionnaire/common/action';
 import AnswerSheet from '@/views/questionnaire/answer/plugIn/AnswerSheet.vue';
 import Countdown from '@/views/questionnaire/answer/plugIn/Countdown.vue';
 import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.vue';
-import MobileScanCode from '@/views/questionnaire/answer/plugIn/MobileScanCode.vue';
 import MarkQuestion from '@/views/questionnaire/answer/plugIn/MarkQuestion.vue';
 import ClassifyAnswerSheet from '@/views/questionnaire/answer/plugIn/ClassifyAnswerSheet.vue';
 import Lifecycle from '@/common/Lifecycle';
@@ -30,7 +29,6 @@ import Lifecycle from '@/common/Lifecycle';
  * isShowSubmitBtn 是否显示提交按钮 默认true
  * submitText 问卷提交文案 默认'确定提交${title}吗？'
  * limitTime 答题总时长(秒) 默认0
- * isShowMobileScanCode 是否显示手机端扫码 默认true
  * isShowMarkQuestion 是否显示标记题目列表 默认true
  * isShowClassifyAnswerSheet 是否显示分类答题卡 默认true
  */
@@ -725,7 +723,6 @@ pageSubscribe.on('markersChange', () => {
       <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-      <MobileScanCode class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
     </div>
   </div>
