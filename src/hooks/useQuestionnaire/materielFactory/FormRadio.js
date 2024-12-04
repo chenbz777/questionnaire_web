@@ -81,7 +81,7 @@ export default class FormRadio extends BaseMateriel {
     }
 
     if (value === '其它') {
-      return this.props.otherValue;
+      return `其它-${this.props.otherValue}`;
     }
 
     const option = this.props.options.find(item => item.value === value);
