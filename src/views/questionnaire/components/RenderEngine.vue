@@ -119,7 +119,7 @@ function toggleMarkers(_data) {
       </div>
     </div>
     <!-- 描述 -->
-    <div class="render-engine__desc" v-if="data.props.desc">
+    <div class="render-engine__desc" v-if="data.props.desc && (data.props.desc !== '<p><br></p>')">
       <div v-html="userDefined.replaceHtmlTags(data.props.desc, replacements)"></div>
     </div>
     <!-- 内容主体 -->
