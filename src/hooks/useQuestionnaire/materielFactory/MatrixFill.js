@@ -55,33 +55,50 @@ export default class MatrixFill extends BaseMateriel {
 
     if (this.props.fillOptions && this.props.fillOptions.length) {
 
-      for (let i = 0; i < this.props.fillOptions.length; i++) {
+      const _this = this;
 
-        const option = this.props.fillOptions[i];
+      // 校验必填
+      const isRequired = this.props.fillOptions.every(option => {
+        const value = (_this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
 
-        const value = (this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
+        if (option.required && !value) {
+          return false;
+        }
 
-        // 校验文本格式
+        return true;
+      });
+
+      if (!isRequired) {
+        return verifyModel.error('请输入内容');
+      }
+
+      // 文本格式
+      const isFormat = this.props.fillOptions.every(option => {
+        const value = (_this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
+
         if (value) {
           if (!TextFormat.verify(option.format, value)) {
-            result = verifyModel.error('文本格式不正确');
-            break;
+            return false;
           }
         }
 
-        // 校验必填
-        if (option.required && !value) {
-          result = verifyModel.error('请输入内容');
-          break;
-        }
+        return true;
+      });
 
-        if (!value) {
-          result = verifyModel.unverified();
-          break;
-        }
+      if (!isFormat) {
+        return verifyModel.error('文本格式不正确');
       }
 
-      return result;
+      // 是否填写, 有一个填写即可
+      const isFillIn = this.props.fillOptions.some(option => {
+        const value = (_this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
+
+        return value;
+      });
+
+      if (!isFillIn) {
+        return verifyModel.unverified();
+      }
     }
 
     return result;
