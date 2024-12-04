@@ -48,9 +48,9 @@ function updateProgress() {
     /**
      * 计算答题进度
      */
-    const isOk = model.verifyRequired();
+    const verifyData = model.verify();
 
-    if (isOk) {
+    if (verifyData.status === 'success') {
       total += 1;
     }
   });
