@@ -58,9 +58,9 @@ function addItem() {
   const keyType = (typeof newData[props.setting.listKey]);
 
   if (keyType === 'number') {
-    newData[props.setting.listKey] = random.number(8);
+    newData[props.setting.listKey] = random.number(6);
   } else {
-    newData[props.setting.listKey] = random.lowerCase(8);
+    newData[props.setting.listKey] = `${newData[props.setting.listKey]}_${random.number(6)}`;
   }
 
   // 添加

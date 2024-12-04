@@ -31,7 +31,7 @@ export default class MatrixRate extends BaseMateriel {
       evaluate: '', // 评价
       evaluatePlaceholder: '请填写评价',
       defaultValue: {
-        one: 5
+        one: 0
       },
       tagDefaultValue: []
     };

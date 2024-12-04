@@ -164,7 +164,6 @@ export default class FormRadio extends BaseMateriel {
         title: '控件属性',
         type: 'block',
         children: [
-
           {
             title: '默认值',
             type: 'select',
