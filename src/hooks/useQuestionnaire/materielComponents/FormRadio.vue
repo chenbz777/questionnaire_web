@@ -56,7 +56,7 @@ function handleClear() {
           placeholder="请输入其他" clearable v-show="componentData.props.defaultValue === '其它'" />
       </el-radio>
     </el-radio-group>
-    <div class="questionnaire__btn" @click="handleClear()">
+    <div class="questionnaire__btn" @click="handleClear()" v-if="componentData.props.showClearBtn">
       清空选中
     </div>
   </div>

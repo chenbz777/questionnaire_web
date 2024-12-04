@@ -24,7 +24,9 @@ export default class FormCheckbox extends BaseMateriel {
           image: ''
         }
       ],
-      showEnglishSerialNumber: false,
+      showEnglishSerialNumber: false,  // 显示英文序号
+      showClearBtn: true,  // 显示清空按钮
+      showSelectAllBtn: true,  // 显示全选按钮
       fraction: 0,  // 选择题全对分数
       score: 0,  // 得分
       partialFraction: 0,  // 部分选对分数
@@ -186,6 +188,16 @@ export default class FormCheckbox extends BaseMateriel {
         title: '显示英文序号',
         type: 'switch',
         propsKey: 'showEnglishSerialNumber'
+      },
+      {
+        title: '显示清空按钮',
+        type: 'switch',
+        propsKey: 'showClearBtn'
+      },
+      {
+        title: '显示全选按钮',
+        type: 'switch',
+        propsKey: 'showSelectAllBtn'
       }
     ];
   }

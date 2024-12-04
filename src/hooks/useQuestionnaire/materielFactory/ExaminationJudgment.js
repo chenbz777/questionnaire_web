@@ -27,6 +27,7 @@ export default class ExaminationJudgment extends BaseMateriel {
           value: '错误'
         }
       ],
+      showClearBtn: false,  // 显示清空按钮
       fraction: 0,  // 选择题分数
       score: 0,  // 得分
       answer: '',  // 答案
@@ -170,6 +171,11 @@ export default class ExaminationJudgment extends BaseMateriel {
                 value: '选项'
               }
             ]
+          },
+          {
+            title: '显示清空按钮',
+            type: 'switch',
+            propsKey: 'showClearBtn'
           }
         ]
       }

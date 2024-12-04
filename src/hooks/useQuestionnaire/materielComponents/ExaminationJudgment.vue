@@ -45,7 +45,7 @@ function handleClear() {
         </div>
       </el-radio>
     </el-radio-group>
-    <div class="questionnaire__btn" @click="handleClear()">
+    <div class="questionnaire__btn" @click="handleClear()" v-if="componentData.props.showClearBtn">
       清空选中
     </div>
   </div>

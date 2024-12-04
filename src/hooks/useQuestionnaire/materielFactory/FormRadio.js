@@ -26,7 +26,8 @@ export default class FormRadio extends BaseMateriel {
       ],
       showOther: false,  // 是否显示其它
       otherValue: '',  // 其它值
-      showEnglishSerialNumber: false,
+      showEnglishSerialNumber: false,  // 显示英文序号
+      showClearBtn: true,  // 显示清空按钮
       fraction: 0,  // 选择题分数
       score: 0,  // 得分
       answer: '',  // 答案
@@ -209,6 +210,11 @@ export default class FormRadio extends BaseMateriel {
             title: '显示英文序号',
             type: 'switch',
             propsKey: 'showEnglishSerialNumber'
+          },
+          {
+            title: '显示清空按钮',
+            type: 'switch',
+            propsKey: 'showClearBtn'
           }
         ]
       }
