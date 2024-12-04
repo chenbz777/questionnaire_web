@@ -86,7 +86,7 @@ export default class FormRadio extends BaseMateriel {
 
     const option = this.props.options.find(item => item.value === value);
 
-    return option.label;
+    return option?.label;
   }
 
   getReadonly() {
@@ -95,15 +95,16 @@ export default class FormRadio extends BaseMateriel {
 
   getValue() {
     if (this.props.showOther && (this.props.defaultValue === '其它')) {
-      return this.props.otherValue;
+      return `其它-${this.props.otherValue}`;
     }
 
     return this.props.defaultValue;
   }
 
   setValue(value = '') {
-    if (this.props.showOther && (this.props.defaultValue === '其它')) {
-      this.props.otherValue = value;
+    if (this.props.showOther && value.includes('其它-')) {
+      this.props.defaultValue = '其它';
+      this.props.otherValue = value.replace('其它-', '');
     } else {
       this.props.defaultValue = value;
     }
