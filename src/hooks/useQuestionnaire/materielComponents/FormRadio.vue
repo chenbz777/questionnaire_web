@@ -28,6 +28,10 @@ function handleChange(value) {
 
 // 清空选中
 function handleClear() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   componentData.value.props.defaultValue = '';
 
   handleChange('');

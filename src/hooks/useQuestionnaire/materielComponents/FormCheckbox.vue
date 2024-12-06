@@ -28,6 +28,10 @@ function handleChange(value) {
 
 // 清空选中
 function handleClear() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   componentData.value.props.defaultValue = [];
 
   handleChange([]);
@@ -35,6 +39,10 @@ function handleClear() {
 
 // 全选
 function handleSelectAll() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   const value = props.data.props.options.map(option => option.value);
 
   componentData.value.props.defaultValue = value;

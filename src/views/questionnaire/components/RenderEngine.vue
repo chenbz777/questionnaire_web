@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 import materielComponents from '@/hooks/useQuestionnaire/materielComponents';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import userDefined from '@/utils/userDefined';
@@ -71,7 +73,7 @@ function getModel(data) {
 const replacements = [
   {
     tag: 'img',
-    style: 'width: 100%; height: auto;'
+    styleAppend: 'max-width: 100%;'
   }
 ];
 
@@ -94,6 +96,29 @@ function toggleMarkers(_data) {
   // 触发标记题目列表更新
   props.option.pageSubscribe.emit('markersChange');
 }
+
+const route = useRoute();
+
+// 是否显示标记按钮
+const isShowMarkers = ref(true);
+
+if (route.query && route.query.isShowMarkers) {
+  isShowMarkers.value = route.query.isShowMarkers === 'true';
+}
+
+// 获取正确答案
+function getAnswerStr(answer) {
+
+  if ((typeof answer) === 'object') {
+    if (Array.isArray(answer)) {
+      return answer.join('、');
+    } else {
+      return Object.values(answer).join('、');
+    }
+  }
+
+  return answer;
+}
 </script>
 
 <template>
@@ -110,7 +135,7 @@ function toggleMarkers(_data) {
         {{ data.props.difficulty }}
       </span>
 
-      <div class="render-engine__title__markers">
+      <div class="render-engine__title__markers" v-if="isShowMarkers">
         <AnimateTransition animateName="animate__bounceIn">
           <van-icon name="star" size="20" color="var(--questionnaire-btn-bg-color)" @click="toggleMarkers(data)"
             v-if="data.isMarkers" />
@@ -136,7 +161,7 @@ function toggleMarkers(_data) {
     <!-- 显示答案 -->
     <div class="render-engine__correct" v-if="option.isShowAnswer">
       <div class="render-engine__correct__title" v-if="data.props.answer">
-        正确答案: {{ data.props.answer }}
+        正确答案: {{ getAnswerStr(data.props.answer) }}
       </div>
       <div class="render-engine__correct__title" v-if="getModel(props.data).getText()">
         考生答案: <span v-html="getModel(props.data).getText()"></span>
@@ -238,6 +263,8 @@ function toggleMarkers(_data) {
 }
 
 .render-engine__correct__title {
+  word-break: break-all;
+  white-space: pre-wrap;
   font-size: 13px;
   line-height: 22px;
 }

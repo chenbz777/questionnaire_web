@@ -1,6 +1,7 @@
 import BaseMateriel from './BaseMateriel';
 import difficultyOptions from '../common/difficultyOptions';
 import VerifyModel from './common/VerifyModel';
+import englishSerialNumber from '../common/englishSerialNumber.js';
 
 
 export default class FormRadio extends BaseMateriel {
@@ -86,7 +87,17 @@ export default class FormRadio extends BaseMateriel {
 
     const option = this.props.options.find(item => item.value === value);
 
-    return option?.label;
+    if (!option) {
+      return '';
+    }
+
+    if (this.props.showEnglishSerialNumber) {
+      const index = this.props.options.findIndex(item => item.value === value);
+
+      return `${englishSerialNumber(index)}${option.label}`;
+    }
+
+    return option.label;
   }
 
   getReadonly() {

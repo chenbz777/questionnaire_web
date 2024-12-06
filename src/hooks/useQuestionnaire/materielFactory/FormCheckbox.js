@@ -1,6 +1,7 @@
 import BaseMateriel from './BaseMateriel';
 import difficultyOptions from '../common/difficultyOptions';
 import VerifyModel from './common/VerifyModel';
+import englishSerialNumber from '../common/englishSerialNumber.js';
 
 
 export default class FormCheckbox extends BaseMateriel {
@@ -73,7 +74,17 @@ export default class FormCheckbox extends BaseMateriel {
     const options = values.map(value => {
       const option = this.props.options.find(item => item.value === value);
 
-      return option ? option.label : '';
+      if (!option) {
+        return '';
+      }
+
+      if (this.props.showEnglishSerialNumber) {
+        const index = this.props.options.findIndex(item => item.value === value);
+
+        return `${englishSerialNumber(index)}${option.label}`;
+      }
+
+      return option.label;
     });
 
     return options.join('、');

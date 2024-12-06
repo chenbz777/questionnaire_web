@@ -28,6 +28,10 @@ function handleChange(value) {
 
 // 清空选中
 function handleClear() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   componentData.value.props.defaultValue = '';
 
   handleChange('');
@@ -41,7 +45,8 @@ const isDesign = (route.name === 'questionnaireV1Design');
 <template>
   <div class="form-select">
     <el-select v-model="componentData.props.defaultValue" :placeholder="data.props.placeholder" @change="handleChange"
-      :disabled="componentData.props.status === 'disabled'" clearable :teleported="false" size="large">
+      :disabled="componentData.props.status === 'disabled'" :clearable="componentData.props.showClearBtn"
+      :teleported="false" size="large">
       <el-option v-for="option in data.props.options" :key="option.value" :label="option.label" :value="option.value">
         {{ option.label }}
 
@@ -57,7 +62,7 @@ const isDesign = (route.name === 'questionnaireV1Design');
     <el-input v-model="componentData.props.otherValue" :disabled="componentData.props.status === 'disabled'"
       placeholder="请输入其他" clearable v-show="componentData.props.defaultValue === '其它'" class="mt-2" />
 
-    <div class="questionnaire__btn" @click="handleClear()">
+    <div class="questionnaire__btn" @click="handleClear()" v-if="componentData.props.showClearBtn">
       清空选中
     </div>
   </div>

@@ -22,7 +22,9 @@ export default class FormSelectMultiple extends BaseMateriel {
           label: '选项1',
           value: '选项1'
         }
-      ]
+      ],
+      showClearBtn: true,  // 显示清空按钮
+      showSelectAllBtn: true  // 显示全选按钮
     };
   }
 
@@ -165,6 +167,16 @@ export default class FormSelectMultiple extends BaseMateriel {
                 value: '选项'
               }
             ]
+          },
+          {
+            title: '显示清空按钮',
+            type: 'switch',
+            propsKey: 'showClearBtn'
+          },
+          {
+            title: '显示全选按钮',
+            type: 'switch',
+            propsKey: 'showSelectAllBtn'
           }
         ]
       }

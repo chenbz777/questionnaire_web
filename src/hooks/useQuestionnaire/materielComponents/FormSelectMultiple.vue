@@ -28,6 +28,10 @@ function handleChange(value) {
 
 // 清空选中
 function handleClear() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   componentData.value.props.defaultValue = [];
 
   handleChange([]);
@@ -35,6 +39,10 @@ function handleClear() {
 
 // 全选
 function handleSelectAll() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   const value = props.data.props.options.map(option => option.value);
 
   componentData.value.props.defaultValue = value;
@@ -46,8 +54,8 @@ function handleSelectAll() {
 <template>
   <div class="form-select">
     <el-select v-model="componentData.props.defaultValue" multiple :placeholder="data.props.placeholder"
-      @change="handleChange" :disabled="componentData.props.status === 'disabled'" clearable :teleported="false"
-      size="large">
+      @change="handleChange" :disabled="componentData.props.status === 'disabled'"
+      :clearable="componentData.props.showClearBtn" :teleported="false" size="large">
       <el-option v-for="(option, index) in data.props.options" :key="option.value" :label="option.label"
         :value="option.value">
         <span v-if="data.props.showEnglishSerialNumber">{{ englishSerialNumber(index) }}</span>
@@ -55,12 +63,12 @@ function handleSelectAll() {
       </el-option>
     </el-select>
 
-    <div class="questionnaire__btn" @click="handleClear()">
+    <button class="questionnaire__btn" @click="handleClear()" v-if="componentData.props.showClearBtn">
       清空选中
-    </div>
-    <div class="questionnaire__btn ml-3" @click="handleSelectAll()">
+    </button>
+    <button class="questionnaire__btn ml-3" @click="handleSelectAll()" v-if="componentData.props.showSelectAllBtn">
       全选
-    </div>
+    </button>
   </div>
 </template>
 

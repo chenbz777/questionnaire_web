@@ -28,6 +28,10 @@ function handleChange(value) {
 
 // 清空选中
 function handleClear() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   componentData.value.props.defaultValue = [];
 
   handleChange([]);
@@ -35,6 +39,10 @@ function handleClear() {
 
 // 全选
 function handleSelectAll() {
+  if (componentData.value.props.status === 'disabled') {
+    return;
+  }
+
   const value = props.data.props.options.map(option => option.value);
 
   componentData.value.props.defaultValue = value;
@@ -47,8 +55,11 @@ function handleSelectAll() {
   <div class="form-checkbox">
     <el-checkbox-group v-model="componentData.props.defaultValue" @change="handleChange">
       <el-checkbox v-for="(option, index) in data.props.options" :key="option.value" :label="option.label"
-        :value="option.value" :disabled="data.props.status === 'disabled'" class="form-select--block">
+        :value="option.value" :disabled="data.props.status === 'disabled'" class="form-select--block"
+        :class="{ 'form-select-card--image': option.image }">
         <div class="form-select-card__label">
+          <img v-if="option.image" :src="option.image" alt="" class="form-select-card__image" />
+
           <div class="form-select-card__text">
             <span v-if="data.props.showEnglishSerialNumber">{{ englishSerialNumber(index) }}</span>
             {{ option.label }}

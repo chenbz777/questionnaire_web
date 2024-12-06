@@ -24,7 +24,8 @@ export default class FormSelect extends BaseMateriel {
         }
       ],
       showOther: false,  // 是否显示其它
-      otherValue: ''  // 其它值
+      otherValue: '',  // 其它值
+      showClearBtn: true  // 显示清空按钮
     };
   }
 
@@ -191,6 +192,11 @@ export default class FormSelect extends BaseMateriel {
             title: '添加【其它】',
             type: 'switch',
             propsKey: 'showOther'
+          },
+          {
+            title: '显示清空按钮',
+            type: 'switch',
+            propsKey: 'showClearBtn'
           }
         ]
       }

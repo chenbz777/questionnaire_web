@@ -31,6 +31,7 @@ import Lifecycle from '@/common/Lifecycle';
  * limitTime 答题总时长(秒) 默认0
  * isShowMarkQuestion 是否显示标记题目列表 默认true
  * isShowClassifyAnswerSheet 是否显示分类答题卡 默认true
+ * isShowMarkers 是否显示标记题目 默认true
  */
 
 
@@ -294,7 +295,7 @@ function initQuestionnaire(data) {
   const replacements = [
     {
       tag: 'img',
-      style: 'width: 100%; height: auto;'
+      styleAppend: 'max-width: 100%;'
     }
   ];
 

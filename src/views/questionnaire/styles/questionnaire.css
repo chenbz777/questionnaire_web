@@ -3,6 +3,7 @@
 }
 
 .questionnaire__btn {
+  border: 0;
   display: inline-block;
   font-size: 14px;
   padding: 6px 16px;

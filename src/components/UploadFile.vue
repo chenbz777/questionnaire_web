@@ -224,8 +224,8 @@ function handlePreview(url) {
 }
 
 .upload-file__item__title {
-  word-wrap: break-word;
-  word-break: normal;
+  word-break: break-all;
+  white-space: pre-wrap;
   padding: 4px 10px;
 }
 
