@@ -167,6 +167,16 @@ pnpm build
 
 <br />
 
+## 感谢
+
+如果可以，来瓶快乐水
+
+<img src="http://img.chenbz.com/wxCode.jpeg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
+
+
+
+<br />
+
 ## 🎨 展示
 
 题型
