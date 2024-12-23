@@ -99,6 +99,14 @@ if (route.query.isShowAnswer) {
   isShowAnswer = route.query.isShowAnswer === 'true';
 }
 
+// 渲染引擎参数
+const renderEngineOption = {
+  isShowAnswer,
+  pageSubscribe,
+  subscribe
+};
+
+
 // 皮肤
 const skinStr = ref('');
 
@@ -348,6 +356,9 @@ function initQuestionnaire(data) {
 
   // 初始化订阅事件
   subscribe = new Subscribe();
+
+  // 重新指向 subscribe 对象
+  renderEngineOption.subscribe = subscribe;
 
   // 逻辑列表
   const logicList = questionnaireData.value.logicList || [];
@@ -665,13 +676,6 @@ function getQuestionList(_questionnaireData) {
   // 过滤隐藏题目
   return _questionnaireData.questionList.filter(item => item.props.status !== 'hidden');
 }
-
-// 渲染引擎参数
-const renderEngineOption = {
-  isShowAnswer,
-  pageSubscribe,
-  subscribe
-};
 
 // 监听题目切换标记变动
 pageSubscribe.on('markersChange', () => {
