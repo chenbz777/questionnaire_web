@@ -292,8 +292,9 @@ function getAnswerStr(answer) {
 
 <style>
 .form-select--block {
-  width: 100%;
+  width: 100% !important;
   margin-bottom: 12px;
+  margin-right: 30px !important;
 }
 
 .form-select-card__image {

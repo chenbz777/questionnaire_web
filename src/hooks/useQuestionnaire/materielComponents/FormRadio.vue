@@ -42,8 +42,8 @@ function handleClear() {
   <div class="form-radio">
     <el-radio-group v-model="componentData.props.defaultValue" @change="handleChange" class="form-radio__group">
       <el-radio v-for="(option, index) in data.props.options" :key="option.value" :value="option.value"
-        :disabled="componentData.props.status === 'disabled'" class="form-select--block"
-        :class="{ 'form-select-card--image': option.image }">
+        :disabled="componentData.props.status === 'disabled'"
+        :class="{ 'form-select-card--image': option.image, 'form-select--block': data.props.arrangementMode === 'vertical' }">
         <div class="form-select-card__label">
           <img v-if="option.image" :src="option.image" alt="" class="form-select-card__image" />
 
@@ -54,7 +54,7 @@ function handleClear() {
         </div>
       </el-radio>
       <el-radio v-if="data.props.showOther" value="其它" :disabled="componentData.props.status === 'disabled'"
-        class="form-select--block">
+        :class="{ 'form-select--block': data.props.arrangementMode === 'vertical' }">
         其它
         <el-input v-model="componentData.props.otherValue" :disabled="componentData.props.status === 'disabled'"
           placeholder="请输入其他" clearable v-show="componentData.props.defaultValue === '其它'" />

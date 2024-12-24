@@ -33,7 +33,8 @@ export default class ExaminationJudgment extends BaseMateriel {
       answer: '',  // 答案
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
-      difficulty: ''  // 题目难度: 简单, 普通, 困难
+      difficulty: '',  // 题目难度: 简单, 普通, 困难
+      arrangementMode: 'vertical'  // 排列方式: vertical, horizontal
     };
   }
 
@@ -150,6 +151,21 @@ export default class ExaminationJudgment extends BaseMateriel {
             type: 'select',
             propsKey: 'defaultValue',
             propsOptionsKey: 'options'
+          },
+          {
+            title: '排列方式',
+            type: 'radioButton',
+            propsKey: 'arrangementMode',
+            options: [
+              {
+                label: '垂直',
+                value: 'vertical'
+              },
+              {
+                label: '水平',
+                value: 'horizontal'
+              }
+            ]
           },
           {
             title: '选项列表',
