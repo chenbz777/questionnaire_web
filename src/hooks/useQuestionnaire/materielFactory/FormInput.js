@@ -118,7 +118,7 @@ export default class FormInput extends BaseMateriel {
             propsKey: 'status',
             options: [
               {
-                label: '正常',
+                label: '显示',
                 value: 'normal'
               },
               {

@@ -154,7 +154,7 @@ export default class FormRadio extends BaseMateriel {
             propsKey: 'status',
             options: [
               {
-                label: '正常',
+                label: '显示',
                 value: 'normal'
               },
               {
