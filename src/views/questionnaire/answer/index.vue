@@ -454,13 +454,26 @@ function initQuestionnaire(data) {
         // 目标题目状态
         const targetRule = logic.targetRule;
 
+        // 处理目标题目规则
         const handleTargetRule = (isCheckPass) => {
+
+          // 设置目标题目状态
+          const setTargetStatus = (targetQuestion, status) => {
+            // 如果目标题目是源题目, 则跳过
+            if (targetQuestion.key === sourceModel.key) {
+              return;
+            }
+
+            // 设置目标题目状态
+            targetQuestion.props.status = status;
+          };
+
           // 如果校验通过
           if (isCheckPass) {
             // 设置目标题目状态
             if (['normal', 'disabled', 'readonly', 'hidden'].includes(targetRule)) {
               targetQuestionList.forEach((targetQuestion) => {
-                targetQuestion.props.status = targetRule;
+                setTargetStatus(targetQuestion, targetRule);
               });
             }
 
@@ -472,10 +485,7 @@ function initQuestionnaire(data) {
             }
           } else {
             targetQuestionList.forEach((targetQuestion) => {
-              targetQuestion.props.status = targetQuestionOldStatusMap.get(targetQuestion.key);
-              console.log('targetQuestion: ', targetQuestion);
-
-              targetQuestion.props.defaultValue = '';
+              setTargetStatus(targetQuestion, targetQuestionOldStatusMap.get(targetQuestion.key));
             });
           }
         };
