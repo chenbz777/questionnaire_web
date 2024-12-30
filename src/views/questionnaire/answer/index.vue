@@ -331,19 +331,6 @@ function initQuestionnaire(data) {
     skinStr.value = getSkinStr(questionnaireData.value);
   }
 
-  // 如果是只读模式
-  if (isReadonly) {
-    // 不显示提交按钮
-    isShowSubmitBtn.value = false;
-
-    // 设置题目只读
-    questionnaireData.value.questionList.forEach((question) => {
-      if (question.props.status !== 'hidden') {
-        question.props.status = 'readonly';
-      }
-    });
-  }
-
   let title = questionnaireData.value.props.title;
 
   if (title) {
@@ -444,25 +431,27 @@ function initQuestionnaire(data) {
       return logic.targetKeyList.includes(item.key);
     });
 
-    // 目标题目实例初始状态集合
-    const targetQuestionOldStatusMap = new Map();
-
-    // 目标题目实例初始状态
-    targetQuestionList.forEach((item) => {
-      targetQuestionOldStatusMap.set(item.key, item.props.status);
-    });
-
     // 如果源题目和目标题目都存在
     if (sourceQuestion && targetQuestionList.length) {
+
+      // 目标题目实例初始状态集合
+      const targetQuestionOldStatusMap = new Map();
+
+      // 目标题目实例初始状态
+      targetQuestionList.forEach((item) => {
+        targetQuestionOldStatusMap.set(item.key, item.props.status);
+      });
 
       // 逻辑处理函数
       const handleLogicFn = (newValue) => {
 
         // 源模型
         const sourceModel = MaterielFactory.createMateriel(logic.sourceType, sourceQuestion);
+
         // 源模型赋值必填
         sourceModel.props.required = true;
 
+        // 目标题目状态
         const targetRule = logic.targetRule;
 
         const handleTargetRule = (isCheckPass) => {
@@ -484,12 +473,14 @@ function initQuestionnaire(data) {
           } else {
             targetQuestionList.forEach((targetQuestion) => {
               targetQuestion.props.status = targetQuestionOldStatusMap.get(targetQuestion.key);
+              console.log('targetQuestion: ', targetQuestion);
+
+              targetQuestion.props.defaultValue = '';
             });
           }
         };
 
         if (logic.sourceRule === '已答') {
-
           if (sourceModel.verifyRequired()) {
             handleTargetRule(true);
           } else {
@@ -498,7 +489,6 @@ function initQuestionnaire(data) {
         }
 
         if (logic.sourceRule === '未答') {
-
           if (!sourceModel.verifyRequired()) {
             handleTargetRule(true);
           } else {
@@ -575,6 +565,19 @@ function initQuestionnaire(data) {
       parseActionList(actionList, data, tempThis);
     });
   });
+
+  // 如果是只读模式
+  if (isReadonly) {
+    // 不显示提交按钮
+    isShowSubmitBtn.value = false;
+
+    // 设置题目只读
+    questionnaireData.value.questionList.forEach((question) => {
+      if (question.props.status !== 'hidden') {
+        question.props.status = 'readonly';
+      }
+    });
+  }
 
   // 深拷贝,防止被插件修改数据
   lifecycle.onMounted(JSON.parse(JSON.stringify(questionnaireData.value)));

@@ -120,8 +120,8 @@ function handleTargetRuleChange(targetRule, index) {
 
             <el-select v-model="item.sourceKey" placeholder="请选择题目" size="small" clearable
               @change="handleSourceKeyChange($event, index)" class="mr-1" style="width: 100px">
-              <el-option v-for="question in questionnaireData.questionList" :key="question.key"
-                :label="question.props.title" :value="question.key" />
+              <el-option v-for="(question, index) in questionnaireData.questionList" :key="question.key"
+                :label="`Q${index + 1} ${question.props.title}`" :value="question.key" />
             </el-select>
 
             <el-select v-model="item.sourceRule" placeholder="规则" size="small" clearable class="mr-1"
@@ -157,8 +157,8 @@ function handleTargetRuleChange(targetRule, index) {
 
             <el-select v-model="item.targetKeyList" multiple placeholder="请选择题目" size="small" clearable
               style="flex: 1;">
-              <el-option v-for="question in questionnaireData.questionList" :key="question.key"
-                :label="question.props.title" :value="question.key" />
+              <el-option v-for="(question, index) in questionnaireData.questionList" :key="question.key"
+                :label="`Q${index + 1} ${question.props.title}`" :value="question.key" />
             </el-select>
           </div>
         </div>

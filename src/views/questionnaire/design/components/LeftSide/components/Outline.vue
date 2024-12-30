@@ -10,8 +10,8 @@ const { questionnaireData } = useDesign();
   <div class="outline">
     <AnimateTransitionGroup>
       <VueDraggable v-model="questionnaireData.questionList" :animation="200">
-        <div v-for="question in questionnaireData.questionList" :key="question.key" class="outline__item">
-          {{ question.props.title || question.type }}
+        <div v-for="(question, index) in questionnaireData.questionList" :key="question.key" class="outline__item">
+          Q{{ index + 1 }} {{ question.props.title || question.type }}
         </div>
       </VueDraggable>
     </AnimateTransitionGroup>
