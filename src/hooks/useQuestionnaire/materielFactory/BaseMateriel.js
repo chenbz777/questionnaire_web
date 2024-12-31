@@ -3,6 +3,7 @@ import VerifyModel from './common/VerifyModel';
 
 
 export default class BaseMateriel {
+
   constructor(instance) {
 
     // 组件类型
@@ -142,6 +143,12 @@ export default class BaseMateriel {
   verifyRequired() {
     const verifyResult = this.verify();
 
+    // 必填项校验: 必须是"success"状态
+    if (this.props.required) {
+      return verifyResult.status === 'success';
+    }
+
+    // 非必填项校验: 只要不是"error"状态就返回true
     return verifyResult.status !== 'error';
   }
 

@@ -39,7 +39,7 @@ export default class FormNumber extends BaseMateriel {
     const verifyModel = new VerifyModel(this);
 
     if ((this.props.defaultValue > this.props.max) || (this.props.defaultValue < this.props.min)) {
-      return verifyModel.error('值不在允许的范围内');
+      return verifyModel.error(`请输入${this.props.min}~${this.props.max}之间的数字`);
     }
 
     return verifyModel.success();

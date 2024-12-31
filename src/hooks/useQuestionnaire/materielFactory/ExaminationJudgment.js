@@ -53,14 +53,8 @@ export default class ExaminationJudgment extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required) {
-      if (!this.props.defaultValue) {
-        return verifyModel.error('请选择选项');
-      }
-    }
-
     if (!this.props.defaultValue) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请选择选项');
     }
 
     return verifyModel.success();

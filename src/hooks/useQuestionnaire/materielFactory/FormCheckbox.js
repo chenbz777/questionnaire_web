@@ -54,12 +54,8 @@ export default class FormCheckbox extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required && !this.props.defaultValue.length) {
-      return verifyModel.error('请选择选项');
-    }
-
     if (!this.props.defaultValue.length) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请选择选项');
     }
 
     return verifyModel.success();

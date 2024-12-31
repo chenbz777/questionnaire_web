@@ -39,12 +39,8 @@ export default class AdvancedAttachment extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required && !this.props.defaultValue.length) {
-      return verifyModel.error('请上传附件');
-    }
-
     if (!this.props.defaultValue.length) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请上传附件');
     }
 
     return verifyModel.success();

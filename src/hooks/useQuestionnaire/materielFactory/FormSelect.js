@@ -44,22 +44,12 @@ export default class FormSelect extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required) {
-      if (!this.props.defaultValue) {
-        return verifyModel.error('请选择选项');
-      }
-
-      if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-        return verifyModel.error('请输入其它值');
-      }
-    }
-
     if (!this.props.defaultValue) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请选择选项');
     }
 
     if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-      return verifyModel.unverified();
+      return verifyModel.error('请输入其它值');
     }
 
     return verifyModel.success();

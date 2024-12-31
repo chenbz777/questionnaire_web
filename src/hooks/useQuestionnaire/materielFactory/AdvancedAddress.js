@@ -38,38 +38,20 @@ export default class AdvancedAddress extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required) {
-      if (this.props.type.includes('省') && !this.props.province) {
-        return verifyModel.error('请选择省份');
-      }
-
-      if (this.props.type.includes('市') && !this.props.city) {
-        return verifyModel.error('请选择城市');
-      }
-
-      if (this.props.type.includes('区') && !this.props.area) {
-        return verifyModel.error('请选择区域');
-      }
-
-      if (this.props.type.includes('详细地址') && !this.props.detailedAddress) {
-        return verifyModel.error('请输入详细地址');
-      }
-    }
-
     if (this.props.type.includes('省') && !this.props.province) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请选择省份');
     }
 
     if (this.props.type.includes('市') && !this.props.city) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请选择城市');
     }
 
     if (this.props.type.includes('区') && !this.props.area) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请选择区域');
     }
 
     if (this.props.type.includes('详细地址') && !this.props.detailedAddress) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请输入详细地址');
     }
 
     return verifyModel.success();

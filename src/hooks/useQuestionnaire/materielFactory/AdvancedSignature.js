@@ -34,13 +34,8 @@ export default class AdvancedSignature extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required && !this.props.defaultValue) {
-      return verifyModel.error('请填写手写签名');
-    }
-
-
     if (!this.props.defaultValue) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请填写手写签名');
     }
 
     return verifyModel.success();

@@ -45,12 +45,8 @@ export default class FormTextarea extends BaseMateriel {
   verify() {
     const verifyModel = new VerifyModel(this);
 
-    if (this.props.required && !this.props.defaultValue) {
-      return verifyModel.error('请输入内容');
-    }
-
     if (!this.props.defaultValue) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请输入内容');
     }
 
     return verifyModel.success();

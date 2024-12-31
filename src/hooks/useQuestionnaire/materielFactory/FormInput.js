@@ -54,17 +54,12 @@ export default class FormInput extends BaseMateriel {
     // 校验文本格式
     if (value) {
       if (!TextFormat.verify(this.props.format, value)) {
-        return verifyModel.error('文本格式不正确');
+        return verifyModel.error(`文本格式不正确, 期望的格式为: ${this.props.format}`);
       }
     }
 
-    // 必填校验
-    if (this.props.required && !value) {
-      return verifyModel.error('请输入内容');
-    }
-
     if (!value) {
-      return verifyModel.unverified();
+      return verifyModel.unverified('请输入内容');
     }
 
     return verifyModel.success();
