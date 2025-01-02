@@ -1,7 +1,6 @@
 import BaseMateriel from './BaseMateriel';
 import TextFormat from '@/common/TextFormat';
 import difficultyOptions from '../common/difficultyOptions';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class FormInput extends BaseMateriel {
@@ -46,23 +45,34 @@ export default class FormInput extends BaseMateriel {
     return '文本';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
-    const value = this.props.defaultValue;
-
-    // 校验文本格式
-    if (value) {
-      if (!TextFormat.verify(this.props.format, value)) {
-        return verifyModel.error(`文本格式不正确, 期望的格式为: ${this.props.format}`);
-      }
-    }
+  verifyInRealTime() {
+    const value = this.utils.text.trim(this.props.defaultValue);
 
     if (!value) {
-      return verifyModel.unverified('请输入内容');
+      return this.verifyModel.unverified();
     }
 
-    return verifyModel.success();
+    // 校验文本格式
+    if (!this.utils.text.verifyFormat(this.props.format, value)) {
+      return this.verifyModel.error(`文本格式不正确, 期望的格式为"${this.props.format}"`);
+    }
+
+    return this.verifyModel.success();
+  }
+
+  verifyInSubmit() {
+    const value = this.utils.text.trim(this.props.defaultValue);
+
+    if (this.props.required && !value) {
+      return this.verifyModel.error('请输入内容');
+    }
+
+    // 校验文本格式
+    if (!this.utils.text.verifyFormat(this.props.format, value)) {
+      return this.verifyModel.error(`文本格式不正确, 期望的格式为"${this.props.format}"`);
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

@@ -1,5 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class FormSelectMultiple extends BaseMateriel {
@@ -40,14 +39,20 @@ export default class FormSelectMultiple extends BaseMateriel {
     return '选择';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
+  verifyInRealTime() {
     if (!this.props.defaultValue.length) {
-      return verifyModel.unverified('请选择选项');
+      return this.verifyModel.unverified();
     }
 
-    return verifyModel.success();
+    return this.verifyModel.success();
+  }
+
+  verifyInSubmit() {
+    if (this.props.required && !this.props.defaultValue.length) {
+      return this.verifyModel.error('请选择选项');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import materielComponents from '@/hooks/useQuestionnaire/materielComponents';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
@@ -119,6 +119,27 @@ function getAnswerStr(answer) {
 
   return answer;
 }
+
+const errorText = ref('');
+
+watch(() => props.data, () => {
+  // 创建题目实例
+  const model = MaterielFactory.createMateriel(props.data.type, props.data, {
+    isFull: true
+  });
+
+  // 获取实时验证结果
+  const verifyInRealTimeData = model.verifyInRealTime();
+
+  if (verifyInRealTimeData.status === 'error') {
+    errorText.value = verifyInRealTimeData.message;
+  } else {
+    errorText.value = '';
+  }
+}, {
+  immediate: true,
+  deep: true
+});
 </script>
 
 <template>
@@ -157,6 +178,10 @@ function getAnswerStr(answer) {
     <!-- 备注 -->
     <div class="render-engine__remark" v-if="data.props.remark">
       {{ data.props.remark }}
+    </div>
+    <!-- 实时验证错误信息 -->
+    <div class="render-engine__error" v-if="errorText">
+      {{ errorText }}
     </div>
     <!-- 显示答案 -->
     <div class="render-engine__correct" v-if="option.isShowAnswer">
@@ -229,6 +254,12 @@ function getAnswerStr(answer) {
   margin-top: 10px;
   padding: 2px 10px;
   border-radius: 4px;
+}
+
+.render-engine__error {
+  font-size: 14px;
+  color: red;
+  margin-top: 10px;
 }
 
 .render-engine__readonly {

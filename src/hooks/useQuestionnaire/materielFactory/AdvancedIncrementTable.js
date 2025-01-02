@@ -1,6 +1,5 @@
 import BaseMateriel from './BaseMateriel';
 import TextFormat from '@/common/TextFormat';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class AdvancedIncrementTable extends BaseMateriel {
@@ -42,46 +41,152 @@ export default class AdvancedIncrementTable extends BaseMateriel {
     return '高级';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
+  // 实时校验
+  verifyInRealTime() {
+    if (!this.props.options || !this.props.options.length) {
+      return this.verifyModel.unverified();
+    }
 
-    let result = verifyModel.success();
+    let errorOption = null;
+    let errorIndex = null;
 
-    if (this.props.options.length) {
-      // 遍历所有字段
-      this.props.options.forEach(option => {
+    // 文本格式
+    const isFormat = this.props.options.every(option => {
 
-        const key = option.key;
+      let result = true;
 
-        // 验证必填字段
-        for (let i = 0; i < this.props.defaultValue.length; i++) {
-          const row = this.props.defaultValue[i];
+      const key = option.key;
 
-          const value = row[key];
+      // 验证必填字段
+      for (let i = 0; i < this.props.defaultValue.length; i++) {
+        const row = this.props.defaultValue[i];
 
-          // 校验文本格式
-          if (value) {
-            if (!TextFormat.verify(option.format, value)) {
-              result = verifyModel.error(`${option.title}格式不正确`);
-              break;
-            }
-          }
+        const value = this.utils.text.trim(row[key]);
 
-          // 校验必填
-          if (option.required && !value) {
-            result = verifyModel.error(`${option.title}不能为空`);
-            break;
-          }
-
-          if (!value) {
-            result = verifyModel.unverified();
+        // 校验文本格式
+        if (value) {
+          if (!TextFormat.verify(option.format, value)) {
+            errorOption = option;
+            errorIndex = i;
+            result = false;
             break;
           }
         }
-      });
+      }
+
+      return result;
+    });
+
+    if (!isFormat) {
+      if (errorOption) {
+        return this.verifyModel.error(`${errorOption.title}第${errorIndex + 1}行, 文本格式不正确, 期望格式为"${errorOption.format}"`);
+      }
+
+      return this.verifyModel.error('文本格式不正确');
     }
 
-    return result;
+    // 是否填写, 有一个填写即可
+    const isFillIn = this.props.options.some(option => {
+      let result = false;
+
+      const key = option.key;
+
+      // 验证必填字段
+      for (let i = 0; i < this.props.defaultValue.length; i++) {
+        const row = this.props.defaultValue[i];
+
+        const value = this.utils.text.trim(row[key]);
+
+        // 校验文本格式
+        if (value) {
+          result = true;
+          break;
+        }
+      }
+
+      return result;
+    });
+
+    if (!isFillIn) {
+      return this.verifyModel.unverified();
+    }
+
+    return this.verifyModel.success();
+  }
+
+  // 提交校验
+  verifyInSubmit() {
+    if (!this.props.options || !this.props.options.length) {
+      return this.verifyModel.success();
+    }
+
+    let errorOption = null;
+    let errorIndex = null;
+
+    // 校验必填
+    const isRequired = this.props.options.every(option => {
+      let result = true;
+
+      const key = option.key;
+
+      // 验证必填字段
+      for (let i = 0; i < this.props.defaultValue.length; i++) {
+        const row = this.props.defaultValue[i];
+
+        const value = this.utils.text.trim(row[key]);
+
+        // 校验必填
+        if (option.required && !value) {
+          errorOption = option;
+          errorIndex = i;
+          result = false;
+          break;
+        }
+      }
+
+      return result;
+    });
+
+    if (!isRequired) {
+      return this.verifyModel.error(`${errorOption.title}第${errorIndex + 1}行, 不能为空`);
+    }
+
+    // 文本格式
+    const isFormat = this.props.options.every(option => {
+
+      let result = true;
+
+      const key = option.key;
+
+      // 验证必填字段
+      for (let i = 0; i < this.props.defaultValue.length; i++) {
+        const row = this.props.defaultValue[i];
+
+        const value = this.utils.text.trim(row[key]);
+
+        // 校验文本格式
+        if (value) {
+          if (!TextFormat.verify(option.format, value)) {
+            errorOption = option;
+            errorIndex = i;
+            result = false;
+            break;
+          }
+        }
+      }
+
+      return result;
+    });
+
+    if (!isFormat) {
+      if (errorOption) {
+        return this.verifyModel.error(`${errorOption.title}第${errorIndex + 1}行, 文本格式不正确, 期望格式为"${errorOption.format}"`);
+      }
+
+      return this.verifyModel.error('文本格式不正确');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

@@ -48,7 +48,7 @@ function updateProgress() {
     /**
      * 计算答题进度
      */
-    const verifyData = model.verify();
+    const verifyData = model.verifyInRealTime();
 
     if (verifyData.status === 'success') {
       total += 1;

@@ -1,6 +1,61 @@
 import random from '@/utils/random.js';
-import VerifyModel from './common/VerifyModel';
+// import VerifyModel from './common/VerifyModel';
+import TextFormat from '@/common/TextFormat';
 
+
+function trim(str) {
+
+  if (!str) {
+    return '';
+  }
+
+  return str.replace(/\s+/g, '');
+}
+
+const utils = {
+  text: {
+    trim,
+    verifyFormat: TextFormat.verify
+  }
+};
+
+class VerifyModel {
+  constructor(materielFactory) {
+    this.materielFactory = materielFactory;
+  }
+
+  getMessageData(data = {}) {
+
+    // status: 'success' | 'error' | 'unverified'
+
+    return {
+      key: this.materielFactory.key,
+      message: `${this.materielFactory?.props?.title}: ${data.message || ''}`,
+      status: data.status
+    };
+  }
+
+  error(message) {
+    return this.getMessageData({
+      message,
+      status: 'error'
+    });
+  }
+
+  unverified(message) {
+    return this.getMessageData({
+      message,
+      status: 'unverified'
+    });
+  }
+
+  success(message) {
+    return this.getMessageData({
+      message,
+      status: 'success'
+    });
+  }
+}
 
 export default class BaseMateriel {
 
@@ -134,22 +189,22 @@ export default class BaseMateriel {
     return 1;
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
-    return verifyModel.success();
+  get utils() {
+    return utils;
   }
 
-  verifyRequired() {
-    const verifyResult = this.verify();
+  get verifyModel() {
+    return new VerifyModel(this);
+  }
 
-    // 必填项校验: 必须是"success"状态
-    if (this.props.required) {
-      return verifyResult.status === 'success';
-    }
+  // 实时校验
+  verifyInRealTime() {
+    return this.verifyModel.success();
+  }
 
-    // 非必填项校验: 只要不是"error"状态就返回true
-    return verifyResult.status !== 'error';
+  // 提交校验
+  verifyInSubmit() {
+    return this.verifyModel.success();
   }
 
   // 获取组件值的文本

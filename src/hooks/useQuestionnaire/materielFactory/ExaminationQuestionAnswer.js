@@ -1,7 +1,5 @@
 import BaseMateriel from './BaseMateriel';
 import difficultyOptions from '../common/difficultyOptions';
-import VerifyModel from './common/VerifyModel';
-
 
 export default class ExaminationQuestionAnswer extends BaseMateriel {
 
@@ -42,14 +40,24 @@ export default class ExaminationQuestionAnswer extends BaseMateriel {
     return '文本';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
+  verifyInRealTime() {
+    const value = this.utils.text.trim(this.props.defaultValue);
 
-    if (!this.props.defaultValue) {
-      return verifyModel.unverified('请输入内容');
+    if (!value) {
+      return this.verifyModel.unverified();
     }
 
-    return verifyModel.success();
+    return this.verifyModel.success();
+  }
+
+  verifyInSubmit() {
+    const value = this.utils.text.trim(this.props.defaultValue);
+
+    if (this.props.required && !value) {
+      return this.verifyModel.error('请输入内容');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

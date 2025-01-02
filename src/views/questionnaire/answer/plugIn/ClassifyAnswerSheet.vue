@@ -55,7 +55,7 @@ function updateAnswerSheet() {
     }
 
     answerSheetItem.children.push({
-      ...model.verify(),
+      ...model.verifyInRealTime(),
       serialNumber: index + 1
     });
   });

@@ -1,5 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class AdvancedAddress extends BaseMateriel {
@@ -35,26 +34,48 @@ export default class AdvancedAddress extends BaseMateriel {
     return '高级';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
+  // 实时校验
+  verifyInRealTime() {
 
     if (this.props.type.includes('省') && !this.props.province) {
-      return verifyModel.unverified('请选择省份');
+      return this.verifyModel.unverified();
     }
 
     if (this.props.type.includes('市') && !this.props.city) {
-      return verifyModel.unverified('请选择城市');
+      return this.verifyModel.unverified();
     }
 
     if (this.props.type.includes('区') && !this.props.area) {
-      return verifyModel.unverified('请选择区域');
+      return this.verifyModel.unverified();
     }
 
     if (this.props.type.includes('详细地址') && !this.props.detailedAddress) {
-      return verifyModel.unverified('请输入详细地址');
+      return this.verifyModel.unverified();
     }
 
-    return verifyModel.success();
+    return this.verifyModel.success();
+  }
+
+  // 提交校验
+  verifyInSubmit() {
+
+    if (this.props.type.includes('省') && !this.props.province) {
+      return this.verifyModel.error('请选择省份');
+    }
+
+    if (this.props.type.includes('市') && !this.props.city) {
+      return this.verifyModel.error('请选择城市');
+    }
+
+    if (this.props.type.includes('区') && !this.props.area) {
+      return this.verifyModel.error('请选择区域');
+    }
+
+    if (this.props.type.includes('详细地址') && !this.props.detailedAddress) {
+      return this.verifyModel.error('请输入详细地址');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

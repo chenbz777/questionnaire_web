@@ -1,6 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
-
 
 export default class AdvancedAttachment extends BaseMateriel {
 
@@ -36,14 +34,22 @@ export default class AdvancedAttachment extends BaseMateriel {
     return '高级';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
+  // 实时校验
+  verifyInRealTime() {
     if (!this.props.defaultValue.length) {
-      return verifyModel.unverified('请上传附件');
+      return this.verifyModel.unverified();
     }
 
-    return verifyModel.success();
+    return this.verifyModel.success();
+  }
+
+  // 提交校验
+  verifyInSubmit() {
+    if (this.props.required && !this.props.defaultValue.length) {
+      return this.verifyModel.error('请上传附件');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

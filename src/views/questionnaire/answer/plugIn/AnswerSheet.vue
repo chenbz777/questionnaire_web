@@ -42,7 +42,9 @@ function updateAnswerSheet() {
       isFull: true
     });
 
-    _answerSheet.push(model.verify());
+    const verifyInRealTimeData = model.verifyInRealTime();
+
+    _answerSheet.push(verifyInRealTimeData);
   });
 
   // 更新答题卡

@@ -152,17 +152,17 @@ function verifySubmitData(questionnaireData) {
       return;
     }
 
-    // 校验题目
-    const verifyData = JSON.parse(JSON.stringify(model.verify()));
-
     // 校验题目列表
-    verifyList.push(verifyData);
+    verifyList.push(model.verifyInRealTime());
+
+    // 校验题目
+    const verifyInSubmitData = model.verifyInSubmit();
 
     // 校验题目选项
-    if (!model.verifyRequired()) {
+    if (verifyInSubmitData.status !== 'success') {
       errorList.push({
         index,
-        ...verifyData
+        ...verifyInSubmitData
       });
     }
   });

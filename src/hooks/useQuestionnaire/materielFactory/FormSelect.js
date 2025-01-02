@@ -1,6 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
-
 
 export default class FormSelect extends BaseMateriel {
 
@@ -41,18 +39,32 @@ export default class FormSelect extends BaseMateriel {
     return '选择';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
+  verifyInRealTime() {
+    const value = this.props.defaultValue;
 
-    if (!this.props.defaultValue) {
-      return verifyModel.unverified('请选择选项');
+    if (!value) {
+      return this.verifyModel.unverified();
     }
 
     if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-      return verifyModel.error('请输入其它值');
+      return this.verifyModel.error('请输入其它值');
     }
 
-    return verifyModel.success();
+    return this.verifyModel.success();
+  }
+
+  verifyInSubmit() {
+    const value = this.props.defaultValue;
+
+    if (this.props.required && !value) {
+      return this.verifyModel.error('请选择选项');
+    }
+
+    if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
+      return this.verifyModel.error('请输入其它值');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

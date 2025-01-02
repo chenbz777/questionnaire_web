@@ -1,5 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class AdvancedSort extends BaseMateriel {
@@ -44,12 +43,6 @@ export default class AdvancedSort extends BaseMateriel {
 
   get group() {
     return '高级';
-  }
-
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
-    return verifyModel.success();
   }
 
   getValue() {

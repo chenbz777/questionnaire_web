@@ -1,7 +1,6 @@
 import BaseMateriel from './BaseMateriel';
 import TextFormat from '@/common/TextFormat';
 import difficultyOptions from '../common/difficultyOptions';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class MatrixFill extends BaseMateriel {
@@ -48,60 +47,95 @@ export default class MatrixFill extends BaseMateriel {
     return '矩阵';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
-    let result = verifyModel.success();
-
-    if (this.props.fillOptions && this.props.fillOptions.length) {
-
-      const _this = this;
-
-      // 校验必填
-      const isRequired = this.props.fillOptions.every(option => {
-        const value = (_this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
-
-        if (option.required && !value) {
-          return false;
-        }
-
-        return true;
-      });
-
-      if (!isRequired) {
-        return verifyModel.error('请输入内容');
-      }
-
-      // 文本格式
-      const isFormat = this.props.fillOptions.every(option => {
-        const value = (_this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
-
-        if (value) {
-          if (!TextFormat.verify(option.format, value)) {
-            return false;
-          }
-        }
-
-        return true;
-      });
-
-      if (!isFormat) {
-        return verifyModel.error('文本格式不正确');
-      }
-
-      // 是否填写, 有一个填写即可
-      const isFillIn = this.props.fillOptions.some(option => {
-        const value = (_this.props.defaultValue[option.key] || '').replace(/\s+/g, '');
-
-        return value;
-      });
-
-      if (!isFillIn) {
-        return verifyModel.unverified();
-      }
+  verifyInRealTime() {
+    if (!this.props.fillOptions || !this.props.fillOptions.length) {
+      return this.verifyModel.unverified();
     }
 
-    return result;
+    let errorOption = null;
+
+    // 文本格式
+    const isFormat = this.props.fillOptions.every(option => {
+      const value = this.utils.text.trim(this.props.defaultValue[option.key]);
+
+      if (value) {
+        if (!this.utils.text.verifyFormat(option.format, value)) {
+          errorOption = option;
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    if (!isFormat) {
+      if (errorOption) {
+        return this.verifyModel.error(`${errorOption.prependTitle}___${errorOption.appendTitle}, 文本格式不正确, 期望格式为"${errorOption.format}"`);
+      }
+
+      return this.verifyModel.error('文本格式不正确');
+    }
+
+    // 是否填写, 有一个填写即可
+    const isFillIn = this.props.fillOptions.some(option => {
+      const value = this.utils.text.trim(this.props.defaultValue[option.key]);
+
+      return value;
+    });
+
+    if (!isFillIn) {
+      return this.verifyModel.unverified();
+    }
+
+    return this.verifyModel.success();
+  }
+
+  verifyInSubmit() {
+    if (!this.props.fillOptions || !this.props.fillOptions.length) {
+      return this.verifyModel.success();
+    }
+
+    let errorOption = null;
+
+    // 校验必填
+    const isRequired = this.props.fillOptions.every(option => {
+      const value = this.utils.text.trim(this.props.defaultValue[option.key]);
+
+      if (option.required && !value) {
+        errorOption = option;
+        return false;
+      }
+
+      return true;
+    });
+
+    if (!isRequired) {
+      return this.verifyModel.error(`${errorOption.prependTitle}___${errorOption.appendTitle}, 不能为空`);
+    }
+
+    // 文本格式
+    const isFormat = this.props.fillOptions.every(option => {
+      const value = this.utils.text.trim(this.props.defaultValue[option.key]);
+
+      if (value) {
+        if (!this.utils.text.verifyFormat(option.format, value)) {
+          errorOption = option;
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    if (!isFormat) {
+      if (errorOption) {
+        return this.verifyModel.error(`${errorOption.prependTitle}___${errorOption.appendTitle}, 文本格式不正确, 期望格式为"${errorOption.format}"`);
+      }
+
+      return this.verifyModel.error('文本格式不正确');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

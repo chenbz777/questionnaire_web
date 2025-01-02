@@ -491,7 +491,7 @@ function initQuestionnaire(data) {
         };
 
         if (logic.sourceRule === '已答') {
-          if (sourceModel.verifyRequired()) {
+          if (sourceModel.verifyInSubmit() === 'success') {
             handleTargetRule(true);
           } else {
             handleTargetRule(false);
@@ -499,7 +499,7 @@ function initQuestionnaire(data) {
         }
 
         if (logic.sourceRule === '未答') {
-          if (!sourceModel.verifyRequired()) {
+          if (!(sourceModel.verifyInSubmit() === 'success')) {
             handleTargetRule(true);
           } else {
             handleTargetRule(false);

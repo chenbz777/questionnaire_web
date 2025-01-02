@@ -1,5 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class FormNumber extends BaseMateriel {
@@ -33,16 +32,6 @@ export default class FormNumber extends BaseMateriel {
 
   get group() {
     return '文本';
-  }
-
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
-    if ((this.props.defaultValue > this.props.max) || (this.props.defaultValue < this.props.min)) {
-      return verifyModel.error(`请输入${this.props.min}~${this.props.max}之间的数字`);
-    }
-
-    return verifyModel.success();
   }
 
   getText() {

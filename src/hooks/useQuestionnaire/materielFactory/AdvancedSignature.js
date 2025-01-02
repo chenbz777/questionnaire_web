@@ -1,5 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class AdvancedSignature extends BaseMateriel {
@@ -31,14 +30,24 @@ export default class AdvancedSignature extends BaseMateriel {
     return '高级';
   }
 
-  verify() {
-    const verifyModel = new VerifyModel(this);
+  // 实时校验
+  verifyInRealTime() {
 
     if (!this.props.defaultValue) {
-      return verifyModel.unverified('请填写手写签名');
+      return this.verifyModel.unverified();
     }
 
-    return verifyModel.success();
+    return this.verifyModel.success();
+  }
+
+  // 提交校验
+  verifyInSubmit() {
+
+    if (this.props.required && !this.props.defaultValue) {
+      return this.verifyModel.error('请填写手写签名');
+    }
+
+    return this.verifyModel.success();
   }
 
   getText() {

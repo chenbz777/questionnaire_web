@@ -1,5 +1,4 @@
 import BaseMateriel from './BaseMateriel';
-import VerifyModel from './common/VerifyModel';
 
 
 export default class FormRate extends BaseMateriel {
@@ -32,12 +31,6 @@ export default class FormRate extends BaseMateriel {
 
   get group() {
     return '选择';
-  }
-
-  verify() {
-    const verifyModel = new VerifyModel(this);
-
-    return verifyModel.success();
   }
 
   getText() {
