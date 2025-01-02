@@ -1,5 +1,4 @@
 import random from '@/utils/random.js';
-// import VerifyModel from './common/VerifyModel';
 import TextFormat from '@/common/TextFormat';
 
 
@@ -224,6 +223,13 @@ export default class BaseMateriel {
   // 设置组件值
   setValue(value) {
     this.props.defaultValue = value;
+  }
+
+  // 重置组件值
+  resetValue() {
+    const _model = new this.constructor();
+
+    this.setValue(_model.getValue());
   }
 
   // 组件属性设置

@@ -36,49 +36,44 @@ function initQuestionnaireData(props = {}) {
     isFull: true
   });
 
-  // 校验问卷数据
-  if (questionnaireData && ((typeof questionnaireData) !== 'object')) {
-    throw new Error('[useQuestionnaire](initQuestionnaireData): 问卷数据必须为对象');
-  }
-
   // 深拷贝问卷数据, 防止修改原数据
   questionnaireData = JSON.parse(JSON.stringify(questionnaireData));
 
-  // 校验问卷数据
-  if (data && ((typeof data) !== 'object')) {
-    throw new Error('[useQuestionnaire](initQuestionnaireData): 数据必须为对象');
+  // 合并最新模型
+  for (let i = 0; i < questionnaireData.questionList.length; i++) {
+    const question = questionnaireData.questionList[i];
+
+    const questionModel = MaterielFactory.createMateriel(question.type, question, {
+      isFull: true
+    });
+
+    // 题目数据存在时, 设置题目数据
+    if (Object.keys(data).includes(question.key)) {
+
+      const _questionModel = MaterielFactory.createMateriel(question.type, question);
+
+      /**
+       * 判断value值与默认值类型是否一致: 如果不一致, 则转换value值类型
+       */
+      const _value = _questionModel.getValue();
+
+      const _valueType = Object.prototype.toString.call(_value);
+
+      const _dataValue = data[question.key];
+
+      const _dataValueType = Object.prototype.toString.call(_dataValue);
+
+      // 类型一致, 直接设置题目数据
+      if (_valueType === _dataValueType) {
+        // 设置题目数据
+        questionModel.setValue(data[question.key]);
+      }
+    }
+
+    // 设置题目属性
+    questionnaireData.questionList[i] = questionModel;
   }
 
-  // 合并最新模型
-  questionnaireData.questionList.forEach((question) => {
-    const model = MaterielFactory.createMateriel(question.type, question);
-
-    if (model) {
-      // 题目数据存在时, 设置题目数据
-      if (Object.keys(data).includes(question.key)) {
-
-        /**
-         * 判断value值与默认值类型是否一致: 如果不一致, 则转换value值类型
-         */
-        const _value = model.getValue();
-
-        const _dataValue = data[question.key];
-
-        const _valueType = Object.prototype.toString.call(_value);
-
-        const _dataValueType = Object.prototype.toString.call(_dataValue);
-
-        // 类型一致, 直接设置题目数据
-        if (_valueType === _dataValueType) {
-          // 设置题目数据
-          model.setValue(data[question.key]);
-        }
-      }
-
-      // 设置题目属性
-      question.props = model.props;
-    }
-  });
 
   return questionnaireData;
 }
