@@ -2,7 +2,6 @@
 import { ref, watch, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import useQuestionnaire from '@/hooks/useQuestionnaire';
-import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import useAnimate from '@/hooks/useAnimate';
 import localStorage from '@/utils/localStorage';
 import { ElMessage, ElMessageBox } from 'element-plus';
@@ -17,6 +16,8 @@ import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.v
 import MarkQuestion from '@/views/questionnaire/answer/plugIn/MarkQuestion.vue';
 import ClassifyAnswerSheet from '@/views/questionnaire/answer/plugIn/ClassifyAnswerSheet.vue';
 import Lifecycle from '@/common/Lifecycle';
+import LogicProcessor from '@/common/LogicProcessor';
+import EventProcessor from '@/common/EventProcessor';
 
 
 /**
@@ -347,14 +348,8 @@ function initQuestionnaire(data) {
   // 重新指向 subscribe 对象
   renderEngineOption.subscribe = subscribe;
 
-  // 逻辑列表
-  const logicList = questionnaireData.value.logicList || [];
-
   // 题目列表
   const questionList = questionnaireData.value.questionList || [];
-
-  // 事件列表
-  const eventList = questionnaireData.value.eventList || [];
 
   // 题目map集合
   const questionMap = new Map();
@@ -411,178 +406,19 @@ function initQuestionnaire(data) {
   });
 
   // 逻辑处理
-  logicList.forEach((logic) => {
-
-    // 如果没有设置规则
-    if (!logic.sourceKey || !logic.sourceRule || !logic.sourceType || !logic.targetRule || !logic.targetKeyList.length) {
-      return;
-    }
-
-    // 源题目实例
-    const sourceQuestion = questionList.find((item) => item.key === logic.sourceKey);
-
-    // 如果没有源题目
-    if (!sourceQuestion) {
-      return;
-    }
-
-    // 目标题目实例
-    const targetQuestionList = questionList.filter((item) => {
-      return logic.targetKeyList.includes(item.key);
-    });
-
-    // 如果源题目和目标题目都存在
-    if (sourceQuestion && targetQuestionList.length) {
-
-      // 目标题目实例初始状态集合
-      const targetQuestionOldStatusMap = new Map();
-
-      // 目标题目实例初始状态
-      targetQuestionList.forEach((item) => {
-        targetQuestionOldStatusMap.set(item.key, item.props.status);
-      });
-
-      // 逻辑处理函数
-      const handleLogicFn = (newValue) => {
-
-        // 源模型
-        const sourceModel = MaterielFactory.createMateriel(logic.sourceType, sourceQuestion);
-
-        // 源模型赋值必填
-        sourceModel.props.required = true;
-
-        // 目标题目状态
-        const targetRule = logic.targetRule;
-
-        // 处理目标题目规则
-        const handleTargetRule = (isCheckPass) => {
-
-          // 设置目标题目状态
-          const setTargetStatus = (targetQuestion, status) => {
-            // 如果目标题目是源题目, 则跳过
-            if (targetQuestion.key === sourceModel.key) {
-              return;
-            }
-
-            // 设置目标题目状态
-            targetQuestion.props.status = status;
-
-            // 如果目标题目是隐藏状态
-            if (status === 'hidden') {
-              // 清空目标题目值
-              targetQuestion.resetValue();
-              // 触发目标题目值变动事件
-              subscribe.emit(`${targetQuestion.key}_onChange`, targetQuestion.getValue());
-            }
-          };
-
-          // 如果校验通过
-          if (isCheckPass) {
-            // 设置目标题目状态
-            if (['normal', 'disabled', 'readonly', 'hidden'].includes(targetRule)) {
-              targetQuestionList.forEach((targetQuestion) => {
-                setTargetStatus(targetQuestion, targetRule);
-              });
-            }
-
-            // 滚动至指定题目
-            if (targetRule === 'toQuestion') {
-              targetQuestionList.forEach((targetQuestion) => {
-                userDefined.scrollIntoView(targetQuestion.key);
-              });
-            }
-          } else {
-            targetQuestionList.forEach((targetQuestion) => {
-              setTargetStatus(targetQuestion, targetQuestionOldStatusMap.get(targetQuestion.key));
-            });
-          }
-        };
-
-        if (logic.sourceRule === '已答') {
-          if (sourceModel.verifyInSubmit() === 'success') {
-            handleTargetRule(true);
-          } else {
-            handleTargetRule(false);
-          }
-        }
-
-        if (logic.sourceRule === '未答') {
-          if (!(sourceModel.verifyInSubmit() === 'success')) {
-            handleTargetRule(true);
-          } else {
-            handleTargetRule(false);
-          }
-        }
-
-        if (logic.sourceRule === '选中') {
-          // 源值
-          const sourceValue = logic.sourceValue || [];
-
-          // 是否匹配
-          const isMatch = sourceValue.some((item) => newValue.includes(item));
-
-          if (isMatch) {
-            handleTargetRule(true);
-          } else {
-            handleTargetRule(false);
-          }
-        }
-
-        if (logic.sourceRule === '等于') {
-          // 源值
-          const sourceValue = logic.sourceValue || '';
-
-          // 是否匹配, 这里特意写成==，因为有可能是数字和字符串比较
-          // eslint-disable-next-line eqeqeq
-          const isMatch = newValue == sourceValue;
-
-          if (isMatch) {
-            handleTargetRule(true);
-          } else {
-            handleTargetRule(false);
-          }
-        }
-      };
-
-      // 值变动事件名称
-      const eventName = `${logic.sourceKey}_onChange`;
-
-      // 初始化执行一遍
-      handleLogicFn(sourceQuestion.props.defaultValue);
-
-      // 后续变动再继续执行
-      subscribe.on(eventName, (newValue) => {
-        handleLogicFn(newValue);
-      });
-    }
+  const logicProcessor = new LogicProcessor(questionnaireData.value, {
+    subscribe
   });
+
+  logicProcessor.run();
 
   // 事件处理
-  eventList.forEach((event) => {
-
-    const { sourceKey, sourceEventName, actionList } = event;
-
-    // 检查是否有必要的数据
-    if (!sourceKey || !sourceEventName || !actionList.length) {
-      return;
-    }
-
-    // 源题目实例
-    const sourceQuestion = questionList.find((item) => item.key === sourceKey);
-
-    // 如果没有源题目
-    if (!sourceQuestion) {
-      return;
-    }
-
-    // 构建事件名称
-    const eventName = `${sourceKey}_${sourceEventName}`;
-    // 监听事件
-    subscribe.on(eventName, (data) => {
-      // 执行动作
-      parseActionList(actionList, data, tempThis);
-    });
+  const eventProcessor = new EventProcessor(questionnaireData.value, {
+    subscribe,
+    tempThis
   });
+
+  eventProcessor.run();
 
   // 如果是只读模式
   if (isReadonly) {

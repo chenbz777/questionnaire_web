@@ -60,7 +60,13 @@ function addItem() {
   if (keyType === 'number') {
     newData[props.setting.listKey] = random.number(6);
   } else {
-    newData[props.setting.listKey] = `${newData[props.setting.listKey]}_${random.number(6)}`;
+    let newKey = random.lowerCase(6);
+
+    if (newData[props.setting.listKey]) {
+      newKey = `${newData[props.setting.listKey]}_${newKey}`;
+    }
+
+    newData[props.setting.listKey] = newKey;
   }
 
   // 添加
