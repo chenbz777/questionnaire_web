@@ -18,6 +18,7 @@ import ClassifyAnswerSheet from '@/views/questionnaire/answer/plugIn/ClassifyAns
 import Lifecycle from '@/common/Lifecycle';
 import LogicProcessor from '@/common/LogicProcessor';
 import EventProcessor from '@/common/EventProcessor';
+import CacheFill from '@/views/questionnaire/answer/plugIn/CacheFill.vue';
 
 
 /**
@@ -89,6 +90,7 @@ let endAnswerTime = Date.now();
 
 // 是否缓存填写: 默认true
 let isCacheFill = true;
+
 // 是否缓存填写
 if (route.query.isCacheFill) {
   isCacheFill = route.query.isCacheFill === 'true';
@@ -298,30 +300,6 @@ function initQuestionnaire(data) {
 
   questionnaireData.value = initQuestionnaireData(data);
 
-  /**
- * 富文本处理
- */
-  const replacements = [
-    {
-      tag: 'img',
-      styleAppend: 'max-width: 100%;'
-    }
-  ];
-
-  questionnaireData.value.props.desc = userDefined.replaceHtmlTags(questionnaireData.value.props.desc, replacements);
-  questionnaireData.value.props.bottomDesc = userDefined.replaceHtmlTags(questionnaireData.value.props.bottomDesc, replacements);
-
-  if (questionnaireData.value.props.desc === '<p><br></p>') {
-    questionnaireData.value.props.desc = '';
-  }
-
-  if (questionnaireData.value.props.bottomDesc === '<p><br></p>') {
-    questionnaireData.value.props.bottomDesc = '';
-  }
-  /**
-   * 富文本处理 end
-   */
-
   // 拓展提交数据: 开始时间
   startAnswerTime = Date.now();
 
@@ -330,12 +308,6 @@ function initQuestionnaire(data) {
     skinStr.value = getSkinStr(initQuestionnaireData());
   } else {
     skinStr.value = getSkinStr(questionnaireData.value);
-  }
-
-  let title = questionnaireData.value.props.title;
-
-  if (title) {
-    title = `【${title}】`;
   }
 
   if (route.query.isShowSubmitBtn === 'false') {
@@ -410,6 +382,7 @@ function initQuestionnaire(data) {
     subscribe
   });
 
+  // 执行逻辑处理
   logicProcessor.run();
 
   // 事件处理
@@ -418,6 +391,7 @@ function initQuestionnaire(data) {
     tempThis
   });
 
+  // 执行事件处理
   eventProcessor.run();
 
   // 如果是只读模式
@@ -479,41 +453,6 @@ function handleQuestionnaireDataChange() {
   lifecycle.onUpdated(_questionnaireData);
 
   lifecycle.onUpdatedOriginal(questionnaireData.value);
-
-  /**
-   * 存储答案数据, 用于刷新页面时恢复数据
-   */
-  if (isCacheFill) {
-    const submitData = verifySubmitData(questionnaireData.value);
-
-    if (Object.keys(submitData.data).length) {
-      // 获取答案数据
-      const answerList = localStorage.get('answerList') || [];
-
-      // 删除旧数据
-      if (answerList.length >= 10) {
-        answerList.shift();
-      }
-
-      const data = {
-        key: questionnaireData.value.key,
-        data: submitData.data
-      };
-
-      // 存储答案数据
-      if (answerList.find(item => item.key === questionnaireData.value.key)) {
-        answerList.splice(answerList.findIndex(item => item.key === questionnaireData.value.key), 1, data);
-      } else {
-        answerList.push(data);
-      }
-
-      // 保存数据
-      localStorage.set('answerList', answerList);
-    }
-  }
-  /**
-   * end
-   */
 }
 
 // 监听问卷数据变化
@@ -586,6 +525,7 @@ pageSubscribe.on('markersChange', () => {
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <CacheFill class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
     </div>
   </div>
 </template>

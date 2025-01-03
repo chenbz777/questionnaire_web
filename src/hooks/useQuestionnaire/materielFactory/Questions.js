@@ -1,4 +1,5 @@
 import BaseMateriel from './BaseMateriel';
+import userDefined from '@/utils/userDefined';
 
 
 export default class Questions extends BaseMateriel {
@@ -14,6 +15,30 @@ export default class Questions extends BaseMateriel {
     this.logicList = instance.logicList || [];
     // 事件列表
     this.eventList = instance.eventList || [];
+
+    /**
+     * 富文本处理
+     */
+    const replacements = [
+      {
+        tag: 'img',
+        styleAppend: 'max-width: 100%;'
+      }
+    ];
+
+    this.props.desc = userDefined.replaceHtmlTags(this.props.desc, replacements);
+    this.props.bottomDesc = userDefined.replaceHtmlTags(this.props.bottomDesc, replacements);
+
+    if (this.props.desc === '<p><br></p>') {
+      this.props.desc = '';
+    }
+
+    if (this.props.bottomDesc === '<p><br></p>') {
+      this.props.bottomDesc = '';
+    }
+    /**
+     * 富文本处理 end
+     */
   }
 
   get defaultProps() {
@@ -150,5 +175,9 @@ export default class Questions extends BaseMateriel {
   }
 
   setValue() {
+  }
+
+  getTitle() {
+    return this.props.title;
   }
 }

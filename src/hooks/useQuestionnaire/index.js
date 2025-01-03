@@ -31,17 +31,17 @@ function initQuestionnaireData(props = {}) {
     data = {};
   }
 
+  if (!questionnaireData) {
+    questionnaireData = MaterielFactory.createMateriel('Questions');
+  }
+
   // 兜底问卷数据
-  questionnaireData = MaterielFactory.createMateriel('Questions', questionnaireData, {
+  questionnaireData = MaterielFactory.createMateriel('Questions', JSON.parse(JSON.stringify(questionnaireData)), {
     isFull: true
   });
 
-  // 深拷贝问卷数据, 防止修改原数据
-  questionnaireData = JSON.parse(JSON.stringify(questionnaireData));
-
   // 合并最新模型
-  for (let i = 0; i < questionnaireData.questionList.length; i++) {
-    const question = questionnaireData.questionList[i];
+  questionnaireData.questionList = questionnaireData.questionList.map((question) => {
 
     const questionModel = MaterielFactory.createMateriel(question.type, question, {
       isFull: true
@@ -70,10 +70,8 @@ function initQuestionnaireData(props = {}) {
       }
     }
 
-    // 设置题目属性
-    questionnaireData.questionList[i] = questionModel;
-  }
-
+    return questionModel;
+  });
 
   return questionnaireData;
 }
