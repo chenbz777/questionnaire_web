@@ -41,7 +41,7 @@ function handleClear() {
   <div class="form-radio">
     <el-radio-group v-model="componentData.props.defaultValue" @change="handleChange" class="form-radio__group">
       <el-radio v-for="option in data.props.options" :key="option.value" :value="option.value"
-        :disabled="componentData.props.status === 'disabled'"
+        :disabled="componentData.props.status === 'disabled'" class="form-select"
         :class="{ 'form-select--block': data.props.arrangementMode === 'vertical' }">
         <div class="form-select-card__label">
           <div class="form-select-card__text">

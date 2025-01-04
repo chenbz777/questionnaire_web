@@ -322,6 +322,10 @@ watch(() => props.data, () => {
 </style>
 
 <style>
+.form-select {
+  margin-bottom: 12px;
+}
+
 .form-select--block {
   width: 100% !important;
   margin-bottom: 12px;

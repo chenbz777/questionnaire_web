@@ -155,7 +155,9 @@ export default class LogicProcessor {
       };
 
       if (logic.sourceRule === '已答') {
-        if (sourceModel.verifyInRealTime() === 'success') {
+        const verifyInRealTimeData = sourceModel.verifyInRealTime();
+
+        if (verifyInRealTimeData?.status === 'success') {
           handleTargetRule(true);
         } else {
           handleTargetRule(false);
@@ -163,7 +165,9 @@ export default class LogicProcessor {
       }
 
       if (logic.sourceRule === '未答') {
-        if (sourceModel.verifyInRealTime() === 'unverified') {
+        const verifyInRealTimeData = sourceModel.verifyInRealTime();
+
+        if (verifyInRealTimeData?.status === 'unverified') {
           handleTargetRule(true);
         } else {
           handleTargetRule(false);
