@@ -58,7 +58,7 @@ export default class FormNumber extends BaseMateriel {
         children: [
           {
             title: '标题',
-            type: 'input',
+            type: 'textarea',
             propsKey: 'title'
           },
           {

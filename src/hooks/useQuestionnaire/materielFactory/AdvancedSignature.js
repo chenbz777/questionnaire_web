@@ -78,7 +78,7 @@ export default class AdvancedSignature extends BaseMateriel {
         children: [
           {
             title: '标题',
-            type: 'input',
+            type: 'textarea',
             propsKey: 'title'
           },
           {

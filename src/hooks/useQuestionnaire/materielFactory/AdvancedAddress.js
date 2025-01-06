@@ -127,7 +127,7 @@ export default class AdvancedAddress extends BaseMateriel {
         children: [
           {
             title: '标题',
-            type: 'input',
+            type: 'textarea',
             propsKey: 'title'
           },
           {

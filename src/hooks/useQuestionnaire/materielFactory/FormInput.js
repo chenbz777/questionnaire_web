@@ -101,7 +101,7 @@ export default class FormInput extends BaseMateriel {
         children: [
           {
             title: '标题',
-            type: 'input',
+            type: 'textarea',
             propsKey: 'title'
           },
           {
