@@ -56,7 +56,7 @@ function handleSelectAll() {
     <el-checkbox-group v-model="componentData.props.defaultValue" @change="handleChange">
       <el-checkbox v-for="(option, index) in data.props.options" :key="option.value" :label="option.label"
         :value="option.value" :disabled="data.props.status === 'disabled'" class="form-select"
-        :class="{ 'form-select-card--image': option.image, 'form-select--block': data.props.arrangementMode === 'vertical' }">
+        :class="{ 'form-select-card--image': option.image }" :style="{ width: `${100 / data.props.optionsPerLine}%` }">
         <div class="form-select-card__label">
           <img v-if="option.image" :src="option.image" alt="" class="form-select-card__image" />
 

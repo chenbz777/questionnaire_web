@@ -213,6 +213,18 @@ pnpm build
 
 <br />
 
+
+
+## 社区群
+
+<img src="https://img.chenbz.com/testd2bea28c-e873-48d3-bb0e-c4b4236daaf9.jpg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
+
+
+
+<br />
+
+
+
 ## 🆕 更新
 
 2024/9/12，新增【考试】、【模版库】功能
