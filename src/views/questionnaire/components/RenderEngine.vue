@@ -323,7 +323,6 @@ watch(() => props.data, () => {
 
 <style>
 .form-select {
-  width: 20%;
   word-wrap: break-word;
   word-break: break-all;
   white-space: normal;
