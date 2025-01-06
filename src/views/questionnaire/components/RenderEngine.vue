@@ -323,33 +323,20 @@ watch(() => props.data, () => {
 
 <style>
 .form-select {
-  margin-bottom: 12px;
-}
-
-.form-select--block {
-  width: 100% !important;
-  margin-bottom: 12px;
-  margin-right: 30px !important;
-}
-
-.form-select-card__image {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  margin-bottom: 5px;
+  width: 20%;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  padding: 4px;
+  margin: 0 !important;
 }
 
 .form-select-card--image {
-  width: auto;
   flex-direction: column-reverse;
-  margin-bottom: 16px;
 }
 
 .form-select-card--image .form-select-card__label {
-  width: 200px;
   border: 1px solid var(--questionnaire-bg-color);
-  cursor: pointer;
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 10px;
@@ -358,8 +345,14 @@ watch(() => props.data, () => {
 .form-select-card--image .form-select-card__text {
   padding: 16px 10px;
   text-align: center;
-  word-wrap: break-word;
-  word-break: break-all;
+}
+
+.form-select-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  margin-bottom: 5px;
 }
 
 .increment-table-readonly {

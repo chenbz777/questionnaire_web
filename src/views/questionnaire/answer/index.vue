@@ -525,7 +525,7 @@ pageSubscribe.on('markersChange', () => {
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-      <CacheFill class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
+      <CacheFill :addLifecycle="addLifecycle" />
     </div>
   </div>
 </template>

@@ -6,6 +6,11 @@ export default class ExaminationJudgment extends BaseMateriel {
 
   constructor(instance) {
     super(instance);
+
+    // 如果选项随机, 则打乱选项
+    if (this.props.randomOptions) {
+      this.props.options = this.props.options.sort(() => Math.random() - 0.5);
+    }
   }
 
   get defaultProps() {
@@ -33,7 +38,8 @@ export default class ExaminationJudgment extends BaseMateriel {
       answerAnalysis: '',  // 答案解析
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: '',  // 题目难度: 简单, 普通, 困难
-      arrangementMode: 'vertical'  // 排列方式: vertical, horizontal
+      optionsPerLine: 1,  // 每行显示的选项数量
+      randomOptions: false  // 选项顺序随机
     };
   }
 
@@ -156,19 +162,32 @@ export default class ExaminationJudgment extends BaseMateriel {
             propsOptionsKey: 'options'
           },
           {
-            title: '排列方式',
-            type: 'radioButton',
-            propsKey: 'arrangementMode',
+            title: '每行选项数量',
+            type: 'select',
+            propsKey: 'optionsPerLine',
             options: [
               {
-                label: '垂直',
-                value: 'vertical'
+                label: '1',
+                value: 1
               },
               {
-                label: '水平',
-                value: 'horizontal'
+                label: '2',
+                value: 2
+              },
+              {
+                label: '3',
+                value: 3
+              },
+              {
+                label: '4',
+                value: 4
               }
             ]
+          },
+          {
+            title: '选项顺序随机',
+            type: 'switch',
+            propsKey: 'randomOptions'
           },
           {
             title: '选项列表',
