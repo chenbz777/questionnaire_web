@@ -17,6 +17,10 @@ const options = [
   {
     label: '高级',
     value: '高级'
+  },
+  {
+    label: '编辑态',
+    value: '编辑态'
   }
 ];
 
@@ -58,8 +62,6 @@ subscribe.on('editDeleteQuestion', (data) => {
         <template v-if="segmented === '基础'">
           <AttributeSettings :settings="currentModel.attributeSettings" v-model="currentComponentData.props" />
         </template>
-      </AnimateTransition>
-      <AnimateTransition>
         <template v-if="segmented === '高级'">
           <div>
             <div class="configuration__as-key">
@@ -69,6 +71,9 @@ subscribe.on('editDeleteQuestion', (data) => {
             </div>
             <AttributeSettings :settings="currentModel.advancedSettings" v-model="currentComponentData.props" />
           </div>
+        </template>
+        <template v-if="segmented === '编辑态'">
+          <AttributeSettings :settings="currentModel.editSettings" v-model="currentComponentData.editProps" />
         </template>
       </AnimateTransition>
     </div>

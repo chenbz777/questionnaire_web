@@ -41,24 +41,26 @@ function handleCopyComponent(data) {
 
 <template>
   <VueDraggable v-model="questionnaireData.questionList" :animation="300" group="questionListDesigner"
-    class="my-draggable">
+    filter=".my-draggable__render--disabled-move" class="my-draggable">
     <el-popover placement="right" trigger="hover" v-for="(question, index) in questionnaireData.questionList"
       :key="question.key">
       <template #reference>
         <RenderEngine :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
           @click="handleClick(question)" class="my-draggable__render" :class="{
             'my-draggable__render--active': (currentQuestionData && currentQuestionData.key) === question.key,
-            'my-draggable__render--hidden': question.props.status === 'hidden'
+            'my-draggable__render--hidden': question.props.status === 'hidden',
+            'my-draggable__render--disabled-move': !question.editProps.move
           }" />
       </template>
       <div class="my-draggable__controls">
-        <div class="my-draggable__controls__item" @click="handleDeleteComponent(index)">
+        <div class="my-draggable__controls__item" @click="handleDeleteComponent(index)"
+          v-if="question.editProps.delete">
           <el-icon class="my-draggable__controls__icon">
             <Delete />
           </el-icon>
           删除
         </div>
-        <div class="my-draggable__controls__item" @click="handleCopyComponent(question)">
+        <div class="my-draggable__controls__item" @click="handleCopyComponent(question)" v-if="question.editProps.copy">
           <el-icon class="my-draggable__controls__icon">
             <CopyDocument />
           </el-icon>

@@ -131,6 +131,12 @@ export default class BaseMateriel {
     //   }
     // });
     // 模拟抽象类 end
+
+    this.editProps = this.defaultEditProps;
+
+    if (instance && instance.editProps) {
+      Object.assign(this.editProps, instance.editProps);
+    }
   }
 
   get materielType() {
@@ -232,6 +238,15 @@ export default class BaseMateriel {
     this.setValue(_model.getValue());
   }
 
+  // 默认编辑态值
+  get defaultEditProps() {
+    return {
+      delete: true,
+      copy: true,
+      move: true
+    };
+  }
+
   // 组件属性设置
   get attributeSettings() {
     return [];
@@ -250,5 +265,29 @@ export default class BaseMateriel {
   // 事件设置
   get eventSettings() {
     return [];
+  }
+
+  // 编辑态设置
+  get editSettings() {
+    /**
+     * 编辑态设置, 可以设置组件的编辑态属性, 例如: 是否可删除、是否可复制、是否可移动等
+     */
+    return [
+      {
+        title: '可删除',
+        type: 'switch',
+        propsKey: 'delete'
+      },
+      {
+        title: '可复制',
+        type: 'switch',
+        propsKey: 'copy'
+      },
+      {
+        title: '可拖拽',
+        type: 'switch',
+        propsKey: 'move'
+      }
+    ];
   }
 }
