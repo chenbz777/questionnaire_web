@@ -270,7 +270,7 @@ export default class BaseMateriel {
   // 编辑态设置
   get editSettings() {
     /**
-     * 编辑态设置, 可以设置组件的编辑态属性, 例如: 是否可删除、是否可复制、是否可移动等
+     * 编辑态设置, 可以设置组件的编辑态属性, 例如: 是否可删除、是否可复制、是否可拖拽
      */
     return [
       {
