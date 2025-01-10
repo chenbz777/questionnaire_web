@@ -48,7 +48,7 @@ import CacheFill from '@/views/questionnaire/answer/plugIn/CacheFill.vue';
   * questionnaireChange 问卷数据变化
   */
 
-const { initQuestionnaireData, getSkinStr, verifySubmitData, uploadConfig } = useQuestionnaire();
+const { initQuestionnaireData, getSkinStr, verifySubmitData, setUploadConfig } = useQuestionnaire();
 
 // 问卷数据
 const questionnaireData = ref(initQuestionnaireData());
@@ -214,11 +214,6 @@ iframeMessage.onMessage = (event) => {
     });
   }
 };
-
-// 设置上传配置
-function setUploadConfig(data) {
-  uploadConfig.value = data;
-}
 
 window.setUploadConfig = setUploadConfig;
 
@@ -525,8 +520,9 @@ pageSubscribe.on('markersChange', () => {
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-      <CacheFill :addLifecycle="addLifecycle" />
     </div>
+
+    <CacheFill :addLifecycle="addLifecycle" />
   </div>
 </template>
 

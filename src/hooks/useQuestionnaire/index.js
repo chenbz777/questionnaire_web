@@ -79,10 +79,15 @@ function initQuestionnaireData(props = {}) {
 // 上传配置
 const uploadConfig = ref({
   baseURL: '',
+  method: 'post',
   url: '',
   headers: {},
   data: {}
 });
+
+function setUploadConfig(config) {
+  uploadConfig.value = Object.assign(uploadConfig.value, config);
+}
 
 // 获取完整url
 function getFullUrl(url = '') {
@@ -172,6 +177,7 @@ export default function useEdit() {
   return {
     initQuestionnaireData,
     uploadConfig,
+    setUploadConfig,
     getFullUrl,
     getSkinStr,
     verifySubmitData

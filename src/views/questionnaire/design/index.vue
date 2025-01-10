@@ -12,7 +12,7 @@ import { ElMessageBox } from 'element-plus';
 
 
 const { questionnaireData, subscribe, skinStr } = useDesign();
-const { initQuestionnaireData, uploadConfig, getSkinStr } = useQuestionnaire();
+const { initQuestionnaireData, getSkinStr, setUploadConfig } = useQuestionnaire();
 
 // 预览弹窗实例
 const previewPopupRef = ref(null);
@@ -73,7 +73,7 @@ iframeMessage.onMessage = (event) => {
   }
 
   if (type === 'setUploadConfig') {
-    uploadConfig.value = data;
+    setUploadConfig(data);
     iframeMessage.send({
       type: 'setUploadConfigCallback',
       data
