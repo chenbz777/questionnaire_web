@@ -122,14 +122,6 @@ export default class LogicProcessor {
 
           // 设置目标题目状态
           targetQuestion.props.status = status;
-
-          // 如果目标题目是隐藏状态
-          if (status === 'hidden') {
-            // 清空目标题目值
-            targetQuestion.resetValue();
-            // 触发目标题目值变动事件
-            this.option.subscribe.emit(`${targetQuestion.key}_onChange`, targetQuestion.getValue());
-          }
         };
 
         // 如果校验通过
