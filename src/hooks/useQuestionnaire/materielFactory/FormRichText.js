@@ -1,4 +1,6 @@
 import BaseMateriel from './BaseMateriel';
+import userDefined from '@/utils/userDefined';
+
 
 export default class FormRichText extends BaseMateriel {
 
@@ -64,7 +66,17 @@ export default class FormRichText extends BaseMateriel {
   }
 
   getText() {
-    return this.props.defaultValue;
+    /**
+     * 富文本处理
+     */
+    const replacements = [
+      {
+        tag: 'img',
+        styleAppend: 'max-width: 100%;'
+      }
+    ];
+
+    return userDefined.replaceHtmlTags(this.props.defaultValue, replacements);
   }
 
   getReadonly() {
