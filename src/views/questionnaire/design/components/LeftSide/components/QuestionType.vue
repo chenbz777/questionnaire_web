@@ -26,6 +26,9 @@ Object.values(MaterielFactory.getModules()).forEach((itemClass) => {
   }
 
   groups[model.group].push(model);
+
+  // 根据sort字段排序
+  groups[model.group].sort((a, b) => a.sort - b.sort);
 });
 
 // 拖拽配置

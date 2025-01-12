@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeUnmount, ref, shallowRef, watch } from 'vue';
+import { onBeforeUnmount, ref, shallowRef, watch, reactive } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import '@wangeditor/editor/dist/css/style.css'; // 引入 css 文件
 import useQuestionnaire from '@/hooks/useQuestionnaire';
@@ -11,6 +11,14 @@ const props = defineProps({
     required: true,
     type: String,
     default: ''
+  },
+  placeholder: {
+    type: String,
+    default: '请输入内容...'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -34,10 +42,11 @@ const mode = 'default';
 const toolbarConfig = {};
 
 // 编辑器配置
-const editorConfig = {
-  placeholder: '请输入内容...',
-  MENU_CONF: {}
-};
+const editorConfig = reactive({
+  placeholder: props.placeholder,  // 占位文案
+  MENU_CONF: {},
+  autoFocus: false // 自动聚焦
+});
 
 function upload(file, insertFn) {
   request.upload(uploadConfig.value.url, {
@@ -84,11 +93,28 @@ onBeforeUnmount(() => {
 const handleCreated = (editor) => {
   // 记录 editor 实例，重要！
   editorRef.value = editor;
+
+  // 初始化完成, 监听 disabled 变化
+  watch(() => props.disabled, (value) => {
+    const _editor = editorRef.value;
+
+    if (value) {
+      _editor.disable();
+    } else {
+      _editor.enable();
+    }
+  }, {
+    immediate: true
+  });
 };
 
 // 监听内容 HTML 变化，更新父组件 v-model
 watch(() => valueHtml.value, (value) => {
   emit('update:modelValue', value);
+});
+
+watch(() => props.modelValue, (value) => {
+  valueHtml.value = value;
 });
 </script>
 
