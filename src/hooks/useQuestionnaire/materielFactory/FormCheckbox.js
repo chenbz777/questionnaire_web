@@ -40,7 +40,9 @@ export default class FormCheckbox extends BaseMateriel {
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: '',  // 题目难度: 简单, 普通, 困难
       optionsPerLine: 1,  // 每行显示的选项数量
-      randomOptions: false  // 选项顺序随机
+      randomOptions: false,  // 选项顺序随机
+      maxSelect: 0,  // 最多选几个
+      minSelect: 0  // 最少选几个
     };
   }
 
@@ -61,12 +63,28 @@ export default class FormCheckbox extends BaseMateriel {
       return this.verifyModel.unverified();
     }
 
+    if (this.props.minSelect && (this.props.defaultValue.length < this.props.minSelect)) {
+      return this.verifyModel.error(`至少选择${this.props.minSelect}个选项`);
+    }
+
+    if (this.props.maxSelect && (this.props.defaultValue.length > this.props.maxSelect)) {
+      return this.verifyModel.error(`最多选择${this.props.maxSelect}个选项`);
+    }
+
     return this.verifyModel.success();
   }
 
   verifyInSubmit() {
     if (this.props.required && !this.props.defaultValue.length) {
       return this.verifyModel.error('请选择选项');
+    }
+
+    if (this.props.minSelect && (this.props.defaultValue.length < this.props.minSelect)) {
+      return this.verifyModel.error(`至少选择${this.props.minSelect}个选项`);
+    }
+
+    if (this.props.maxSelect && (this.props.defaultValue.length > this.props.maxSelect)) {
+      return this.verifyModel.error(`最多选择${this.props.maxSelect}个选项`);
     }
 
     return this.verifyModel.success();
@@ -228,23 +246,35 @@ export default class FormCheckbox extends BaseMateriel {
                 uploadType: 'jpg, jpeg, png, gif'
               }
             ]
+          },
+          {
+            title: '显示英文序号',
+            type: 'switch',
+            propsKey: 'showEnglishSerialNumber'
+          },
+          {
+            title: '显示清空按钮',
+            type: 'switch',
+            propsKey: 'showClearBtn'
+          },
+          {
+            title: '显示全选按钮',
+            type: 'switch',
+            propsKey: 'showSelectAllBtn'
+          },
+          {
+            title: '最多选几个',
+            type: 'number',
+            min: 0,
+            propsKey: 'maxSelect'
+          },
+          {
+            title: '最少选几个',
+            type: 'number',
+            min: 0,
+            propsKey: 'minSelect'
           }
         ]
-      },
-      {
-        title: '显示英文序号',
-        type: 'switch',
-        propsKey: 'showEnglishSerialNumber'
-      },
-      {
-        title: '显示清空按钮',
-        type: 'switch',
-        propsKey: 'showClearBtn'
-      },
-      {
-        title: '显示全选按钮',
-        type: 'switch',
-        propsKey: 'showSelectAllBtn'
       }
     ];
   }

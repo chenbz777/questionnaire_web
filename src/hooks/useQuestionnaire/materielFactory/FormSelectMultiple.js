@@ -5,6 +5,11 @@ export default class FormSelectMultiple extends BaseMateriel {
 
   constructor(instance) {
     super(instance);
+
+    // 如果选项随机, 则打乱选项
+    if (this.props.randomOptions) {
+      this.props.options = this.props.options.sort(() => Math.random() - 0.5);
+    }
   }
 
   get defaultProps() {
@@ -23,7 +28,10 @@ export default class FormSelectMultiple extends BaseMateriel {
         }
       ],
       showClearBtn: true,  // 显示清空按钮
-      showSelectAllBtn: true  // 显示全选按钮
+      showSelectAllBtn: true,  // 显示全选按钮
+      randomOptions: false,  // 选项顺序随机
+      maxSelect: 0,  // 最多选几个
+      minSelect: 0  // 最少选几个
     };
   }
 
@@ -44,12 +52,28 @@ export default class FormSelectMultiple extends BaseMateriel {
       return this.verifyModel.unverified();
     }
 
+    if (this.props.minSelect && (this.props.defaultValue.length < this.props.minSelect)) {
+      return this.verifyModel.error(`至少选择${this.props.minSelect}个选项`);
+    }
+
+    if (this.props.maxSelect && (this.props.defaultValue.length > this.props.maxSelect)) {
+      return this.verifyModel.error(`最多选择${this.props.maxSelect}个选项`);
+    }
+
     return this.verifyModel.success();
   }
 
   verifyInSubmit() {
     if (this.props.required && !this.props.defaultValue.length) {
       return this.verifyModel.error('请选择选项');
+    }
+
+    if (this.props.minSelect && (this.props.defaultValue.length < this.props.minSelect)) {
+      return this.verifyModel.error(`至少选择${this.props.minSelect}个选项`);
+    }
+
+    if (this.props.maxSelect && (this.props.defaultValue.length > this.props.maxSelect)) {
+      return this.verifyModel.error(`最多选择${this.props.maxSelect}个选项`);
     }
 
     return this.verifyModel.success();
@@ -150,6 +174,11 @@ export default class FormSelectMultiple extends BaseMateriel {
             propsKey: 'placeholder'
           },
           {
+            title: '选项顺序随机',
+            type: 'switch',
+            propsKey: 'randomOptions'
+          },
+          {
             title: '选项列表',
             type: 'list',
             propsKey: 'options',
@@ -178,6 +207,18 @@ export default class FormSelectMultiple extends BaseMateriel {
             title: '显示全选按钮',
             type: 'switch',
             propsKey: 'showSelectAllBtn'
+          },
+          {
+            title: '最多选几个',
+            type: 'number',
+            min: 0,
+            propsKey: 'maxSelect'
+          },
+          {
+            title: '最少选几个',
+            type: 'number',
+            min: 0,
+            propsKey: 'minSelect'
           }
         ]
       }
