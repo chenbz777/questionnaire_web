@@ -40,7 +40,8 @@ export default class FormRadio extends BaseMateriel {
       answerAnalysisAttachment: [],  // 答案解析附件
       difficulty: '',  // 题目难度: 简单, 普通, 困难
       optionsPerLine: 1,  // 每行显示的选项数量
-      randomOptions: false  // 选项顺序随机
+      randomOptions: false,  // 选项顺序随机
+      otherText: '其它'  // 【其它】文案
     };
   }
 
@@ -92,7 +93,7 @@ export default class FormRadio extends BaseMateriel {
     }
 
     if (value === '其它') {
-      return `其它-${this.props.otherValue}`;
+      return `${this.props.otherText}-${this.props.otherValue}`;
     }
 
     const option = this.props.options.find(item => item.value === value);
@@ -254,6 +255,14 @@ export default class FormRadio extends BaseMateriel {
             title: '添加【其它】',
             type: 'switch',
             propsKey: 'showOther'
+          },
+          {
+            title: '【其它】文案',
+            type: 'input',
+            propsKey: 'otherText',
+            condition: (propsData) => {
+              return propsData.showOther;
+            }
           },
           {
             title: '显示英文序号',
