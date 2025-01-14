@@ -1,6 +1,5 @@
 <script setup>
 import { toRefs, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
 
 
 const props = defineProps({
@@ -36,10 +35,6 @@ function handleClear() {
 
   handleChange('');
 }
-
-const route = useRoute();
-
-const isDesign = (route.name === 'questionnaireV1Design');
 </script>
 
 <template>
@@ -49,18 +44,16 @@ const isDesign = (route.name === 'questionnaireV1Design');
       :teleported="false" size="large">
       <el-option v-for="option in data.props.options" :key="option.value" :label="option.label" :value="option.value">
         {{ option.label }}
-
-        <span class="questionnaire__correct"
-          v-if="isDesign && (componentData.props.answer === option.value)">正确答案</span>
       </el-option>
 
       <el-option value="其它" v-if="data.props.showOther">
-        其它
+        {{ data.props.otherText }}
       </el-option>
     </el-select>
 
     <el-input v-model="componentData.props.otherValue" :disabled="componentData.props.status === 'disabled'"
-      placeholder="请输入其他" clearable v-show="componentData.props.defaultValue === '其它'" class="mt-2" />
+      :placeholder="`请输入${data.props.otherText}`" clearable v-show="componentData.props.defaultValue === '其它'"
+      class="mt-2" />
 
     <div class="questionnaire__btn" @click="handleClear()" v-if="componentData.props.showClearBtn">
       清空选中

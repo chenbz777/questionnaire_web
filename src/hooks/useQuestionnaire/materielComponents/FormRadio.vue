@@ -57,7 +57,7 @@ function handleClear() {
         class="form-select" :style="{ width: `${100 / data.props.optionsPerLine}%` }">
         {{ data.props.otherText }}
         <el-input v-model="componentData.props.otherValue" :disabled="componentData.props.status === 'disabled'"
-          clearable v-show="componentData.props.defaultValue === '其它'" />
+          :placeholder="`请输入${data.props.otherText}`" clearable v-show="componentData.props.defaultValue === '其它'" />
       </el-radio>
     </el-radio-group>
     <div class="questionnaire__btn" @click="handleClear()" v-if="componentData.props.showClearBtn">

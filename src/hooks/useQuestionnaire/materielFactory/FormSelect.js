@@ -4,6 +4,11 @@ export default class FormSelect extends BaseMateriel {
 
   constructor(instance) {
     super(instance);
+
+    // 如果选项随机, 则打乱选项
+    if (this.props.randomOptions) {
+      this.props.options = this.props.options.sort(() => Math.random() - 0.5);
+    }
   }
 
   get defaultProps() {
@@ -23,7 +28,9 @@ export default class FormSelect extends BaseMateriel {
       ],
       showOther: false,  // 是否显示其它
       otherValue: '',  // 其它值
-      showClearBtn: true  // 显示清空按钮
+      showClearBtn: true,  // 显示清空按钮
+      randomOptions: false,  // 选项顺序随机
+      otherText: '其它'  // 【其它】文案
     };
   }
 
@@ -47,7 +54,7 @@ export default class FormSelect extends BaseMateriel {
     }
 
     if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-      return this.verifyModel.error('请输入其它值');
+      return this.verifyModel.error(`请输入${this.props.otherText}值`);
     }
 
     return this.verifyModel.success();
@@ -61,7 +68,7 @@ export default class FormSelect extends BaseMateriel {
     }
 
     if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-      return this.verifyModel.error('请输入其它值');
+      return this.verifyModel.error(`请输入${this.props.otherText}值`);
     }
 
     return this.verifyModel.success();
@@ -191,9 +198,22 @@ export default class FormSelect extends BaseMateriel {
             ]
           },
           {
+            title: '选项顺序随机',
+            type: 'switch',
+            propsKey: 'randomOptions'
+          },
+          {
             title: '添加【其它】',
             type: 'switch',
             propsKey: 'showOther'
+          },
+          {
+            title: '【其它】文案',
+            type: 'input',
+            propsKey: 'otherText',
+            condition: (propsData) => {
+              return propsData.showOther;
+            }
           },
           {
             title: '显示清空按钮',

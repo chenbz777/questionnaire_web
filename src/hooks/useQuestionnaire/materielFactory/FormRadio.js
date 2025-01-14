@@ -65,7 +65,7 @@ export default class FormRadio extends BaseMateriel {
     }
 
     if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-      return this.verifyModel.error('请输入其它值');
+      return this.verifyModel.error(`请输入${this.props.otherText}值`);
     }
 
     return this.verifyModel.success();
@@ -79,7 +79,7 @@ export default class FormRadio extends BaseMateriel {
     }
 
     if ((this.props.defaultValue === '其它') && (!this.props.otherValue)) {
-      return this.verifyModel.error('请输入其它值');
+      return this.verifyModel.error(`请输入${this.props.otherText}值`);
     }
 
     return this.verifyModel.success();
