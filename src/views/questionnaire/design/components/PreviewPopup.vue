@@ -66,19 +66,20 @@ defineExpose({
 <template>
   <div class="preview-popup">
     <el-drawer v-model="popup" title="预览" direction="btt" :destroy-on-close="true" size="90%" @opened="onOpened">
-      <div class="preview__container">
-        <div class="preview__container__head">
-          <el-segmented v-model="platform" :options="options" size="default" />
-        </div>
-        <div class="preview__container__content">
-          <div :class="{
-            'preview__container__content--pc': platform === '电脑预览',
-            'preview__container__content--phone': platform === '手机预览'
-          }">
-            <iframe src="/questionnaire/answer" id="previewIframe" class="my-iframe"></iframe>
+      <BaseContainer height="100%">
+        <template #head>
+          <div class="p-3 text-center">
+            <el-segmented v-model="platform" :options="options" size="default" />
           </div>
+        </template>
+
+        <div class="preview__content">
+          <iframe src="/questionnaire/answer" id="previewIframe" class="my-iframe" :class="{
+            'my-iframe--pc': platform === '电脑预览',
+            'my-iframe--phone': platform === '手机预览'
+          }"></iframe>
         </div>
-      </div>
+      </BaseContainer>
     </el-drawer>
   </div>
 </template>
@@ -92,37 +93,26 @@ defineExpose({
   padding: 0;
 }
 
-.preview__container {
-  width: 100%;
+.preview__content {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.preview__container__head {
-  padding: 20px;
-  text-align: center;
-}
-
-.preview__container__content {
-  width: 100%;
-  flex: 1;
-  display: flex;
-}
-
-.preview__container__content--pc {
-  width: 100%;
-}
-
-.preview__container__content--phone {
-  width: 375px;
-  margin: 0 auto;
+  padding: 10px;
+  background-color: #e9eaef;
 }
 
 .my-iframe {
   display: block;
   width: 100%;
   height: 100%;
-  border: 0;
+  border: 8px solid white;
+  margin: auto;
+  transition: all 0.3s;
+}
+
+.my-iframe--pc {
+  width: 100%;
+}
+
+.my-iframe--phone {
+  width: 375px;
 }
 </style>
