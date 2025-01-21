@@ -48,6 +48,50 @@
   margin: 10px 0;
 }
 
+.upload-file__item {
+  border-radius: 6px;
+  margin: 6px 0;
+  padding: 4px 10px;
+  background-color: #eff0f1;
+  color: #303133;
+  font-size: 14px;
+  border: 1px solid #eff0f1;
+  line-height: normal;
+}
+
+.upload-file__item__content {
+  display: flex;
+  align-items: center;
+}
+
+.upload-file__item__icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.upload-file__item__title {
+  flex: 1;
+  width: 0;
+  word-wrap: break-word;
+  word-break: normal;
+  margin: 0 10px;
+}
+
+.upload-file__item__btn {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 12px;
+  background-color: transparent;
+  transition: all 0.3s;
+  border-radius: 4px;
+}
+
+.upload-file__item__btn:hover {
+  background-color: #3095fa;
+  color: white;
+}
+
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
   .questionnaire__card {

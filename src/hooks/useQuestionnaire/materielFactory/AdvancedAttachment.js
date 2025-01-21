@@ -1,4 +1,8 @@
 import BaseMateriel from './BaseMateriel';
+import useFile from '@/hooks/useFile';
+
+
+const { getFileIconByFileName } = useFile();
 
 export default class AdvancedAttachment extends BaseMateriel {
 
@@ -57,7 +61,15 @@ export default class AdvancedAttachment extends BaseMateriel {
       let html = '';
 
       this.props.defaultValue.forEach(item => {
-        html += `<a href="${item.url}" target="_blank">${item.name}</a><br>`;
+        html += `<a href="${item.url}" target="_blank">
+        <div class="upload-file__item">
+          <div class="upload-file__item__content">
+            <img src="${getFileIconByFileName(item.name)}" alt="${item.name}" class="upload-file__item__icon" />
+            <div class="upload-file__item__title">${item.name}</div>
+            <div class="upload-file__item__btn">预览</div>
+          </div>
+        </div>
+        </a>`;
       });
 
       return html;
