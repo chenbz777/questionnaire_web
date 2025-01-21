@@ -46,6 +46,7 @@ import CacheFill from '@/views/questionnaire/answer/plugIn/CacheFill.vue';
   * questionsSubmitAfter 提交问卷后
   * submitQuestionnaire 提交问卷
   * questionnaireChange 问卷数据变化
+  * resetFillData 重置已填写数据
   */
 
 const { initQuestionnaireData, getSkinStr, verifySubmitData, setUploadConfig } = useQuestionnaire();
@@ -132,6 +133,21 @@ function getSubmitData() {
   return submitData;
 }
 
+// 重置已填写数据
+function resetFillData(data = {}) {
+  const keys = Object.keys(data);
+
+  questionnaireData.value.questionList.forEach((question) => {
+    // 优先采用传入的数据
+    if (keys.includes(question.key)) {
+      question.setValue(data[question.key]);
+    } else {
+      // 兜底使用默认值
+      question.resetValue();
+    }
+  });
+}
+
 // 初始化通讯SDK
 const iframeMessage = new IframeMessage();
 
@@ -210,6 +226,17 @@ iframeMessage.onMessage = (event) => {
     userDefined.scrollIntoView(data.key);
     iframeMessage.send({
       type: 'scrollIntoViewCallback',
+      data
+    });
+  }
+
+  // 清空已填写数据
+  if (type === 'resetFillData') {
+
+    resetFillData(data);
+
+    iframeMessage.send({
+      type: 'resetFillDataCallback',
       data
     });
   }

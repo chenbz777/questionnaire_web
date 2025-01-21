@@ -489,6 +489,12 @@ function toReadonlyEasy() {
   iframeUrl.value = window.location.origin + '/questionnaire/readonly/easy';
   init();
 }
+
+function resetFillData() {
+  iframeMessage.send({
+    type: 'resetFillData'
+  });
+}
 </script>
 
 <template>
@@ -501,6 +507,7 @@ function toReadonlyEasy() {
       <el-button type="primary" @click="toAnswerEasy()">换成简单填写</el-button>
       <el-button type="primary" @click="toReadonly()">换成只读</el-button>
       <el-button type="primary" @click="toReadonlyEasy()">换成简单只读</el-button>
+      <el-button type="warning" @click="resetFillData()">重置已填写数据</el-button>
     </div>
 
     <iframe :src="iframeUrl" id="myIframe" frameborder="0" :key="iframeUrl"></iframe>
