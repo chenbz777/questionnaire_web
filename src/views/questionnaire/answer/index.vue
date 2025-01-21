@@ -327,7 +327,12 @@ function initQuestionnaire(data) {
 
   // 初始化皮肤
   if (isEasy) {
-    skinStr.value = getSkinStr(initQuestionnaireData());
+    const _questionnaireData = initQuestionnaireData();
+
+    // 简易模式下不显示背景图片
+    _questionnaireData.props.bgImage = '';
+
+    skinStr.value = getSkinStr(_questionnaireData);
   } else {
     skinStr.value = getSkinStr(questionnaireData.value);
   }
