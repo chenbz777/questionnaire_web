@@ -25,6 +25,12 @@ function handleClickAddActionBtn() {
 
 // 确认动作
 function handleConfirmAction(actionData) {
+  if (actionList.value.find(item => item.key === actionData.key)) {
+    actionList.value.splice(actionList.value.findIndex(item => item.key === actionData.key), 1, actionData);
+
+    return;
+  }
+
   actionList.value.push(actionData);
 }
 
