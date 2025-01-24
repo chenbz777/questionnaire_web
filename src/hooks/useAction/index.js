@@ -75,8 +75,11 @@ async function parseActionList(actionList = [], data, myThis) {
   }
 }
 
-export default {
-  executeCustomCode,
-  parseAction,
-  parseActionList
-};
+
+export default function useAction() {
+  return {
+    executeCustomCode,
+    parseAction,
+    parseActionList
+  };
+}

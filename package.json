@@ -1,8 +1,9 @@
 {
   "name": "questionnaire_web",
-  "private": true,
   "version": "1.0.0",
+  "private": false,
   "author": "陈炳泽",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite --host",

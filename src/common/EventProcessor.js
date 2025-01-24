@@ -1,8 +1,8 @@
-import action from '@/hooks/useQuestionnaire/common/action';
+import useAction from '@/hooks/useAction';
 
 
 // 解析动作
-const { parseActionList } = action;
+const { parseActionList } = useAction();
 
 
 export default class LogicProcessor {

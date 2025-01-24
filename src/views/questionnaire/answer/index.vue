@@ -9,7 +9,7 @@ import userDefined from '@/utils/userDefined';
 import IframeMessage from '@/common/IframeMessage';
 import Subscribe from '@/common/Subscribe';
 import RenderEngine from '@/views/questionnaire/components/RenderEngine.vue';
-import action from '@/hooks/useQuestionnaire/common/action';
+import useAction from '@/hooks/useAction';
 import AnswerSheet from '@/views/questionnaire/answer/plugIn/AnswerSheet.vue';
 import Countdown from '@/views/questionnaire/answer/plugIn/Countdown.vue';
 import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.vue';
@@ -72,7 +72,7 @@ const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === '
 const isShowSubmitBtn = ref(true);
 
 // 解析动作
-const { parseActionList, executeCustomCode } = action;
+const { parseActionList, executeCustomCode } = useAction();
 
 // 订阅通知
 let subscribe = new Subscribe();
