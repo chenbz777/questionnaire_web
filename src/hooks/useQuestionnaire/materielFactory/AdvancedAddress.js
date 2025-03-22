@@ -36,7 +36,6 @@ export default class AdvancedAddress extends BaseMateriel {
 
   // 实时校验
   verifyInRealTime() {
-
     if (this.props.type.includes('省') && !this.props.province) {
       return this.verifyModel.unverified();
     }
@@ -58,20 +57,19 @@ export default class AdvancedAddress extends BaseMateriel {
 
   // 提交校验
   verifyInSubmit() {
-
-    if (this.props.type.includes('省') && !this.props.province) {
+    if (this.props.required && this.props.type.includes('省') && !this.props.province) {
       return this.verifyModel.error('请选择省份');
     }
 
-    if (this.props.type.includes('市') && !this.props.city) {
+    if (this.props.required && this.props.type.includes('市') && !this.props.city) {
       return this.verifyModel.error('请选择城市');
     }
 
-    if (this.props.type.includes('区') && !this.props.area) {
+    if (this.props.required && this.props.type.includes('区') && !this.props.area) {
       return this.verifyModel.error('请选择区域');
     }
 
-    if (this.props.type.includes('详细地址') && !this.props.detailedAddress) {
+    if (this.props.required && this.props.type.includes('详细地址') && !this.props.detailedAddress) {
       return this.verifyModel.error('请输入详细地址');
     }
 
