@@ -3,7 +3,6 @@ import { ref, watch, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import useQuestionnaire from '@/hooks/useQuestionnaire';
 import useAnimate from '@/hooks/useAnimate';
-import localStorage from '@/utils/localStorage';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import userDefined from '@/utils/userDefined';
 import IframeMessage from '@/common/IframeMessage';
@@ -18,12 +17,10 @@ import ClassifyAnswerSheet from '@/views/questionnaire/answer/plugIn/ClassifyAns
 import Lifecycle from '@/common/Lifecycle';
 import LogicProcessor from '@/common/LogicProcessor';
 import EventProcessor from '@/common/EventProcessor';
-import CacheFill from '@/views/questionnaire/answer/plugIn/CacheFill.vue';
 
 
 /**
  * 页面接收参数
- * isCacheFill 是否缓存填写 默认true
  * isShowAnswer 是否显示答案 默认false
  * isShowAnswerProgress 是否显示答题进度 默认true
  * isShowCountdown 是否显示倒计时 默认true
@@ -39,14 +36,16 @@ import CacheFill from '@/views/questionnaire/answer/plugIn/CacheFill.vue';
 
 /**
   * 事件汇总
-  * setQuestionnaireData 设置问卷数据
-  * getQuestionnaireData 获取问卷数据
-  * getSubmitData 获取提交数据
-  * setUploadConfig 设置上传配置
-  * questionsSubmitAfter 提交问卷后
-  * submitQuestionnaire 提交问卷
-  * questionnaireChange 问卷数据变化
-  * resetFillData 重置已填写数据
+  * setQuestionnaireData 设置问卷数据: 被动触发
+  * getQuestionnaireData 获取问卷数据: 被动触发
+  * getSubmitData 获取提交数据: 被动触发
+  * setUploadConfig 设置上传配置: 被动触发
+  * questionsSubmitAfter 提交问卷后: 主动触发
+  * submitQuestionnaire 提交问卷: 主动触发
+  * questionnaireChange 问卷数据变化: 主动触发
+  * resetFillData 重置已填写数据: 被动触发
+  * scrollIntoView 滚动至指定题目: 被动触发
+  * setBtnList 自定义按钮列表: 被动触发
   */
 
 const { initQuestionnaireData, getSkinStr, verifySubmitData, setUploadConfig } = useQuestionnaire();
@@ -71,6 +70,9 @@ const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === '
 // 是否显示提交按钮
 const isShowSubmitBtn = ref(true);
 
+// 按钮列表
+const btnList = ref([]);
+
 // 解析动作
 const { parseActionList, executeCustomCode } = useAction();
 
@@ -88,14 +90,6 @@ let startAnswerTime = Date.now();
 
 // 结束答题时间
 let endAnswerTime = Date.now();
-
-// 是否缓存填写: 默认true
-let isCacheFill = true;
-
-// 是否缓存填写
-if (route.query.isCacheFill) {
-  isCacheFill = route.query.isCacheFill === 'true';
-}
 
 // 显示答案
 let isShowAnswer = false;
@@ -167,22 +161,6 @@ iframeMessage.onMessage = (event) => {
       data.questionnaireData = initQuestionnaireData();
     }
 
-    // 没有答案数据, 则判断是否使用缓存
-    if (!data.data || !Object.keys(data.data).length) {
-      // 如果使用缓存
-      if (isCacheFill) {
-        const answerList = localStorage.get('answerList') || [];
-
-        // 获取答案数据
-        const answerData = answerList.find(item => item.key === data.questionnaireData.key);
-
-        // 如果有答案数据
-        if (answerData) {
-          data.data = answerData.data;
-        }
-      }
-    }
-
     initQuestionnaire(data);
 
     iframeMessage.send({
@@ -232,11 +210,20 @@ iframeMessage.onMessage = (event) => {
 
   // 清空已填写数据
   if (type === 'resetFillData') {
-
     resetFillData(data);
 
     iframeMessage.send({
       type: 'resetFillDataCallback',
+      data
+    });
+  }
+
+  // 自定义按钮列表
+  if (type === 'setBtnList') {
+    btnList.value = data.btnList;
+
+    iframeMessage.send({
+      type: 'setBtnListCallback',
       data
     });
   }
@@ -504,6 +491,24 @@ function getQuestionList(_questionnaireData) {
 pageSubscribe.on('markersChange', () => {
   handleQuestionnaireDataChange();
 });
+
+// 按钮列表点击事件
+function onBtnClick(item) {
+  const { emitName } = item;
+
+  if (!emitName) {
+    return;
+  }
+
+  // 触发自定义事件
+  iframeMessage.send({
+    type: emitName,
+    data: {
+      questionnaireData: questionnaireData.value,
+      data: getSubmitData()
+    }
+  });
+}
 </script>
 
 <template>
@@ -535,8 +540,15 @@ pageSubscribe.on('markersChange', () => {
       </div>
 
       <div class="questionnaire__container__foot">
-        <div class="questionnaire__container__btn" @click="handleSubmit()" id="submitBtn" v-if="isShowSubmitBtn">
+        <div class="questionnaire__container__btn" :class="{
+          'questionnaire__container__btn--one': !btnList.length
+        }" @click="handleSubmit()" id="submitBtn" v-if="isShowSubmitBtn">
           {{ questionnaireData.props.btnText }}
+        </div>
+
+        <div class="questionnaire__container__btn" v-for="item in btnList" :key="item.key" :style="item.style"
+          @click="onBtnClick(item)">
+          {{ item.text }}
         </div>
       </div>
 
@@ -553,8 +565,6 @@ pageSubscribe.on('markersChange', () => {
       <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
     </div>
-
-    <CacheFill :addLifecycle="addLifecycle" />
   </div>
 </template>
 
@@ -648,8 +658,9 @@ pageSubscribe.on('markersChange', () => {
 }
 
 .questionnaire__container__btn {
-  margin: 0 auto;
-  padding: 10px 60px;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 10px 30px;
   border-radius: 6px;
   cursor: pointer;
   background-color: var(--questionnaire-btn-bg-color);
@@ -657,11 +668,19 @@ pageSubscribe.on('markersChange', () => {
   text-align: center;
 }
 
+.questionnaire__container__btn--one {
+  padding: 10px 60px;
+}
+
+.questionnaire__container__btn:last-child {
+  margin-right: 0;
+}
+
 .questionnaire__container__foot {
-  padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .plug-in-popup {

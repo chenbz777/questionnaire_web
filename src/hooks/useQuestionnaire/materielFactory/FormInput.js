@@ -20,8 +20,8 @@ export default class FormInput extends BaseMateriel {
       placeholder: '请输入',
       prepend: '',  // 前置文案
       append: '',  // 后置文案
-      maxLength: 1000,  // 最大长度
-      showWordLimit: true,  // 是否显示字数统计
+      maxLength: 999999,  // 最大长度
+      showWordLimit: false,  // 是否显示字数统计
       clearable: true,  // 是否可清空
       format: '不限制',  // 文本格式
       fraction: 0,  // 主观题分数
