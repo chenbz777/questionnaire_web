@@ -21,6 +21,10 @@ const signaturePadRef = ref(null);
 onMounted(() => {
   // 发送生命周期事件
   props.emitSubscribe('onMounted');
+
+  if (componentData.value.props.defaultValue) {
+    signaturePadRef.value.fromDataURL(componentData.value.props.defaultValue);
+  }
 });
 
 function handleChange(value) {
