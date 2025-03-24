@@ -20,7 +20,7 @@
 
 #### 题外话
 
-项目目前处于小孩子刚出生阶段，会有很多的需要待完善的点，各位大佬有意见和需求和项目不足点欢迎提出来，我虚心学习请教。
+项目目前处于小孩子刚出生阶段，会有很多的需要待完善的点，各位大佬有意见和需求和项目不足点欢迎提出来(邮箱：wx.open@qq.com，也可加群进行交流)，我虚心学习请教。
 
 生活中是卑微的打工人，社恐五颗星，大家口下留情，被业务折磨已经身心疲惫了。
 
@@ -177,6 +177,14 @@ pnpm build
 
 <br />
 
+## 社区群
+
+<img src="https://img.chenbz.com/testd2bea28c-e873-48d3-bb0e-c4b4236daaf9.jpg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
+
+
+
+<br />
+
 ## 🎨 展示
 
 题型
@@ -210,16 +218,6 @@ pnpm build
 预览
 
 ![预览](https://ice.frostsky.com/2024/09/07/e37e78575c73ec34f34c1cde35dbc27b.png)
-
-<br />
-
-
-
-## 社区群
-
-<img src="https://img.chenbz.com/testd2bea28c-e873-48d3-bb0e-c4b4236daaf9.jpg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
-
-
 
 <br />
 
@@ -273,4 +271,17 @@ pnpm build
 - 优化题目“标题”为“长文本输入框”
 - 新增“单选题”、“判断题”、“多选”、“选择填空”：支持选项乱序、每行选项个数
 - 新增题目“编辑态配置”：可以设置组件的编辑态属性, 例如: 是否可删除、是否可复制、是否可拖拽
+
+<br />
+
+2025-3-24 更新日志
+
+【题目】
+
+- 修复动作引擎bug
+- 修复“地址”控件校验bug
+- 修复“手写签名”控件回显bug
+- 新增 填写页“自定义底部按钮”功能
+- 移除填写缓存功能，交由宿系统监听“questionnaireChange”事件进行完善
+- 修复 填写页“标题”高度bug
 
