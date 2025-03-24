@@ -641,7 +641,6 @@ function onBtnClick(item) {
   font-size: 30px;
   font-weight: 500;
   text-align: center;
-  height: 42px;
   line-height: 42px;
   margin-top: 20px;
 }
