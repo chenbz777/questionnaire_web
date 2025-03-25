@@ -18,8 +18,8 @@ export default class FormTextarea extends BaseMateriel {
       defaultValue: '',
       placeholder: '请输入',
       minLength: 0,  // 最小长度
-      maxLength: 1000,  // 最大长度
-      showWordLimit: true,  // 是否显示字数统计
+      maxLength: 999999,  // 最大长度
+      showWordLimit: false,  // 是否显示字数统计
       fraction: 0,  // 主观题分数
       score: 0,  // 得分
       answer: '',  // 答案
