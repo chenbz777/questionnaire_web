@@ -118,6 +118,11 @@ function getSubmitData() {
   data.endAnswerTime = endAnswerTime;
   data.openUserKey = openUserKey;
 
+  const { deviceType, deviceOS } = userDefined.parseUA();
+
+  data.deviceType = deviceType;
+  data.deviceOS = deviceOS;
+
   const submitData = {
     data,
     errorList,
