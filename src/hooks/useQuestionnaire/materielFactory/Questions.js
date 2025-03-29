@@ -44,7 +44,7 @@ export default class Questions extends BaseMateriel {
   get defaultProps() {
     return {
       title: this.title,  // 标题
-      desc: '问卷描述',  // 描述
+      desc: '',  // 描述
       showLogo: false,  // 是否显示logo
       logo: 'http://img.chenbz.com/wj/pANZu8O.png',  // logo
       logoPosition: 'center',  // logo位置: left-左, center-中, right-右
@@ -53,7 +53,7 @@ export default class Questions extends BaseMateriel {
       contentBgColor: '#ffffff',  // 内容背景颜色: #ffffff
       textColor: '#333333',  // 文字颜色: #333333
       btnText: '提交',  // 按钮文本: 提交
-      btnBgColor: '#3095fa',  // 按钮背景颜色: #346ede
+      btnBgColor: '#1677ff',  // 按钮背景颜色: #346ede
       btnTextColor: '#ffffff',  // 按钮文字颜色: #ffffff
       showQuestionIndex: true,  // 显示题目序号
       copyrightText: '【离线版问卷】提供技术支持',  // 版权信息
