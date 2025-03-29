@@ -35,7 +35,7 @@ const skinList = [
       contentBgColor: '#ffffff',
       textColor: '#333333',
       btnText: '提交',
-      btnBgColor: '#3095fa',
+      btnBgColor: '#1677ff',
       btnTextColor: '#ffffff'
     }
   },
