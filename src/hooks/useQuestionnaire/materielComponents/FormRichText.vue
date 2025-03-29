@@ -1,5 +1,6 @@
 <script setup>
 import { toRefs, onMounted, watch } from 'vue';
+import RichTextEditor from '@/components/RichTextEditor.vue';
 
 
 const props = defineProps({
