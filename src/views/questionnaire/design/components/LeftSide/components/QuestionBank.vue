@@ -61,22 +61,22 @@ const draggableOption = {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f0f0f0;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 14px;
+  background-color: var(--bg-tertiary-color);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
+  font-size: var(--fs-2);
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
   border: 1px solid transparent;
   transition: all 0.3s;
 }
 
 .question-bank__item__text {
-  color: #999999;
-  font-size: 12px;
+  color: var(--text-secondary-color);
+  font-size: var(--fs-1);
 }
 
 .question-bank__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 </style>

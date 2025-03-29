@@ -110,8 +110,8 @@ onMounted(() => {
   width: 72px;
   height: 100%;
   overflow-y: auto;
-  padding: 10px 4px;
-  border-right: 2px solid #f0f0f0;
+  padding: calc(var(--p-1) / 2);
+  border-right: 2px solid var(--bg-tertiary-color);
 }
 
 .left-side__menu-content {
@@ -119,33 +119,32 @@ onMounted(() => {
   width: 0;
   height: 100%;
   overflow-y: auto;
-  padding: 10px;
-  border-radius: 10px;
+  padding: var(--p-2);
   transition: all 0.3s;
 }
 
 .left-side__menu__item {
   text-align: center;
   cursor: pointer;
-  border-radius: 8px;
-  padding: 6px 4px;
+  border-radius: var(--br-2);
+  margin: var(--m-1) 0;
+  padding: var(--p-1);
   transition: all 0.3s;
-  margin-top: 10px;
 }
 
 .left-side__menu__item:hover {
-  background-color: #f0f0f0;
+  background-color: var(--bg-tertiary-color);
 }
 
 .left-side__menu__item--active {
-  color: #3095fa;
+  color: var(--primary-color);
 }
 
 .left-side__menu__item__icon {
-  font-size: 24px;
+  font-size: var(--fs-5);
 }
 
 .left-side__menu__item__title {
-  font-size: 14px;
+  font-size: var(--fs-2);
 }
 </style>

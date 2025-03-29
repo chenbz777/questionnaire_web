@@ -59,13 +59,13 @@ function handleClick(templateBaseItem) {
 
 <style scoped>
 .template-base__item {
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 4px;
+  background-color: var(--bg-tertiary-color);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
   overflow: hidden;
-  font-size: 14px;
+  font-size: var(--fs-2);
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
   border: 1px solid transparent;
   transition: all 0.3s;
   position: relative;
@@ -81,7 +81,7 @@ function handleClick(templateBaseItem) {
 
 .template-base__item__title {
   text-align: center;
-  margin-top: 10px;
+  margin-top: var(--m-2);
 }
 
 .template-base__item__container {
@@ -100,16 +100,16 @@ function handleClick(templateBaseItem) {
 
 .template-base__item:hover .template-base__item__container {
   opacity: 1;
-  background-color: rgba(240, 240, 240, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .template-base__item__btn {
   display: block;
   width: 100%;
-  margin: 10px;
+  margin: var(--m-1);
 }
 
 .template-base__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 </style>

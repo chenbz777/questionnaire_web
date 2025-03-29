@@ -583,15 +583,14 @@ function onBtnClick(item) {
   color: var(--questionnaire-text-color);
   background-size: 100%;
   background-repeat: no-repeat;
-
   display: flex;
   justify-content: center;
   overflow-y: auto;
-  padding: 60px;
+  padding: var(--p-5);
 }
 
 .page__head {
-  padding: 10px;
+  padding: var(--p-2);
   background-color: var(--questionnaire-bg-color);
 }
 
@@ -609,7 +608,7 @@ function onBtnClick(item) {
   position: sticky;
   top: 0;
   z-index: 10;
-  margin-left: 20px;
+  margin-left: var(--m-3);
   width: 260px;
   overflow-y: auto;
 }
@@ -627,7 +626,7 @@ function onBtnClick(item) {
 }
 
 .questionnaire__container__logo {
-  margin-top: 20px;
+  margin-top: var(--m-3);
   display: flex;
   justify-content: var(--questionnaire-logo-position);
 }
@@ -638,29 +637,29 @@ function onBtnClick(item) {
 }
 
 .questionnaire__container__title {
-  font-size: 30px;
+  font-size: var(--fs-5);
   font-weight: 500;
   text-align: center;
-  line-height: 42px;
-  margin-top: 20px;
+  line-height: var(--lh-5);
+  margin-top: var(--m-2);
 }
 
 .questionnaire__container__desc {
-  font-size: 16px;
+  font-size: var(--fs-3);
   font-weight: 400;
-  margin-top: 20px;
-  padding: 0 10px;
+  margin-top: var(--m-2);
+  padding: 0 var(--p-2);
 }
 
 .questionnaire__container__content {
-  margin-top: 30px;
+  margin-top: var(--m-3);
 }
 
 .questionnaire__container__btn {
-  margin-top: 20px;
-  margin-right: 20px;
-  padding: 10px 30px;
-  border-radius: 6px;
+  margin-top: var(--m-4);
+  margin-right: var(--m-3);
+  padding: var(--p-2) var(--p-5);
+  border-radius: var(--br-2);
   cursor: pointer;
   background-color: var(--questionnaire-btn-bg-color);
   color: var(--questionnaire-btn-text-color);
@@ -668,7 +667,7 @@ function onBtnClick(item) {
 }
 
 .questionnaire__container__btn--one {
-  padding: 10px 60px;
+  padding: var(--p-2) calc(var(--p-4) * 2);
 }
 
 .questionnaire__container__btn:last-child {
@@ -682,19 +681,10 @@ function onBtnClick(item) {
   flex-wrap: wrap;
 }
 
-.plug-in-popup {
-  height: 70vh;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: var(--questionnaire-bg-color);
-  color: var(--questionnaire-text-color);
-}
-
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
-
   .page {
-    padding: 16px;
+    padding: var(--p-3);
   }
 
   .page__right {

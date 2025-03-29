@@ -312,13 +312,13 @@ function getFileIconByFileName(fileName) {
 }
 
 .upload-file__item {
-  border-radius: 6px;
-  margin: 6px 0;
-  padding: 4px 10px;
-  background-color: #eff0f1;
-  color: #303133;
-  font-size: 14px;
-  border: 1px solid #eff0f1;
+  border-radius: var(--br-2);
+  margin: var(--m-1) 0;
+  padding: var(--p-1);
+  background-color: var(--bg-tertiary-color);
+  color: var(--text-base-color);
+  font-size: var(--fs-2);
+  border: 1px solid var(--border-base-color);
   line-height: normal;
 }
 
@@ -338,25 +338,25 @@ function getFileIconByFileName(fileName) {
   width: 0;
   word-wrap: break-word;
   word-break: normal;
-  margin: 0 10px;
+  margin: 0 var(--m-1);
 }
 
 .upload-file__item__btn {
   cursor: pointer;
-  font-size: 12px;
-  padding: 4px 12px;
+  font-size: var(--fs-1);
+  padding: calc(var(--p-1) / 2) var(--p-2);
   background-color: transparent;
   transition: all 0.3s;
-  border-radius: 4px;
+  border-radius: var(--br-1);
 }
 
 .upload-file__item__btn:hover {
-  background-color: #3095fa;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
 }
 
 .upload-file__item__percentage {
-  margin-top: 4px;
+  margin-top: calc(var(--m-1) / 2);
 }
 
 .upload-file__item :deep(.el-progress__text) {
@@ -370,23 +370,23 @@ function getFileIconByFileName(fileName) {
 }
 
 .upload-file__template {
-  background-color: #eff0f1;
-  color: #303133;
-  font-size: 12px;
-  padding: 10px 16px;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  background-color: var(--bg-tertiary-color);
+  color: var(--text-base-color);
+  font-size: var(--fs-2);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
+  margin-bottom: var(--m-1);
 }
 
 .upload-file__template__item {
-  margin-top: 6px;
+  margin-top: var(--m-1);
 }
 
 .upload-file__no-api {
-  background-color: #eff0f1;
-  color: #303133;
-  font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 6px;
+  background-color: var(--bg-tertiary-color);
+  color: var(--text-base-color);
+  font-size: var(--fs-2);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
 }
 </style>

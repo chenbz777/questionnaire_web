@@ -56,8 +56,10 @@ function removeRow(index) {
             <el-table-column v-for="(option, index) in data.props.options" :key="option.key" :prop="option.key"
               :label="option.title" :width="data.props.options.length < 4 ? '' : 260">
               <template #header>
-                {{ option.title }}
-                <span class="increment-table__required" v-if="data.props.options[index].required">*</span>
+                <div class="increment-table__header">
+                  <div class="increment-table__required" v-if="data.props.options[index].required">*</div>
+                  {{ option.title }}
+                </div>
               </template>
               <template #default="{ row }">
                 <el-input v-model="row[option.key]" clearable />
@@ -106,6 +108,11 @@ function removeRow(index) {
 </template>
 
 <style scoped>
+.increment-table__header {
+  display: flex;
+  align-items: center;
+}
+
 .increment-table__item {
   border: 1px solid rgba(225, 225, 225, 0.5);
   border-radius: 6px;

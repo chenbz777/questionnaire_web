@@ -137,17 +137,17 @@ const componentName = props.setting.type === 'slot' ? defineAsyncComponent(() =>
 
 <style scoped>
 .attribute-setting-engine {
-  margin: 10px;
+  margin: var(--m-2);
   display: flex;
   align-items: center;
-  color: #16191b;
+  color: var(--text-base-color);
   font-weight: 400;
-  font-size: 12px;
+  font-size: var(--fs-1);
 }
 
 .attribute-setting-engine__title {
-  width: 80px;
-  margin-right: 10px;
+  width: 72px;
+  margin-right: var(--m-1);
 }
 
 .attribute-setting-engine__title:empty {

@@ -2,7 +2,6 @@
 import { VueDraggable } from 'vue-draggable-plus';
 import RenderEngine from '@/views/questionnaire/components/RenderEngine.vue';
 import useDesign from '@/hooks/useDesign';
-import { ElMessageBox } from 'element-plus';
 
 
 const { questionnaireData, subscribe, currentQuestionData, copyQuestion } = useDesign();
@@ -14,23 +13,11 @@ function handleClick(data) {
 
 // 删除组件
 function handleDeleteComponent(index) {
-  ElMessageBox.confirm(
-    '确认删除该题目吗？',
-    '删除题目',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  )
-    .then(() => {
-      const data = questionnaireData.value.questionList[index];
+  const data = questionnaireData.value.questionList[index];
 
-      questionnaireData.value.questionList.splice(index, 1);
+  questionnaireData.value.questionList.splice(index, 1);
 
-      subscribe.emit('editDeleteQuestion', data);
-    })
-    .catch(() => { });
+  subscribe.emit('editDeleteQuestion', data);
 }
 
 // 复制组件
@@ -53,13 +40,17 @@ function handleCopyComponent(data) {
           }" />
       </template>
       <div class="my-draggable__controls">
-        <div class="my-draggable__controls__item" @click="handleDeleteComponent(index)"
+        <el-popconfirm title="确认删除该题目吗？" placement="top" :width="180" @confirm="handleDeleteComponent(index)"
           v-if="question.editProps.delete">
-          <el-icon class="my-draggable__controls__icon">
-            <Delete />
-          </el-icon>
-          删除
-        </div>
+          <template #reference>
+            <div class="my-draggable__controls__item">
+              <el-icon class="my-draggable__controls__icon">
+                <Delete />
+              </el-icon>
+              删除
+            </div>
+          </template>
+        </el-popconfirm>
         <div class="my-draggable__controls__item" @click="handleCopyComponent(question)" v-if="question.editProps.copy">
           <el-icon class="my-draggable__controls__icon">
             <CopyDocument />
@@ -78,17 +69,17 @@ function handleCopyComponent(data) {
 }
 
 .my-draggable:empty {
-  border: 1px dashed rgba(17, 31, 44, .2);
+  border: 1px dashed var(--border-base-color);
   background-image: -webkit-repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 0, 0, .08) 4px, rgba(0, 0, 0, .08) 0);
   display: flex;
-  border-radius: 6px;
+  border-radius: var(--br-2);
   transition: all 0.3s;
 }
 
 .my-draggable:empty:before {
   content: '请拖拽组件到此处';
-  color: rgba(0, 0, 0, .25);
-  font-size: 18px;
+  color: var(--text-tertiary-color);
+  font-size: var(--fs-3);
   line-height: 100%;
   margin: auto;
 }
@@ -116,7 +107,7 @@ function handleCopyComponent(data) {
 }
 
 .my-draggable__render--hidden {
-  background-color: rgba(211, 211, 211, 0.2);
+  background-color: var(--bg-tertiary-color);
 }
 
 .my-draggable__controls {
@@ -126,13 +117,13 @@ function handleCopyComponent(data) {
 
 .my-draggable__controls__item {
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
+  padding: var(--p-1);
+  border-radius: var(--br-2);
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.3s;
-  margin-bottom: 6px;
+  margin-bottom: var(--m-1);
 }
 
 .my-draggable__controls__item:last-child {
@@ -145,7 +136,7 @@ function handleCopyComponent(data) {
 
 .my-draggable__controls__icon {
   display: block;
-  font-size: 16px;
-  margin-right: 4px;
+  font-size: var(--fs-3);
+  margin-right: var(--m-1);
 }
 </style>

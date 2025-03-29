@@ -62,7 +62,7 @@ function handleClick(data) {
         <div class="question-type__title">
           {{ key }}
         </div>
-        <el-row :gutter="10" v-draggable="[groupItems, draggableOption]">
+        <el-row :gutter="12" v-draggable="[groupItems, draggableOption]">
           <el-col :span="12" v-for="item in groupItems" :key="item.key">
             <div class="question-type__item" @click="handleClick(item)">{{ item.title }}</div>
           </el-col>
@@ -74,24 +74,24 @@ function handleClick(data) {
 
 <style scoped>
 .question-type__title {
-  font-size: 16px;
+  font-size: var(--fs-3);
   font-weight: 500;
-  color: #333333;
-  line-height: 40px;
+  color: var(--text-base-color);
+  line-height: calc(var(--lh-2) * 2);
 }
 
 .question-type__item {
-  background-color: #f0f0f0;
-  font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  background-color: var(--bg-tertiary-color);
+  font-size: var(--fs-2);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
+  margin-bottom: var(--m-1);
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.3s;
 }
 
 .question-type__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 </style>

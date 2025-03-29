@@ -33,20 +33,19 @@ function handleChange() {
 
 <style scoped>
 .matrix-fill__item {
-  margin-right: 20px;
-  margin-bottom: 10px;
   display: flex;
   align-items: center;
+  margin-bottom: var(--m-1);
 }
 
 .matrix-fill__item__input {
   flex: 1;
   padding: 6px;
-  margin-left: 10px;
+  margin-left: var(--m-1);
   border: 0;
   border-bottom: 1px solid var(--questionnaire-text-color);
   min-width: 100px;
-  font-size: 14px;
+  font-size: var(--fs-2);
   word-wrap: break-word;
   word-break: normal;
 }

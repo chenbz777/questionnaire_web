@@ -86,14 +86,16 @@ subscribe.on('editDeleteQuestion', (data) => {
 }
 
 .configuration-segmented {
-  background-color: white;
-  padding: 6px 2px;
-  border-bottom: 1px solid rgba(31, 56, 88, 0.1);
+  background-color: var(--bg-base-color);
+  padding: var(--p-1);
+  border-bottom: 1px solid var(--border-base-color);
 }
 
 .configuration-segmented .el-segmented {
-  --el-border-radius-base: 16px;
-  --el-segmented-bg-color: white;
+  --el-border-radius-base: var(--br-4);
+  --el-segmented-bg-color: var(--bg-base-color);
+  --el-segmented-item-selected-bg-color: var(--primary-color);
+  --el-segmented-item-selected-color: var(--primary-text-color);
 }
 
 .configuration__content {
@@ -104,14 +106,14 @@ subscribe.on('editDeleteQuestion', (data) => {
 .configuration__as-key {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: var(--p-2);
 }
 
 .configuration__as-key__title {
   color: #16191b;
   font-weight: 400;
-  font-size: 12px;
-  margin-right: 10px;
+  font-size: var(--fs-2);
+  margin-right: var(--m-1);
 }
 
 .configuration__as-key__input {

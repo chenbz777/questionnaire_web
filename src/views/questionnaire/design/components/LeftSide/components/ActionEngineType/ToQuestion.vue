@@ -40,7 +40,7 @@ watch(() => actionData, (value) => {
 
 <style scoped>
 .tq__title {
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: var(--fs-2);
+  margin-bottom: var(--m-1);
 }
 </style>

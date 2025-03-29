@@ -51,12 +51,12 @@ watch(() => propsData.value, (value) => {
 
 <style scoped>
 .attribute-config__block__title {
-  font-size: 14px;
-  background-color: hsla(210, 8%, 95%, .4);
-  color: #171a1d;
-  border-top: 1px solid rgba(31, 56, 88, 0.1);
-  border-bottom: 1px solid rgba(31, 56, 88, 0.1);
-  padding: 6px 12px;
+  font-size: var(--fs-2);
+  background-color: var(--bg-secondary-color);
+  color: var(--text-base-color);
+  border-top: 1px solid var(--border-base-color);
+  border-bottom: 1px solid var(--border-base-color);
+  padding: var(--p-1);
   font-weight: 500;
 }
 </style>

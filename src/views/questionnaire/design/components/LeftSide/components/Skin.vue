@@ -2,7 +2,6 @@
 import { watch } from 'vue';
 import useDesign from '@/hooks/useDesign';
 import useQuestionnaire from '@/hooks/useQuestionnaire';
-import { ElMessageBox } from 'element-plus';
 import UploadFile from '@/components/UploadFile.vue';
 
 
@@ -118,22 +117,9 @@ const skinList = [
 ];
 
 function handleSkinChange(data) {
+  Object.assign(questionnaireData.value.props, JSON.parse(JSON.stringify(data)));
 
-  ElMessageBox.confirm(
-    '该操作将会覆盖当前皮肤设置，是否继续？',
-    '提示',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  )
-    .then(() => {
-      Object.assign(questionnaireData.value.props, JSON.parse(JSON.stringify(data)));
-
-      skinStr.value = getSkinStr(questionnaireData.value);
-    })
-    .catch(() => { });
+  skinStr.value = getSkinStr(questionnaireData.value);
 }
 
 watch(() => questionnaireData.value.props, (value) => {
@@ -157,7 +143,11 @@ const uploadFileConfig = {
     <div>
       <div class="skin__item" v-for="item in skinList" :key="item.title">
         <div class="skin__item__title">{{ item.title }}</div>
-        <div class="skin__item__btn" @click="handleSkinChange(item.data)">使用</div>
+        <el-popconfirm title="该操作将会覆盖当前皮肤设置，是否继续？" placement="top" :width="240" @confirm="handleSkinChange(item.data)">
+          <template #reference>
+            <div class="skin__item__btn">使用</div>
+          </template>
+        </el-popconfirm>
       </div>
     </div>
 
@@ -168,7 +158,6 @@ const uploadFileConfig = {
 
     <template v-if="questionnaireData.props.showLogo">
       <div>
-        <!-- <el-input v-model="questionnaireData.props.logo" placeholder="请输入[logo]远程地址" clearable /> -->
         <UploadFile v-model="questionnaireData.props.logo" :option="uploadFileConfig" />
       </div>
 
@@ -184,7 +173,6 @@ const uploadFileConfig = {
       <div>背景图</div>
     </div>
     <div>
-      <!-- <el-input v-model="questionnaireData.props.bgImage" placeholder="请输入[背景图]远程地址" clearable /> -->
       <UploadFile v-model="questionnaireData.props.bgImage" :option="uploadFileConfig" />
     </div>
 
@@ -234,10 +222,10 @@ const uploadFileConfig = {
 
 <style scoped>
 .skin__title {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  margin-top: 28px;
+  font-size: var(--fs-2);
+  font-weight: 500;
+  margin-top: var(--m-3);
+  margin-bottom: var(--m-2);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -250,11 +238,12 @@ const uploadFileConfig = {
 .skin__item {
   display: flex;
   align-items: center;
-  background-color: #F0F0F0;
-  border-radius: 4px;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  font-size: 12px;
+  background-color: var(--bg-tertiary-color);
+  border-radius: var(--br-2);
+  padding: var(--p-1);
+  margin-bottom: var(--m-1);
+  font-size: var(--fs-2);
+  font-weight: 400;
 }
 
 .skin__item__title {
@@ -262,7 +251,7 @@ const uploadFileConfig = {
 }
 
 .skin__item__btn {
-  color: #409eff;
+  color: var(--primary-color);
   cursor: pointer;
 }
 </style>
