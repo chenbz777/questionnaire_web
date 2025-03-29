@@ -69,6 +69,7 @@ const draggableOption = {
   margin-bottom: var(--m-1);
   border: 1px solid transparent;
   transition: all 0.3s;
+  color: var(--text-base-color);
 }
 
 .question-bank__item__text {

@@ -262,6 +262,35 @@ const importJSON = () => {
   });
 };
 
+function parseUA() {
+  const ua = window.navigator.userAgent;
+
+  let deviceType = '其它';
+  let deviceOS = '其它';
+
+  // 识别操作系统
+  if (/Windows NT/i.test(ua)) {
+    deviceOS = 'Windows'; // Windows 系统
+  } else if (/Mac OS X/i.test(ua)) {
+    deviceOS = 'macOS'; // macOS 系统
+  } else if (/Android/i.test(ua)) {
+    deviceOS = 'Android'; // 安卓系统
+  } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    deviceOS = 'iOS'; // iOS 系统（iPhone、iPad、iPod）
+  }
+
+  // 识别设备类型
+  if (/Mobile/i.test(ua) || /iPhone|Android/i.test(ua)) {
+    deviceType = '手机'; // 手机设备
+  } else if (/Tablet|iPad/i.test(ua)) {
+    deviceType = '平板'; // 平板设备
+  } else if (/Windows NT|Mac OS X|Linux/i.test(ua)) {
+    deviceType = '电脑'; // 电脑设备
+  }
+
+  return { deviceType, deviceOS };
+}
+
 export default {
   localFullScreen,
   getParameter,
@@ -274,5 +303,6 @@ export default {
   convertToRichText,
   scrollIntoView,
   exportJSON,
-  importJSON
+  importJSON,
+  parseUA
 };
