@@ -5,57 +5,45 @@
 .questionnaire__btn {
   border: 0;
   display: inline-block;
-  font-size: 14px;
-  padding: 6px 16px;
-  border-radius: 6px;
-  margin-top: 10px;
+  font-size: var(--fs-2);
+  padding: var(--p-1) var(--p-2);
+  border-radius: var(--br-2);
+  margin-top: var(--m-1);
   cursor: pointer;
   background-color: var(--questionnaire-btn-bg-color);
   color: var(--questionnaire-btn-text-color);
 }
 
-.questionnaire__correct {
-  background-color: #67c23a;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-/* .el-popper {
-  display: block !important;
-} */
-
 .technical-support {
-  font-size: 12px;
+  font-size: var(--fs-1);
   text-align: center;
-  color: rgba(0, 0, 0, 0.3);
-  margin-top: 20px;
+  color: var(--text-tertiary-color);
+  margin-top: var(--m-3);
 }
 
 .questionnaire__card {
-  border-radius: 10px;
+  border-radius: var(--br-2);
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
   background-color: var(--questionnaire-content-bg-color);
   color: var(--questionnaire-text-color);
-  padding: 20px;
+  padding: var(--p-3);
 }
 
 .questionnaire__tips {
   color: var(--questionnaire-text-color);
-  font-size: 14px;
+  font-size: var(--fs-2);
   text-align: center;
-  margin: 10px 0;
+  margin: var(--m-1) 0;
 }
 
 .upload-file__item {
-  border-radius: 6px;
-  margin: 6px 0;
-  padding: 4px 10px;
-  background-color: #eff0f1;
-  color: #303133;
-  font-size: 14px;
-  border: 1px solid #eff0f1;
+  border-radius: var(--br-2);
+  margin: var(--m-1) 0;
+  padding: var(--p-1);
+  background-color: var(--bg-tertiary-color);
+  color: var(--text-base-color);
+  font-size: var(--fs-2);
+  border: 1px solid var(--border-base-color);
   line-height: normal;
 }
 
@@ -75,26 +63,26 @@
   width: 0;
   word-wrap: break-word;
   word-break: normal;
-  margin: 0 10px;
+  margin: 0 var(--m-1);
 }
 
 .upload-file__item__btn {
   cursor: pointer;
-  font-size: 12px;
-  padding: 4px 12px;
+  font-size: var(--fs-1);
+  padding: calc(var(--p-1) / 2) var(--p-2);
   background-color: transparent;
   transition: all 0.3s;
-  border-radius: 4px;
+  border-radius: var(--br-1);
 }
 
 .upload-file__item__btn:hover {
-  background-color: #3095fa;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
 }
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
   .questionnaire__card {
-    padding: 10px;
+    padding: var(--p-2);
   }
 }

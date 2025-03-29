@@ -210,14 +210,14 @@ watch(() => props.data, () => {
 <style scoped>
 .render-engine {
   position: relative;
-  padding: 10px;
+  padding: var(--p-2);
   border: 1px solid transparent;
   border-bottom: 1px solid var(--questionnaire-bg-color);
 }
 
 .render-engine__required {
   color: red;
-  font-size: 20px;
+  font-size: var(--fs-4);
   position: absolute;
   left: -1px;
   top: 12px;
@@ -226,9 +226,9 @@ watch(() => props.data, () => {
 
 .render-engine__title {
   position: relative;
-  font-size: 16px;
-  margin-bottom: 10px;
-  padding-right: 30px;
+  font-size: var(--fs-3);
+  margin-bottom: var(--m-2);
+  padding-right: var(--p-4);
 }
 
 .render-engine__title__markers {
@@ -241,25 +241,24 @@ watch(() => props.data, () => {
 }
 
 .render-engine__desc {
-  font-size: 14px;
-  color: #909399;
-  margin-bottom: 10px;
+  font-size: var(--fs-2);
+  color: var(--text-secondary-color);
+  margin-bottom: var(--m-1);
 }
 
 .render-engine__remark {
-  background-color: #f4f4f5;
-  /* background-color: rgba(225, 225, 225, 0.3); */
-  font-size: 14px;
-  color: #909399;
-  margin-top: 10px;
-  padding: 2px 10px;
-  border-radius: 4px;
+  background-color: var(--bg-tertiary-color);
+  font-size: var(--fs-2);
+  color: var(--text-secondary-color);
+  margin-top: var(--m-1);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
 }
 
 .render-engine__error {
-  font-size: 14px;
+  font-size: var(--fs-2);
   color: red;
-  margin-top: 10px;
+  margin-top: var(--m-1);
 }
 
 .render-engine__readonly {
@@ -271,22 +270,21 @@ watch(() => props.data, () => {
 }
 
 .render-engine__tips {
-  font-size: 14px;
+  font-size: var(--fs-2);
   font-weight: 400;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
+  padding: calc(var(--p-1) / 2) var(--p-1);
+  border-radius: var(--br-1);
+  margin-left: var(--m-1);
   background-color: var(--questionnaire-bg-color);
   color: var(--questionnaire-text-color);
 }
 
 .render-engine__correct {
-  /* background-color: rgba(0, 0, 0, 0.1); */
   background-color: var(--questionnaire-bg-color);
-  border-radius: 6px;
-  padding: 6px 10px;
-  margin-top: 10px;
-  font-size: 14px;
+  border-radius: var(--br-2);
+  padding: var(--p-1);
+  margin-top: var(--m-1);
+  font-size: var(--fs-2);
 }
 
 .render-engine__correct:empty {
@@ -296,27 +294,28 @@ watch(() => props.data, () => {
 .render-engine__correct__title {
   word-break: break-all;
   white-space: pre-wrap;
-  font-size: 13px;
-  line-height: 22px;
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  color: var(--text-secondary-color);
 }
 
 .render-engine__correct__a {
-  margin: 0 6px;
+  margin: 0 var(--m-1);
 }
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
   .render-engine__title {
-    font-size: 18px;
+    font-size: var(--fs-4);
     font-weight: 500;
   }
 
   .render-engine__desc {
-    font-size: 16px;
+    font-size: var(--fs-3);
   }
 
   .render-engine__remark {
-    font-size: 16px;
+    font-size: var(--fs-3);
   }
 }
 </style>
@@ -326,7 +325,7 @@ watch(() => props.data, () => {
   word-wrap: break-word;
   word-break: break-all;
   white-space: normal;
-  padding: 4px;
+  padding: calc(var(--p-1) / 2) var(--p-1);
   margin: 0 !important;
 }
 
@@ -336,13 +335,13 @@ watch(() => props.data, () => {
 
 .form-select-card--image .form-select-card__label {
   border: 1px solid var(--questionnaire-bg-color);
-  border-radius: 6px;
+  border-radius: var(--br-1);
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
 }
 
 .form-select-card--image .form-select-card__text {
-  padding: 16px 10px;
+  padding: var(--p-1);
   text-align: center;
 }
 
@@ -351,7 +350,6 @@ watch(() => props.data, () => {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  margin-bottom: 5px;
 }
 
 .increment-table-readonly {
@@ -368,19 +366,19 @@ watch(() => props.data, () => {
 }
 
 .increment-table__required {
-  display: inline-block;
   color: red;
-  font-size: 20px;
+  font-size: var(--fs-4);
+  margin-right: calc(var(--m-1) / 2);
 }
 
 .advanced-sort__item {
-  padding: 6px 10px;
+  padding: var(--p-1);
+  border-radius: var(--br-2);
   border: 1px solid var(--questionnaire-bg-color);
   background-color: var(--questionnaire-bg-color);
   color: var(--questionnaire-text-color);
   cursor: move;
-  margin-bottom: 6px;
-  border-radius: 4px;
+  margin-bottom: var(--m-1);
   display: flex;
   align-items: center;
 }
@@ -392,9 +390,13 @@ watch(() => props.data, () => {
 .advanced-sort__item__index {
   background-color: var(--questionnaire-btn-bg-color);
   color: var(--questionnaire-btn-text-color);
-  padding: 2px 8px;
-  border-radius: 2px;
-  margin-right: 10px;
+  border-radius: var(--br-1);
+  margin-right: var(--m-1);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .advanced-sort__item__index--backward {
@@ -405,14 +407,14 @@ watch(() => props.data, () => {
 .advanced-sort__item__image {
   display: block;
   width: 100px;
-  margin-right: 10px;
+  margin-right: var(--m-1);
 }
 
 .advanced-sort__item__content {
   flex: 1;
   width: 0;
-  margin-right: 10px;
-  font-size: 14px;
+  margin-right: var(--m-1);
+  font-size: var(--fs-2);
   display: flex;
   align-items: center;
 }
@@ -499,14 +501,11 @@ watch(() => props.data, () => {
 
 .render-engine .el-select-dropdown__item {
   color: var(--questionnaire-text-color) !important;
-  border-radius: 6px;
-  margin-bottom: 2px;
+  border-radius: var(--br-1);
   transition: all 0.3s;
 }
 
 .render-engine .el-select-dropdown__item.is-selected {
-  /* background-color: var(--questionnaire-btn-bg-color) !important; */
-  /* color: var(--questionnaire-btn-text-color) !important; */
   background-color: var(--questionnaire-bg-color) !important;
   color: var(--questionnaire-btn-bg-color) !important;
   font-weight: 400 !important;
@@ -617,34 +616,12 @@ watch(() => props.data, () => {
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
-
-  .render-engine {
-    padding: 16px;
-  }
-
-  .render-engine__desc {
-    margin-top: 16px;
-  }
-
-  .render-engine__content {
-    margin-top: 16px;
-  }
-
   .render-engine .el-radio__label {
-    font-size: 16px !important;
+    font-size: var(--fs-3) !important;
   }
 
   .render-engine .el-checkbox__label {
-    font-size: 16px !important;
-  }
-
-  .render-engine__pushpin {
-    top: 16px;
-    right: 16px;
-  }
-
-  .render-engine__tips {
-    font-size: 14px;
+    font-size: var(--fs-3) !important;
   }
 
   .advanced-sort__item__content {
@@ -652,7 +629,7 @@ watch(() => props.data, () => {
   }
 
   .advanced-sort__item__image {
-    margin-bottom: 10px;
+    margin-bottom: var(--m-1);
   }
 
   .advanced-sort__item__content__text {

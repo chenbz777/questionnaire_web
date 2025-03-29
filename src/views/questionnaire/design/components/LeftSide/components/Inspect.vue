@@ -3,6 +3,7 @@ import { ref, reactive, watch } from 'vue';
 import useDesign from '@/hooks/useDesign';
 import random from '@/utils/random.js';
 import selectLicenseType from './common/selectLicenseType';
+import userDefined from '@/utils/userDefined.js';
 
 
 /**
@@ -32,7 +33,7 @@ const percentage = ref(100);
  * 5. 逻辑规则完整: 不完整扣分
  */
 
-const { questionnaireData } = useDesign();
+const { questionnaireData, subscribe } = useDesign();
 
 const { logicList, questionList, eventList } = questionnaireData.value;
 
@@ -66,7 +67,8 @@ function inspect() {
           key: random.lowerCase(),
           index,
           message: '题目标题不完整',
-          data: ''
+          data: '',
+          questionKey: question.key
         });
       }
     });
@@ -88,7 +90,8 @@ function inspect() {
           key: random.lowerCase(),
           index,
           message: '题目标题重复',
-          data: title
+          data: title,
+          questionKey: question.key
         });
       }
     });
@@ -112,7 +115,8 @@ function inspect() {
             key: random.lowerCase(),
             index,
             message: '选项标题重复',
-            data: labelList.toString()
+            data: labelList.toString(),
+            questionKey: question.key
           });
         }
       }
@@ -132,7 +136,8 @@ function inspect() {
             key: random.lowerCase(),
             index,
             message: '选项小于2个',
-            data: ''
+            data: '',
+            questionKey: question.key
           });
         }
       }
@@ -202,6 +207,19 @@ watch(() => questionnaireData, () => {
   deep: true,
   immediate: true
 });
+
+// 滚动到题目
+function scrollToQuestion(data) {
+  userDefined.scrollIntoView(data.questionKey);
+
+  if (questionnaireData.value?.questionList) {
+    const question = questionnaireData.value.questionList.find(item => item.key === data.questionKey);
+
+    if (question) {
+      subscribe.emit('editClickQuestion', question);
+    }
+  }
+}
 </script>
 
 <template>
@@ -226,7 +244,7 @@ watch(() => questionnaireData, () => {
             </div>
           </template>
 
-          <div class="inspect__item" v-for="item in errorTitleList" :key="item.key">
+          <div class="inspect__item" v-for="item in errorTitleList" :key="item.key" @click="scrollToQuestion(item)">
             题目Q{{ item.index + 1 }}: {{ item.message }}
           </div>
         </el-collapse-item>
@@ -240,7 +258,8 @@ watch(() => questionnaireData, () => {
             </div>
           </template>
 
-          <div class="inspect__item" v-for="item in errorTitleRepeatList" :key="item.key">
+          <div class="inspect__item" v-for="item in errorTitleRepeatList" :key="item.key"
+            @click="scrollToQuestion(item)">
             题目Q{{ item.index + 1 }}: {{ item.message }}-{{ item.data }}
           </div>
         </el-collapse-item>
@@ -254,7 +273,8 @@ watch(() => questionnaireData, () => {
             </div>
           </template>
 
-          <div class="inspect__item" v-for="item in errorOptionRepeatList" :key="item.key">
+          <div class="inspect__item" v-for="item in errorOptionRepeatList" :key="item.key"
+            @click="scrollToQuestion(item)">
             题目Q{{ item.index + 1 }}: {{ item.message }}-{{ item.data }}
           </div>
         </el-collapse-item>
@@ -268,7 +288,8 @@ watch(() => questionnaireData, () => {
             </div>
           </template>
 
-          <div class="inspect__item" v-for="item in errorOptionLengthList" :key="item.key">
+          <div class="inspect__item" v-for="item in errorOptionLengthList" :key="item.key"
+            @click="scrollToQuestion(item)">
             题目Q{{ item.index + 1 }}: {{ item.message }}
           </div>
         </el-collapse-item>
@@ -310,24 +331,25 @@ watch(() => questionnaireData, () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 40px 0;
+  margin: calc(var(--m-3) * 2) 0;
 }
 
 .inspect__item {
   background-color: #F0F0F0;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 13px;
-  font-weight: 500;
+  border-radius: var(--br-2);
+  padding: var(--p-1);
+  font-size: var(--fs-2);
+  font-weight: 400;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: var(--m-1);
+  cursor: pointer;
 }
 
 .inspect__content__label {
   color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
 }
 
 .my-collapse-item {
@@ -335,6 +357,6 @@ watch(() => questionnaireData, () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 6px;
+  padding-right: var(--p-1);
 }
 </style>

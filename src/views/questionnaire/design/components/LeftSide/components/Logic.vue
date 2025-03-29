@@ -1,7 +1,6 @@
 <script setup>
 import useDesign from '@/hooks/useDesign';
 import random from '@/utils/random.js';
-import { ElMessageBox } from 'element-plus';
 import selectLicenseType from './common/selectLicenseType';
 import inputLicenseType from './common/inputLicenseType';
 
@@ -69,19 +68,7 @@ function handleSourceKeyChange(sourceKey, index) {
 
 // 删除逻辑
 function removeLogic(index) {
-  ElMessageBox.confirm(
-    '确认删除该逻辑吗？',
-    '删除逻辑',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  )
-    .then(() => {
-      questionnaireData.value.logicList.splice(index, 1);
-    })
-    .catch(() => { });
+  questionnaireData.value.logicList.splice(index, 1);
 }
 
 // 处理targetRule变化
@@ -110,10 +97,14 @@ function handleTargetRuleChange(targetRule, index) {
           'logic__content__item--error': (!item.sourceKey || !item.sourceRule || !item.targetRule || !item.targetKeyList.length),
           'logic__content__item--success': (item.sourceKey && item.sourceRule && item.targetRule && item.targetKeyList.length)
         }">
-          <div class="logic__content__remove" @click.stop="removeLogic(index)">
-            <el-icon class="logic__content__remove__icon">
-              <SemiSelect />
-            </el-icon>
+          <div class="logic__content__remove">
+            <el-popconfirm title="确认删除该逻辑吗？" placement="top" :width="180" @confirm="removeLogic(index)">
+              <template #reference>
+                <el-icon class="logic__content__remove__icon">
+                  <SemiSelect />
+                </el-icon>
+              </template>
+            </el-popconfirm>
           </div>
           <div class="logic__content__item__source">
             <div class="mr-1">如果</div>
@@ -171,22 +162,22 @@ function handleTargetRuleChange(targetRule, index) {
 
 <style scoped>
 .logic__head {
-  padding-bottom: 10px;
+  padding-bottom: var(--m-2);
 }
 
 .logic__content__item {
   position: relative;
-  font-size: 12px;
-  color: #333333;
-  border: 1px solid #f0f0f0;
+  font-size: var(--fs-1);
+  color: var(--text-base-color);
+  border: 1px solid var(--border-base-color);
   border-radius: 6px;
-  background-color: #f0f0f0;
+  background-color: var(--bg-tertiary-color);
   transition: all 0.3s;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
 }
 
 .logic__content__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 
 .logic__content__item--error {
@@ -200,8 +191,8 @@ function handleTargetRuleChange(targetRule, index) {
 .logic__content__item__source {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px dashed #ffffff;
+  padding: var(--p-1);
+  border-bottom: 1px dashed var(--bg-base-color);
 }
 
 .logic__content__item__source:last-child {
@@ -215,17 +206,17 @@ function handleTargetRuleChange(targetRule, index) {
   right: -10px;
   z-index: 2;
   background-color: #f5333f;
-  border: 2px solid white;
+  border: 2px solid var(--primary-text-color);
   border-radius: 100%;
   cursor: pointer;
-  color: white;
+  color: var(--primary-text-color);
   transition: all 0.3s;
 }
 
 .logic__content__remove__icon {
   display: block;
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--fs-3);
 }
 
 .logic__content__item:hover .logic__content__remove {

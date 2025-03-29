@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import useDesign from '@/hooks/useDesign';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import random from '@/utils/random.js';
-import { ElMessageBox } from 'element-plus';
 import ActionList from './ActionList.vue';
 import ActionDialog from './ActionDialog.vue';
 
@@ -55,19 +54,7 @@ function handleSourceKeyChange(sourceKey, index) {
 
 // 删除逻辑
 function removeEvent(index) {
-  ElMessageBox.confirm(
-    '确认删除该事件吗？',
-    '删除事件',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  )
-    .then(() => {
-      questionnaireData.value.eventList.splice(index, 1);
-    })
-    .catch(() => { });
+  questionnaireData.value.eventList.splice(index, 1);
 }
 
 /**
@@ -157,10 +144,14 @@ function handleConfirmAction(actionData) {
           'event__content__item--error': (!item.sourceKey || !item.sourceEventName || !item.actionList.length),
           'event__content__item--success': (item.sourceKey && item.sourceEventName && item.actionList.length)
         }">
-          <div class="event__content__remove" @click.stop="removeEvent(index)">
-            <el-icon class="event__content__remove__icon">
-              <SemiSelect />
-            </el-icon>
+          <div class="event__content__remove">
+            <el-popconfirm title="确认删除该事件吗？" placement="top" :width="180" @confirm="removeEvent(index)">
+              <template #reference>
+                <el-icon class="event__content__remove__icon">
+                  <SemiSelect />
+                </el-icon>
+              </template>
+            </el-popconfirm>
           </div>
           <div class="event__content__item__source">
             <div class="mr-4">当</div>
@@ -194,22 +185,22 @@ function handleConfirmAction(actionData) {
 
 <style scoped>
 .event__head {
-  padding-bottom: 10px;
+  padding-bottom: var(--m-2);
 }
 
 .event__content__item {
   position: relative;
-  font-size: 12px;
-  color: #333333;
-  border: 1px solid #f0f0f0;
+  font-size: var(--fs-1);
+  color: var(--text-base-color);
+  border: 1px solid var(--border-base-color);
   border-radius: 6px;
-  background-color: #f0f0f0;
+  background-color: var(--bg-tertiary-color);
   transition: all 0.3s;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
 }
 
 .event__content__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 
 .event__content__item--error {
@@ -223,8 +214,8 @@ function handleConfirmAction(actionData) {
 .event__content__item__source {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px dashed #ffffff;
+  padding: var(--p-1);
+  border-bottom: 1px dashed var(--bg-base-color);
 }
 
 .event__content__item__source:last-child {
@@ -238,17 +229,17 @@ function handleConfirmAction(actionData) {
   right: -10px;
   z-index: 2;
   background-color: #f5333f;
-  border: 2px solid white;
+  border: 2px solid var(--primary-text-color);
   border-radius: 100%;
   cursor: pointer;
-  color: white;
+  color: var(--primary-text-color);
   transition: all 0.3s;
 }
 
 .event__content__remove__icon {
   display: block;
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--fs-3);
 }
 
 .event__content__item:hover .event__content__remove {

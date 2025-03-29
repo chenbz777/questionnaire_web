@@ -40,27 +40,27 @@ function getExamSettings(type) {
 
 <style scoped>
 .exam__head {
-  padding-bottom: 10px;
+  padding-bottom: var(--m-2);
 }
 
 .exam__content__item {
   position: relative;
-  font-size: 12px;
-  color: #333333;
-  border: 1px solid #f0f0f0;
+  font-size: var(--fs-1);
+  color: var(--text-base-color);
+  border: 1px solid var(--border-base-color);
   border-radius: 6px;
-  background-color: #f0f0f0;
+  background-color: var(--bg-tertiary-color);
   transition: all 0.3s;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
 }
 
 .exam__content__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 
 .exam__content__item__source {
-  padding: 10px;
-  border-bottom: 1px dashed #ffffff;
+  padding: var(--p-1);
+  border-bottom: 1px dashed var(--bg-base-color);
 }
 
 .exam__content__item__source:last-child {
@@ -68,11 +68,11 @@ function getExamSettings(type) {
 }
 
 .exam__content__item--null {
-  color: #999999;
+  color: var(--text-secondary-color);
 }
 
 .exam__content__item__title {
-  font-size: 14px;
+  font-size: var(--fs-2);
   font-weight: 500;
 }
 </style>

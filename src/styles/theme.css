@@ -1,2 +1,53 @@
 :root {
+  --m-1: 8px;
+  --m-2: 12px;
+  --m-3: 20px;
+  --m-4: 32px;
+  --m-5: 48px;
+
+  --p-1: 8px;
+  --p-2: 12px;
+  --p-3: 20px;
+  --p-4: 32px;
+  --p-5: 48px;
+
+  --fs-1: 12px;
+  --fs-2: 14px;
+  --fs-3: 16px;
+  --fs-4: 20px;
+  --fs-5: 24px;
+
+  --lh-1: 20px;
+  --lh-2: 22px;
+  --lh-3: 24px;
+  --lh-4: 28px;
+  --lh-5: 32px;
+
+  --fw-1: 400;
+  --fw-2: 500;
+  --fw-3: 600;
+  --fw-4: 700;
+  --fw-5: 800;
+
+  --br-1: 6px;
+  --br-2: 8px;
+  --br-3: 12px;
+  --br-4: 16px;
+  --br-5: 24px;
+
+  --bg-base-color: #ffffff;
+  --bg-secondary-color: #f8f9fa;
+  --bg-tertiary-color: #f0f0f0;
+
+  --text-base-color: #000000;
+  --text-secondary-color: #606266;
+  --text-tertiary-color: #8c8c8c;
+
+  --primary-color: #1677ff;
+  --primary-text-color: #ffffff;
+
+  --primary-color-1: #e2f2fe;
+  --primary-text-color-1: #1677ff;
+
+  --border-base-color: #dcdfe6;
 }

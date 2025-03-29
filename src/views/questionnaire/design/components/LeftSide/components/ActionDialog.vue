@@ -120,18 +120,18 @@ const actionTypeList = [
 
 <style scoped>
 .ac-btn {
-  border: 1px solid #d6dbe3;
-  padding: 6px 12px;
-  border-radius: 3px;
+  border: 1px solid var(--border-base-color);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 10px;
+  margin-bottom: var(--m-1);
 }
 
 .ac-btn:hover {
-  background-color: #d4e3fc;
-  border-color: #d4e3fc;
-  color: #0052d9;
+  background-color: var(--primary-text-color);
+  border-color: var(--primary-text-color-1);
+  color: var(--primary-text-color-1);
 }
 </style>

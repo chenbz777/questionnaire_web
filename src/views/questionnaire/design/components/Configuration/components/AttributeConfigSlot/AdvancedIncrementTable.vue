@@ -99,23 +99,4 @@ function handleChange() {
   </div>
 </template>
 
-<style scoped>
-.matrix-fill__item {
-  margin-right: 20px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.matrix-fill__item__input {
-  flex: 1;
-  padding: 6px;
-  margin-left: 10px;
-  border: 0;
-  border-bottom: 1px solid var(--questionnaire-text-color);
-  min-width: 100px;
-  font-size: 14px;
-  word-wrap: break-word;
-  word-break: normal;
-}
-</style>
+<style scoped></style>

@@ -85,28 +85,28 @@ function onSort() {
 .ace-list__item {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--m-1);
 }
 
 .ace-list__item__icon {
   cursor: pointer;
-  font-size: 18px;
-  margin-right: 4px;
+  font-size: var(--fs-4);
+  margin-right: var(--m-1);
 }
 
 .ace-list__item__content {
   flex: 1;
   width: 0;
-  padding: 4px 10px;
-  font-size: 12px;
+  padding: var(--p-1);
+  font-size: var(--fs-1);
   background-color: #ffffff;
-  border-radius: 4px;
-  border: 1px solid #f0f0f0;
+  border-radius: var(--br-2);
+  border: 1px solid var(--border-base-color);
   cursor: pointer;
 }
 
 .ace-list__item__content:hover {
-  border-color: #409eff;
+  border-color: var(--primary-color);
 }
 
 .ace-list__item__content:empty::after {
@@ -115,7 +115,7 @@ function onSort() {
 
 .ace-list__item__icon2 {
   cursor: grab;
-  font-size: 18px;
-  margin-left: 4px;
+  font-size: var(--fs-4);
+  margin-left: var(--m-1);
 }
 </style>

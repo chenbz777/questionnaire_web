@@ -23,16 +23,16 @@ const { questionnaireData } = useDesign();
 <style scoped>
 .outline__item {
   background-color: #f0f0f0;
-  font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  font-size: var(--fs-2);
+  padding: var(--p-1);
+  border-radius: var(--br-2);
+  margin-bottom: var(--m-1);
   cursor: move;
   border: 1px solid transparent;
   transition: all 0.3s;
 }
 
 .outline__item:hover {
-  border: 1px solid #3095fa;
+  border: 1px solid var(--primary-color);
 }
 </style>

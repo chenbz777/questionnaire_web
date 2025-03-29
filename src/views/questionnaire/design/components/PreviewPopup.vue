@@ -95,15 +95,16 @@ defineExpose({
 
 .preview__content {
   height: 100%;
-  padding: 10px;
-  background-color: #e9eaef;
+  padding: var(--p-2);
+  background-color: var(--bg-base-color);
+  padding-top: 0;
 }
 
 .my-iframe {
   display: block;
   width: 100%;
   height: 100%;
-  border: 8px solid white;
+  border: 0;
   margin: auto;
   transition: all 0.3s;
 }

@@ -180,8 +180,8 @@ const clearQuestionnaire = () => {
 .page {
   display: flex;
   height: 100vh;
-  padding: 10px;
-  color: #303133;
+  padding: var(--p-2);
+  color: var(--text-base-color);
   background-size: contain;
   background-repeat: no-repeat;
   background-color: var(--questionnaire-bg-color);
@@ -191,18 +191,17 @@ const clearQuestionnaire = () => {
 }
 
 .page__menus {
-  /* width: 320px; */
   height: 100%;
   overflow-y: auto;
-  background-color: #ffffff;
-  border-radius: 10px;
+  background-color: var(--bg-base-color);
+  border-radius: var(--br-3);
 }
 
 .page__edit {
   flex: 1;
   width: 0;
   height: 100%;
-  padding: 0 70px;
+  padding: 0 calc(var(--p-5) * 2);
 }
 
 .page__edit__head {
@@ -210,10 +209,10 @@ const clearQuestionnaire = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  padding: 0 10px;
+  background-color: var(--bg-base-color);
+  border-radius: var(--br-3);
+  margin-bottom: var(--m-2);
+  padding: 0 var(--p-2);
 }
 
 .page__edit__content {
@@ -225,7 +224,7 @@ const clearQuestionnaire = () => {
   width: 320px;
   height: 100%;
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: var(--br-3);
   overflow: hidden;
   padding: 0;
 }
@@ -234,5 +233,6 @@ const clearQuestionnaire = () => {
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  border-radius: var(--br-3);
 }
 </style>
