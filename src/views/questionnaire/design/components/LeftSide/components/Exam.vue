@@ -48,7 +48,7 @@ function getExamSettings(type) {
   font-size: var(--fs-1);
   color: var(--text-base-color);
   border: 1px solid var(--border-base-color);
-  border-radius: 6px;
+  border-radius: var(--br-2);
   background-color: var(--bg-tertiary-color);
   transition: all 0.3s;
   margin-bottom: var(--m-1);
