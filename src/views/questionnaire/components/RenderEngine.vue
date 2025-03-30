@@ -478,6 +478,7 @@ watch(() => props.data, () => {
 
 .render-engine .el-checkbox__label {
   font-weight: 400 !important;
+  line-height: var(--lh-1);
 }
 
 .render-engine .el-checkbox__input.is-checked+.el-checkbox__label {
