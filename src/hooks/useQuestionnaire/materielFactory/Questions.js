@@ -56,6 +56,7 @@ export default class Questions extends BaseMateriel {
       btnBgColor: '#1677ff',  // 按钮背景颜色: #346ede
       btnTextColor: '#ffffff',  // 按钮文字颜色: #ffffff
       showQuestionIndex: true,  // 显示题目序号
+      showQuestionType: true,  // 显示题目类型
       copyrightText: '【离线版问卷】提供技术支持',  // 版权信息
       submitBeforeActionFn: 'async function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n\n //return false 将会打断提交动作,支持promise \n return true;\n}',  // 提交前回调
       submitAfterActionFn: 'function(data) {\n  // console.log("data:", data);\n  // console.log("this:", this);\n}',  // 提交后回调
@@ -97,6 +98,11 @@ export default class Questions extends BaseMateriel {
             title: '显示题目编号',
             type: 'switch',
             propsKey: 'showQuestionIndex'
+          },
+          {
+            title: '显示题目类型',
+            type: 'switch',
+            propsKey: 'showQuestionType'
           },
           {
             title: '版权信息',

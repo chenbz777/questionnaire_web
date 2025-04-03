@@ -12,7 +12,6 @@ import useAction from '@/hooks/useAction';
 import AnswerSheet from '@/views/questionnaire/answer/plugIn/AnswerSheet.vue';
 import Countdown from '@/views/questionnaire/answer/plugIn/Countdown.vue';
 import AnswerProgress from '@/views/questionnaire/answer/plugIn/AnswerProgress.vue';
-import MarkQuestion from '@/views/questionnaire/answer/plugIn/MarkQuestion.vue';
 import ClassifyAnswerSheet from '@/views/questionnaire/answer/plugIn/ClassifyAnswerSheet.vue';
 import Lifecycle from '@/common/Lifecycle';
 import LogicProcessor from '@/common/LogicProcessor';
@@ -28,7 +27,6 @@ import EventProcessor from '@/common/EventProcessor';
  * isShowSubmitBtn 是否显示提交按钮 默认true
  * submitText 问卷提交文案 默认'确定提交${title}吗？'
  * limitTime 答题总时长(秒) 默认0
- * isShowMarkQuestion 是否显示标记题目列表 默认true
  * isShowClassifyAnswerSheet 是否显示分类答题卡 默认true
  * isShowMarkers 是否显示标记题目 默认true
  */
@@ -363,14 +361,6 @@ function initQuestionnaire(data) {
   // 题目map集合
   questionList.forEach((question) => {
     questionMap.set(question.key, question);
-
-    // 添加隐藏属性: 是否是标记题目
-    Object.defineProperty(question, 'isMarkers', {
-      value: false,
-      enumerable: false, // 设置为不可枚举
-      writable: true,    // 可以修改值
-      configurable: true // 可以删除或重新配置
-    });
   });
 
   const tempThis = {
@@ -445,27 +435,11 @@ function handleQuestionnaireDataChange() {
   // 深拷贝,防止被插件修改数据, 防止修改数据时触发watch造成死循环
   const _questionnaireData = JSON.parse(JSON.stringify(questionnaireData.value));
 
-  // 标记题目列表
-  const _markersQuestionList = [];
-
-  for (let i = 0; i < questionnaireData.value.questionList.length; i++) {
-    const item = questionnaireData.value.questionList[i];
-
-    if (item.isMarkers) {
-      _markersQuestionList.push({
-        key: item.key,
-        serialNumber: i + 1,
-        isMarkers: item.isMarkers
-      });
-    }
-  }
-
   iframeMessage.send({
     type: 'questionnaireChange',
     data: {
       questionnaireData: _questionnaireData,
-      data: getSubmitData(),
-      markersQuestionList: _markersQuestionList
+      data: getSubmitData()
     }
   });
 
@@ -536,7 +510,7 @@ function onBtnClick(item) {
 
       <div class="questionnaire__container__content">
         <RenderEngine v-for="(question, index) in getQuestionList(questionnaireData)" :key="question.key"
-          :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
+          :data="question" :sequence="(index + 1)" :questionnaireData="questionnaireData"
           :option="renderEngineOption" />
       </div>
 
@@ -567,7 +541,6 @@ function onBtnClick(item) {
       <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
-      <MarkQuestion class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <ClassifyAnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
     </div>
   </div>

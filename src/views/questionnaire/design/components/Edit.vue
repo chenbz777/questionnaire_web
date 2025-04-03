@@ -32,7 +32,7 @@ function handleCopyComponent(data) {
     <el-popover placement="right" trigger="hover" v-for="(question, index) in questionnaireData.questionList"
       :key="question.key">
       <template #reference>
-        <RenderEngine :data="question" :sequence="questionnaireData.props.showQuestionIndex ? index + 1 : 0"
+        <RenderEngine :data="question" :sequence="(index + 1)" :questionnaireData="questionnaireData"
           @click="handleClick(question)" class="my-draggable__render" :class="{
             'my-draggable__render--active': (currentQuestionData && currentQuestionData.key) === question.key,
             'my-draggable__render--hidden': question.props.status === 'hidden',

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 import materielComponents from '@/hooks/useQuestionnaire/materielComponents';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import userDefined from '@/utils/userDefined';
@@ -22,6 +21,10 @@ const props = defineProps({
     default: () => {
       return {};
     }
+  },
+  questionnaireData: {  // 问卷数据
+    type: Object,
+    required: true
   }
 });
 
@@ -77,35 +80,6 @@ const replacements = [
   }
 ];
 
-// 切换标记显示状态
-function toggleMarkers(_data) {
-  _data.isMarkers = !_data.isMarkers;
-
-  if (!props.option) {
-    return;
-  }
-
-  if (!props.option.pageSubscribe) {
-    return;
-  }
-
-  if (!props.option.pageSubscribe.emit) {
-    return;
-  }
-
-  // 触发标记题目列表更新
-  props.option.pageSubscribe.emit('markersChange');
-}
-
-const route = useRoute();
-
-// 是否显示标记按钮
-const isShowMarkers = ref(true);
-
-if (route.query && route.query.isShowMarkers) {
-  isShowMarkers.value = route.query.isShowMarkers === 'true';
-}
-
 // 获取正确答案
 function getAnswerStr(answer) {
 
@@ -148,21 +122,13 @@ watch(() => props.data, () => {
     <div class="render-engine__required" v-if="data.props.required">*</div>
     <!-- 标题 -->
     <div class="render-engine__title" v-if="data.props.title || sequence">
-      <span v-if="sequence">Q{{ sequence }}</span>
+      <span v-if="questionnaireData.props.showQuestionIndex">Q{{ sequence }}</span>
       {{ data.props.title }}
-      <span class="render-engine__tips" v-if="model.title">{{ model.title }}</span>
+      <span class="render-engine__tips" v-if="questionnaireData.props.showQuestionType">{{ model.title }}</span>
       <span class="render-engine__tips" v-if="data.props.fraction">{{ data.props.fraction }}分</span>
       <span class="render-engine__tips" v-if="data.props.difficulty">
         {{ data.props.difficulty }}
       </span>
-
-      <div class="render-engine__title__markers" v-if="isShowMarkers">
-        <AnimateTransition animateName="animate__bounceIn">
-          <van-icon name="star" size="20" color="var(--questionnaire-btn-bg-color)" @click="toggleMarkers(data)"
-            v-if="data.isMarkers" />
-          <van-icon name="star-o" size="20" @click="toggleMarkers(data)" v-else />
-        </AnimateTransition>
-      </div>
     </div>
     <!-- 描述 -->
     <div class="render-engine__desc" v-if="data.props.desc && (data.props.desc !== '<p><br></p>')">
@@ -228,16 +194,6 @@ watch(() => props.data, () => {
   position: relative;
   font-size: var(--fs-3);
   margin-bottom: var(--m-2);
-  padding-right: var(--p-4);
-}
-
-.render-engine__title__markers {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  z-index: 2;
-  cursor: pointer;
 }
 
 .render-engine__desc {
