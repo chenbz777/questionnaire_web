@@ -49,7 +49,7 @@ const editorConfig = reactive({
 });
 
 function upload(file, insertFn) {
-  request.upload(uploadConfig.value.url, {
+  request.upload(uploadConfig.value.uploadUrl, {
     file,
     ...uploadConfig.value.data
   }, {
@@ -58,7 +58,7 @@ function upload(file, insertFn) {
       ...uploadConfig.value.headers
     }
   }).then(res => {
-    insertFn(getFullUrl(res.path || res.url), res.name);
+    insertFn(getFullUrl(res?.url || res?.fileUrl || res?.urlPath || res?.path || res), res.name);
   });
 }
 
