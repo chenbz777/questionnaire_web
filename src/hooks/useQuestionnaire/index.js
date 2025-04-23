@@ -78,11 +78,11 @@ function initQuestionnaireData(props = {}) {
 
 // 上传配置
 const uploadConfig = ref({
-  baseURL: '',
-  method: 'post',
-  url: '',
-  headers: {},
-  data: {}
+  method: 'post',  // 请求方式
+  uploadUrl: '',  // 上传请求地址
+  headers: {},  // 上传请求头
+  data: {},  // 上传数据
+  fileBaseUrl: ''  // 文件访问基础地址
 });
 
 function setUploadConfig(config) {
@@ -91,7 +91,7 @@ function setUploadConfig(config) {
 
 // 获取完整url
 function getFullUrl(url = '') {
-  return url.includes('http') ? url : uploadConfig.value.baseURL + url;
+  return url.includes('http') ? url : uploadConfig.value.fileBaseUrl + url;
 }
 
 // 获取皮肤样式

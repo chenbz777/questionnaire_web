@@ -88,7 +88,7 @@ async function handleChange(file, fileList) {
 
   axios({
     method: uploadConfig.value.method,
-    url: uploadConfig.value.url,
+    url: uploadConfig.value.uploadUrl,
     headers: {
       'Content-Type': 'multipart/form-data',
       ...uploadConfig.value.headers
