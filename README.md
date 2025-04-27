@@ -26,6 +26,8 @@
 
 祝大家：财源广进，金玉满堂，身体健康，笑口常开，吉祥如意乐无边！
 
+使用过程中遇到问题，需要进群可以邮箱联系我。
+
 <br />
 
 ## 🎨 预览
@@ -115,41 +117,9 @@ pnpm build
 
 <br />
 
-## ✨ 使用方法
+## ✨ 集成到系统方法
 
-### 集成【设计问卷】
-
-> 集成 demo 在项目目录 `src/views/questionnaire/demo/design.vue`
-
-<br />
-
-### 集成【填写问卷】
-
-> 集成 demo 在项目目录 `src/views/questionnaire/demo/answer.vue`
-
-<br />
-
-### 集成【只读问卷】
-
-> 集成 demo 在项目目录 `src/views/questionnaire/demo/answer.vue`
-
-<br />
-
-### 集成【设计题目】
-
-> 集成 demo 在项目目录 `src/views/questionnaire/demo/designQuestion.vue`
-
-<br />
-
-### 集成【填答简洁版问卷】
-
-> 用法与【填答问卷】一致，只是去掉了"皮肤"样式
-
-<br />
-
-### 集成【只读简洁版问卷】
-
-> 用法与【只读问卷】一致，只是去掉了"皮肤"样式
+> 阅读 **docs** 文件夹
 
 <br />
 
@@ -177,13 +147,7 @@ pnpm build
 
 <br />
 
-## 社区群
 
-<img src="https://img.chenbz.com/testd2bea28c-e873-48d3-bb0e-c4b4236daaf9.jpg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
-
-
-
-<br />
 
 ## 🎨 展示
 
@@ -285,3 +249,14 @@ pnpm build
 - 移除填写缓存功能，交由宿系统监听“questionnaireChange”事件进行完善
 - 修复 填写页“标题”高度bug
 
+<br />
+
+2025-4-27 更新日志
+
+- 更改“多行输入框”默认配置
+- 统一优化全局样式（内外间距、圆角、主题色值）
+- 提交数据新增字段“提交设备类型”、“提交设备系统”字段
+- 优化打包体积
+- 移除“题目标记“功能、移除“填写缓存”功能 交由宿系统自行实现
+- 新增“自定义问卷底部按钮”
+- 新增集成文档，详情可见 **dosc** 文件夹
