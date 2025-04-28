@@ -99,8 +99,21 @@ class TextFormat {
     return formatList;
   }
 
-  static getFormat(value) {
+  static getFormatItem(value) {
     return formatList.find(item => item.value === value);
+  }
+
+  static getFormat(value) {
+
+    if (!value) {
+      return '';
+    }
+
+    if (!formatList.find(item => item.value === value)) {
+      return '';
+    }
+
+    return formatList.find(item => item.value === value).format;
   }
 
   static verify(formatType, value) {
