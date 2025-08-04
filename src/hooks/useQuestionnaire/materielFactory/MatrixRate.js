@@ -52,7 +52,7 @@ export default class MatrixRate extends BaseMateriel {
     let text = '';
 
     this.props.rateOptions.forEach((item) => {
-      text += `${item.label}: ${this.props.defaultValue[item.key]}分;`;
+      text += `${item.label}: ${this.props.defaultValue[item.key] || 0}分;`;
     });
 
     if (this.props.tagDefaultValue.length) {
@@ -71,7 +71,7 @@ export default class MatrixRate extends BaseMateriel {
 
     this.props.rateOptions.forEach((item) => {
       html += `<div>
-                <div>${item.label}: ${this.props.defaultValue[item.key]}分</div>
+                <div>${item.label}: ${this.props.defaultValue[item.key] || 0}分</div>
               </div>`;
     });
 
