@@ -88,6 +88,21 @@ const formatList = [
     label: '小数',
     value: '小数',
     format: '^[+-]?(\\d+([.]\\d*)?([eE][+-]?\\d+)?|[.]\\d+([eE][+-]?\\d+)?)$'
+  },
+  {
+    label: '香港手机号',
+    value: '香港手机号',
+    format: '^(5|6|8|9)\\d{7}$'
+  },
+  {
+    label: '澳门手机号',
+    value: '澳门手机号',
+    format: '^6\\d{7}$'
+  },
+  {
+    label: '台湾手机号',
+    value: '台湾手机号',
+    format: '^09\\d{8}$'
   }
 ];
 
