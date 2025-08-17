@@ -133,6 +133,9 @@ function verifySubmitData(questionnaireData) {
   // 数据
   const data = {};
 
+  // 预览数据，方便做导出和前端数据列表回显(v-html)
+  const previewData = {};
+
   // 校验列表
   const verifyList = [];
 
@@ -144,6 +147,8 @@ function verifySubmitData(questionnaireData) {
     const key = question.key;
 
     data[key] = model.getValue();
+
+    previewData[key] = model.getText();
 
     // 隐藏题目不校验
     if (question.props.status && question.props.status === 'hidden') {
@@ -168,6 +173,7 @@ function verifySubmitData(questionnaireData) {
   return {
     errorList,
     data,
+    previewData,
     openUserKey,
     verifyList
   };

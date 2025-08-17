@@ -108,7 +108,7 @@ const skinStr = ref('');
 
 // 获取提交数据
 function getSubmitData() {
-  const { data, openUserKey, errorList, verifyList } = verifySubmitData(questionnaireData.value);
+  const { data, openUserKey, errorList, verifyList, previewData } = verifySubmitData(questionnaireData.value);
 
   endAnswerTime = Date.now();
 
@@ -123,6 +123,7 @@ function getSubmitData() {
 
   const submitData = {
     data,
+    previewData,
     errorList,
     verifyList
   };
