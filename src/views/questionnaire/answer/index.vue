@@ -28,7 +28,6 @@ import EventProcessor from '@/common/EventProcessor';
  * submitText 问卷提交文案 默认'确定提交${title}吗？'
  * limitTime 答题总时长(秒) 默认0
  * isShowClassifyAnswerSheet 是否显示分类答题卡 默认true
- * isShowMarkers 是否显示标记题目 默认true
  */
 
 
@@ -101,7 +100,6 @@ const renderEngineOption = {
   pageSubscribe,
   subscribe
 };
-
 
 // 皮肤
 const skinStr = ref('');
