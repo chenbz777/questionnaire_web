@@ -75,6 +75,9 @@ export default class BaseMateriel {
     // 组件唯一标识别名
     this.asKey = key;
 
+    // 字段是否唯一，用于数据库校验值唯一性
+    this.unique = false;
+
     // 组件属性
     this.props = this.defaultProps;
 
