@@ -70,7 +70,7 @@ subscribe.on('editDeleteQuestion', (data) => {
                 class="configuration__as-key__input" />
             </div>
             <div class="configuration__as-key">
-              <div class="configuration__as-key__title">字段唯一</div>
+              <div class="configuration__as-key__title">字段值唯一</div>
               <el-switch v-model="currentComponentData.unique" />
             </div>
             <AttributeSettings :settings="currentModel.advancedSettings" v-model="currentComponentData.props" />
