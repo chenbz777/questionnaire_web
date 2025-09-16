@@ -47,6 +47,12 @@ import EventProcessor from '@/common/EventProcessor';
 
 const { initQuestionnaireData, getSkinStr, verifySubmitData, setUploadConfig } = useQuestionnaire();
 
+const emit = defineEmits([
+  'questionsSubmitAfter',
+  'submitQuestionnaire',
+  'questionnaireChange'
+]);
+
 // 问卷数据
 const questionnaireData = ref(initQuestionnaireData());
 
@@ -157,13 +163,7 @@ iframeMessage.onMessage = (event) => {
 
   // 设置问卷数据
   if (type === 'setQuestionnaireData') {
-
-    // 没有问卷数据, 则初始化问卷数据
-    if (!data.questionnaireData || !Object.keys(data.questionnaireData).length) {
-      data.questionnaireData = initQuestionnaireData();
-    }
-
-    initQuestionnaire(data);
+    setQuestionnaireData(data);
 
     iframeMessage.send({
       type: 'setQuestionnaireDataCallback',
@@ -222,7 +222,7 @@ iframeMessage.onMessage = (event) => {
 
   // 自定义按钮列表
   if (type === 'setBtnList') {
-    btnList.value = data.btnList;
+    setBtnList(data.btnList);
 
     iframeMessage.send({
       type: 'setBtnListCallback',
@@ -249,6 +249,8 @@ async function onSubmit() {
   if (!isOk) {
     return;
   }
+
+  emit('submitQuestionnaire', submitData);
 
   iframeMessage.send({
     type: 'submitQuestionnaire',
@@ -425,6 +427,8 @@ function questionsSubmitAfter() {
   executeCustomCode(questionnaireData.value.props.submitAfterActionFn, getSubmitData(), {
     questionnaireData: questionnaireData.value
   });
+
+  emit('questionsSubmitAfter', getSubmitData());
 }
 
 window.initQuestionnaire = initQuestionnaire;
@@ -433,6 +437,11 @@ window.initQuestionnaire = initQuestionnaire;
 function handleQuestionnaireDataChange() {
   // 深拷贝,防止被插件修改数据, 防止修改数据时触发watch造成死循环
   const _questionnaireData = JSON.parse(JSON.stringify(questionnaireData.value));
+
+  emit('questionnaireChange', {
+    questionnaireData: _questionnaireData,
+    data: getSubmitData()
+  });
 
   iframeMessage.send({
     type: 'questionnaireChange',
@@ -487,6 +496,34 @@ function onBtnClick(item) {
     }
   });
 }
+
+// 设置问卷数据
+function setQuestionnaireData(data) {
+  // 没有问卷数据, 则初始化问卷数据
+  if (!data.questionnaireData || !Object.keys(data.questionnaireData).length) {
+    data.questionnaireData = initQuestionnaireData();
+  }
+
+  initQuestionnaire(data);
+}
+
+// 获取问卷数据
+function getQuestionnaireData() {
+  return JSON.parse(JSON.stringify(questionnaireData.value));
+}
+
+// 设置按钮列表
+function setBtnList(data) {
+  btnList.value = data;
+}
+
+defineExpose({
+  setQuestionnaireData,
+  getQuestionnaireData,
+  getSubmitData,
+  setUploadConfig,
+  setBtnList
+});
 </script>
 
 <template>

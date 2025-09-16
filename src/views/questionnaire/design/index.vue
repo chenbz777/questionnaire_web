@@ -14,6 +14,7 @@ import { ElMessageBox } from 'element-plus';
 const { questionnaireData, subscribe, skinStr } = useDesign();
 const { initQuestionnaireData, getSkinStr, setUploadConfig } = useQuestionnaire();
 
+
 // 预览弹窗实例
 const previewPopupRef = ref(null);
 
@@ -53,11 +54,7 @@ iframeMessage.onMessage = (event) => {
   const { type, data } = event;
 
   if (type === 'setQuestionnaireData') {
-    const _questionnaireData = initQuestionnaireData(data);
-
-    questionnaireData.value = _questionnaireData;
-
-    skinStr.value = getSkinStr(questionnaireData.value);
+    setQuestionnaireData();
 
     iframeMessage.send({
       type: 'setQuestionnaireDataCallback',
@@ -97,6 +94,27 @@ const clearQuestionnaire = () => {
     })
     .catch(() => { });
 };
+
+// 设置问卷数据
+function setQuestionnaireData(data) {
+  const _questionnaireData = initQuestionnaireData(data);
+
+  questionnaireData.value = _questionnaireData;
+
+  skinStr.value = getSkinStr(questionnaireData.value);
+}
+
+// 获取问卷数据
+function getQuestionnaireData() {
+  return JSON.parse(JSON.stringify(questionnaireData.value));
+}
+
+// 暴露方法
+defineExpose({
+  setQuestionnaireData,
+  getQuestionnaireData,
+  setUploadConfig
+});
 </script>
 
 <template>

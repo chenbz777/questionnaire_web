@@ -56,7 +56,8 @@ iframeMessage.onMessage = (event) => {
   }
 
   if (type === 'setUploadConfig') {
-    uploadConfig.value = data;
+    setUploadConfig(data);
+
     iframeMessage.send({
       type: 'setUploadConfigCallback',
       data
@@ -76,6 +77,18 @@ const options = [
 ];
 
 const segmented = ref('基础');
+
+//  设置上传配置
+function setUploadConfig(data) {
+  uploadConfig.value = data;
+}
+
+// 暴露函数
+defineExpose({
+  setQuestionData,
+  getQuestionData,
+  setUploadConfig
+});
 </script>
 
 <template>
