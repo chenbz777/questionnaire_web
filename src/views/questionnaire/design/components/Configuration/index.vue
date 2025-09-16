@@ -69,6 +69,10 @@ subscribe.on('editDeleteQuestion', (data) => {
               <el-input v-model="currentComponentData.asKey" placeholder="自定义标识" clearable
                 class="configuration__as-key__input" />
             </div>
+            <div class="configuration__as-key">
+              <div class="configuration__as-key__title">字段唯一</div>
+              <el-switch v-model="currentComponentData.unique" />
+            </div>
             <AttributeSettings :settings="currentModel.advancedSettings" v-model="currentComponentData.props" />
           </div>
         </template>
@@ -106,12 +110,13 @@ subscribe.on('editDeleteQuestion', (data) => {
 .configuration__as-key {
   display: flex;
   align-items: center;
-  padding: var(--p-2);
+  margin: var(--m-2);
 }
 
 .configuration__as-key__title {
   color: #16191b;
   font-weight: 400;
+  width: 80px;
   font-size: var(--fs-2);
   margin-right: var(--m-1);
 }

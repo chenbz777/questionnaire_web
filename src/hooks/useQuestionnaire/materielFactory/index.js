@@ -34,6 +34,7 @@ class MaterielFactory {
       if (isFull && instance) {
         materiel.key = instance.key || materiel.key;
         materiel.asKey = instance.asKey || materiel.asKey;
+        materiel.unique = instance.unique || materiel.unique;
       }
 
       return materiel;
