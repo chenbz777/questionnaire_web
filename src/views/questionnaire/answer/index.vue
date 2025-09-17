@@ -21,13 +21,8 @@ import EventProcessor from '@/common/EventProcessor';
 /**
  * 页面接收参数
  * isShowAnswer 是否显示答案 默认false
- * isShowAnswerProgress 是否显示答题进度 默认true
- * isShowCountdown 是否显示倒计时 默认true
- * isShowAnswerSheet 是否显示答题卡 默认true
- * isShowSubmitBtn 是否显示提交按钮 默认true
- * submitText 问卷提交文案 默认'确定提交${title}吗？'
  * limitTime 答题总时长(秒) 默认0
- * isShowClassifyAnswerSheet 是否显示分类答题卡 默认true
+ * showSidePlugin 是否显示侧边插件 默认true
  */
 
 
@@ -98,6 +93,12 @@ let endAnswerTime = Date.now();
 let isShowAnswer = false;
 if (route.query.isShowAnswer) {
   isShowAnswer = route.query.isShowAnswer === 'true';
+}
+
+// 是否显示侧边插件
+const showSidePlugin = ref(true);
+if (route.query.showSidePlugin) {
+  showSidePlugin.value = route.query.showSidePlugin === 'true';
 }
 
 // 渲染引擎参数
@@ -290,7 +291,7 @@ function handleSubmit() {
   }
 
   ElMessageBox.confirm(
-    route.query.submitText || `确定提交${title}吗？`,
+    `确定提交${title}吗？`,
     '提示',
     {
       confirmButtonText: '确定',
@@ -326,10 +327,6 @@ function initQuestionnaire(data) {
     skinStr.value = getSkinStr(_questionnaireData);
   } else {
     skinStr.value = getSkinStr(questionnaireData.value);
-  }
-
-  if (route.query.isShowSubmitBtn === 'false') {
-    isShowSubmitBtn.value = false;
   }
 
   // 初始化订阅事件
@@ -522,7 +519,8 @@ defineExpose({
   getQuestionnaireData,
   getSubmitData,
   setUploadConfig,
-  setBtnList
+  setBtnList,
+  showSidePlugin
 });
 </script>
 
@@ -573,7 +571,7 @@ defineExpose({
     </div>
 
     <!-- 简洁模式下不显示, 手机端不显示 -->
-    <div class="page__right" v-if="!isEasy">
+    <div class="page__right" v-if="!isEasy && showSidePlugin">
       <AnswerProgress class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <Countdown class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
       <AnswerSheet class="questionnaire__card mb-3" :addLifecycle="addLifecycle" />
