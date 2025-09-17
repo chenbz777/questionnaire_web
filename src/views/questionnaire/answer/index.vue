@@ -65,10 +65,10 @@ const { animateElement } = useAnimate();
 const route = useRoute();
 
 // 判断是否是只读模式
-const isReadonly = (route.name === 'questionnaireV1Readonly') || (route.name === 'questionnaireV1ReadonlyEasy');
+const isReadonly = route.query.isReadonly || (route.name === 'questionnaireV1Readonly') || (route.name === 'questionnaireV1ReadonlyEasy');
 
 // 判断是否是简易模式
-const isEasy = (route.name === 'questionnaireV1AnswerEasy') || (route.name === 'questionnaireV1ReadonlyEasy');
+const isEasy = route.query.isEasy || (route.name === 'questionnaireV1AnswerEasy') || (route.name === 'questionnaireV1ReadonlyEasy');
 
 // 是否显示提交按钮
 const isShowSubmitBtn = ref(true);
