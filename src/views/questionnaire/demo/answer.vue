@@ -510,7 +510,7 @@ function resetFillData() {
       <el-button type="warning" @click="resetFillData()">重置已填写数据</el-button>
     </div>
 
-    <iframe :src="iframeUrl" id="myIframe" frameborder="0" :key="iframeUrl"></iframe>
+    <iframe :src="iframeUrl" id="myIframe" name="myIframe" frameborder="0" :key="iframeUrl"></iframe>
   </div>
 </template>
 

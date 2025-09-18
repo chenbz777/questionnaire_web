@@ -181,7 +181,7 @@ function setQuestionnaireData() {
       <el-button type="success" @click="setQuestionnaireData()">设置问卷数据</el-button>
     </div>
 
-    <iframe :src="iframeUrl" id="myIframe" frameborder="0"></iframe>
+    <iframe :src="iframeUrl" id="myIframe" name="myIframe" frameborder="0"></iframe>
   </div>
 </template>
 

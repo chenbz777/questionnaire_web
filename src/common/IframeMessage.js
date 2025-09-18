@@ -5,127 +5,70 @@ export default class IframeMessage {
     // 是否是父容器
     this.isParent = !!iframeId;
     // iframeId
-    this.iframeId = iframeId;
+    this.iframeId = iframeId || window.name;
     // iframe节点
     this.iframe = null;
-    // 是否握手成功
-    this.isHandshake = false;
     // 消息列表
     this.messageList = [];
     // 消息回调
     this.onMessage = () => { };
     // 临时存储this
     const _this = this;
-    // 任务id
-    let taskId = null;
-    // 任务次数
-    let taskNum = 100;
     // 消息回调map
     this.messageCallbackMap = new Map();
-    // 握手id
-    this.handshakeId = '';
 
-    if (this.isParent) {
-      // 创建任务
-      taskId = setInterval(() => {
-        // 如果任务次数小于等于0
-        if (taskNum <= 0) {
-          console.error(`[IframeMessage]: 没有找到id为${iframeId}的iframe节点,请检查iframeId是否正确`);
-          clearInterval(taskId);
-          return;
-        }
-
-        // 获取iframe节点
-        const iframeDom = document.getElementById(iframeId);
-
-        // 如果iframe节点存在
-        if (iframeDom && iframeDom.contentWindow) {
-
-          this.handshakeId = Math.random().toString(36).slice(2);
-
-          // 存储iframe节点
-          this.iframe = iframeDom;
-          // 发送握手消息
-          this.sendMessage({
-            type: 'handshake',
-            data: {
-              handshakeId: this.handshakeId
-            }
-          });
-        }
-
-        taskNum--;
-      }, 100);
+    // 子容器，初始化完成发送 load 消息
+    if (!this.isParent) {
+      this.sendMessage({
+        type: 'load'
+      });
     }
 
     this.handleEvent = (event) => {
       try {
-        const messageData = JSON.parse(event.data);
+        const eventData = JSON.parse(event.data);
+        const { type, data, iframeId } = eventData;
 
-        const { type, data, handshakeId: _handshakeId } = messageData;
-
-        if (_this.handshakeId && _handshakeId) {
-          if (_this.handshakeId !== _handshakeId) {
-            // console.log(`[IframeMessage]: 握手id不一致, 不处理消息, 期望握手id: ${_this.handshakeId}, 实际握手id: ${_handshakeId}`);
-            return;
-          }
-        }
-
-        // 如果是握手消息, 回复握手成功
-        if (type === 'handshake') {
-          console.log('[IframeMessage]: 我是子容器, 我收到的握手id是:', _handshakeId);
-
-          _this.sendMessage({
-            type: 'handshakeSuccessful'
-          });
-
-          // 设置握手成功
-          _this.isHandshake = true;
-
-          // 设置握手id
-          _this.handshakeId = data.handshakeId;
-
+        if (_this.iframeId !== iframeId) {
+          // console.log(`[IframeMessage]: iframeId不一致, 不处理消息, 期望iframeId: ${_this.iframeId}, 实际iframeId: ${iframeId}`);
           return;
         }
 
-        // 如果是握手成功消息
-        if (type === 'handshakeSuccessful') {
-          // 如果已经握手成功, 则不再执行
-          if (_this.isHandshake) {
-            return;
+        // 子容器初始化完成消息
+        if (type === 'load') {
+          // 获取iframe节点
+          const iframeDom = document.getElementById(iframeId);
+
+          // 如果iframe节点存在
+          if (iframeDom && iframeDom.contentWindow) {
+            // 存储iframe节点
+            this.iframe = iframeDom;
           }
 
-          // 清除任务
-          clearInterval(taskId);
-
-          console.log(`[IframeMessage]: 我是父容器(${_this.iframeId}), 我收到握手成功, 握手id是:`, _this.handshakeId);
-
-          // 设置握手成功
-          _this.isHandshake = true;
-
-          // 发送消息
-          _this.messageList.forEach((sendFn) => {
+          // 发送消息队列缓存的消息
+          this.messageList.forEach((sendFn) => {
             sendFn();
           });
 
           // 清空消息列表
-          _this.messageList = [];
+          this.messageList = [];
 
           return;
         }
 
+        // 判断是否存在回调函数
         if (_this.messageCallbackMap.has(type)) {
-
-          const callback = _this.messageCallbackMap.get(type);
-
-          callback(messageData.data);
-
+          // 获取回调函数
+          const callbackFn = _this.messageCallbackMap.get(type);
+          // 执行回调函数
+          callbackFn(data);
+          // 删除回调函数
           _this.messageCallbackMap.delete(type);
 
           return;
         }
 
-        _this.onMessage(messageData);
+        _this.onMessage(eventData);
       } catch (error) {
         console.log('[IframeMessage](error): ', error, event);
       }
@@ -136,7 +79,8 @@ export default class IframeMessage {
 
   // 发送消息
   send(data = {}, callback) {
-    if (!this.isHandshake) {
+    // 如果iframe不存在，则添加到消息列表中，待iframe加载完成后发送
+    if (this.isParent && !this.iframe) {
       const _this = this;
 
       this.messageList.push(() => {
@@ -146,11 +90,11 @@ export default class IframeMessage {
       return;
     }
 
+    // 发送消息
     this.sendMessage(data, callback);
   }
 
   sendMessage(data, callback) {
-
     if (callback) {
       const { type } = data;
 
@@ -159,7 +103,7 @@ export default class IframeMessage {
       this.messageCallbackMap.set(key, callback);
     }
 
-    data.handshakeId = this.handshakeId;
+    data.iframeId = this.iframeId;
 
     if (this.isParent) {
       this.iframe.contentWindow?.postMessage(JSON.stringify(data), '*');
@@ -171,7 +115,6 @@ export default class IframeMessage {
   // 销毁
   destroy() {
     console.log('[IframeMessage](destroy): 销毁');
-
     window.removeEventListener('message', this.handleEvent);
   }
 }
