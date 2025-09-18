@@ -36,7 +36,7 @@ function setQuestionData(data = {}) {
       <el-button type="primary" @click="setQuestionData({ type: 'FormCheckbox' })">设置题目(多选)</el-button>
     </div>
 
-    <iframe :src="iframeUrl" id="myIframe" frameborder="0"></iframe>
+    <iframe :src="iframeUrl" id="myIframe" name="myIframe" frameborder="0"></iframe>
   </div>
 </template>
 
