@@ -54,7 +54,7 @@ iframeMessage.onMessage = (event) => {
   const { type, data } = event;
 
   if (type === 'setQuestionnaireData') {
-    setQuestionnaireData();
+    setQuestionnaireData(data);
 
     iframeMessage.send({
       type: 'setQuestionnaireDataCallback',
