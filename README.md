@@ -123,14 +123,6 @@ pnpm build
 
 <br />
 
-## 🏗️ 待完善
-
-1. [控件] 日期时间
-
-   > 暂时还没找到好的日期时间插件，后续再补充
-
-<br />
-
 ## 📌 许可协议
 
 本项目基于 MIT 许可证开源，详情请参阅 [LICENSE](./LICENSE) 文件。
@@ -143,11 +135,7 @@ pnpm build
 
 <img src="http://img.chenbz.com/wxCode.jpeg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
 
-
-
 <br />
-
-
 
 ## 🎨 展示
 
@@ -184,8 +172,6 @@ pnpm build
 ![预览](https://ice.frostsky.com/2024/09/07/e37e78575c73ec34f34c1cde35dbc27b.png)
 
 <br />
-
-
 
 ## 🆕 更新
 
@@ -229,7 +215,7 @@ pnpm build
 
 【题目】
 
-- 修复只读bug
+- 修复只读 bug
 - 重构问卷题目校验逻辑
 - 新增实时校验错误提示
 - 优化题目“标题”为“长文本输入框”
@@ -242,12 +228,12 @@ pnpm build
 
 【题目】
 
-- 修复动作引擎bug
-- 修复“地址”控件校验bug
-- 修复“手写签名”控件回显bug
+- 修复动作引擎 bug
+- 修复“地址”控件校验 bug
+- 修复“手写签名”控件回显 bug
 - 新增 填写页“自定义底部按钮”功能
 - 移除填写缓存功能，交由宿系统监听“questionnaireChange”事件进行完善
-- 修复 填写页“标题”高度bug
+- 修复 填写页“标题”高度 bug
 
 <br />
 
