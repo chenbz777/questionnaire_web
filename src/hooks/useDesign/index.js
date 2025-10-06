@@ -45,7 +45,7 @@ subscribe.on('editClickQuestion', (data) => {
 
 // 订阅编辑区删除题目事件
 subscribe.on('editDeleteQuestion', (data) => {
-  if (data.key === currentQuestionData.value.key) {
+  if (data.key === currentQuestionData.value?.key) {
     currentQuestionData.value = null;
   }
 
