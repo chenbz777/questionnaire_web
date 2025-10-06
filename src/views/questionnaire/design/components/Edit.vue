@@ -29,18 +29,20 @@ function handleCopyComponent(data) {
 <template>
   <VueDraggable v-model="questionnaireData.questionList" :animation="300" group="questionListDesigner"
     filter=".my-draggable__render--disabled-move" class="my-draggable">
-    <el-popover placement="right" trigger="hover" v-for="(question, index) in questionnaireData.questionList"
-      :key="question.key">
-      <template #reference>
-        <RenderEngine :data="question" :sequence="(index + 1)" :questionnaireData="questionnaireData"
-          @click="handleClick(question)" class="my-draggable__render" :class="{
-            'my-draggable__render--active': (currentQuestionData && currentQuestionData.key) === question.key,
-            'my-draggable__render--hidden': question.props.status === 'hidden',
-            'my-draggable__render--disabled-move': !question.editProps.move
-          }" />
-      </template>
-      <div class="my-draggable__controls">
-        <el-popconfirm title="确认删除该题目吗？" placement="top" :width="180" @confirm="handleDeleteComponent(index)"
+    <div v-for="(question, index) in questionnaireData.questionList" :key="question.key"
+      class="my-draggable__render-wrapper">
+      <RenderEngine :data="question" :sequence="(index + 1)" :questionnaireData="questionnaireData"
+        @click="handleClick(question)" class="my-draggable__render" :class="{
+          'my-draggable__render--active': (currentQuestionData && currentQuestionData.key) === question.key,
+          'my-draggable__render--hidden': question.props.status === 'hidden',
+          'my-draggable__render--disabled-move': !question.editProps.move
+        }">
+        <slot name="render">
+          <RenderEngine :data="question" :sequence="(index + 1)" />
+        </slot>
+      </RenderEngine>
+      <div class="my-draggable__controls" v-if="(currentQuestionData && currentQuestionData.key) === question.key">
+        <el-popconfirm title="确认删除该题目吗？" placement="top" :width="200" @confirm="handleDeleteComponent(index)"
           v-if="question.editProps.delete">
           <template #reference>
             <div class="my-draggable__controls__item">
@@ -58,7 +60,7 @@ function handleCopyComponent(data) {
           复制
         </div>
       </div>
-    </el-popover>
+    </div>
   </VueDraggable>
 </template>
 
@@ -82,6 +84,14 @@ function handleCopyComponent(data) {
   font-size: var(--fs-3);
   line-height: 100%;
   margin: auto;
+}
+
+.my-draggable__render-wrapper {
+  position: relative;
+}
+
+.my-draggable__render-wrapper:empty {
+  display: none;
 }
 
 .my-draggable__render {
@@ -111,8 +121,12 @@ function handleCopyComponent(data) {
 }
 
 .my-draggable__controls {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  z-index: 10;
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 
 .my-draggable__controls__item {
@@ -123,11 +137,7 @@ function handleCopyComponent(data) {
   justify-content: center;
   align-items: center;
   transition: all 0.3s;
-  margin-bottom: var(--m-1);
-}
-
-.my-draggable__controls__item:last-child {
-  margin-bottom: 0;
+  font-size: var(--fs-2);
 }
 
 .my-draggable__controls__item:hover {
@@ -136,7 +146,7 @@ function handleCopyComponent(data) {
 
 .my-draggable__controls__icon {
   display: block;
-  font-size: var(--fs-3);
-  margin-right: var(--m-1);
+  font-size: var(--fs-2);
+  margin-right: calc(var(--m-1) / 2);
 }
 </style>

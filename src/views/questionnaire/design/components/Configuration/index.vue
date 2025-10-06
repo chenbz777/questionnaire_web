@@ -40,7 +40,7 @@ subscribe.on('editClickQuestion', (data) => {
 
 // 订阅删除组件事件
 subscribe.on('editDeleteQuestion', (data) => {
-  if (data.key === currentComponentData.value.key) {
+  if (data.key === currentComponentData.value?.key) {
     currentComponentData.value = null;
     currentModel.value = null;
   }
