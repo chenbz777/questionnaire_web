@@ -84,7 +84,7 @@ function handleClickAnswerSheet(key) {
 
     <div class="answer-sheet__status">
       <div class="answer-sheet__item answer-sheet__item--success" />
-      <div class="answer-sheet__status__text">正确</div>
+      <div class="answer-sheet__status__text">已答</div>
 
       <div class="answer-sheet__item answer-sheet__item--error" />
       <div class="answer-sheet__status__text">错误</div>
