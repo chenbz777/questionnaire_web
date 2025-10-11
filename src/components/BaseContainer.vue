@@ -1,9 +1,5 @@
 <script setup>
 defineProps({
-  isPage: {
-    type: Boolean,
-    default: false
-  },
   height: {
     type: String,
     default: 'auto'
@@ -12,20 +8,12 @@ defineProps({
 </script>
 
 <template>
-  <div class="bc" :class="{ 'bc--page': isPage }" :style="{ height }">
+  <div class="bc" :class="{ 'bc--page': height === '100vh' }" :style="{ height }">
     <div class="bc__head">
       <slot name="head" />
     </div>
     <div class="bc__container">
-      <div class="bc__container__left">
-        <slot name="left" />
-      </div>
-      <div class="bc__container__content">
-        <slot />
-      </div>
-      <div class="bc__container__right">
-        <slot name="right" />
-      </div>
+      <slot />
     </div>
     <div class="bc__foot">
       <slot name="foot" />
@@ -64,40 +52,11 @@ defineProps({
   box-sizing: border-box;
   flex: 1;
   height: 0;
-  display: flex;
-}
-
-.bc__container__left {
-  box-sizing: border-box;
-  height: 100%;
   overflow: auto;
   position: relative;
 }
 
-.bc__container__content {
-  flex: 1;
-  width: 0;
-  height: 100%;
-  overflow: auto;
-  position: relative;
-}
-
-.bc__container__right {
-  box-sizing: border-box;
-  height: 100%;
-  overflow: auto;
-  position: relative;
-}
-
-.bc__container__content::-webkit-scrollbar {
-  display: none;
-}
-
-.bc__container__left::-webkit-scrollbar {
-  display: none;
-}
-
-.bc__container__right::-webkit-scrollbar {
+.bc__container::-webkit-scrollbar {
   display: none;
 }
 

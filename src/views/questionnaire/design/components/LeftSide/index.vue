@@ -55,6 +55,12 @@ const menus = [
     icon: 'Files',
     component: defineAsyncComponent(() => import('./components/TemplateBase.vue')),
     width: '250px'
+  },
+  {
+    title: 'AI智能',
+    icon: 'MagicStick',
+    component: defineAsyncComponent(() => import('./components/Intelligent.vue')),
+    width: '350px'
   }
 ];
 
