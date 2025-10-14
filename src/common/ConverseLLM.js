@@ -144,9 +144,9 @@ export default class ConverseLLM {
   // 合并内容函数
   mergeStreamData(arr) {
     // 合并内容
-    const content = arr.map(item => item.choices[0].delta.content).join('');
+    const content = arr.map(item => item.choices[0].message.content).join('');
     // 合并推理内容
-    const reasoningContent = arr.map(item => item.choices[0].delta.reasoning_content).join('');
+    const reasoningContent = arr.map(item => item.choices[0].message.reasoning_content).join('');
     // 是否完成
     const isFinished = arr.some(item => item.choices[0].finish_reason);
 
@@ -254,6 +254,15 @@ export default class ConverseLLM {
           return;
         }
 
+        if (progressEvent.event.currentTarget.status !== 200) {
+          isError = true;
+          assistantMessage.isFinished = true;
+          assistantMessage.content = `请求错误: ${progressEvent.event.currentTarget.responseText}`;
+          this.addMessage(assistantMessage);
+          callbackFn(assistantMessage);
+          return;
+        }
+
         const arr = handleStreamToArray(progressEvent);
 
         // 合并内容
@@ -271,6 +280,7 @@ export default class ConverseLLM {
       // console.log('response: ', response);
     }).catch((error) => {
       isError = true;
+      assistantMessage.isFinished = true;
       console.error(error);
     });
 

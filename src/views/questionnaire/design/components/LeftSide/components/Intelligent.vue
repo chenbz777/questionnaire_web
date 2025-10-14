@@ -4,7 +4,7 @@ import BaseContainer from '@/components/BaseContainer.vue';
 import MaterielFactory from '@/hooks/useQuestionnaire/MaterielFactory';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import useDesign from '@/hooks/useDesign';
-import ConverseLLM from '@/common/ConverseLLM';
+import ConverseLLMFactory from '@/common/ConverseLLMFactory';
 import RenderEngine from '@/views/questionnaire/components/RenderEngine.vue';
 
 
@@ -109,10 +109,7 @@ function parseJsonToQuestionnaire(json) {
 }
 
 // 对话模型实例
-const converseLLM = new ConverseLLM({
-  baseURL: '',  // 请填写你的LLM API地址
-  apiKey: '',  // 请填写你的LLM API密钥
-  model: '',  // 请填写你的LLM 模型名称
+const converseLLM = ConverseLLMFactory.create('openai', {
   prompt
 });
 
@@ -154,8 +151,6 @@ function sendMessage() {
         messageList.value = converseLLM.messageList;
       }
     } catch (error) {
-      // console.log('error: ', error);
-      // message.content = '生成失败，请重新输入描述！';
       messageList.value = converseLLM.messageList;
     }
   });
@@ -281,6 +276,7 @@ function clickPreset(text) {
   margin-bottom: var(--m-2);
   margin-right: var(--m-3);
   border: 1px solid var(--border-base-color);
+  word-wrap: break-word;
 }
 
 .ai-message--user {

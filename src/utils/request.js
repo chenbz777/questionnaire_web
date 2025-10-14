@@ -5,6 +5,7 @@ import qs from 'qs';
 import { ElMessage } from 'element-plus';
 import NProgress from 'nprogress';
 import localStorage from './localStorage';
+import globalConfig from '@/config';
 
 
 /**
@@ -27,16 +28,7 @@ NProgress.configure({
   parent: 'body' //指定进度条的父容器
 });
 
-// 根据不同环境更改不同 baseUrl
-if (process.env.NODE_ENV === 'development') {
-  // 开发环境
-
-  // axiosInstance.defaults.baseURL = '';
-} else if (process.env.NODE_ENV === 'production') {
-  // 正式环境
-
-  // axiosInstance.defaults.baseURL = '';
-}
+axiosInstance.defaults.baseURL = globalConfig.request.baseURL;
 
 // 请求队列
 const requestMap = new Map();
