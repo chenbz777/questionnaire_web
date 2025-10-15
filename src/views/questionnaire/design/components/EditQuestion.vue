@@ -32,7 +32,7 @@ function handleCopyComponent(data) {
     <div v-for="(question, index) in questionnaireData.questionList" :key="question.key"
       class="my-draggable__render-wrapper">
       <RenderEngine :data="question" :sequence="(index + 1)" :questionnaireData="questionnaireData"
-        @click="handleClick(question)" class="my-draggable__render" :class="{
+        @click.stop="handleClick(question)" class="my-draggable__render" :class="{
           'my-draggable__render--active': (currentQuestionData && currentQuestionData.key) === question.key,
           'my-draggable__render--hidden': question.props.status === 'hidden',
           'my-draggable__render--disabled-move': !question.editProps.move
@@ -45,7 +45,7 @@ function handleCopyComponent(data) {
         <el-popconfirm title="确认删除该题目吗？" placement="top" :width="200" @confirm="handleDeleteComponent(index)"
           v-if="question.editProps.delete">
           <template #reference>
-            <div class="my-draggable__controls__item">
+            <div class="my-draggable__controls__item my-draggable__controls__item--delete">
               <el-icon class="my-draggable__controls__icon">
                 <Delete />
               </el-icon>
@@ -131,22 +131,26 @@ function handleCopyComponent(data) {
 
 .my-draggable__controls__item {
   cursor: pointer;
-  padding: var(--p-1);
-  border-radius: var(--br-2);
+  padding: calc(var(--p-1) / 2) var(--p-1);
+  border-radius: var(--br-1);
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.3s;
   font-size: var(--fs-2);
-}
-
-.my-draggable__controls__item:hover {
-  background-color: #f0f0f0;
+  background-color: var(--primary-color-1);
+  color: var(--primary-text-color-1);
+  margin-left: calc(var(--m-1) / 2);
 }
 
 .my-draggable__controls__icon {
   display: block;
   font-size: var(--fs-2);
   margin-right: calc(var(--m-1) / 2);
+}
+
+.my-draggable__controls__item--delete {
+  background-color: #fef0f0;
+  color: #f56c6c;
 }
 </style>
