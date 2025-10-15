@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import Configuration from './components/Configuration/index.vue';
-import Edit from './components/Edit.vue';
+import EditQuestion from './components/EditQuestion.vue';
 import useDesign from '@/hooks/useDesign';
 import useQuestionnaire from '@/hooks/useQuestionnaire';
 import LeftSide from './components/LeftSide/index.vue';
@@ -176,7 +176,7 @@ defineExpose({
       </div>
       <div class="page__edit__content">
         <div class="questionnaire__card questionnaire__container">
-          <Edit />
+          <EditQuestion />
         </div>
       </div>
     </div>
