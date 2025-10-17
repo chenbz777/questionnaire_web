@@ -154,7 +154,7 @@ defineExpose({
     <div class="page__edit">
       <div class="page__edit__head">
         <div>
-          <el-icon :size="20" @click="showMenus = true">
+          <el-icon :size="20" @click="showMenus = true" v-if="userDefined.isMobile">
             <Expand />
           </el-icon>
         </div>
