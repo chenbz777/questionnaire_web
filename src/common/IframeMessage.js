@@ -26,6 +26,14 @@ export default class IframeMessage {
 
     this.handleEvent = (event) => {
       try {
+        if (!event.data) {
+          return;
+        }
+
+        if (event.data === 'undefined') {
+          return;
+        }
+
         const eventData = JSON.parse(event.data);
         const { type, data, iframeId } = eventData;
 

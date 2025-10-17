@@ -29,7 +29,6 @@ const { questionnaireData } = useDesign();
   margin-bottom: var(--m-1);
   cursor: move;
   border: 1px solid transparent;
-  transition: all 0.3s;
 }
 
 .outline__item:hover {
