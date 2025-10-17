@@ -64,7 +64,10 @@ function handleClick(data) {
         </div>
         <el-row :gutter="12" v-draggable="[groupItems, draggableOption]">
           <el-col :span="12" v-for="item in groupItems" :key="item.key">
-            <div class="question-type__item" @click="handleClick(item)">{{ item.title }}</div>
+            <div class="question-type__item" @click="handleClick(item)">
+              <i class="iconfont question-type__item__icon" :class="`icon-${item.type}`"></i>
+              {{ item.title }}
+            </div>
           </el-col>
         </el-row>
       </template>
@@ -89,9 +92,16 @@ function handleClick(data) {
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
 }
 
 .question-type__item:hover {
   border: 1px solid var(--primary-color);
+}
+
+.question-type__item__icon {
+  display: block;
+  margin-right: calc((var(--m-1) / 2));
 }
 </style>
