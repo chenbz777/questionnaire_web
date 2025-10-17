@@ -40,13 +40,9 @@ const goTop = (top = 0) => {
   });
 };
 
-const isMobile = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
-};
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
 
-const isWx = () => {
-  return /MicroMessenger/i.test(window.navigator.userAgent);
-};
+const isWx = /MicroMessenger/i.test(window.navigator.userAgent);
 
 const copyText = (text) => {
   if (!text) {

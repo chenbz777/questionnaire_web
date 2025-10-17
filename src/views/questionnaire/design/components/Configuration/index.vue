@@ -103,7 +103,7 @@ subscribe.on('editDeleteQuestion', (data) => {
 }
 
 .configuration__content {
-  height: calc(100% - 44px);
+  height: calc(100% - 50px);
   overflow-y: auto;
 }
 

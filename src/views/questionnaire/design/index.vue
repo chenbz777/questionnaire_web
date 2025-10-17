@@ -14,6 +14,10 @@ import { ElMessageBox } from 'element-plus';
 const { questionnaireData, subscribe, skinStr } = useDesign();
 const { initQuestionnaireData, getSkinStr, setUploadConfig } = useQuestionnaire();
 
+// 显示左侧菜单
+const showMenus = ref(false);
+// 显示配置
+const showConfiguration = ref(false);
 
 // 预览弹窗实例
 const previewPopupRef = ref(null);
@@ -47,6 +51,25 @@ onUnmounted(() => {
 
 onMounted(() => {
   skinStr.value = getSkinStr(questionnaireData.value);
+
+  // 移动端
+  if (userDefined.isMobile) {
+    // 订阅编辑组件事件
+    subscribe.on('editClickQuestion', (data) => {
+      // 侧边菜单不显示时，才显示组件编辑菜单，防止同时显示
+      if (!showMenus.value) {
+        showConfiguration.value = true;
+      }
+    });
+
+    /**
+     * 初始化显示组件编辑菜单，然后马上关闭，这样是为了让弹窗内容提前渲染
+     */
+    showConfiguration.value = true;
+    setTimeout(() => {
+      showConfiguration.value = false;
+    }, 10);
+  }
 });
 
 // 监听消息
@@ -123,11 +146,18 @@ defineExpose({
     <div class="page__menus">
       <LeftSide />
     </div>
+    <el-drawer v-model="showMenus" direction="ltr" :with-header="false" size="85vw" class="page__drawer">
+      <LeftSide />
+    </el-drawer>
 
     <!-- 编辑区 -->
     <div class="page__edit">
       <div class="page__edit__head">
-        <div></div>
+        <div>
+          <el-icon :size="20" @click="showMenus = true">
+            <Expand />
+          </el-icon>
+        </div>
         <div>
           <el-dropdown>
             <el-button class="mr-3">
@@ -150,28 +180,50 @@ defineExpose({
                   </el-icon>
                   导入问卷JSON
                 </el-dropdown-item>
+                <template v-if="userDefined.isMobile">
+                  <el-dropdown-item @click="clearQuestionnaire()">
+                    <el-icon class="mr-1">
+                      <Delete />
+                    </el-icon>
+                    清空问卷
+                  </el-dropdown-item>
+                  <el-dropdown-item @click="previewPopupRef.open(questionnaireData)">
+                    <el-icon class="mr-1">
+                      <View />
+                    </el-icon>
+                    预览问卷
+                  </el-dropdown-item>
+                  <el-dropdown-item @click="questionnaireSetting()">
+                    <el-icon class="mr-1">
+                      <Setting />
+                    </el-icon>
+                    问卷配置
+                  </el-dropdown-item>
+                </template>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
 
-          <el-button type="danger" plain @click="clearQuestionnaire()">
-            清空问卷
-            <el-icon class="ml-1">
-              <Delete />
-            </el-icon>
-          </el-button>
-          <el-button type="success" plain @click="previewPopupRef.open(questionnaireData)">
-            预览问卷
-            <el-icon class="ml-1">
-              <View />
-            </el-icon>
-          </el-button>
-          <el-button type="primary" plain @click="questionnaireSetting()">
-            问卷配置
-            <el-icon class="ml-1">
-              <Setting />
-            </el-icon>
-          </el-button>
+          <template v-if="!userDefined.isMobile">
+            <el-button type="danger" plain @click="clearQuestionnaire()">
+              清空问卷
+              <el-icon class="ml-1">
+                <Delete />
+              </el-icon>
+            </el-button>
+            <el-button type="success" plain @click="previewPopupRef.open(questionnaireData)">
+              预览问卷
+              <el-icon class="ml-1">
+                <View />
+              </el-icon>
+            </el-button>
+            <el-button type="primary" plain @click="questionnaireSetting()">
+              问卷配置
+              <el-icon class="ml-1">
+                <Setting />
+              </el-icon>
+            </el-button>
+          </template>
         </div>
       </div>
       <div class="page__edit__content">
@@ -185,6 +237,9 @@ defineExpose({
     <div class="page__configuration">
       <Configuration />
     </div>
+    <el-drawer v-model="showConfiguration" direction="btt" :with-header="false" size="85vh" class="page__drawer">
+      <Configuration />
+    </el-drawer>
 
     <PreviewPopup ref="previewPopupRef" />
   </div>
@@ -252,5 +307,24 @@ defineExpose({
   height: 100%;
   overflow-y: auto;
   border-radius: var(--br-3);
+}
+
+:deep(.page__drawer .el-drawer__body) {
+  padding: 0;
+}
+
+/* 针对宽度小于 768px 的设备（通常是移动设备） */
+@media only screen and (max-width: 768px) {
+  .page__menus {
+    display: none;
+  }
+
+  .page__configuration {
+    display: none;
+  }
+
+  .page__edit {
+    padding: 0;
+  }
 }
 </style>
