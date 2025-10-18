@@ -1,0 +1,103 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 5043496 */
+  src: url('iconfont.woff2?t=1760768156427') format('woff2'),
+       url('iconfont.woff?t=1760768156427') format('woff'),
+       url('iconfont.ttf?t=1760768156427') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-MatrixFill:before {
+  content: "\e6ae";
+}
+
+.icon-MatrixRate:before {
+  content: "\e64f";
+}
+
+.icon-AdvancedIncrementTable:before {
+  content: "\e615";
+}
+
+.icon-AdvancedPhone:before {
+  content: "\e60f";
+}
+
+.icon-AdvancedIdCard:before {
+  content: "\e614";
+}
+
+.icon-AdvancedSort:before {
+  content: "\e609";
+}
+
+.icon-AdvancedAttachment:before {
+  content: "\e718";
+}
+
+.icon-AdvancedAddress:before {
+  content: "\e71a";
+}
+
+.icon-AdvancedSignature:before {
+  content: "\e7bd";
+}
+
+.icon-FormSelectMultiple:before {
+  content: "\e719";
+}
+
+.icon-ExaminationJudgment:before {
+  content: "\e6c6";
+}
+
+.icon-FormRadio:before {
+  content: "\e667";
+}
+
+.icon-FormRate:before {
+  content: "\e661";
+}
+
+.icon-FormCheckbox:before {
+  content: "\e62c";
+}
+
+.icon-FormSelect:before {
+  content: "\e61f";
+}
+
+.icon-ExaminationMultipleChoice:before {
+  content: "\e71d";
+}
+
+.icon-FormDateTime:before {
+  content: "\e6ff";
+}
+
+.icon-ExaminationQuestionAnswer:before {
+  content: "\e60b";
+}
+
+.icon-FormNumber:before {
+  content: "\e660";
+}
+
+.icon-FormRichText:before {
+  content: "\e6d2";
+}
+
+.icon-FormTextarea:before {
+  content: "\e693";
+}
+
+.icon-FormInput:before {
+  content: "\e692";
+}
+
