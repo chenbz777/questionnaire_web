@@ -2,6 +2,7 @@
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import { vDraggable } from 'vue-draggable-plus';
 import useDesign from '@/hooks/useDesign';
+import userDefined from '@/utils/userDefined';
 
 
 const { addQuestion } = useDesign();
@@ -57,6 +58,10 @@ function handleClick(data) {
 
 <template>
   <div class="question-type">
+    <div class="alert" v-if="userDefined.isMobile">
+      温馨提示: 点击下方组件以添加到问卷
+    </div>
+
     <AnimateTransitionGroup>
       <template v-for="(groupItems, key) in groups" :key="key">
         <div class="question-type__title">

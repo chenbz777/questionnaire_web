@@ -3,6 +3,7 @@ import useDesign from '@/hooks/useDesign';
 import MaterielFactory from '@/hooks/useQuestionnaire/materielFactory';
 import { vDraggable } from 'vue-draggable-plus';
 import defaultQuestionBank from './common/defaultQuestionBank';
+import userDefined from '@/utils/userDefined';
 
 
 const { addQuestion } = useDesign();
@@ -41,6 +42,10 @@ const draggableOption = {
 
 <template>
   <div class="question-bank">
+    <div class="alert mb-3" v-if="userDefined.isMobile">
+      温馨提示: 点击下方组件以添加到问卷
+    </div>
+
     <el-collapse>
       <el-collapse-item v-for="questionBankItems in defaultQuestionBank" :key="questionBankItems.label"
         :title="questionBankItems.label" :name="questionBankItems.label">
