@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineAsyncComponent } from 'vue';
 import random from '@/utils/random';
+import userDefined from '@/utils/userDefined';
 
 
 const emit = defineEmits(['confirm']);
@@ -87,11 +88,11 @@ const actionTypeList = [
 
 <template>
   <div>
-    <el-dialog v-model="actionListDialog" title="请选择下方的执行动作" width="800px">
+    <el-dialog v-model="actionListDialog" title="请选择下方的执行动作" :width="userDefined.isMobile ? '90%' : '800px'">
       <div v-for="actionType in actionTypeList" :key="actionType.type">
         <div class="g-tips mb-2">{{ actionType.title }}</div>
         <el-row :gutter="20">
-          <el-col :span="8" v-for="actionItem in actionType.list" :key="actionItem.type" class="mb-2">
+          <el-col :md="8" :xs="24" v-for="actionItem in actionType.list" :key="actionItem.type" class="mb-2">
             <div class="ac-btn" @click="openActionDialog(actionItem.type)">
               {{ actionItem.title }}
               <span class="g-tips">({{ actionItem.type }})</span>
@@ -101,7 +102,8 @@ const actionTypeList = [
       </div>
     </el-dialog>
 
-    <el-dialog v-model="actionDialog" width="800px" destroy-on-close :show-close="false">
+    <el-dialog v-model="actionDialog" :width="userDefined.isMobile ? '90%' : '800px'" destroy-on-close
+      :show-close="false">
       <div>
         <el-input v-model="actionComponentData.title" placeholder="标题" class="w-100, mb-3">
           <template #prepend>动作名称</template>

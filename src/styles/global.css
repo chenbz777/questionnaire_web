@@ -8,3 +8,12 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.alert {
+  padding: var(--p-1) var(--p-2);
+  border-radius: var(--br-2);
+  font-size: var(--fs-2);
+  background-color: var(--bg-secondary-color);
+  color: var(--text-secondary-color);
+  border: 1px solid var(--border-base-color);
+}

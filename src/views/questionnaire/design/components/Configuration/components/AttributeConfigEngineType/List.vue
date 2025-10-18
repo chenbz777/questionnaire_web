@@ -5,6 +5,7 @@ import { VueDraggable } from 'vue-draggable-plus';
 import random from '@/utils/random';
 import { ElMessage } from 'element-plus';
 import quickList from './common/quickList';
+import userDefined from '@/utils/userDefined';
 
 
 const props = defineProps({
@@ -260,7 +261,8 @@ function getText(item) {
       批量编辑
     </el-button>
 
-    <el-drawer v-model="drawer" title="编辑子项" direction="rtl" size="460px" destroy-on-close>
+    <el-drawer v-model="drawer" title="编辑子项" direction="rtl" :size="userDefined.isMobile ? '90%' : '460px'"
+      destroy-on-close>
       <div>
         <AttributeSettings :settings="setting.listSettings" v-model="drawerData" dataKey="itemKey" />
       </div>
@@ -273,7 +275,7 @@ function getText(item) {
       </template>
     </el-drawer>
 
-    <el-dialog v-model="dialogVisible" title="批量编辑" width="520px">
+    <el-dialog v-model="dialogVisible" title="批量编辑" :width="userDefined.isMobile ? '90%' : '520px'">
 
       <div class="quick">
         <div class="quick__left">

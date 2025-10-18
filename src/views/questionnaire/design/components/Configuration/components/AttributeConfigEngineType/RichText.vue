@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import RichTextEditor from '@/components/RichTextEditor.vue';
+import userDefined from '@/utils/userDefined';
 
 
 const props = defineProps({
@@ -41,7 +42,8 @@ function handleCancel() {
   <div>
     <el-button plain @click="dialogVisible = true">编辑富文本</el-button>
 
-    <el-dialog v-model="dialogVisible" title="富文本编辑器" destroy-on-close class="rich-text__dialog">
+    <el-dialog v-model="dialogVisible" title="富文本编辑器123" destroy-on-close
+      :width="userDefined.isMobile ? '90%' : '800px'">
 
       <RichTextEditor v-model="htmlValue" />
 
@@ -55,9 +57,4 @@ function handleCancel() {
   </div>
 </template>
 
-<style scoped>
-:deep(.rich-text__dialog) {
-  min-width: 500px;
-  max-width: 800px;
-}
-</style>
+<style scoped></style>

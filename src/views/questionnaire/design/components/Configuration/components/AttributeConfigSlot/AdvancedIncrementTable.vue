@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue';
+import userDefined from '@/utils/userDefined';
 
 
 const props = defineProps({
@@ -59,7 +60,7 @@ function handleChange() {
   <div>
     <el-button @click="openDialogFormVisible()">编辑默认值</el-button>
 
-    <el-dialog v-model="dialogFormVisible" title="编辑" width="800">
+    <el-dialog v-model="dialogFormVisible" title="编辑" :width="userDefined.isMobile ? '90%' : '800px'">
       <div>
         <el-table :data="tableData" style="width: 100%" border>
           <el-table-column type="index" label="序号" width="60" />

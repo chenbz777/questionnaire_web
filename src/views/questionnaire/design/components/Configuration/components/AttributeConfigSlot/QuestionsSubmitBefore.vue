@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
+import userDefined from '@/utils/userDefined';
 
 
 const props = defineProps({
@@ -55,7 +56,8 @@ function confirmActionDialog() {
 
 <template>
   <div>
-    <el-dialog v-model="actionDialog" width="800px" destroy-on-close :show-close="false">
+    <el-dialog v-model="actionDialog" :width="userDefined.isMobile ? '90%' : '800px'" destroy-on-close
+      :show-close="false">
       <Codemirror v-model="actionFnText" :style="{ height: '400px', borderRadius: '7px', overflow: 'hidden' }"
         :extensions="extensions" />
 
