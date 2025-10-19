@@ -2,6 +2,7 @@
 import { VueDraggable } from 'vue-draggable-plus';
 import RenderEngine from '@/views/questionnaire/components/RenderEngine.vue';
 import useDesign from '@/hooks/useDesign';
+import userDefined from '@/utils/userDefined';
 
 
 const { questionnaireData, subscribe, currentQuestionData, copyQuestion } = useDesign();
@@ -28,7 +29,8 @@ function handleCopyComponent(data) {
 
 <template>
   <VueDraggable v-model="questionnaireData.questionList" :animation="300" group="questionListDesigner"
-    filter=".my-draggable__render--disabled-move" class="my-draggable">
+    filter=".my-draggable__render--disabled-move" class="my-draggable"
+    :handle="userDefined.isMobile ? '.my-draggable-move' : ''">
     <div v-for="(question, index) in questionnaireData.questionList" :key="question.key"
       class="my-draggable__render-wrapper">
       <RenderEngine :data="question" :sequence="(index + 1)" :questionnaireData="questionnaireData"
@@ -59,6 +61,12 @@ function handleCopyComponent(data) {
           </el-icon>
           复制
         </div>
+      </div>
+      <div class="my-draggable__controls__item my-draggable-move" v-if="userDefined.isMobile">
+        <el-icon class="my-draggable__controls__icon">
+          <Pointer />
+        </el-icon>
+        长按拖动
       </div>
     </div>
   </VueDraggable>
@@ -152,5 +160,13 @@ function handleCopyComponent(data) {
 .my-draggable__controls__item--delete {
   background-color: #fef0f0;
   color: #f56c6c;
+}
+
+.my-draggable-move {
+  cursor: move;
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  z-index: 11;
 }
 </style>

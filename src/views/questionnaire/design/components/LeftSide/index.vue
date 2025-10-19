@@ -127,6 +127,8 @@ onMounted(() => {
   overflow-y: auto;
   padding: var(--p-2);
   transition: all 0.3s;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .left-side__menu__item {

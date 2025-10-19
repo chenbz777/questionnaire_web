@@ -525,7 +525,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="page" :isPage="true" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
+  <div class="page" :class="{ 'page--easy': isEasy }" v-if="questionnaireData" :style="skinStr">
 
     <div class="questionnaire__card questionnaire__container questionnaire__container--full">
 

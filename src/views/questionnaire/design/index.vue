@@ -291,6 +291,8 @@ defineExpose({
 .page__edit__content {
   width: 100%;
   height: calc(100% - 60px);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .page__configuration {
