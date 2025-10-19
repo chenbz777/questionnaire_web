@@ -30,15 +30,6 @@ defineProps({
 }
 
 .bc--page {
-  padding-left: constant(safe-area-inset-left);
-  padding-left: env(safe-area-inset-left);
-
-  padding-right: constant(safe-area-inset-right);
-  padding-right: env(safe-area-inset-right);
-
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
-
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }

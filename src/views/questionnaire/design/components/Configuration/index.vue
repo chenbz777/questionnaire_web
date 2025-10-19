@@ -105,6 +105,8 @@ subscribe.on('editDeleteQuestion', (data) => {
 .configuration__content {
   height: calc(100% - 50px);
   overflow-y: auto;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .configuration__as-key {
