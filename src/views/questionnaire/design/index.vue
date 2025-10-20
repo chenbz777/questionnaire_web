@@ -160,7 +160,7 @@ defineExpose({
         </div>
         <div>
           <el-dropdown>
-            <el-button class="mr-3">
+            <el-button>
               工具菜单
               <el-icon class="ml-1">
                 <arrow-down />
@@ -205,23 +205,23 @@ defineExpose({
           </el-dropdown>
 
           <template v-if="!userDefined.isMobile">
-            <el-button type="danger" plain @click="clearQuestionnaire()">
-              清空问卷
-              <el-icon class="ml-1">
+            <el-button type="danger" plain @click="clearQuestionnaire()" class="ml-3">
+              <el-icon class="mr-1">
                 <Delete />
               </el-icon>
+              清空问卷
             </el-button>
             <el-button type="success" plain @click="previewPopupRef.open(questionnaireData)">
-              预览问卷
-              <el-icon class="ml-1">
+              <el-icon class="mr-1">
                 <View />
               </el-icon>
+              预览问卷
             </el-button>
             <el-button type="primary" plain @click="questionnaireSetting()">
-              问卷配置
-              <el-icon class="ml-1">
+              <el-icon class="mr-1">
                 <Setting />
               </el-icon>
+              问卷配置
             </el-button>
           </template>
         </div>

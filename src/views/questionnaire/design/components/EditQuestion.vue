@@ -169,4 +169,11 @@ function handleCopyComponent(data) {
   right: 1px;
   z-index: 11;
 }
+
+/* 针对宽度小于 768px 的设备（通常是移动设备） */
+@media only screen and (max-width: 768px) {
+  .my-draggable:empty:before {
+    content: '请展开侧边栏-点击组件添加到此处';
+  }
+}
 </style>
