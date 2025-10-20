@@ -9,47 +9,47 @@ const routes = [
   },
   {
     path: '/questionnaire/design',
-    name: 'questionnaireV1Design',
+    name: 'questionnaireDesign',
     component: () => import('@/views/questionnaire/design/index.vue')
   },
   {
     path: '/questionnaire/answer',
-    name: 'questionnaireV1Answer',
+    name: 'questionnaireAnswer',
     component: () => import('@/views/questionnaire/answer/index.vue')
   },
   {
     path: '/questionnaire/readonly',
-    name: 'questionnaireV1Readonly',
+    name: 'questionnaireReadonly',
     component: () => import('@/views/questionnaire/answer/index.vue')
   },
   {
     path: '/questionnaire/answer/easy',
-    name: 'questionnaireV1AnswerEasy',
+    name: 'questionnaireAnswerEasy',
     component: () => import('@/views/questionnaire/answer/index.vue')
   },
   {
     path: '/questionnaire/readonly/easy',
-    name: 'questionnaireV1ReadonlyEasy',
+    name: 'questionnaireReadonlyEasy',
     component: () => import('@/views/questionnaire/answer/index.vue')
   },
   {
     path: '/questionnaire/design/question',
-    name: 'questionnaireV1DesignQuestion',
+    name: 'questionnaireDesignQuestion',
     component: () => import('@/views/questionnaire/design/question.vue')
   },
   {
     path: '/questionnaire/demo/design',
-    name: 'questionnaireV1DemoDesign',
+    name: 'questionnaireDemoDesign',
     component: () => import('@/views/questionnaire/demo/design.vue')
   },
   {
     path: '/questionnaire/demo/answer',
-    name: 'questionnaireV1DemoAnswer',
+    name: 'questionnaireDemoAnswer',
     component: () => import('@/views/questionnaire/demo/answer.vue')
   },
   {
     path: '/questionnaire/demo/design/question',
-    name: 'questionnaireV1DemoDesignQuestion',
+    name: 'questionnaireDemoDesignQuestion',
     component: () => import('@/views/questionnaire/demo/designQuestion.vue')
   },
   {

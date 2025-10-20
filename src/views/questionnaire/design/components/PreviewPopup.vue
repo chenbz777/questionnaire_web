@@ -45,10 +45,10 @@ function onOpened() {
       clearInterval(taskId);
     }
 
-    if (window.previewIframe.contentWindow.initQuestionnaire) {
+    if (window.previewIframe.contentWindow.setQuestionnaireData) {
       clearInterval(taskId);
 
-      window.previewIframe.contentWindow.initQuestionnaire({
+      window.previewIframe.contentWindow.setQuestionnaireData({
         questionnaireData: questionnaireData.value
       });
 
