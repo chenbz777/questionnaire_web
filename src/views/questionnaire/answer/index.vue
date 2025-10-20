@@ -60,10 +60,10 @@ const { animateElement } = useAnimate();
 const route = useRoute();
 
 // 判断是否是只读模式
-const isReadonly = route.query.isReadonly || (route.name === 'questionnaireV1Readonly') || (route.name === 'questionnaireV1ReadonlyEasy');
+const isReadonly = ref(route.query.isReadonly || (route.name === 'questionnaireReadonly') || (route.name === 'questionnaireReadonlyEasy'));
 
 // 判断是否是简易模式
-const isEasy = route.query.isEasy || (route.name === 'questionnaireV1AnswerEasy') || (route.name === 'questionnaireV1ReadonlyEasy');
+const isEasy = ref(route.query.isEasy || (route.name === 'questionnaireAnswerEasy') || (route.name === 'questionnaireReadonlyEasy'));
 
 // 是否显示提交按钮
 const isShowSubmitBtn = ref(true);
@@ -318,7 +318,7 @@ function initQuestionnaire(data) {
   startAnswerTime = Date.now();
 
   // 初始化皮肤
-  if (isEasy) {
+  if (isEasy.value) {
     const _questionnaireData = initQuestionnaireData();
 
     // 简易模式下不显示背景图片
@@ -402,7 +402,7 @@ function initQuestionnaire(data) {
   eventProcessor.run();
 
   // 如果是只读模式
-  if (isReadonly) {
+  if (isReadonly.value) {
     // 不显示提交按钮
     isShowSubmitBtn.value = false;
 
@@ -427,8 +427,6 @@ function questionsSubmitAfter() {
 
   emit('questionsSubmitAfter', getSubmitData());
 }
-
-window.initQuestionnaire = initQuestionnaire;
 
 // 处理数据变动
 function handleQuestionnaireDataChange() {
@@ -504,6 +502,8 @@ function setQuestionnaireData(data) {
   initQuestionnaire(data);
 }
 
+window.setQuestionnaireData = setQuestionnaireData;
+
 // 获取问卷数据
 function getQuestionnaireData() {
   return JSON.parse(JSON.stringify(questionnaireData.value));
@@ -520,7 +520,9 @@ defineExpose({
   getSubmitData,
   setUploadConfig,
   setBtnList,
-  showSidePlugin
+  showSidePlugin,
+  isReadonly,
+  isEasy
 });
 </script>
 
