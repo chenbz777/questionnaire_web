@@ -97,9 +97,11 @@ export default class MatrixRate extends BaseMateriel {
   }
 
   setValue(data = {}) {
-    this.props.defaultValue = data.defaultValue;
-    this.props.evaluate = data.evaluate;
-    this.props.tagDefaultValue = data.tagDefaultValue;
+    const { defaultValue = { one: '' }, evaluate = '', tagDefaultValue = [] } = data;
+
+    this.props.defaultValue = defaultValue;
+    this.props.evaluate = evaluate;
+    this.props.tagDefaultValue = tagDefaultValue;
   }
 
   get attributeSettings() {

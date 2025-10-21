@@ -86,7 +86,7 @@ export default class AdvancedAttachment extends BaseMateriel {
     return this.props.defaultValue.filter(item => item.url);
   }
 
-  setValue(value = '') {
+  setValue(value = []) {
     this.props.defaultValue = value;
   }
 

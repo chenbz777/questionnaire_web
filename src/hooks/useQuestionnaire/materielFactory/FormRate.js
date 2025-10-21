@@ -65,8 +65,10 @@ export default class FormRate extends BaseMateriel {
   }
 
   setValue(data = {}) {
-    this.props.defaultValue = data.defaultValue;
-    this.props.evaluate = data.evaluate;
+    const { defaultValue = 5, evaluate = '' } = data;
+
+    this.props.defaultValue = defaultValue;
+    this.props.evaluate = evaluate;
   }
 
   get attributeSettings() {
