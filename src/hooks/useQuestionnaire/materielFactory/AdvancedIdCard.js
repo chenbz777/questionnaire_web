@@ -138,7 +138,7 @@ export default class AdvancedIdCard extends BaseMateriel {
   }
 
   setValue(data = {}) {
-    const { idCardType, idCardNumber } = data;
+    const { idCardType = 'CN', idCardNumber = '' } = data;
 
     this.props.idCardType = idCardType;
 

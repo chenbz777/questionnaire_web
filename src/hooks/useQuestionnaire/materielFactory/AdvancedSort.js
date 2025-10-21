@@ -49,7 +49,7 @@ export default class AdvancedSort extends BaseMateriel {
     return this.props.defaultValue;
   }
 
-  setValue(value) {
+  setValue(value = []) {
     this.props.defaultValue = value;
   }
 

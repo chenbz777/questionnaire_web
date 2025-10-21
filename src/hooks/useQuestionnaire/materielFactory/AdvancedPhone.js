@@ -138,7 +138,7 @@ export default class AdvancedPhone extends BaseMateriel {
   }
 
   setValue(data = {}) {
-    const { phoneType, phoneNumber } = data;
+    const { phoneType = 'CN', phoneNumber = '' } = data;
 
     this.props.phoneType = phoneType;
 
