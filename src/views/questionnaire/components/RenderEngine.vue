@@ -194,6 +194,7 @@ watch(() => props.data, () => {
   position: relative;
   font-size: var(--fs-3);
   margin-bottom: var(--m-2);
+  font-weight: 500;
 }
 
 .render-engine__desc {
@@ -263,7 +264,6 @@ watch(() => props.data, () => {
 @media only screen and (max-width: 768px) {
   .render-engine__title {
     font-size: var(--fs-4);
-    font-weight: 500;
   }
 
   .render-engine__desc {
