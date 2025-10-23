@@ -8,6 +8,10 @@ const { questionnaireData } = useDesign();
 
 <template>
   <div class="outline">
+    <div class="alert mb-3">
+      温馨提示: 长按可拖拽排序
+    </div>
+
     <AnimateTransitionGroup>
       <VueDraggable v-model="questionnaireData.questionList" :animation="200">
         <div v-for="(question, index) in questionnaireData.questionList" :key="question.key" class="outline__item">

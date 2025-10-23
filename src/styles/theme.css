@@ -51,3 +51,41 @@
 
   --border-base-color: #dcdfe6;
 }
+
+/* 针对宽度小于 768px 的设备（通常是移动设备） */
+@media only screen and (max-width: 768px) {
+  :root {
+    --design-width: 375;
+
+    /* clamp(min, preferred, max) */
+    --m-1: clamp(8px, calc((8 / var(--design-width)) * 100vw), 10px);
+    --m-2: clamp(10px, calc((10 / var(--design-width)) * 100vw), 12px);
+    --m-3: clamp(14px, calc((14 / var(--design-width)) * 100vw), 16px);
+    --m-4: clamp(18px, calc((18 / var(--design-width)) * 100vw), 20px);
+    --m-5: clamp(24px, calc((24 / var(--design-width)) * 100vw), 24px);
+
+    --p-1: clamp(8px, calc((8 / var(--design-width)) * 100vw), 10px);
+    --p-2: clamp(10px, calc((10 / var(--design-width)) * 100vw), 12px);
+    --p-3: clamp(14px, calc((14 / var(--design-width)) * 100vw), 16px);
+    --p-4: clamp(18px, calc((18 / var(--design-width)) * 100vw), 20px);
+    --p-5: clamp(24px, calc((24 / var(--design-width)) * 100vw), 26px);
+
+    --fs-1: clamp(12px, calc((12 / var(--design-width)) * 100vw), 14px);
+    --fs-2: clamp(14px, calc((14 / var(--design-width)) * 100vw), 16px);
+    --fs-3: clamp(16px, calc((16 / var(--design-width)) * 100vw), 18px);
+    --fs-4: clamp(18px, calc((18 / var(--design-width)) * 100vw), 20px);
+    --fs-5: clamp(24px, calc((24 / var(--design-width)) * 100vw), 26px);
+
+    --lh-1: clamp(16px, calc((16 / var(--design-width)) * 100vw), 18px);
+    --lh-2: clamp(18px, calc((18 / var(--design-width)) * 100vw), 20px);
+    --lh-3: clamp(20px, calc((20 / var(--design-width)) * 100vw), 22px);
+    --lh-4: clamp(22px, calc((22 / var(--design-width)) * 100vw), 24px);
+    --lh-5: clamp(28px, calc((28 / var(--design-width)) * 100vw), 30px);
+
+    --br-1: clamp(6px, calc((6 / var(--design-width)) * 100vw), 8px);
+    --br-2: clamp(8px, calc((8 / var(--design-width)) * 100vw), 10px);
+    --br-3: clamp(12px, calc((12 / var(--design-width)) * 100vw), 14px);
+    --br-4: clamp(16px, calc((16 / var(--design-width)) * 100vw), 18px);
+    --br-5: clamp(24px, calc((24 / var(--design-width)) * 100vw), 26px);
+  }
+}

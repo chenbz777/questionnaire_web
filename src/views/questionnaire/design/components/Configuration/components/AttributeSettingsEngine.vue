@@ -78,14 +78,14 @@ const componentName = props.setting.type === 'slot' ? defineAsyncComponent(() =>
       </el-checkbox-group>
 
       <!-- select 下拉单选 -->
-      <el-select v-model="propsData[dataKey]" filterable :placeholder="`请选择${setting.title}`" clearable
+      <el-select v-model="propsData[dataKey]" :placeholder="`请选择${setting.title}`" clearable
         v-if="setting.type === 'select'">
         <el-option v-for="item in setting.propsOptionsKey ? propsData[setting.propsOptionsKey] : setting.options"
           :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
 
       <!-- multiple 下拉多选 -->
-      <el-select v-model="propsData[dataKey]" filterable multiple :placeholder="`请选择${setting.title}`" clearable
+      <el-select v-model="propsData[dataKey]" multiple :placeholder="`请选择${setting.title}`" clearable
         v-if="setting.type === 'multiple'">
         <el-option v-for="item in setting.propsOptionsKey ? propsData[setting.propsOptionsKey] : setting.options"
           :key="item.value" :label="item.label" :value="item.value" />

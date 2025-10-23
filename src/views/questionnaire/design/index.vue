@@ -62,6 +62,16 @@ onMounted(() => {
       }
     });
 
+    // 订阅点击组件事件
+    subscribe.on('clickQuestionBank', (data) => {
+      showMenus.value = false;
+    });
+
+    // 订阅点击组件事件
+    subscribe.on('clickQuestionType', (data) => {
+      showMenus.value = false;
+    });
+
     /**
      * 初始化显示组件编辑菜单，然后马上关闭，这样是为了让弹窗内容提前渲染
      */

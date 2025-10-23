@@ -6,7 +6,7 @@ import defaultQuestionBank from './common/defaultQuestionBank';
 import userDefined from '@/utils/userDefined';
 
 
-const { addQuestion } = useDesign();
+const { addQuestion, subscribe } = useDesign();
 
 // 模型实例集合
 const modelMap = {};
@@ -21,7 +21,12 @@ function getModelTitle(type) {
 }
 
 function handleClick(data) {
-  addQuestion(MaterielFactory.createMateriel(data.type, data));
+  const model = MaterielFactory.createMateriel(data.type, data);
+
+  addQuestion(model);
+
+  // 触发点击添加题目事件
+  subscribe.emit('clickQuestionBank', model);
 }
 
 // 拖拽配置
@@ -33,6 +38,7 @@ const draggableOption = {
     put: false,
     pull: 'clone'
   },
+  handle: userDefined.isMobile ? '.isMobile' : '',  // 移动端禁用掉拖拽（随便指定不存在的className）
   clone: (data) => {
     // 自定义克隆函数: 拖拽时克隆一个新的组件
     return MaterielFactory.createMateriel(data.type, data);

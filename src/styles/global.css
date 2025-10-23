@@ -3,6 +3,7 @@ body {
   padding: 0;
 
   font-family: PingFang SC-Regular, PingFang SC;
+  font-size: var(--fs-2);
 }
 
 * {

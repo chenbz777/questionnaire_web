@@ -113,7 +113,7 @@ onMounted(() => {
 }
 
 .left-side__menu {
-  width: 72px;
+  width: 80px;
   height: 100%;
   overflow-y: auto;
   padding: calc(var(--p-1) / 2);

@@ -54,10 +54,6 @@ function getExamSettings(type) {
   margin-bottom: var(--m-1);
 }
 
-.exam__content__item:hover {
-  border: 1px solid var(--primary-color);
-}
-
 .exam__content__item__source {
   padding: var(--p-1);
   border-bottom: 1px dashed var(--bg-base-color);
@@ -74,5 +70,12 @@ function getExamSettings(type) {
 .exam__content__item__title {
   font-size: var(--fs-2);
   font-weight: 500;
+}
+
+/* 针对宽度大于 768px 的设备（通常是PC设备） */
+@media only screen and (min-width: 768px) {
+  .exam__content__item:hover {
+    border: 1px solid var(--primary-color);
+  }
 }
 </style>

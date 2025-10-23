@@ -218,12 +218,7 @@ function handleConfirmAction(actionData) {
   border-bottom: 1px dashed var(--bg-base-color);
 }
 
-.event__content__item__source:last-child {
-  border-bottom: none;
-}
-
 .event__content__remove {
-  opacity: 0;
   position: absolute;
   top: -10px;
   right: -10px;
@@ -242,7 +237,18 @@ function handleConfirmAction(actionData) {
   font-size: var(--fs-3);
 }
 
-.event__content__item:hover .event__content__remove {
-  opacity: 1;
+/* 针对宽度大于 768px 的设备（通常是PC设备） */
+@media only screen and (min-width: 768px) {
+  .event__content__item__source:last-child {
+    border-bottom: none;
+  }
+
+  .event__content__remove {
+    opacity: 0;
+  }
+
+  .event__content__item:hover .event__content__remove {
+    opacity: 1;
+  }
 }
 </style>
