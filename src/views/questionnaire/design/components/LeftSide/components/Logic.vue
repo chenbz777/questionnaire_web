@@ -176,10 +176,6 @@ function handleTargetRuleChange(targetRule, index) {
   margin-bottom: var(--m-1);
 }
 
-.logic__content__item:hover {
-  border: 1px solid var(--primary-color);
-}
-
 .logic__content__item--error {
   border: 1px solid #ff4d4f;
 }
@@ -200,7 +196,6 @@ function handleTargetRuleChange(targetRule, index) {
 }
 
 .logic__content__remove {
-  opacity: 0;
   position: absolute;
   top: -10px;
   right: -10px;
@@ -219,7 +214,18 @@ function handleTargetRuleChange(targetRule, index) {
   font-size: var(--fs-3);
 }
 
-.logic__content__item:hover .logic__content__remove {
-  opacity: 1;
+/* 针对宽度大于 768px 的设备（通常是PC设备） */
+@media only screen and (min-width: 768px) {
+  .logic__content__item:hover {
+    border: 1px solid var(--primary-color);
+  }
+
+  .logic__content__remove {
+    opacity: 0;
+  }
+
+  .logic__content__item:hover .logic__content__remove {
+    opacity: 1;
+  }
 }
 </style>

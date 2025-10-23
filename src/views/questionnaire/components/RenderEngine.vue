@@ -259,21 +259,6 @@ watch(() => props.data, () => {
 .render-engine__correct__a {
   margin: 0 var(--m-1);
 }
-
-/* 针对宽度小于 768px 的设备（通常是移动设备） */
-@media only screen and (max-width: 768px) {
-  .render-engine__title {
-    font-size: var(--fs-4);
-  }
-
-  .render-engine__desc {
-    font-size: var(--fs-3);
-  }
-
-  .render-engine__remark {
-    font-size: var(--fs-3);
-  }
-}
 </style>
 
 <style>
@@ -415,6 +400,7 @@ watch(() => props.data, () => {
 }
 
 .render-engine .el-radio__label {
+  font-size: var(--fs-2) !important;
   font-weight: 400 !important;
 }
 
@@ -433,6 +419,7 @@ watch(() => props.data, () => {
 }
 
 .render-engine .el-checkbox__label {
+  font-size: var(--fs-2) !important;
   font-weight: 400 !important;
   line-height: var(--lh-1);
 }
@@ -573,14 +560,6 @@ watch(() => props.data, () => {
 
 /* 针对宽度小于 768px 的设备（通常是移动设备） */
 @media only screen and (max-width: 768px) {
-  .render-engine .el-radio__label {
-    font-size: var(--fs-3) !important;
-  }
-
-  .render-engine .el-checkbox__label {
-    font-size: var(--fs-3) !important;
-  }
-
   .advanced-sort__item__content {
     flex-direction: column;
   }

@@ -5,7 +5,7 @@ import useDesign from '@/hooks/useDesign';
 import userDefined from '@/utils/userDefined';
 
 
-const { addQuestion } = useDesign();
+const { addQuestion, subscribe } = useDesign();
 
 const groups = {
   '文本': [],
@@ -41,6 +41,7 @@ const draggableOption = {
     put: false,
     pull: 'clone'
   },
+  handle: userDefined.isMobile ? '.isMobile' : '',  // 移动端禁用掉拖拽（随便指定不存在的className）
   clone: (data) => {
     // 自定义克隆函数: 拖拽时克隆一个新的组件
     return MaterielFactory.createMateriel(data.type);
@@ -53,6 +54,9 @@ function handleClick(data) {
   const model = MaterielFactory.createMateriel(data.type);
 
   addQuestion(model);
+
+  // 触发点击事件
+  subscribe.emit('clickQuestionType', model);
 }
 </script>
 
