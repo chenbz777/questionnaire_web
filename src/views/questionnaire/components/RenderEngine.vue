@@ -397,6 +397,7 @@ watch(() => props.data, () => {
 .render-engine .el-radio {
   color: var(--questionnaire-text-color) !important;
   height: auto !important;
+  white-space: normal !important;
 }
 
 .render-engine .el-radio__label {
@@ -416,6 +417,7 @@ watch(() => props.data, () => {
 .render-engine .el-checkbox {
   color: var(--questionnaire-text-color) !important;
   height: auto !important;
+  white-space: normal !important;
 }
 
 .render-engine .el-checkbox__label {

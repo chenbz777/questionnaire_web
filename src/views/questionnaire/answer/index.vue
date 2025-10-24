@@ -692,5 +692,9 @@ defineExpose({
   .page__right {
     display: none;
   }
+
+  .questionnaire__container {
+    width: 100%;
+  }
 }
 </style>
