@@ -3,7 +3,7 @@ import { ref, watch, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import useQuestionnaire from '@/hooks/useQuestionnaire';
 import useAnimate from '@/hooks/useAnimate';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import userDefined from '@/utils/userDefined';
 import IframeMessage from '@/common/IframeMessage';
 import Subscribe from '@/common/Subscribe';
@@ -290,19 +290,7 @@ function handleSubmit() {
     title = `【${title}】`;
   }
 
-  ElMessageBox.confirm(
-    `确定提交${title}吗？`,
-    '提示',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  )
-    .then(() => {
-      onSubmit();
-    })
-    .catch(() => { });
+  onSubmit();
 }
 
 // 初始化
