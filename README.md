@@ -133,7 +133,7 @@ pnpm build
 
 如果可以，来瓶快乐水
 
-<img src="http://img.chenbz.com/wxCode.jpeg" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
+<img src="https://img.chenbz.com/others/paymentCode.JPG" alt="http://img.chenbz.com/wxCode.jpeg" style="width: 300px;" />
 
 <br />
 
@@ -252,10 +252,10 @@ pnpm build
 2025-9-26 更新日志
 
 - 新增“身份证”、“手机号”、“日期时间” 控件
-- 修复“矩阵评分”显示bug
-- 数据提交新增previewData字段
+- 修复“矩阵评分”显示 bug
+- 数据提交新增 previewData 字段
 - 新增“字段值唯一”字段判断（用户收集报名信息很有必要，避免重复提交）
 - 问卷组件适配以“组件形式”调用
 - 优化只读判断逻辑
 - 简化侧边插件配置参数
-- 重构IframeMessage封装
+- 重构 IframeMessage 封装
