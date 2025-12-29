@@ -138,7 +138,7 @@ class TextFormat {
       return true;
     }
 
-    const regex = new RegExp(formatData.format.slice(1, -1));
+    const regex = new RegExp(formatData.format);
 
     return regex.test(value);
   }
