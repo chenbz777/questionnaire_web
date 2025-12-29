@@ -101,7 +101,7 @@ export default class AdvancedPhone extends BaseMateriel {
 
         const format = option.format;
 
-        const regex = new RegExp(format.slice(1, -1));
+        const regex = new RegExp(format);
 
         if (!regex.test(value)) {
           return this.verifyModel.error(`手机号格式不正确, 期望的格式为"${option.label}"`);
