@@ -110,7 +110,7 @@ export default [
                 'maxLength': 1000,
                 'showWordLimit': true,
                 'clearable': true,
-                'format': '不限制',
+                'format': 'none',
                 'fraction': 0,
                 'answer': '',
                 'answerAnalysis': '',

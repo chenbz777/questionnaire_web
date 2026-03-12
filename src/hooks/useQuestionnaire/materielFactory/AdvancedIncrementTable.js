@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import TextFormat from '@/common/TextFormat';
+import Validators from '@/common/Validators';
 
 
 export default class AdvancedIncrementTable extends BaseMateriel {
@@ -17,7 +17,7 @@ export default class AdvancedIncrementTable extends BaseMateriel {
       options: [
         {
           title: '标题1',
-          format: '不限制',
+          format: 'none',
           required: false,
           key: 'one'
         }
@@ -65,7 +65,7 @@ export default class AdvancedIncrementTable extends BaseMateriel {
 
         // 校验文本格式
         if (value) {
-          if (!TextFormat.verify(option.format, value)) {
+          if (!Validators.verify(option.format, value)) {
             errorOption = option;
             errorIndex = i;
             result = false;
@@ -166,7 +166,7 @@ export default class AdvancedIncrementTable extends BaseMateriel {
 
         // 校验文本格式
         if (value) {
-          if (!TextFormat.verify(option.format, value)) {
+          if (!Validators.verify(option.format, value)) {
             errorOption = option;
             errorIndex = i;
             result = false;
@@ -302,8 +302,8 @@ export default class AdvancedIncrementTable extends BaseMateriel {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                options: TextFormat.getFormatList(),
-                value: '不限制'
+                options: Validators.getValidators(),
+                value: 'none'
               },
               {
                 title: '必填',

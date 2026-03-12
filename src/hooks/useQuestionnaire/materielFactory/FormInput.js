@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import TextFormat from '@/common/TextFormat';
+import Validators from '@/common/Validators';
 import difficultyOptions from '../common/difficultyOptions';
 
 
@@ -23,7 +23,7 @@ export default class FormInput extends BaseMateriel {
       maxLength: 999999,  // 最大长度
       showWordLimit: false,  // 是否显示字数统计
       clearable: true,  // 是否可清空
-      format: '不限制',  // 文本格式
+      format: 'none',  // 文本格式
       fraction: 0,  // 主观题分数
       score: 0,  // 得分
       answer: '',  // 答案
@@ -53,8 +53,8 @@ export default class FormInput extends BaseMateriel {
     }
 
     // 校验文本格式
-    if (!this.utils.text.verifyFormat(this.props.format, value)) {
-      return this.verifyModel.error(`文本格式不正确, 期望的格式为"${this.props.format}"`);
+    if (!Validators.verify(this.props.format, value)) {
+      return this.verifyModel.error(`文本格式不正确, 期望的格式为"${Validators.getValidatorItemLabel(this.props.format)}"`);
     }
 
     return this.verifyModel.success();
@@ -69,8 +69,8 @@ export default class FormInput extends BaseMateriel {
 
     if (value) {
       // 校验文本格式
-      if (!this.utils.text.verifyFormat(this.props.format, value)) {
-        return this.verifyModel.error(`文本格式不正确, 期望的格式为"${this.props.format}"`);
+      if (!Validators.verify(this.props.format, value)) {
+        return this.verifyModel.error(`文本格式不正确, 期望的格式为"${Validators.getValidatorItemLabel(this.props.format)}"`);
       }
     }
 
@@ -187,7 +187,7 @@ export default class FormInput extends BaseMateriel {
             title: '文本格式',
             type: 'select',
             propsKey: 'format',
-            options: TextFormat.getFormatList()
+            options: Validators.getValidators()
           }
         ]
       }

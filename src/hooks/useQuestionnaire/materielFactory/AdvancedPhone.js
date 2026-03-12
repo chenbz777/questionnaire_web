@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import TextFormat from '@/common/TextFormat';
+import Validators from '@/common/Validators';
 
 
 export default class AdvancedPhone extends BaseMateriel {
@@ -18,26 +18,26 @@ export default class AdvancedPhone extends BaseMateriel {
       phoneTypes: [
         {
           label: '中国大陆',
-          value: 'CN',
-          format: TextFormat.getFormat('手机号')
+          value: 'phone',
+          format: Validators.getValidatorItemRegex('phone')
         },
         {
           label: '香港',
-          value: 'HK',
-          format: TextFormat.getFormat('香港手机号')
+          value: 'hkPhone',
+          format: Validators.getValidatorItemRegex('hkPhone')
         },
         {
           label: '台湾',
-          value: 'TW',
-          format: TextFormat.getFormat('台湾手机号')
+          value: 'twPhone',
+          format: Validators.getValidatorItemRegex('twPhone')
         },
         {
           label: '澳门',
-          value: 'MO',
-          format: TextFormat.getFormat('澳门手机号')
+          value: 'moPhone',
+          format: Validators.getValidatorItemRegex('moPhone')
         }
       ],
-      phoneType: 'CN',
+      phoneType: 'phone',
       phoneNumber: ''
     };
   }
@@ -71,7 +71,7 @@ export default class AdvancedPhone extends BaseMateriel {
 
       const format = option.format;
 
-      const regex = new RegExp(format.slice(1, -1));
+      const regex = new RegExp(format);
 
       if (!regex.test(value)) {
         return this.verifyModel.error(`手机号格式不正确, 期望的格式为"${option.label}"`);

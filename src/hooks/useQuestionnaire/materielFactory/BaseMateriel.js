@@ -1,5 +1,4 @@
 import random from '@/utils/random.js';
-import TextFormat from '@/common/TextFormat';
 
 
 function trim(str) {
@@ -13,8 +12,7 @@ function trim(str) {
 
 const utils = {
   text: {
-    trim,
-    verifyFormat: TextFormat.verify
+    trim
   }
 };
 

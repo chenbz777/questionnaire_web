@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import TextFormat from '@/common/TextFormat';
+import Validators from '@/common/Validators';
 
 
 export default class AdvancedIdCard extends BaseMateriel {
@@ -18,26 +18,26 @@ export default class AdvancedIdCard extends BaseMateriel {
       idCardTypes: [
         {
           label: '中国大陆',
-          value: 'CN',
-          format: TextFormat.getFormat('身份证')
+          value: 'idCard',
+          format: Validators.getValidatorItemRegex('idCard')
         },
         {
           label: '香港',
-          value: 'HK',
-          format: TextFormat.getFormat('香港身份证')
+          value: 'hkIdCard',
+          format: Validators.getValidatorItemRegex('hkIdCard')
         },
         {
           label: '台湾',
-          value: 'TW',
-          format: TextFormat.getFormat('台湾身份证')
+          value: 'twIdCard',
+          format: Validators.getValidatorItemRegex('twIdCard')
         },
         {
           label: '澳门',
-          value: 'MO',
-          format: TextFormat.getFormat('澳门身份证')
+          value: 'moIdCard',
+          format: Validators.getValidatorItemRegex('moIdCard')
         }
       ],
-      idCardType: 'CN',
+      idCardType: 'idCard',
       idCardNumber: ''
     };
   }
@@ -71,7 +71,7 @@ export default class AdvancedIdCard extends BaseMateriel {
 
       const format = option.format;
 
-      const regex = new RegExp(format.slice(1, -1));
+      const regex = new RegExp(format);
 
       if (!regex.test(value)) {
         return this.verifyModel.error(`身份证号码格式不正确, 期望的格式为"${option.label}"`);
@@ -101,7 +101,7 @@ export default class AdvancedIdCard extends BaseMateriel {
 
         const format = option.format;
 
-        const regex = new RegExp(format.slice(1, -1));
+        const regex = new RegExp(format);
 
         if (!regex.test(value)) {
           return this.verifyModel.error(`身份证号码格式不正确, 期望的格式为"${option.label}"`);

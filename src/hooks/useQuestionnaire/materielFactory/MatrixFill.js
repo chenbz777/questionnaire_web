@@ -1,5 +1,5 @@
 import BaseMateriel from './BaseMateriel';
-import TextFormat from '@/common/TextFormat';
+import Validators from '@/common/Validators';
 import difficultyOptions from '../common/difficultyOptions';
 
 
@@ -19,7 +19,7 @@ export default class MatrixFill extends BaseMateriel {
         {
           prependTitle: '填空1',
           appendTitle: '',
-          format: '不限制',
+          format: 'none',
           required: false,
           key: 'one'
         }
@@ -59,7 +59,7 @@ export default class MatrixFill extends BaseMateriel {
       const value = this.utils.text.trim(this.props.defaultValue[option.key]);
 
       if (value) {
-        if (!this.utils.text.verifyFormat(option.format, value)) {
+        if (!Validators.verify(option.format, value)) {
           errorOption = option;
           return false;
         }
@@ -118,7 +118,7 @@ export default class MatrixFill extends BaseMateriel {
       const value = this.utils.text.trim(this.props.defaultValue[option.key]);
 
       if (value) {
-        if (!this.utils.text.verifyFormat(option.format, value)) {
+        if (!Validators.verify(option.format, value)) {
           errorOption = option;
           return false;
         }
@@ -253,8 +253,8 @@ export default class MatrixFill extends BaseMateriel {
                 title: '文本格式',
                 type: 'select',
                 itemKey: 'format',
-                options: TextFormat.getFormatList(),
-                value: '不限制'
+                options: Validators.getValidators(),
+                value: 'none'
               },
               {
                 title: '必填',
